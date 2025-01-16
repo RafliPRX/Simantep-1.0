@@ -1,0 +1,239 @@
+.login {
+    display: flex;
+    width: 1920px;
+    height: 919px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    background: #000E60;
+}
+.login .col{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 153px;
+    align-self: stretch;
+    overflow-y: hidden;
+}
+.login .col .form-col{
+    display: flex;
+    width: 523px;
+    height: 579px;
+    padding: 32px 56px;
+    align-items: center;
+    gap: 10px;
+    border-radius: 32px;
+    border: 1px solid #FFF;
+    margin-left: 176px;
+}
+.login .col .form-col form{
+    display: flex;
+    width: 415px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 67px;
+    flex-shrink: 0;
+}
+.login .col .form-col form .header{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+.login .col .form-col form .header h1{
+    color: #FFF;
+    font-family: "DM Sans";
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 56px; /* 155.556% */
+    letter-spacing: -0.72px;
+}
+.login .col .form-col form .header h3{
+    color: #A3AED0;
+    font-family: "DM Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%; /* 16px */
+    letter-spacing: -0.32px;
+}
+.login .col .form-col form .input-col{
+    display: flex;
+    flex-direction: column;
+    width: 415px;
+    height: 400px;
+    gap: 5px;
+}
+.login .col .form-col form .input-col label{
+    width: 410px;
+    height: 20px;
+    color: #FFF;
+    font-family: "DM Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 100%; /* 14px */
+    letter-spacing: -0.28px;
+}
+.login .col .form-col form .input-col input{
+    display: flex;
+    width: 363px;
+    height: 10px;
+    padding: 17px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: #000E60;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #FFF;
+}
+.login .col .form-col form .input-col input:focus{
+    outline: none;
+}
+.login .col .form-col form .input-col .forget{
+    display: flex;
+    flex-direction: row;
+    width: 393px;
+    height: 20px;
+    flex-shrink: 0;
+    gap: 132px;
+}
+.login .col .form-col form .input-col .forget .checkbox{
+    display: flex;
+    flex-direction: row;
+    gap: 11px;
+    width: 143px;
+    height: 20px;
+    flex-shrink: 0;
+}
+.login .col .form-col form .input-col .forget .checkbox input{
+    display: flex;
+    width: 18px;
+    height: 18px;
+    padding: 1px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    border-radius: 2px;
+    background: #D30ED8;
+}
+.login .col .form-col form .input-col .forget .checkbox label{
+    color: #FFF;
+    font-family: "DM Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: -0.28px;
+}
+.login .col .form-col form .input-col .forget a{
+    color: #FFF;
+    font-family: "DM Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: -0.28px;
+    text-decoration: none;
+}
+.login .col .form-col form .input-col button{
+    display: flex;
+    width: 410px;
+    height: 54px;
+    flex-shrink: 0;
+    margin-top: 30px;    
+    padding: 10px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #D30ED8;
+    color: #FFF;
+    text-align: center;
+    font-family: "DM Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 14px */
+    letter-spacing: -0.28px;
+}
+.login .col .form-col form .input-col .register{
+    display: flex;
+    flex-direction: row;
+    width: 244px;
+    height: 40px;
+    gap: 5px;
+}
+.login .col .form-col form .input-col .register p{
+    color: var(--Secondary-Grey-600, #A3AED0);
+    font-family: "DM Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 26px; /* 185.714% */
+    letter-spacing: -0.28px;
+}
+.login .col .form-col form .input-col .register a{
+    color: #FFF;
+    font-family: "DM Sans";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 26px;
+    letter-spacing: -0.28px;
+    text-decoration: none;
+}
+.login .col .logo{
+    display: flex;
+    width: 960px;
+    height: 919px;
+    padding: 215px 145px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+.login .col .logo .logo-col{
+    width: 960px;
+    height: 919px;
+    position: absolute;
+    left: 984px;
+}
+.login .col .logo .logo-col .mask{
+    width: 960px;
+    height: 919px;
+    flex-shrink: 0;
+    border-radius: 0px 0px 0px 200px;
+    background: #0B2E2C;
+}
+.login .col .logo .logo-col .mask .pic{
+    display: flex;
+    width: 1429px;
+    height: 919px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    background: url(../assets/Login.png) lightgray -96.58px 0px / 113.517% 100% no-repeat;
+}
+.login .col .logo .logo-col .logo-bg{
+    position: absolute;
+    left: 184px;
+    top: 135px;
+    width: 600px;
+    height: 600px;
+    border-radius: 32px;
+    background: rgba(255, 255, 255, 0.50);
+    overflow-y: hidden;
+}
+.login .col .logo .logo-col .logo-bg .logo{
+    width: 200px;
+    height: 200px;
+    margin-left: 54px;
+    margin-top: -19px;
+    background: url(../assets/simanteb-logo.png) rgb(255, 255, 255, 0) 50% / cover no-repeat;
+}

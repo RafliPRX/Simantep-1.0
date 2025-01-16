@@ -1,0 +1,90 @@
+.sidebar{
+    display: inline-flex;
+    height: 1152px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    flex-shrink: 0;
+}
+.sidebar .sidebar-col{
+    width: 290px;
+    height: 1152px;
+    flex-shrink: 0;
+    background: #000B48;
+}
+.sidebar .sidebar-col .logo-col{
+    display: flex;
+    flex-direction: row;
+    width: 240px;
+    height: 99px;
+    flex-shrink: 0;
+}
+.sidebar .sidebar-col .logo-col .logo{
+    width: 99px;
+    height: 99px;
+    flex-shrink: 0;
+    background: url(../../assets/simanteb-logo.png) rgb(255, 255, 255, 0) 50% / cover no-repeat;
+    transition: all 0.4s ease-in-out;
+    cursor: pointer;
+}
+.sidebar .sidebar-col .logo-col .logo:hover{
+    transform: scale3d(1.1, 1.1, 1.1);
+    transition: all 0.4s ease-in-out;
+}
+.sidebar .sidebar-col .logo-col h2{
+    width: 141px;
+    height: 27.773px;
+    flex-shrink: 0;
+    color: #FFF;
+    font-family: Poppins;
+    font-size: 26px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 26px */
+    margin-top: 35px;
+}
+.sidebar .sidebar-col .separator{
+    margin-top: 10px;
+    width: 290px;
+    height: 2px;
+    flex-shrink: 0;
+    background: rgba(255, 255, 255, 0.10);
+}
+.sidebar .sidebar-col .selected{
+    margin-left: 21px;
+    display: flex;
+    flex-direction: column;
+    width: 259px;
+    height: 260px;
+    flex-shrink: 0;
+    margin-top: 20px;
+    gap: 10px;
+}
+.sidebar .sidebar-col .selected .list{
+    display: flex;
+    flex-direction: row;
+    width: 257px;
+    height: 36px;
+    flex-shrink: 0;
+    gap: 10px;
+}
+.sidebar .sidebar-col .selected .list a{
+    color: #FFF;
+    font-family: "DM Sans";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 30px; /* 187.5% */
+    letter-spacing: -0.32px;
+    text-decoration: none;
+    transition: all 0.5s ease-in-out;
+}
+.sidebar .sidebar-col .selected .list a:hover{
+    transition: all 0.5s ease-in-out;
+    transform: scale(1.1);
+}
+.sidebar .sidebar-col .selected .list svg{
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+}

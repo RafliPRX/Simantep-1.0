@@ -1,0 +1,103 @@
+.banner{
+    width: 1684px;
+    height: 685px;
+    flex-shrink: 0;
+    border-radius: 100px;
+    margin-left: 101px;
+    margin-top: 120px;
+    border: 1px solid #000;
+    background: var(--Secondary-Primary-White, #FFF);
+    overflow-y: hidden;   
+}
+.banner .banner-pic{
+    width: 1789px;
+    height: 1144px;
+    flex-shrink: 0;
+    background: url(../../assets/Login.png) lightgray 50% / cover no-repeat;
+}
+.banner .banner-pic .text-group{
+    width: 1452px;
+    height: 500px;
+    flex-shrink: 0;
+    margin-left: 160px;
+    margin-top: 127px;
+}
+.banner .banner-pic .text-group h1{
+    display: flex;
+    width: 1452px;
+    height: 150px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: var(--Secondary-Primary-White, #FFF);
+    font-family: "DM Sans";
+    font-size: 125px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 42px; /* 33.6% */
+    letter-spacing: -2.5px;
+}
+.banner .banner-pic .text-group h2{
+    color: var(--Secondary-Primary-White, #FFF);
+    font-family: "DM Sans";
+    font-size: 70px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 84px;
+    letter-spacing: -1.4px;
+}
+.banner .banner-pic .text-group h3{
+    color: #FFF;
+    font-family: "DM Sans";
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 33px;
+    letter-spacing: -0.92px;
+    margin-top: 57px;
+    overflow-y: hidden;
+}
+.banner .banner-pic .text-group button{
+    width: 155.217px;
+    height: 51px;
+    flex-shrink: 0;    
+    color: #FFF;
+    color: var(--Secondary-Primary-Black, #000);
+    text-align: center;
+    font-family: "DM Sans";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 171.429% */
+    letter-spacing: -0.28px;
+    border-radius: 10px;
+    border: 0px;
+    margin-top: 80px;
+    transition: all 0.3s ease-in-out;
+    margin-left: 10px;
+    cursor: pointer;
+}
+.banner .banner-pic .text-group button:hover{
+    transform: scale(1.1);
+    transition: all 0.3s ease-in-out;
+}
+.banner .banner-pic .text-group a{
+    display: flex;
+    width: 137px;
+    height: 28px;
+    flex-direction: column;
+    justify-content: center;
+    flex-shrink: 0;
+    color: #FFF;
+
+    /* Body Text/ Medium/ Medium */
+    font-family: "DM Sans";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px; /* 175% */
+    letter-spacing: -0.32px;
+    text-decoration: none;
+    margin-left: 232px;
+    margin-top: -41px;
+}

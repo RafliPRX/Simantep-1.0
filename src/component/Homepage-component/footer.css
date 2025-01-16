@@ -1,0 +1,52 @@
+.footer{
+    width: 1684px;
+    height: 486px;
+    flex-shrink: 0;
+    border-radius: 100px;
+    border: 1px solid #000;
+    background: var(--Secondary-Primary-White, #FFF);
+    margin-left: 100px;
+    margin-top: 315px;
+    overflow-y: hidden;
+    transition: all 0.4s ease-in-out;
+}
+.footer:hover{
+    transform: scale(1.1);
+    transition: all 0.4s ease-in-out;
+}
+.footer .footer-bg{
+    display: flex;
+    flex-direction: column;
+    width: 3796px;
+    height: 685px;
+    flex-shrink: 0;
+    background: url(../../assets/Login.png) lightgray 50% / cover no-repeat;
+}
+.footer .footer-bg .footer-info{
+    width: 1163px;
+    height: 223px;
+    flex-shrink: 0;
+    background: url(../../assets/footer-info.png) rgb(255, 255, 255, 0) 50% / cover no-repeat;
+    margin-top: 72px;
+    margin-left: 250px;
+}
+.footer .footer-bg .footer-info2{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 1474.438px;
+    height: 100.697px;
+    flex-shrink: 0;
+    margin-top: 50px;
+    margin-left: 100px;
+    gap: 20px;
+    padding-top: 10px;
+}
+.footer .footer-bg .footer-info2 svg{
+    transition: all 0.4s ease-in-out;
+    cursor: pointer;
+}
+.footer .footer-bg .footer-info2 svg:hover{
+    transition: all 0.4s ease-in-out;
+    transform: scale(1.1);
+}

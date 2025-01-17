@@ -157,11 +157,13 @@
     color: #FFF;
     text-align: center;
     font-family: "DM Sans";
-    font-size: 14px;
+    font-size: 24px;
     font-style: normal;
     font-weight: 700;
     line-height: 100%; /* 14px */
     letter-spacing: -0.28px;
+    border: none;
+    cursor: pointer;
 }
 .login .col .form-col form .input-col .register{
     display: flex;

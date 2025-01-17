@@ -59,45 +59,6 @@ const Content = () => {
                                 </tr>
                             </table>
                         </div>
-                        <form action="">
-                        <div className='content-f'>
-                            <h1>Data Diri</h1>
-                                <label htmlFor="">Nama</label>
-                                <input placeholder='Nama' type="text"/>
-                                <label htmlFor="">NIP/NRK</label>
-                                <input placeholder='NRK' type="text"/>
-                                <label htmlFor="">No.Handphone</label>
-                                <input placeholder='No. HP' type="text"/>
-                        </div>
-                        <div className='content-tx'>
-                            <h1>Alasan Cuti/Sakit/Izin</h1>
-                            <textarea placeholder='Alasan Cuti/Sakit/Izin' name="" id=""></textarea>
-                        </div>
-                        <div className='content-ty'>
-                            <h1>Jenis Surat</h1>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Cuti Kontrak</label>
-                            </div>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Cuti Alasan Penting</label>
-                            </div>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Izin</label>
-                            </div>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Cuti Hamil</label>
-                            </div>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Cuti Sakit</label>
-                            </div>
-                        </div>
-                        <button className='submit' type="submit">Submit</button>
-                        </form>
                     </div>
                 </div>
             </div>

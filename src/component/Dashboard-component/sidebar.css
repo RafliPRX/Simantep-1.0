@@ -1,5 +1,5 @@
 .sidebar{
-    display: inline-flex;
+    display: flex;
     height: 1152px;
     flex-direction: column;
     align-items: flex-start;
@@ -60,15 +60,22 @@
     margin-top: 20px;
     gap: 10px;
 }
-.sidebar .sidebar-col .selected .list{
+.sidebar .sidebar-col .selected .list {
     display: flex;
     flex-direction: row;
-    width: 257px;
+    width: 269px;
     height: 36px;
     flex-shrink: 0;
     gap: 10px;
+    cursor: pointer;
+    transition: all 0.5s ease-in-out;
+    padding-left: 20px;
 }
-.sidebar .sidebar-col .selected .list a{
+.sidebar .sidebar-col .selected .list:hover{
+    transform: scale(1.1);
+    transition: all 0.5s ease-in-out;
+}
+.sidebar .sidebar-col .selected .list p {
     color: #FFF;
     font-family: "DM Sans";
     font-size: 16px;
@@ -77,13 +84,10 @@
     line-height: 30px; /* 187.5% */
     letter-spacing: -0.32px;
     text-decoration: none;
+    width: 112px;
     transition: all 0.5s ease-in-out;
 }
-.sidebar .sidebar-col .selected .list a:hover{
-    transition: all 0.5s ease-in-out;
-    transform: scale(1.1);
-}
-.sidebar .sidebar-col .selected .list svg{
+.sidebar .sidebar-col .selected .list svg {
     width: 24px;
     height: 24px;
     flex-shrink: 0;

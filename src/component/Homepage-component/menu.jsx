@@ -30,6 +30,7 @@ const Menu = () => {
                         <button onClick={() => window.location.href = "/Dashboard-laras"}>Masuk</button>
                     </div>
                 </div>
+
             </div>
         </>
     )

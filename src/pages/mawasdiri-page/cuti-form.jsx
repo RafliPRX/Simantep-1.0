@@ -1,5 +1,5 @@
-import Cuti_form from "../../component/Dashboard-component/cuti"
-import Sidebar from "../../component/Dashboard-component/sidebar"
+import Sidebar from '../../component/Mawasdiri-component/sidebar'
+import Cuti_form from '../../component/Mawasdiri-component/cuti'
 import './cuti-form.css'
 const Cuti = () =>  {
     return(

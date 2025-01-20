@@ -1,0 +1,7 @@
+.dashboard{
+    display: flex;
+    flex-direction: row;
+    width: 1920px;
+    height: 1769px;
+    background: #000E60;
+}

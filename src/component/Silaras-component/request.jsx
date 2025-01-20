@@ -1,10 +1,10 @@
-import './cuti.css';
-const Cuti_form = () => {
+import './fix-form'
+const Request = () => {
     return(
         <>
             <div className='main-dashboard'>
-                <p>Mawasdiri/Dashboard</p>
-                <h1>Pengajuan Cuti</h1>
+                <p>Silaras/Form Permohonan BHP & ATK</p>
+                <h1>Form Permohonan Barang Habis Pakai & Alat Tulis Kantor</h1>
                 <div className='profile'>
                     <input placeholder='Search' type="text" />
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -33,47 +33,23 @@ const Cuti_form = () => {
                     <div className='box'>
                         <form action="">
                         <div className='content-f'>
-                            <h1>Data Diri</h1>
-                                <label htmlFor="">Nama</label>
-                                <input placeholder='Nama' type="text"/>
-                                <label htmlFor="">NIP/NRK</label>
-                                <input placeholder='NRK' type="text"/>
-                                <label htmlFor="">No.Handphone</label>
-                                <input placeholder='No. HP' type="text"/>
-                        </div>
-                        <div className='content-tx'>
-                            <h1>Alasan Cuti/Sakit/Izin</h1>
-                            <textarea placeholder='Alasan Cuti/Sakit/Izin' name="" id=""></textarea>
-                        </div>
-                        <div className='content-ty'>
-                            <h1>Jenis Surat</h1>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Cuti Kontrak</label>
-                            </div>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Cuti Alasan Penting</label>
-                            </div>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Izin</label>
-                            </div>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Cuti Hamil</label>
-                            </div>
-                            <div className='check'>
-                                <input type="checkbox" name="" id="" />
-                                <label htmlFor="">Cuti Sakit</label>
-                            </div>
+                            <h1>Data Diri Peminjam</h1>
+                            <label htmlFor="">Nama</label>
+                            <input placeholder='Nama' type="text"/>
+                            <label htmlFor="">NIP/NRK</label>
+                            <input placeholder='NRK' type="text"/>
+                            <label htmlFor="">Unit Kerja</label>
+                            <input placeholder='No. HP' type="text"/>
+                            <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>
+                            <textarea placeholder='Isi Disini' name="" id=""></textarea>
                         </div>
                         <button className='submit' type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
             </div>        
+
         </>
     )
 }
-export default Cuti_form
+export default Request

@@ -7,7 +7,7 @@
     flex-shrink: 0;
 }
 .sidebar .sidebar-col{
-    width: 290px;
+    width: auto;
     height: 1152px;
     flex-shrink: 0;
     background: #000B48;
@@ -42,6 +42,7 @@
     font-weight: 700;
     line-height: 100%; /* 26px */
     margin-top: 35px;
+    cursor: pointer;
 }
 .sidebar .sidebar-col .separator{
     margin-top: 10px;

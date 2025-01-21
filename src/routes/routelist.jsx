@@ -6,6 +6,9 @@ import Dashboard_laras from "../pages/silaras-page/dashboard-laras";
 import Fix from "../pages/silaras-page/fix-form";
 import Form_request from "../pages/silaras-page/form-req";
 import Form_vehicle from "../pages/silaras-page/Form-Vehicle";
+import Dashboard_simak from "../pages/Simak-page/dashboard-simak";
+import Form_withdrawl from "../pages/Simak-page/form-withdrawl";
+import Proposed_Form from "../pages/Simak-page/proposed-form";
 
 
 export const routeList = [
@@ -40,5 +43,17 @@ export const routeList = [
     {
         path: "/form-permohonan-BHP-ATK",
         element: <Form_request/>
+    },
+    {
+        path: '/dashboard-simak',
+        element: <Dashboard_simak/>
+    },
+    {
+        path: '/Withdrawl-form',
+        element: <Form_withdrawl/>
+    },
+    {
+        path: '/Propose-form',
+        element: <Proposed_Form/>
     },
 ]

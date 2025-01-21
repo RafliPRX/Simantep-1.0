@@ -49,6 +49,10 @@ const Vehicle = () => {
                                 <input type="checkbox" name="" id="" />
                                 <label htmlFor="">Roda 4</label>
                             </div>
+                            <div className='check'>
+                                <input type="checkbox" name="" id="" />
+                                <label htmlFor="">Roda 6</label>
+                            </div>
                             <label htmlFor="">Tanggal Peminjaman</label>
                             <input placeholder='No. HP' type="date"/>
                             <label htmlFor="">Jam Peminjaman</label>

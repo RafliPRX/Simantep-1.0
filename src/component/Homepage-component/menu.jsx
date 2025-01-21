@@ -19,7 +19,7 @@ const Menu = () => {
                     <div className='text'>
                         <h3>SIMAK</h3>
                         <h5>Sistem Manajemen Keuangan</h5>
-                        <button onClick={() => window.location.href = "/Dashboard"}>Masuk</button>
+                        <button onClick={() => window.location.href = "/dashboard-simak"}>Masuk</button>
                     </div>
                 </div>
                 <div className='card'>

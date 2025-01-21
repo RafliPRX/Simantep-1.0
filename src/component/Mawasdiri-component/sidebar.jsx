@@ -9,8 +9,8 @@ const Sidebar = () => {
         <>
             <div className='sidebar'>
                 <div className='sidebar-col'>
-                    <div className='logo-col'>
-                        <div className='logo' onClick={() => window.location.href = "/Home"}></div>
+                    <div className='logo-col' onClick={() => window.location.href = "/Home"}>
+                        <div className='logo'></div>
                         <h2 >SIMANTEP</h2>
                     </div>
                     <div className='separator'></div>

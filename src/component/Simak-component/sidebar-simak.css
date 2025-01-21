@@ -1,4 +1,4 @@
-.sidebar-2{
+.sidebar-3{
     display: flex;
     height: 1152px;
     flex-direction: column;
@@ -6,20 +6,20 @@
     gap: 10px;
     flex-shrink: 0;
 }
-.sidebar-2 .sidebar-col{
-    width: auto;
+.sidebar-3 .sidebar-col{
+    width: 291px;
     height: 1152px;
     flex-shrink: 0;
     background: #000B48;
 }
-.sidebar-2 .sidebar-col .logo-col{
+.sidebar-3 .sidebar-col .logo-col{
     display: flex;
     flex-direction: row;
     width: 240px;
     height: 99px;
     flex-shrink: 0;
 }
-.sidebar-2 .sidebar-col .logo-col .logo{
+.sidebar-3 .sidebar-col .logo-col .logo{
     width: 99px;
     height: 99px;
     flex-shrink: 0;
@@ -27,11 +27,11 @@
     transition: all 0.4s ease-in-out;
     cursor: pointer;
 }
-.sidebar-2 .sidebar-col .logo-col .logo:hover{
+.sidebar-3 .sidebar-col .logo-col .logo:hover{
     transform: scale3d(1.1, 1.1, 1.1);
     transition: all 0.4s ease-in-out;
 }
-.sidebar-2 .sidebar-col .logo-col h2{
+.sidebar-3 .sidebar-col .logo-col h2{
     width: 141px;
     height: 27.773px;
     flex-shrink: 0;
@@ -44,14 +44,14 @@
     margin-top: 35px;
     cursor: pointer;
 }
-.sidebar-2 .sidebar-col .separator{
+.sidebar-3 .sidebar-col .separator{
     margin-top: 10px;
-    width: 340px;
+    width: 292px;
     height: 2px;
     flex-shrink: 0;
     background: rgba(255, 255, 255, 0.10);
 }
-.sidebar-2 .sidebar-col .selected{
+.sidebar-3 .sidebar-col .selected{
     margin-left: 21px;
     display: flex;
     flex-direction: column;
@@ -61,7 +61,7 @@
     margin-top: 20px;
     gap: 10px;
 }
-.sidebar-2 .sidebar-col .selected .list {
+.sidebar-3 .sidebar-col .selected .list {
     display: flex;
     flex-direction: row;
     width: 400px;
@@ -72,11 +72,11 @@
     transition: all 0.5s ease-in-out;
     padding-left: 20px;
 }
-.sidebar-2 .sidebar-col .selected .list:hover{
+.sidebar-3 .sidebar-col .selected .list:hover{
     transform: scale(1.1);
     transition: all 0.5s ease-in-out;
 }
-.sidebar-2 .sidebar-col .selected .list p {
+.sidebar-3 .sidebar-col .selected .list p {
     color: #FFF;
     font-family: "DM Sans";
     font-size: 16px;
@@ -88,7 +88,7 @@
     width: auto;
     transition: all 0.5s ease-in-out;
 }
-.sidebar-2 .sidebar-col .selected .list svg {
+.sidebar-3 .sidebar-col .selected .list svg {
     width: 24px;
     height: 24px;
     flex-shrink: 0;

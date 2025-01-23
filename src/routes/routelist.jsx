@@ -1,5 +1,6 @@
 import Homepage from "../pages/homepage";
 import Login from "../pages/login";
+import Absent_Page from "../pages/mawasdiri-page/absent-page";
 import Cuti from "../pages/mawasdiri-page/cuti-form";
 import Dashboard from "../pages/mawasdiri-page/dashboard";
 import Dashboard_laras from "../pages/silaras-page/dashboard-laras";
@@ -55,5 +56,9 @@ export const routeList = [
     {
         path: '/Propose-form',
         element: <Proposed_Form/>
+    },
+    {
+        path: '/Absensi-Page',
+        element: <Absent_Page/>
     },
 ]

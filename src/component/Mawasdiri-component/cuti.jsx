@@ -1,5 +1,36 @@
 import './cuti.css';
+import { useState } from 'react';
 const Cuti_form = () => {
+  const [cuti, setShow] = useState(false); // Changed to boolean for clarity
+    
+  function Cuti(event) {
+      setShow(event.target.checked); // Set show based on checkbox state
+  }
+  const [show_imp, setShow1] = useState(false); // Changed to boolean for clarity
+
+  function Cuti_alasan_penting(event) {
+      setShow1(event.target.checked); // Set show based on checkbox state
+  }
+
+  const [izin, setShow2] = useState(false); // Changed to boolean for clarity
+
+  function Izin(event) {
+      setShow2(event.target.checked); // Set show based on checkbox state
+  }
+
+  const [hamil, setHamil] = useState(false); // Changed to boolean for clarity
+
+  function Hamil(event) {
+    setHamil(event.target.checked); // Set show based on checkbox state
+  }
+
+  const [sakit, setSakit] = useState(false); // Changed to boolean for clarity
+
+  function Sakit(event) {
+    setSakit(event.target.checked); // Set show based on checkbox state
+  }
+
+
     return(
         <>
             <div className='main-dashboard'>
@@ -45,28 +76,90 @@ const Cuti_form = () => {
                             <h1>Alasan Cuti/Sakit/Izin</h1>
                             <textarea placeholder='Alasan Cuti/Sakit/Izin' name="" id=""></textarea>
                         </div>
-                        <div className='content-ty'>
+                        <div className='content-f'>
                             <h1>Jenis Surat</h1>
                             <div className='check'>
-                                <input type="checkbox" name="" id="" />
+                                <input type="checkbox" name="" id=""  onChange={Cuti}/>
                                 <label htmlFor="">Cuti Kontrak</label>
                             </div>
+                            {cuti && ( // Conditionally render based on show state
+                                    <div className='check-form'>
+                                        <label htmlFor="">Cuti Kontrak</label>
+                                        <input style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <label htmlFor="">Dimulai Dari Tanggal</label>
+                                        <div className='inp-date'>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <label className='text' htmlFor="">s.d</label>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                        </div>
+                                    </div>
+                                )}
                             <div className='check'>
-                                <input type="checkbox" name="" id="" />
+                                <input type="checkbox" name="" id="" onClick={Cuti_alasan_penting}/>
                                 <label htmlFor="">Cuti Alasan Penting</label>
                             </div>
+                            {show_imp && ( // Conditionally render based on show state
+                                    <div className='check-form'>
+                                        <label htmlFor="">Cuti Alasan Penting</label>
+                                        <input style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <label htmlFor="">Dimulai Dari Tanggal</label>
+                                        <div className='inp-date'>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <label className='text' htmlFor="">s.d</label>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                        </div>
+                                    </div>
+                                )}
                             <div className='check'>
-                                <input type="checkbox" name="" id="" />
+                                <input type="checkbox" name="" id="" onClick={Izin}/>
                                 <label htmlFor="">Izin</label>
                             </div>
+                            {izin && ( // Conditionally render based on show state
+                                    <div className='check-form'>
+                                        <label htmlFor="">Izin</label>
+                                        <input style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <label htmlFor="">Dimulai Dari Tanggal</label>
+                                        <div className='inp-date'>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <label className='text' htmlFor="">s.d</label>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                        </div>
+                                    </div>
+                                )}
                             <div className='check'>
-                                <input type="checkbox" name="" id="" />
+                                <input type="checkbox" name="" id="" onClick={Hamil}/>
                                 <label htmlFor="">Cuti Hamil</label>
                             </div>
+                            {hamil && ( // Conditionally render based on show state
+                                    <div className='check-form'>
+                                        <label htmlFor="">Hamil</label>
+                                        <input style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <label htmlFor="">Dimulai Dari Tanggal</label>
+                                        <div className='inp-date'>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <label className='text' htmlFor="">s.d</label>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                        </div>
+                                    </div>
+                                )}
                             <div className='check'>
-                                <input type="checkbox" name="" id="" />
+                                <input type="checkbox" name="" id="" onClick={Sakit}/>
                                 <label htmlFor="">Cuti Sakit</label>
                             </div>
+                            {sakit && ( // Conditionally render based on show state
+                                    <div className='check-form'>
+                                        <label htmlFor="">Sakit</label>
+                                        <input style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <label htmlFor="">Dimulai Dari Tanggal</label>
+                                        <div className='inp-date'>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <label className='text' htmlFor="">s.d</label>
+                                          <input style={{marginTop: '10px'}} type="date" name="" id="" />
+                                        </div>
+                                        <label htmlFor="">Bukti Surat Sakit</label>
+                                        <input style={{marginTop: '10px', paddingTop: '10px'}} type="File" name="" id="" />
+                                    </div>
+                                )}
                         </div>
                         <button className='submit' type="submit">Submit</button>
                         </form>

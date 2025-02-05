@@ -40,7 +40,7 @@ const Fix_form = () => {
                             <input placeholder='NRK' type="text"/>
                             <label htmlFor="">No.Handphone</label>
                             <input placeholder='No. HP' type="text"/>
-                            <label htmlFor="">Permintaan Perbaikan(Deskripsikan Perbaikan)</label>
+                            <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
                             <textarea placeholder='Alasan Cuti/Sakit/Izin' name="" id=""></textarea>
                         </div>
                         <button className='submit' type="submit">Submit</button>

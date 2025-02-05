@@ -3,7 +3,7 @@
     width: 1920px;
     height: 2928px;
     background: #000E60;
-    overflow-y: scroll;
+    overflow-y: hidden;
     overflow-x: hidden;
     flex-direction: column;
 }

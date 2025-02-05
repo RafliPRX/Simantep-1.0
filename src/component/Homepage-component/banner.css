@@ -7,12 +7,14 @@
     margin-top: 120px;
     border: 1px solid #000;
     background: var(--Secondary-Primary-White, #FFF);
-    overflow-y: hidden;   
+    overflow-y: hidden;
+    overflow-x: hidden;   
 }
 .banner .banner-pic{
     width: 1789px;
     height: 1144px;
     flex-shrink: 0;
+    margin-top: -129px;
     background: url(../../assets/Login.png) lightgray 50% / cover no-repeat;
 }
 .banner .banner-pic .text-group{
@@ -20,7 +22,7 @@
     height: 500px;
     flex-shrink: 0;
     margin-left: 160px;
-    margin-top: 127px;
+    padding-top: 238px;
 }
 .banner .banner-pic .text-group h1{
     display: flex;

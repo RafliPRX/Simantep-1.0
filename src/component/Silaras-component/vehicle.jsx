@@ -1,5 +1,64 @@
+import { useState } from 'react'
 import './fix-form.css'
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 const Vehicle = () => {
+    const [nama, setNama] = useState("");
+    const [unit, setUnits] = useState("");
+    const [jenis, setJenis] = useState("");
+    const [tanggal, setTanggal] = useState("");
+    const [jam, setJam] = useState("");
+    const [durasi, setDurasi] = useState("");
+    const navigate = useNavigate();
+    const handleChangeNama = (event) => {
+      console.log(event.target.value);
+      setNama(event.target.value);
+    }
+    const handleChangeUnits = (event) => {
+      console.log(event.target.value);
+      setUnits(event.target.value);
+    }
+    const handleChangeJenis = (event) => {
+      console.log(event.target.value);
+      setJenis(event.target.value);
+    }
+    const handleChangeTanggal = (event) => {
+      console.log(event.target.value);
+      setTanggal(event.target.value);
+    }
+    const handleChangeJam = (event) => {
+      console.log(event.target.value);
+      setJam(event.target.value);
+    }
+    const handleChangeDurasi = (event) => {
+      console.log(event.target.value);
+      setDurasi(event.target.value);
+    }
+    const handleRequest = async (event) => {
+      event.preventDefault();
+      const payload = {
+        nama:nama,
+        unit:unit,
+        jenis:jenis,
+        tanggal_pinjam:tanggal,
+        jam_pinjam:jam,
+        durasi_pinjam:durasi,
+      };
+      try {
+        const response = await axios.post(`http://localhost/Simantep_API/SILARAS/new_vehicle.php`, payload, {
+          headers: {
+            "Content-Type" : "multipart/form-data"
+          }
+        });
+        console.log(response.data);
+        setTimeout(() => {
+          navigate("/dashboard-laras");
+        }, 1000);
+      } catch (error) {
+        console.log(error.response);
+        
+      }
+    }
     return(
         <>
             <div className='main-dashboard'>
@@ -35,32 +94,30 @@ const Vehicle = () => {
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
                             <label htmlFor="">Nama</label>
-                            <input placeholder='Nama' type="text"/>
-                            <label htmlFor="">NIP/NRK</label>
-                            <input placeholder='NRK' type="text"/>
+                            <input onChange={handleChangeNama} placeholder='Nama' type="text"/>
                             <label htmlFor="">Unit Kerja</label>
-                            <input placeholder='No. HP' type="text"/>
+                            <input onChange={handleChangeUnits} placeholder='Unit Kerja' type="text"/>
                             <label htmlFor="">Jenis Peminjaman Kendaraan (Pilih Satu)</label>
                             <div className='check'>
-                                <input type="checkbox" name="" id="" />
+                                <input onChange={handleChangeJenis} value={"Roda 2"} type="checkbox" name="" id="" />
                                 <label htmlFor="">Roda 2</label>
                             </div>
                             <div className='check'>
-                                <input type="checkbox" name="" id="" />
+                                <input onChange={handleChangeJenis} value={"Roda 4"} type="checkbox" name="" id="" />
                                 <label htmlFor="">Roda 4</label>
                             </div>
                             <div className='check'>
-                                <input type="checkbox" name="" id="" />
+                                <input onChange={handleChangeJenis} value={"Roda 6"} type="checkbox" name="" id="" />
                                 <label htmlFor="">Roda 6</label>
                             </div>
                             <label htmlFor="">Tanggal Peminjaman</label>
-                            <input placeholder='No. HP' type="date"/>
+                            <input onChange={handleChangeTanggal} placeholder='Tanggal Peminjaman' type="date"/>
                             <label htmlFor="">Jam Peminjaman</label>
-                            <input placeholder='No. HP' type="time"/>
+                            <input onChange={handleChangeJam} placeholder='Jam Peminjaman' type="time"/>
                             <label htmlFor="">Durasi Peminjaman</label>
-                            <input placeholder='No. HP' type="time"/>
+                            <input onChange={handleChangeDurasi} placeholder='Durasi Peminjaman' type="time"/>
                         </div>
-                        <button className='submit' type="submit">Submit</button>
+                        <button onClick={handleRequest} className='submit' type="submit">Submit</button>
                         </form>
                     </div>
                 </div>

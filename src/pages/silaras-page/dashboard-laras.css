@@ -1,8 +1,8 @@
-.dashboard{
+.dashboard {
     display: flex;
     flex-direction: row;
     width: 1920px;
     height: 1769px;
     background: #000E60;
-    overflow-y: hidden;
+    overflow-y: auto; /* Changed from hidden to auto */
 }

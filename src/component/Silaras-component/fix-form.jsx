@@ -1,5 +1,52 @@
+import { useState } from 'react';
 import './fix-form.css';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 const Fix_form = () => {
+  const [nama, setNama] = useState("");
+  const [nrk, setNrk] = useState("");
+  const [unit, setUnits] = useState("");
+  const [fixing, setFixing] = useState("");
+  const navigate = useNavigate();
+  const handleChangeNama = (event) => {
+    console.log(event.target.value);
+    setNama(event.target.value);
+  }
+  const handleChangeNRK = (event) => {
+    console.log(event.target.value);
+    setNrk(event.target.value);
+  }
+  const handleChangeUnits = (event) => {
+    console.log(event.target.value);
+    setUnits(event.target.value);
+  }
+  const handleChangeFixing = (event) => {
+    console.log(event.target.value);
+    setFixing(event.target.value);
+  }
+
+  const handleRequest = async (event) => {
+    event.preventDefault();
+    const payload = {
+      nama: nama,
+      nrk: nrk,
+      unit: unit,
+      fix: fixing,
+    };
+    try {
+      const respone = await axios.post(`http://localhost/Simantep_API/SILARAS/new_fix.php`, payload, {
+        headers: {
+          "Content-Type" : "multipart/form-data"
+        }
+      });
+      console.log(respone.data);
+      setTimeout(() => {
+        navigate("/dashboard-laras");
+      }, 1000);
+    } catch (error) {
+      console.log(error.respone);
+    }
+  }
     return(
         <>
             <div className='main-dashboard'>
@@ -35,15 +82,15 @@ const Fix_form = () => {
                         <div className='content-f'>
                             <h1>Data Perbaikan</h1>
                             <label htmlFor="">Nama</label>
-                            <input placeholder='Nama' type="text"/>
+                            <input onChange={handleChangeNama} value={nama} placeholder='Nama' type="text"/>
                             <label htmlFor="">NIP/NRK</label>
-                            <input placeholder='NRK' type="text"/>
-                            <label htmlFor="">No.Handphone</label>
-                            <input placeholder='No. HP' type="text"/>
+                            <input onChange={handleChangeNRK} value={nrk} placeholder='NRK' type="text"/>
+                            <label htmlFor="">Units</label>
+                            <input onChange={handleChangeUnits} value={unit} placeholder='Units' type="text"/>
                             <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
-                            <textarea placeholder='Alasan Cuti/Sakit/Izin' name="" id=""></textarea>
+                            <textarea onChange={handleChangeFixing} value={fixing} placeholder='Permintaan Perbaikan' name="" id=""></textarea>
                         </div>
-                        <button className='submit' type="submit">Submit</button>
+                        <button onClick={handleRequest} className='submit' type="submit">Submit</button>
                         </form>
                     </div>
                 </div>

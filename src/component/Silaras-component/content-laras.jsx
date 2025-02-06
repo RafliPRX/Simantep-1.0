@@ -1,6 +1,57 @@
+import { useEffect, useState } from 'react';
 import './content-laras.css'
+import axios from 'axios';
 // import green from '../../assets/green.svg'
 const Content_laras = () => {
+    const [fix, setFix] = useState([]);
+
+    const getFix = async () => {
+        try {
+            const response = await axios.get("http://localhost/Simantep_API/SILARAS/fix.php", {
+                headers: {}
+            });
+            // console.log(response.data); // Log the response data
+            setFix(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+    useEffect(() => {
+        getFix();
+    }, []);
+
+    const [vehicle, setVehicle] = useState([]);
+
+    const getVehicle = async () => {
+        try {
+            const response = await axios.get("http://localhost/Simantep_API/SILARAS/vehicle.php", {
+                headers: {}
+            })
+            console.log(response.data);
+            setVehicle(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+    useEffect(() => {
+        getVehicle();
+    }, [])
+    const [request, setRequest] = useState([]);
+    const getRequest = async () => {
+        try {
+            const response = await axios.get("http://localhost/Simantep_API/SILARAS/request.php", {
+                headers: {}
+            })
+            console.log(response.data);
+            setRequest(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    };
+    useEffect(() => {
+        getRequest();
+    }, [])
     return(
         <>
             <div className='main-dashboard'>
@@ -44,15 +95,17 @@ const Content_laras = () => {
                                     <th style={{textAlign:'center'}}>Permintaan Perbaikan</th>
                                     <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
-                                <tr>
-                                    <td style={{textAlign:'center'}}>1</td>
-                                    <td style={{textAlign:'center'}}>-</td>
-                                    <td style={{textAlign:'center'}}>Yudis</td>
-                                    <td style={{textAlign:'center'}}>BTR/101/666</td>
-                                    <td style={{textAlign:'center'}}>HUMAS</td>
-                                    <td style={{textAlign:'center'}}>Perbaikan Hotwheel</td>
-                                    <td style={{textAlign:'center'}}>Lihat Disini</td>
-                                </tr>
+                                {fix.map((item, index) => (
+                                    <tr key={item.id}>
+                                        <td style={{textAlign:'center'}}>{index + 1}</td>
+                                        <td style={{textAlign:'center'}}>{item.id}</td>
+                                        <td style={{textAlign:'center'}}>{item.nama}</td>
+                                        <td style={{textAlign:'center'}}>{item.nrk}</td>
+                                        <td style={{textAlign:'center'}}>{item.unit}</td>
+                                        <td style={{textAlign:'center'}}>{item.fix}</td>
+                                        <td style={{textAlign:'center'}}><a href="#">Lihat Disini</a></td>
+                                    </tr>
+                                ))}
                             </table>
                         </div>
                     </div>
@@ -64,7 +117,6 @@ const Content_laras = () => {
                                     <th style={{textAlign:'center'}}>Nomor</th>
                                     <th style={{textAlign:'center'}}>id Form</th>
                                     <th style={{textAlign:'center'}}>Nama</th>
-                                    <th style={{textAlign:'center'}}>NIP/NRK</th>
                                     <th style={{textAlign:'center'}}>Unit Kerja</th>
                                     <th style={{textAlign:'center'}}>Jenis Peminjaman Kendaraan</th>
                                     <th style={{textAlign:'center'}}>Tanggal Peminjaman</th>
@@ -72,18 +124,19 @@ const Content_laras = () => {
                                     <th style={{textAlign:'center'}}>Durasi Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
-                                <tr>
-                                    <td style={{textAlign:'center'}}>1</td>
-                                    <td style={{textAlign:'center'}}>-</td>
-                                    <td style={{textAlign:'center'}}>Yudis</td>
-                                    <td style={{textAlign:'center'}}>BTR/101/666</td>
-                                    <td style={{textAlign:'center'}}>HUMAS</td>
-                                    <td style={{textAlign:'center'}}>Roda 2</td>
-                                    <td style={{textAlign:'center'}}>12/1/2025</td>
-                                    <td style={{textAlign:'center'}}>12:00</td>
-                                    <td style={{textAlign:'center'}}>02:00</td>
-                                    <td style={{textAlign:'center'}}>Lihat Disini</td>
+                                {vehicle.map((item, index) => (
+                                <tr key={item.id}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.id}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama}</td>
+                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    <td style={{textAlign:'center'}}>{item.jenis}</td>
+                                    <td style={{textAlign:'center'}}>{item.tanggal_pinjam}</td>
+                                    <td style={{textAlign:'center'}}>{item.jam_pinjam}</td>
+                                    <td style={{textAlign:'center'}}>{item.durasi_pinjam}</td>
+                                    <td style={{textAlign:'center'}}><a href="">Lihat Disini</a></td>
                                 </tr>
+                                ))}
                             </table>
                         </div>
                     </div>
@@ -100,15 +153,18 @@ const Content_laras = () => {
                                     <th style={{textAlign:'center'}}>Permohonan Barang</th>
                                     <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
-                                <tr>
-                                    <td style={{textAlign:'center'}}>1</td>
-                                    <td style={{textAlign:'center'}}>-</td>
-                                    <td style={{textAlign:'center'}}>Yudis</td>
-                                    <td style={{textAlign:'center'}}>BTR/101/666</td>
-                                    <td style={{textAlign:'center'}}>HUMAS</td>
-                                    <td style={{textAlign:'center'}}>Hotwheel Baru</td>
+                                {request.map((item, index) => (
+                                <tr key={item.id}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.id}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama}</td>
+                                    <td style={{textAlign:'center'}}>{item.nrk}</td>
+                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    <td style={{textAlign:'center'}}>{item.barang}</td>
                                     <td style={{textAlign:'center'}}>Lihat Disini</td>
                                 </tr>
+                                
+                                ))}
                             </table>
                         </div>
                     </div>
@@ -117,5 +173,4 @@ const Content_laras = () => {
         </>
     )
 }
-
 export default Content_laras

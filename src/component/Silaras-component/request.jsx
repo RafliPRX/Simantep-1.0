@@ -1,5 +1,52 @@
+import { useState } from 'react'
 import './fix-form'
+import axios from 'axios'
+import { useNavigate } from 'react-router-dom'
 const Request = () => {
+    const [nama, setNama] = useState('')
+    const [nrk, setNRK] = useState('')
+    const [unit, setUnit] = useState('')
+    const [barang, setBarang] = useState('')
+    const navigate = useNavigate();
+
+    const handleChangeNama = (event) => {
+      console.log(event.target.value);
+      setNama(event.target.value);
+    }
+    const handleChangeNRK = (event) => {
+      console.log(event.target.value);
+      setNRK(event.target.value);
+    }
+    const handleChangeUnit = (event) => {
+      console.log(event.target.value);
+      setUnit(event.target.value);
+    }
+    const handleChangeBarang = (event) => {
+      console.log(event.target.value);
+      setBarang(event.target.value);
+    }
+    const hadleRequest = async (event) => {
+      event.preventDefault();
+      const payload = {
+        nama: nama,
+        nrk: nrk,
+        unit: unit,
+        barang: barang,
+      };
+      try {
+        const response = await axios.post(`http://localhost/Simantep_API/SILARAS/new_request.php`, payload, {
+          headers: {
+            "Content-Type" : "multipart/form-data"
+          }
+        });
+        console.log(response.data);
+        setTimeout(() => {
+          navigate("/dashboard-laras");
+        }, 1000);
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
     return(
         <>
             <div className='main-dashboard'>
@@ -35,15 +82,15 @@ const Request = () => {
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
                             <label htmlFor="">Nama</label>
-                            <input placeholder='Nama' type="text"/>
+                            <input onChange={handleChangeNama} placeholder='Nama' type="text"/>
                             <label htmlFor="">NIP/NRK</label>
-                            <input placeholder='NRK' type="text"/>
+                            <input onChange={handleChangeNRK} placeholder='NRK' type="text"/>
                             <label htmlFor="">Unit Kerja</label>
-                            <input placeholder='No. HP' type="text"/>
+                            <input onChange={handleChangeUnit} placeholder='Unit Kerja' type="text"/>
                             <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>
-                            <textarea placeholder='Isi Disini' name="" id=""></textarea>
+                            <textarea onChange={handleChangeBarang} placeholder='Isi Disini' name="" id=""></textarea>
                         </div>
-                        <button className='submit' type="submit">Submit</button>
+                        <button onClick={hadleRequest} className='submit' type="submit">Submit</button>
                         </form>
                     </div>
                 </div>

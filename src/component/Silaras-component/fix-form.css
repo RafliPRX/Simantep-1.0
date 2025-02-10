@@ -283,7 +283,7 @@
 }
 .main-dashboard .content-col .box .content-f .check label{
     display: flex;
-    width: 150px;
+    width: 230px;
     height: 46px;
     align-items: center;
     flex-shrink: 0;
@@ -296,6 +296,7 @@
     font-weight: 700;
     line-height: 28px; /* 175% */
     letter-spacing: -0.32px;
+    margin-right: -150px;
 }
 .main-dashboard .content-col .box .content-ty .check label{
     display: flex;

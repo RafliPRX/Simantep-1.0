@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './content-laras.css'
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 // import green from '../../assets/green.svg'
 const Content_laras = () => {
     const [fix, setFix] = useState([]);
@@ -52,7 +53,54 @@ const Content_laras = () => {
     useEffect(() => {
         getRequest();
     }, [])
-    return(
+    const handleDeleteFix = async (id) => {
+        try {
+          const response = await axios.delete(`http://localhost/Simantep_API/SILARAS/delete_fix.php?id=${id}`, {
+            headers: {
+              "Content-Type" : "multipart/form-data"
+            }
+          });
+          console.log(response.data);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } catch (error) {
+          console.log(error.response);
+        }
+      }
+      const handleDeleteVehicle = async (id) => {
+
+        try {
+          const response = await axios.delete(`http://localhost/Simantep_API/SILARAS/delete_vehicle.php?id=${id}`, {
+            headers: {
+              "Content-Type" : "multipart/form-data"
+            }
+          });
+          console.log(response.data);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } catch (error) {
+          console.log(error.response);
+        }
+      }
+      const handleDeleteRequest = async (id) => {
+
+        try {
+          const response = await axios.delete(`http://localhost/Simantep_API/SILARAS/delete_request.php?id=${id}`, {
+            headers: {
+              "Content-Type" : "multipart/form-data"
+            }
+          });
+          console.log(response.data);
+          setTimeout(() => {
+            window.location.reload();
+          }, 1000);
+        } catch (error) {
+          console.log(error.response);
+        }
+      }
+      return(
         <>
             <div className='main-dashboard'>
                 <p>Silaras/Dashboard</p>
@@ -103,7 +151,10 @@ const Content_laras = () => {
                                         <td style={{textAlign:'center'}}>{item.nrk}</td>
                                         <td style={{textAlign:'center'}}>{item.unit}</td>
                                         <td style={{textAlign:'center'}}>{item.fix}</td>
-                                        <td style={{textAlign:'center'}}><a href="#">Lihat Disini</a></td>
+                                        <td style={{textAlign:'center'}}>
+                                            <Link to={`/form-perbaikan/${item.id}`}>Lihat Disini |</Link>
+                                            <br /> <div><button onClick={() => handleDeleteFix(item.id)}>Hapus</button></div>
+                                        </td>
                                     </tr>
                                 ))}
                             </table>
@@ -134,7 +185,9 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{item.tanggal_pinjam}</td>
                                     <td style={{textAlign:'center'}}>{item.jam_pinjam}</td>
                                     <td style={{textAlign:'center'}}>{item.durasi_pinjam}</td>
-                                    <td style={{textAlign:'center'}}><a href="">Lihat Disini</a></td>
+                                    <td style={{textAlign:'center'}}><Link to={`/form-kendaraan-dinas/${item.id}`}>Lihat Disini|</Link>
+                                    <br /><div><button onClick={() => handleDeleteVehicle(item.id)}>Hapus</button></div> 
+                                    </td>
                                 </tr>
                                 ))}
                             </table>
@@ -161,9 +214,10 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{item.nrk}</td>
                                     <td style={{textAlign:'center'}}>{item.unit}</td>
                                     <td style={{textAlign:'center'}}>{item.barang}</td>
-                                    <td style={{textAlign:'center'}}>Lihat Disini</td>
+                                    <td style={{textAlign:'center'}}><Link to={`/form-permintaan-barang-baru/${item.id}`}>Lihat Disini|</Link>
+                                    <br /><div><button onClick={() => handleDeleteRequest(item.id)}>Hapus</button></div>
+                                    </td>
                                 </tr>
-                                
                                 ))}
                             </table>
                         </div>

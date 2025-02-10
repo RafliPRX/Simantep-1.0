@@ -145,6 +145,7 @@
     letter-spacing: -0.24px;
     margin-bottom: 15px;
     margin-left: 38px;
+    width: 230px;
 }
 .main-dashboard .content-col .box .content-f input{
     width: 1059px;
@@ -317,7 +318,7 @@
 }
 .main-dashboard .content-col .box .content-f .check label{
     display: flex;
-    width: 150px;
+    width: 230px;
     height: 46px;
     align-items: center;
     flex-shrink: 0;

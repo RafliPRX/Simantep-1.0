@@ -89,6 +89,8 @@ const Fix_form = () => {
                             <input onChange={handleChangeUnits} value={unit} placeholder='Units' type="text"/>
                             <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
                             <textarea onChange={handleChangeFixing} value={fixing} placeholder='Permintaan Perbaikan' name="" id=""></textarea>
+                            <label htmlFor="">Bukti Gambar</label>
+                            <input type="file" name="" id="" />
                         </div>
                         <button onClick={handleRequest} className='submit' type="submit">Submit</button>
                         </form>

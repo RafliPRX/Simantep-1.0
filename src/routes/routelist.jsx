@@ -4,9 +4,12 @@ import Absent_Page from "../pages/mawasdiri-page/absent-page";
 import Cuti from "../pages/mawasdiri-page/cuti-form";
 import Dashboard from "../pages/mawasdiri-page/dashboard";
 import Dashboard_laras from "../pages/silaras-page/dashboard-laras";
+import Fix_Detail from "../pages/silaras-page/fix-detail";
 import Fix from "../pages/silaras-page/fix-form";
 import Form_request from "../pages/silaras-page/form-req";
 import Form_vehicle from "../pages/silaras-page/Form-Vehicle";
+import Form_vehicle_Detail from "../pages/silaras-page/form-vehicle-detail";
+import Request_Detail from "../pages/silaras-page/request-detail";
 import Dashboard_simak from "../pages/Simak-page/dashboard-simak";
 import Form_withdrawl from "../pages/Simak-page/form-withdrawl";
 import Proposed_Form from "../pages/Simak-page/proposed-form";
@@ -60,5 +63,17 @@ export const routeList = [
     {
         path: '/Absensi-Page',
         element: <Absent_Page/>
+    },
+    {
+        path: "/form-perbaikan/:id",
+        element: <Fix_Detail/>
+    },
+    {
+        path: "/form-kendaraan-dinas/:id",
+        element: <Form_vehicle_Detail/>
+    },
+    {
+        path: "/form-permintaan-barang-baru/:id",
+        element: <Request_Detail/>
     },
 ]

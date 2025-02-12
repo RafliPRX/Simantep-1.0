@@ -11,6 +11,8 @@ import Form_vehicle from "../pages/silaras-page/Form-Vehicle";
 import Form_vehicle_Detail from "../pages/silaras-page/form-vehicle-detail";
 import Request_Detail from "../pages/silaras-page/request-detail";
 import Dashboard_simak from "../pages/Simak-page/dashboard-simak";
+import Detail_Form_Propose from "../pages/Simak-page/update-form-propose";
+import Detail_Form_withdrawl from "../pages/Simak-page/update-form-withdrawl";
 import Form_withdrawl from "../pages/Simak-page/form-withdrawl";
 import Proposed_Form from "../pages/Simak-page/proposed-form";
 
@@ -75,5 +77,13 @@ export const routeList = [
     {
         path: "/form-permintaan-barang-baru/:id",
         element: <Request_Detail/>
+    },
+    {
+        path: "/form-dana-RPD/:id",
+        element: <Detail_Form_withdrawl/>
+    },
+    {
+        path: "/form-dana-LPJ/:id",
+        element: <Detail_Form_Propose/>
     },
 ]

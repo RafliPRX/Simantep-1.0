@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './form.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
-const Withdraw = () => {
+const Detail_Withdraw = () => {
     const navigate = useNavigate();
+    const param = useParams();
     const [show, setShow] = useState(false); // Changed to boolean for clarity
 
     function handleShow(event) {
@@ -105,6 +106,7 @@ const Withdraw = () => {
     const handleRequest = async(event) => {
         event.preventDefault();
         const payload = {
+            id_dana: param.id,
             nama:nama,
             NRK:nrk,
             jabatan_pj:jabatan,
@@ -124,7 +126,7 @@ const Withdraw = () => {
             metode: metode
         };
         try {
-            const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_RPD/new_Dana.php`, payload, {
+            const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_RPD/update_dana.php?id=${param.id}`, payload, {
                 headers: {
                     "Content-Type" : "multipart/form-data",
                 }
@@ -137,6 +139,23 @@ const Withdraw = () => {
             console.log(error.response);
         }
     }
+    const [detail, setDetail] = useState([]);
+    const getDetail = async () => {
+        try {
+            const response = await axios.get(`http://localhost/Simantep_API/SIMAK/Dana_RPD/detail_dana.php?id=${param.id}`, {
+                headers: {}
+            });
+            setDetail(response.data);
+            console.log(response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    useEffect(() => {
+        getDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
     return (
         <>
             <div className='main-dashboard'>
@@ -172,43 +191,44 @@ const Withdraw = () => {
                             <div className='content-f'>
                                 <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} value={nama} placeholder='Nama' type="text"/>
+                                <input onChange={handleChangeNama} value={nama} placeholder={detail.nama} type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} value={nrk} placeholder='NIP/NRK' type="text"/>
+                                <input onChange={handleChangeNRK} value={nrk} placeholder={detail.NRK} type="text"/>
                                 <label htmlFor="">Jabatan</label>
-                                <input onChange={handleChangeJabatan} value={jabatan} placeholder='Jabatan' type="text"/>
+                                <input onChange={handleChangeJabatan} value={jabatan} placeholder={detail.jabatan_pj} type="text"/>
                             </div>
 
                             <div className='content-f'>
                                 <h1>Nama Kegiatan & Unit</h1>
                                 <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
-                                <input onChange={handleChangeKegiatan} value={kegiatan} placeholder='Nama Rencana Kegiatan dan Program' type="text"/>
+                                <input onChange={handleChangeKegiatan} value={kegiatan} placeholder={detail.nama_kegiatan} type="text"/>
                                 <label htmlFor="">Rencana Pelaksanaan</label>
-                                <input onChange={handleChangeRencana} value={rencana} placeholder='Rencana Pelaksanaan' type="date"/>
+                                <input onChange={handleChangeRencana} value={rencana} placeholder={detail.rencana_pelaksana} type="date"/>
                                 <div className='check'>
                                     <input value="Sosial" type="checkbox" id="sosialCheckbox" onChange={(event) => {
                                         handleShow(event);
                                         handleChangeUnits(event);
                                     }} />
                                     <label htmlFor="sosialCheckbox">Sosial</label>
+                                    <label htmlFor="" style={{display: detail.units === 'Sosial' ? 'flex' : 'none'}}>Anda Sebelumnya Milih Sosial</label>
                                 </div>
                                 {show && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Kebutuhan Akun 521211</label>
-                                        <input onChange={handleChangeAkun211} value={akun211} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeAkun211} value={akun211} placeholder={detail.acc_521211} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Kebutuhan Akun 522141</label><br /><br />
                                         <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
                                         <label style={{width: '200px'}} htmlFor="">Sewa Tempat</label><br /><br />                  
-                                        <input onChange={handleChangeTempat} value={tempat} placeholder='Sewa Tempat' type="text" name="" id="" />
+                                        <input onChange={handleChangeTempat} value={tempat} placeholder={detail.acc_522141_tempat} type="text" name="" id="" />
                                         <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
                                         <label style={{width: '200px'}} htmlFor="">Sewa Kendaraan</label><br /><br />                  
-                                        <input onChange={handleChangeKendaraan} value={kendaraan} placeholder='Sewa Kendaraan' type="text" name="" id="" />
+                                        <input onChange={handleChangeKendaraan} value={kendaraan} placeholder={detail.acc_522141_tempat} type="text" name="" id="" />
                                         <label htmlFor="">Kebutuhan Akun 522151</label>
-                                        <input onChange={handleChangeAkun151} value={akun151} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeAkun151} value={akun151} placeholder={detail.acc_522151} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Kebutuhan Akun 524113</label>
-                                        <input onChange={handleChangeAkun113} value={akun113} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeAkun113} value={akun113} placeholder={detail.acc_524113} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Kebutuhan Akun 524114</label>
-                                        <input onChange={handleChangeAkun114} value={akun114} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeAkun114} value={akun114} placeholder={detail.acc_524114} style={{marginTop: '10px'}} type="text" name="" id="" />
                                     </div>
                                 )}
                                 <div className='check'>
@@ -217,15 +237,16 @@ const Withdraw = () => {
                                         handleChangeUnits(event);
                                     }}/>
                                     <label htmlFor="sosialCheckbox">Medis</label>
+                                    <label htmlFor="" style={{display: detail.units === 'Medis' ? 'flex' : 'none'}}>Anda Sebelumnya Milih Medis</label>
                                 </div>
                                 {show1 && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Kebutuhan Akun 521211</label>
-                                        <input onChange={handleChangeAkun211} value={akun211} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeAkun211} value={akun211} placeholder={detail.acc_521211} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Kebutuhan Akun 522191</label>
-                                        <input onChange={handleChangeAkun191} value={akun191} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeAkun191} value={akun191} placeholder={detail.acc_522191} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Keterangan</label>
-                                        <input onChange={handleChangeKeterangan} value={keterangan} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeKeterangan} value={keterangan} placeholder={detail.keterangan} style={{marginTop: '10px'}} type="text" name="" id="" />
                                     </div>
                                 )}
                                 <div className='check'>
@@ -233,13 +254,14 @@ const Withdraw = () => {
                                         handleShow2(event)
                                         handleChangeUnits(event);}} />
                                     <label htmlFor="sosialCheckbox">Manajemen</label>
+                                    <label htmlFor="" style={{display: detail.units === 'Manajemen' ? 'flex' : 'none'}}>Anda Sebelumnya Milih Manajemen</label>
                                 </div>
                                 {show2 && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Total Permintaan Dana</label>
-                                        <input onChange={handleChangeDana} value={totaldana} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeDana} value={totaldana} placeholder={detail.total_dana} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Metode Pembayaran</label>
-                                        <input onChange={handleChangeMetode} value={metode} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeMetode} value={metode} placeholder={detail.metode} style={{marginTop: '10px'}} type="text" name="" id="" />
                                     </div>
                                 )}
                             </div>
@@ -252,4 +274,4 @@ const Withdraw = () => {
     );
 }
 
-export default Withdraw;
+export default Detail_Withdraw;

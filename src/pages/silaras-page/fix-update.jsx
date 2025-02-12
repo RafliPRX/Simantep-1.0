@@ -1,14 +1,14 @@
-import Request_form_Detail from '../../component/Silaras-component/request-form-detail'
+import Fix_form_Detail from '../../component/Silaras-component/fix-form-update'
 import Sidebar_laras from '../../component/Silaras-component/sidebar-laras'
 import './fix-form.css'
-const Request_Detail = () =>  {
+const Fix_Detail = () =>  {
     return(
         <> 
             <div className="dashboard">
                 <Sidebar_laras/>
-                <Request_form_Detail/>
+                <Fix_form_Detail/>
             </div>
         </>
     )
 }
-export default Request_Detail
+export default Fix_Detail

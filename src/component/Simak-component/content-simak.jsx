@@ -1,6 +1,74 @@
 import './content-simak.css'
 import green from '../../assets/green.svg'
+import { useEffect, useState } from 'react'
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 const Content_simak = () => {
+    const [dana, setDana] = useState([]);
+    const getDana = async () => {
+        try {
+            const response = await axios.get("http://localhost/Simantep_API/SIMAK/Dana_RPD/dana.php", {
+                headers: {}
+            })
+            console.log(response.data);
+            setDana(response.data);
+        } catch (error) {
+            console.error();
+        }
+    }
+
+    useEffect(() => {
+        getDana();
+    },[]);
+
+    const [lpj, setLpj] = useState([]);
+    const getLpj = async () => {
+        try {
+            const response = await axios.get("http://localhost/Simantep_API/SIMAK/Dana_LPJ/dana_lpj.php", {
+                headers: {}
+            })
+            console.log(response.data);
+            setLpj(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    useEffect(() => {
+        getLpj();
+    },[]);
+    const handleDeleteRPD = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost/Simantep_API/SIMAK/Dana_RPD/delete_dana.php?id=${id}`, {
+                headers: {
+                    "Content-Type" : "multipart/form-data"
+                }
+            });
+            console.log(response.data);
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } catch (error) {
+            console.log(error.response);
+            
+        }
+    }
+    const handleDeleteLPJ = async (id) => {
+        try {
+            const response = await axios.delete(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/delete_dana_LPJ.php?id=${id}`, {
+                headers: {
+                    "Content-Type" : "multipart/form-data"
+                }
+            });
+            console.log(response.data);
+            setTimeout(() => {
+                window.location.reload();
+            }, 1000);
+        } catch (error) {
+            console.log(error.response);
+            
+        }
+    }
+
     return(
         <>
             <div className='main-dashboard'>
@@ -42,13 +110,18 @@ const Content_simak = () => {
                                     <th style={{textAlign:'center'}}>Feedback Bagian Keuangan</th>
                                     <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
-                                <tr>
-                                    <td style={{textAlign:'center'}}>1</td>
-                                    <td style={{textAlign:'center'}}>Balapan</td>
-                                    <td style={{textAlign:'center'}}>31/1/2025</td>
-                                    <td style={{textAlign:'center'}}>-</td>
-                                    <td style={{textAlign:'center'}}>Buka</td>
+                                {dana.map((item, index) => (
+                                <tr key={item.id_dana}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
+                                    <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_keuangan}</td>
+                                    <td style={{textAlign:'center'}}>
+                                        <Link to={`/form-dana-RPD/${item.id_dana}`}>Buka</Link>| <br />
+                                        <div><button onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
+                                    </td>
                                 </tr>
+                                ))}
                             </table>
                         </div>
                     </div>
@@ -75,20 +148,23 @@ const Content_simak = () => {
                                     <th>Keterangan</th>
                                     <th>Tanggal & Jam di Terima</th>
                                 </tr>
-                                <tr>
-                                    <td style={{textAlign:'center'}}>1</td>
-                                    <td style={{textAlign:'center'}}>Sosial</td>
-                                    <td style={{textAlign:'center'}}>Balapan</td>
-                                    <td style={{textAlign:'center'}}>2/2/2025</td>
-                                    <td style={{textAlign:'center'}}>15/1/2025 <br /> 12:00</td>
+                                {lpj.map((item, index) => (
+                                <tr key={item.id_lpj}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
+                                    <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
+                                    <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
                                     <td style={{textAlign:'center'}}> <img src={green} alt="" /> Approve</td>
-                                    <td style={{textAlign:'center'}}>17/1/2025 <br /> 12:00</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
                                     <td style={{textAlign:'center'}}><img src={green} alt="" /> Approve</td>
-                                    <td style={{textAlign:'center'}}>20/1/2025</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>-</td>
                                     <td style={{textAlign:'center'}}>21/1/2025 <br /> 12:00</td>
-                                    <td style={{textAlign:'center'}}>Buka</td>
-                                </tr>
+                                    <td style={{textAlign:'center'}}> <Link to={`/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
+                                    <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
+                                </tr>                                
+                                ))}
                             </table>
                         </div>
                     </div>

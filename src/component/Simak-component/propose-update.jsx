@@ -1,9 +1,9 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './form.css'
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
 
-const Proposed = () => {
+const Proposed_Detail = () => {
         const [show, setShow] = useState(false); // Changed to boolean for clarity
     
         function handleShow(event) {
@@ -20,7 +20,24 @@ const Proposed = () => {
         function handleShow2(event) {
             setShow2(event.target.checked); // Set show based on checkbox state
         }
-    
+        
+        const param = useParams();
+        const [detail, setDetail] = useState({});
+        const getDetail = async () => {
+            try {
+                const response = await axios.get(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/detail_dana_LPJ.php?id=${param.id}`, {
+                    headers: {}
+                })
+                setDetail(response.data);
+                console.log(response.data);
+            } catch (error) {
+                console.error(error);
+            }
+        }
+        useEffect(() => {
+            getDetail();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        },[]);
         const [nama, setNama] = useState("");
         const [nrk, setNRK] = useState("");
         const [jabatan, setJabatan] = useState("");
@@ -63,7 +80,7 @@ const Proposed = () => {
                 rencana_pelaksana: rencana,
             };
             try {
-                const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/new_Dana_LPJ.php`, payload, {
+                const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/update_dana_LPJ.php?id=${param.id}`, payload, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                 }
@@ -112,56 +129,58 @@ const Proposed = () => {
                             <div className='content-f'>
                                 <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} placeholder='Nama' type="text"/>
+                                <input onChange={handleChangeNama} placeholder={detail.nama} type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} placeholder='NIP/NRK' type="text"/>
+                                <input onChange={handleChangeNRK} placeholder={detail.nrk} type="text"/>
                                 <label htmlFor="">Jabatan</label>
-                                <input onChange={handleChangeJabatan} placeholder='Jabatan' type="text"/>
+                                <input onChange={handleChangeJabatan} placeholder={detail.jabatan} type="text"/>
                             </div>
-
                             <div className='content-f'>
                                 <h1>Nama Kegiatan & Unit</h1>
                                 <div className='check'>
-                                    <input type="checkbox" value="Sosial" id="sosialCheckbox" onChange={ (event) =>{
+                                    <input value="Sosial" type="checkbox" id="sosialCheckbox" onChange={(event)=>{
                                         handleShow(event);
                                         handleChangeUnits(event);
                                         }} />
                                     <label htmlFor="sosialCheckbox">Sosial</label>
+                                    <label htmlFor="" style={{display: detail.units === 'Sosial' ? 'flex' : 'none'}}>Anda Sebelumnya Memilih Sosial</label>
                                 </div>
                                 {show && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
-                                        <input onChange={handleChangeKegiatan} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeKegiatan} placeholder={detail.nama_kegiatan} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Rencana Pelaksanaan</label>
                                         <input onChange={handleChangeRencana} style={{marginTop: '10px'}} type="date" name="" id="" />
                                     </div>
                                 )}
                                 <div className='check'>
-                                    <input type="checkbox" value="Medis" id="sosialCheckbox" onChange={(event) => {
+                                    <input value="Medis" type="checkbox" id="sosialCheckbox" onChange={ (event) =>{
                                         handleShow1(event);
                                         handleChangeUnits(event);
                                         }} />
                                     <label htmlFor="sosialCheckbox">Medis</label>
+                                    <label htmlFor="" style={{display: detail.units === 'Medis' ? 'flex' : 'none'}}>Anda Sebelumnya Memilih Medis</label>
                                 </div>
                                 {show1 && ( // Conditionally render based on show state
                                 <div className='check-form'>
-                                    <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
-                                    <input onChange={handleChangeKegiatan} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                    <label onChange={handleChangeKegiatan} htmlFor="">Nama Rencana Kegiatan dan Program</label>
+                                    <input style={{marginTop: '10px'}} type="text" placeholder={detail.nama_kegiatan} name="" id="" />
                                     <label htmlFor="">Rencana Pelaksanaan</label>
                                     <input onChange={handleChangeRencana} style={{marginTop: '10px'}} type="date" name="" id="" />
                                 </div>
                             )}
                                 <div className='check'>
-                                    <input value="Manajemen" type="checkbox" id="sosialCheckbox" onChange={ (event) => {
-                                        handleShow2(event);
-                                        handleChangeUnits(event);
-                                        }} />
+                                    <input value="Manajemen" type="checkbox" id="sosialCheckbox" onChange={(event)=>{
+                                    handleShow2(event);
+                                    handleChangeUnits(event);
+                                    }} />
                                     <label htmlFor="sosialCheckbox">Manajemen</label>
+                                    <label htmlFor="" style={{display: detail.units === 'Manajemen' ? 'flex' : 'none'}}>Anda Sebelumnya Memilih Manajemen</label>
                                 </div>
                                 {show2 && ( // Conditionally render based on show state
                                 <div className='check-form'>
                                     <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
-                                    <input onChange={handleChangeKegiatan} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                    <input onChange={handleChangeKegiatan} style={{marginTop: '10px'}} placeholder={detail.nama_kegiatan} type="text" name="" id="" />
                                     <label htmlFor="">Rencana Pelaksanaan</label>
                                     <input onChange={handleChangeRencana} style={{marginTop: '10px'}} type="date" name="" id="" />
                                 </div>
@@ -175,4 +194,4 @@ const Proposed = () => {
         </>
     )
 }
-export default Proposed
+export default Proposed_Detail

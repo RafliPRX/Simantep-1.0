@@ -3,7 +3,7 @@ import './form.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const Proposed_Detail = () => {
+const Proposed_Update = () => {
         const [show, setShow] = useState(false); // Changed to boolean for clarity
     
         function handleShow(event) {
@@ -194,4 +194,4 @@ const Proposed_Detail = () => {
         </>
     )
 }
-export default Proposed_Detail
+export default Proposed_Update

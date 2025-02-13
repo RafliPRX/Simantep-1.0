@@ -15,12 +15,11 @@ const Fix_Detail = () => {
         <> 
             <div className="dashboard">
             <Sidebar_laras/>
-                <div className='content'>
-                
-                <button className='switch' onClick={toggleForm}>
-                    {showDetail ? 'Switch to Update Form' : 'Switch to Detail Form'}
-                </button>
-                {showDetail ? <Fix_form_Detail/> : <Fix_form_Update/>}
+                <div className='content'>                
+                    <button className='switch' onClick={toggleForm}>
+                        {showDetail ? 'Switch to Update Form' : 'Switch to Detail Form'}
+                    </button>
+                    {showDetail ? <Fix_form_Detail/> : <Fix_form_Update/>}
                 </div>
             </div>
         </>

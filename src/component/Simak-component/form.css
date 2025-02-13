@@ -332,6 +332,29 @@
     line-height: 28px; /* 175% */
     letter-spacing: -0.32px;
 }
+.main-dashboard .content-col .box .content table{
+    width:1183px;
+    margin-left: 20px;
+}
+.main-dashboard .content-col .box .content table tr{
+    gap: 10px;
+    width: 1183px;
+    padding-left: 10px;
+    text-align: center;
+}
+.main-dashboard .content-col .box .content table tr th{
+    color: #A3AED0;
+    font-family: "DM Sans";
+    font-size: 14px;
+    font-style: normal;
+    text-align: center;
+    font-weight: 500;
+    line-height: 24px; /* 171.429% */
+    letter-spacing: -0.28px;
+    width: 216px;
+    gap: 10px;
+}
+
 .main-dashboard .content-col .box .content-ty .check label{
     display: flex;
     width: 1025px;

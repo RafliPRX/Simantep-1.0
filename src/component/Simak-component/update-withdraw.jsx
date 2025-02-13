@@ -3,7 +3,7 @@ import './form.css';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const Detail_Withdraw = () => {
+const Update_Withdraw = () => {
     const navigate = useNavigate();
     const param = useParams();
     const [show, setShow] = useState(false); // Changed to boolean for clarity
@@ -274,4 +274,4 @@ const Detail_Withdraw = () => {
     );
 }
 
-export default Detail_Withdraw;
+export default Update_Withdraw

@@ -4,17 +4,18 @@ import Absent_Page from "../pages/mawasdiri-page/absent-page";
 import Cuti from "../pages/mawasdiri-page/cuti-form";
 import Dashboard from "../pages/mawasdiri-page/dashboard";
 import Dashboard_laras from "../pages/silaras-page/dashboard-laras";
-import Fix_Detail from "../pages/silaras-page/fix-detail";
+
 import Fix from "../pages/silaras-page/fix-form";
 import Form_request from "../pages/silaras-page/form-req";
-import Form_vehicle from "../pages/silaras-page/Form-Vehicle";
-import Form_vehicle_Detail from "../pages/silaras-page/form-vehicle-detail";
-import Request_Detail from "../pages/silaras-page/request-detail";
+import Form_vehicle_Detail from "../pages/silaras-page/form-vehicle-update";
+import Request_Detail from "../pages/silaras-page/request-update";
 import Dashboard_simak from "../pages/Simak-page/dashboard-simak";
 import Detail_Form_Propose from "../pages/Simak-page/update-form-propose";
 import Detail_Form_withdrawl from "../pages/Simak-page/update-form-withdrawl";
 import Form_withdrawl from "../pages/Simak-page/form-withdrawl";
 import Proposed_Form from "../pages/Simak-page/proposed-form";
+import Fix_Detail from "../pages/silaras-page/fix-detail";
+import Form_vehicle from "../pages/silaras-page/form-Vehicle";
 
 
 export const routeList = [

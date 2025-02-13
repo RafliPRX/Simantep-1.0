@@ -1,34 +1,11 @@
 import { useEffect, useState } from 'react';
 import './fix-form.css';
 import axios from 'axios';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
-const Fix_form_Update = () => {
-  const [nama, setNama] = useState("");
-  const [nrk, setNrk] = useState("");
-  const [unit, setUnits] = useState("");
-  const [fixing, setFixing] = useState("");
-  const navigate = useNavigate();
-  
+const Fix_form_Detail = () => { 
   const param = useParams();
   const [detail, setDetail] = useState({});
-  const handleChangeNama = (event) => {
-    console.log(event.target.value);
-    setNama(event.target.value);
-  }
-  const handleChangeNRK = (event) => {
-    console.log(event.target.value);
-    setNrk(event.target.value);
-  }
-  const handleChangeUnits = (event) => {
-    console.log(event.target.value);
-    setUnits(event.target.value);
-  }
-  const handleChangeFixing = (event) => {
-    console.log(event.target.value);
-    setFixing(event.target.value);
-  }
-
   const getDetail = async () => {
       try {
         const response = await axios.get(`http://localhost/Simantep_API/SILARAS/detail_fix.php?id=${param.id}`, {
@@ -45,34 +22,6 @@ const Fix_form_Update = () => {
     getDetail();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
-
-  const handleRequest = async (event) => {
-    event.preventDefault();
-    const payload = {
-      id: param.id,  
-      nama: nama,
-      nrk: nrk,
-      unit: unit,
-      fix: fixing,
-    };
-    if (!payload.nama || !payload.unit || !payload.nrk || !payload.fixing) {
-      alert("Mohon isi semua field yang wajib diisi");
-      return;
-    }
-    try {
-      const respone = await axios.post(`http://localhost/Simantep_API/SILARAS/update_fix.php`, payload, {
-        headers: {
-          "Content-Type" : "multipart/form-data"
-        }
-      });
-      console.log(respone.data);
-      setTimeout(() => {
-        navigate("/dashboard-laras");
-      }, 1000);
-    } catch (error) {
-      console.log(error.respone);
-    }
-  }
 
   return(
       <>
@@ -108,18 +57,39 @@ const Fix_form_Update = () => {
                       <form action="">
                       <div className='content-f'>
                           <h1>Data Perbaikan</h1>
-                          <label htmlFor="">Nama</label>
-                          <input contentEditable onChange={handleChangeNama} onInput={(e) => setNama(e.target.textContent)} placeholder={detail.nama} type="text"/>
-                          <label htmlFor="">NIP/NRK</label>
-                          <input contentEditable onChange={handleChangeNRK} onInput={(e) => setNrk(e.target.textContent)} placeholder={detail.nrk} type="text"/>
-                          <label htmlFor="">Units</label>
-                          <input contentEditable onChange={handleChangeUnits} onInput={(e) => setUnits(e.target.textContent)} placeholder={detail.unit} type="text"/>
-                          <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
-                          <textarea onChange={handleChangeFixing} onInput={(e) => setFixing(e.target.value)} placeholder={detail.fix} name="" id=""></textarea>
-                          <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
-                          <input type="file" name="" id="" />
+                          <table>
+                            <tr>
+                              <td>Nama</td>
+                            </tr>
+                            <tr>
+                              <td className='input'>{detail.nama}</td>
+                            </tr>
+                            <tr>
+                              <td>NIP/NRK</td>
+                            </tr>
+                            <tr>
+                              <td className='input'>{detail.nrk}</td>
+                            </tr>
+                            <tr>
+                              <td>Units</td>
+                            </tr>
+                            <tr>
+                              <td className='input'>{detail.unit}</td>
+                            </tr>
+                            <tr>
+                              <td>Permintaan Perbaikan (Deskripsikan Perbaikan)</td>
+                            </tr>
+                            <tr>
+                              <td className='input'>{detail.fix}</td>
+                            </tr>
+                            <tr>
+                              <td>Bukti Gambar</td>
+                            </tr>
+                            <tr>
+                              <td className='input'>{detail.foto}</td>
+                            </tr>
+                          </table>
                       </div>
-                      <button onClick={handleRequest} className='submit' type="submit">Submit</button>
                       </form>
                   </div>
               </div>
@@ -128,4 +98,4 @@ const Fix_form_Update = () => {
   )
 }
 
-export default Fix_form_Update
+export default Fix_form_Detail;

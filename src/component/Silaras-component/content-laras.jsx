@@ -11,10 +11,10 @@ const Content_laras = () => {
             const response = await axios.get("http://localhost/Simantep_API/SILARAS/fix.php", {
                 headers: {}
             });
-            // console.log(response.data); // Log the response data
+            console.log(response.data); // Log the response data
             setFix(response.data);
         } catch (error) {
-            console.log(error);
+            console.log(error.response);
         }
     };
 
@@ -133,36 +133,41 @@ const Content_laras = () => {
                     <div className='box'>
                         <div className='content'>
                             <h1>Daftar Form Perbaikan</h1>
+                            {fix.length > 0 ? (
                             <table>
-                                <tr>
-                                    <th style={{textAlign:'center'}}>Nomor</th>
-                                    <th style={{textAlign:'center'}}>id Form</th>
-                                    <th style={{textAlign:'center'}}>Nama</th>
-                                    <th style={{textAlign:'center'}}>NIP/NRK</th>
-                                    <th style={{textAlign:'center'}}>Unit Kerja</th>
-                                    <th style={{textAlign:'center'}}>Permintaan Perbaikan</th>
-                                    <th style={{textAlign:'center'}}>Detail</th>
+                              <tr>
+                                <th style={{textAlign:'center'}}>Nomor</th>
+                                <th style={{textAlign:'center'}}>id Form</th>
+                                <th style={{textAlign:'center'}}>Nama</th>
+                                <th style={{textAlign:'center'}}>NIP/NRK</th>
+                                <th style={{textAlign:'center'}}>Unit Kerja</th>
+                                <th style={{textAlign:'center'}}>Permintaan Perbaikan</th>
+                                <th style={{textAlign:'center'}}>Detail</th>
+                              </tr>
+                              {fix.map((item, index) => (
+                                <tr key={item.id}>
+                                  <td style={{textAlign:'center'}}>{index + 1}</td>
+                                  <td style={{textAlign:'center'}}>{item.id}</td>
+                                  <td style={{textAlign:'center'}}>{item.nama}</td>
+                                  <td style={{textAlign:'center'}}>{item.nrk}</td>
+                                  <td style={{textAlign:'center'}}>{item.unit}</td>
+                                  <td style={{textAlign:'center'}}>{item.fix}</td>
+                                  <td style={{textAlign:'center'}}>
+                                    <Link to={`/form-perbaikan/${item.id}`}>Lihat Disini |</Link>
+                                    <br /><div><button className='putih' onClick={() => handleDeleteFix(item.id)}>Hapus</button></div>
+                                  </td>
                                 </tr>
-                                {fix.map((item, index) => (
-                                    <tr key={item.id}>
-                                        <td style={{textAlign:'center'}}>{index + 1}</td>
-                                        <td style={{textAlign:'center'}}>{item.id}</td>
-                                        <td style={{textAlign:'center'}}>{item.nama}</td>
-                                        <td style={{textAlign:'center'}}>{item.nrk}</td>
-                                        <td style={{textAlign:'center'}}>{item.unit}</td>
-                                        <td style={{textAlign:'center'}}>{item.fix}</td>
-                                        <td style={{textAlign:'center'}}>
-                                            <Link to={`/form-perbaikan/${item.id}`}>Lihat Disini |</Link>
-                                            <br /> <div><button onClick={() => handleDeleteFix(item.id)}>Hapus</button></div>
-                                        </td>
-                                    </tr>
-                                ))}
+                              ))}
                             </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
                         </div>
                     </div>
                     <div className='box'>
                         <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
+                            {vehicle.length > 0 ? (
                             <table>
                                 <tr>
                                     <th style={{textAlign:'center'}}>Nomor</th>
@@ -175,7 +180,7 @@ const Content_laras = () => {
                                     <th style={{textAlign:'center'}}>Durasi Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
-                                {vehicle.map((item, index) => (
+                              {vehicle.map((item, index) => (
                                 <tr key={item.id}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.id}</td>
@@ -189,24 +194,28 @@ const Content_laras = () => {
                                     <br /><div><button onClick={() => handleDeleteVehicle(item.id)}>Hapus</button></div> 
                                     </td>
                                 </tr>
-                                ))}
+                          ))}
                             </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
                         </div>
                     </div>
                     <div className='box'>
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
+                            {request.length > 0 ? (
                             <table>
                                 <tr>
-                                    <th style={{textAlign:'center'}}>Nomor</th>
-                                    <th style={{textAlign:'center'}}>id Form</th>
-                                    <th style={{textAlign:'center'}}>Nama</th>
-                                    <th style={{textAlign:'center'}}>NIP/NRK</th>
-                                    <th style={{textAlign:'center'}}>Unit Kerja</th>
-                                    <th style={{textAlign:'center'}}>Permohonan Barang</th>
-                                    <th style={{textAlign:'center'}}>Detail</th>
+                                   <th style={{textAlign:'center'}}>Nomor</th>
+                                   <th style={{textAlign:'center'}}>id Form</th>
+                                   <th style={{textAlign:'center'}}>Nama</th>
+                                   <th style={{textAlign:'center'}}>NIP/NRK</th>
+                                   <th style={{textAlign:'center'}}>Unit Kerja</th>
+                                   <th style={{textAlign:'center'}}>Permohonan Barang</th>
+                                   <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
-                                {request.map((item, index) => (
+                              {request.map((item, index) => (
                                 <tr key={item.id}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.id}</td>
@@ -216,10 +225,13 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{item.barang}</td>
                                     <td style={{textAlign:'center'}}><Link to={`/form-permintaan-barang-baru/${item.id}`}>Lihat Disini|</Link>
                                     <br /><div><button onClick={() => handleDeleteRequest(item.id)}>Hapus</button></div>
-                                    </td>
-                                </tr>
-                                ))}
+                                </td>
+                            </tr>
+                          ))}
                             </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
                         </div>
                     </div>
                 </div>

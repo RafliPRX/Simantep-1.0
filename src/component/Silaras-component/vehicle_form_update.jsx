@@ -3,7 +3,7 @@ import './fix-form.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const Vehicle_Detail = () => {
+const Vehicle_Update = () => {
     const [nama, setNama] = useState("");
     const [unit, setUnits] = useState("");
     const [jenis, setJenis] = useState("");
@@ -156,5 +156,5 @@ const Vehicle_Detail = () => {
         </>
     )
 }
-export default Vehicle_Detail
+export default Vehicle_Update
 

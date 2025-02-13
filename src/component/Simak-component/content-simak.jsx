@@ -102,15 +102,16 @@ const Content_simak = () => {
                     <div className='box'>
                         <div className='content'>
                             <h1>Cek Progress Pengajuan RPD</h1>
+                            {dana.length > 0 ? (
                             <table>
-                                <tr>
-                                    <th style={{textAlign:'center'}}>Nomor</th>
-                                    <th style={{textAlign:'center'}}>Nama Kegiatan</th>
-                                    <th style={{textAlign:'center'}}>Tanggal Pelaksanaan</th>
-                                    <th style={{textAlign:'center'}}>Feedback Bagian Keuangan</th>
-                                    <th style={{textAlign:'center'}}>Detail</th>
-                                </tr>
-                                {dana.map((item, index) => (
+                            <tr>
+                                <th style={{textAlign:'center'}}>Nomor</th>
+                                <th style={{textAlign:'center'}}>Nama Kegiatan</th>
+                                <th style={{textAlign:'center'}}>Tanggal Pelaksanaan</th>
+                                <th style={{textAlign:'center'}}>Feedback Bagian Keuangan</th>
+                                <th style={{textAlign:'center'}}>Detail</th>
+                            </tr>
+                            {dana.map((item, index) => (
                                 <tr key={item.id_dana}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
@@ -123,11 +124,15 @@ const Content_simak = () => {
                                 </tr>
                                 ))}
                             </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
                         </div>
                     </div>
                     <div className='box'>
                         <div className='content'>
                             <h1>Cek Progress Pengajuan Proposal dan LPJ</h1>
+                            {lpj.length > 0 ? (
                             <table>
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
@@ -148,7 +153,7 @@ const Content_simak = () => {
                                     <th>Keterangan</th>
                                     <th>Tanggal & Jam di Terima</th>
                                 </tr>
-                                {lpj.map((item, index) => (
+                            {lpj.map((item, index) => (
                                 <tr key={item.id_lpj}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.unit}</td>
@@ -164,8 +169,11 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}> <Link to={`/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
                                     <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
-                                ))}
+                            ))}
                             </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
                         </div>
                     </div>
                 </div>

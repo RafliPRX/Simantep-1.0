@@ -1,5 +1,7 @@
 import './content-simak.css'
 import green from '../../assets/green.svg'
+import white from '../../assets/unread.svg'
+import red from '../../assets/decline.svg'
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
@@ -160,9 +162,13 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
-                                    <td style={{textAlign:'center'}}> <img src={green} alt="" /> Approve</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
                                     <td style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
-                                    <td style={{textAlign:'center'}}><img src={green} alt="" /> Approve</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>-</td>
                                     <td style={{textAlign:'center'}}>21/1/2025 <br /> 12:00</td>

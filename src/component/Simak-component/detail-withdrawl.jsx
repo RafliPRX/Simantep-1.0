@@ -5,23 +5,6 @@ import { useParams } from 'react-router-dom';
 
 const Detail_Withdraw = () => {
     const param = useParams();
-    // const [show, setShow] = useState(false); // Changed to boolean for clarity
-
-    // function handleShow(event) {
-    //     setShow(event.target.checked); // Set show based on checkbox state
-    // }
-    // const [show1, setShow1] = useState(false); // Changed to boolean for clarity
-
-    // function handleShow1(event) {
-    //     setShow1(event.target.checked); // Set show based on checkbox state
-    // }
-
-    // const [show2, setShow2] = useState(false); // Changed to boolean for clarity
-
-    // function handleShow2(event) {
-    //     setShow2(event.target.checked); // Set show based on checkbox state
-    // }
-
     const [detail, setDetail] = useState([]);
     const getDetail = async () => {
         try {
@@ -189,72 +172,6 @@ const Detail_Withdraw = () => {
                                     </div>
                                 </table>
                             </div>
-                            {/* <div className='content-f'>
-                                <h1>Nama Kegiatan & Unit</h1>
-                                <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
-                                <input placeholder={detail.nama_kegiatan} type="text"/>
-                                <label htmlFor="">Rencana Pelaksanaan</label>
-                                <input placeholder={detail.rencana_pelaksana} type="date"/>
-                                <div className='check'>
-                                    <input value="Sosial" type="checkbox" id="sosialCheckbox" onChange={(event) => {
-                                        handleShow(event);
-                                    }} />
-                                    <label htmlFor="sosialCheckbox">Sosial</label>
-                                    <label htmlFor="" style={{display: detail.units === 'Sosial' ? 'flex' : 'none'}}>Anda Sebelumnya Milih Sosial</label>
-                                </div>
-                                {show && ( // Conditionally render based on show state
-                                    <div className='check-form'>
-                                        <label htmlFor="">Kebutuhan Akun 521211</label>
-                                        <input placeholder={detail.acc_521211} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522141</label><br /><br />
-                                        <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
-                                        <label style={{width: '200px'}} htmlFor="">Sewa Tempat</label><br /><br />                  
-                                        <input placeholder={detail.acc_522141_tempat} type="text" name="" id="" />
-                                        <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
-                                        <label style={{width: '200px'}} htmlFor="">Sewa Kendaraan</label><br /><br />                  
-                                        <input placeholder={detail.acc_522141_tempat} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522151</label>
-                                        <input placeholder={detail.acc_522151} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 524113</label>
-                                        <input placeholder={detail.acc_524113} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 524114</label>
-                                        <input placeholder={detail.acc_524114} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                    </div>
-                                )}
-                                <div className='check'>
-                                    <input value="Medis" type="checkbox" id="sosialCheckbox" onChange={(event)=> {
-                                        handleShow1(event);                                        
-                                    }}/>
-                                    <label htmlFor="sosialCheckbox">Medis</label>
-                                    <label htmlFor="" style={{display: detail.units === 'Medis' ? 'flex' : 'none'}}>Anda Sebelumnya Milih Medis</label>
-                                </div>
-                                {show1 && ( // Conditionally render based on show state
-                                    <div className='check-form'>
-                                        <label htmlFor="">Kebutuhan Akun 521211</label>
-                                        <input placeholder={detail.acc_521211} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522191</label>
-                                        <input placeholder={detail.acc_522191} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Keterangan</label>
-                                        <input placeholder={detail.keterangan} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                    </div>
-                                )}
-                                <div className='check'>
-                                    <input type="checkbox" value="Manajemen" id="sosialCheckbox" onChange={(event) =>{
-                                        handleShow2(event)
-                                        }} />
-                                    <label htmlFor="sosialCheckbox">Manajemen</label>
-                                    <label htmlFor="" style={{display: detail.units === 'Manajemen' ? 'flex' : 'none'}}>Anda Sebelumnya Milih Manajemen</label>
-                                </div>
-                                {show2 && ( // Conditionally render based on show state
-                                    <div className='check-form'>
-                                        <label htmlFor="">Total Permintaan Dana</label>
-                                        <input placeholder={detail.total_dana} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Metode Pembayaran</label>
-                                        <input placeholder={detail.metode} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                    </div>
-                                )}
-                            </div>
-                            <button className='submit' type="submit">Submit</button> */}
                         </form>
                     </div>
                 </div>

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import './form.css'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
 const Proposed_Detail = () => {        
@@ -21,6 +21,59 @@ const Proposed_Detail = () => {
             getDetail();
         // eslint-disable-next-line react-hooks/exhaustive-deps
         },[]);
+
+        const [kasubag, setKasubag] = useState("");
+        const navigate = useNavigate();
+        const handleChangeKasubag = (event) => {
+          setKasubag(event.target.value);
+          console.log(event.target.value);
+        }
+        const [head, setHead] = useState("");
+        const handleChangeHead = (event) => {
+          setHead(event.target.value);
+          console.log(event.target.value);
+        }
+
+        const handleKasubagRequest = async (event) =>{
+            event.preventDefault();
+            const payload = {
+              veri_1: kasubag
+            };
+            try {
+              const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/answer_kasubag_lpj.php?id=${param.id}`, payload, {
+                headers: {
+                'Content-Type': 'multipart/form-data',
+                }
+              });
+              console.log(response.data);
+              setTimeout(() => {
+                  navigate("/dashboard-simak");
+              }, 1000);  
+            } catch (error) {
+              console.log(error.response);
+              
+            }
+        }
+        const handleHeadRequest = async (event) =>{
+          event.preventDefault();
+          const payload = {
+            veri_2: head,
+          };
+          try {
+            const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/answer_head_lpj.php?id=${param.id}`, payload, {
+              headers: {
+              'Content-Type': 'multipart/form-data',
+              }
+            });
+            console.log(response.data);
+            setTimeout(() => {
+                navigate("/dashboard-simak");
+            }, 1000);  
+          } catch (error) {
+            console.log(error.response);
+            
+          }
+      }
     return(
         <>
             <div className='main-dashboard'>
@@ -93,6 +146,42 @@ const Proposed_Detail = () => {
                             </tr>
                             </table>
                         </div>
+                        <div className='content-f'>
+                          <h1>Jawab KASUBAG</h1>
+                          <form action="">
+                          <table>
+                            <tr style={{marginBottom: '15px'}}>
+                              <td>Jawaban</td>
+                            </tr>
+                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" /></td>
+                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
+                            </tr>
+                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="3" id="" /></td>
+                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
+                            </tr>
+                          </table>
+                          </form>
+                        </div>
+                        <button onClick={handleKasubagRequest} className='submit' type="submit">Submit</button>
+                        <div className='content-f'>
+                          <h1>Jawab KASUBAG</h1>
+                          <table>
+                            <tr style={{marginBottom: '15px'}}>
+                              <td>Jawaban</td>
+                            </tr>
+                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={2} id="" /></td>
+                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
+                            </tr>
+                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input  onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={3} id="" /></td>
+                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
+                            </tr>
+                          </table>
+                        </div>
+                        <button onClick={handleHeadRequest} className='submit' type="submit">Submit</button>
                     </div>
                 </div>
             </div>        

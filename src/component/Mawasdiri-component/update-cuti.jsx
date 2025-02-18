@@ -1,10 +1,10 @@
-import axios from 'axios';
+import { useNavigate, useParams } from 'react-router-dom';
 import './cuti.css';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-const Cuti_form = () => {
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+const Cuti_form_Update = () => {
     const [cuti, setShow] = useState(false); // Changed to boolean for clarity
-
+      
     function Cuti(event) {
         setShow(event.target.checked); // Set show based on checkbox state
     }
@@ -31,7 +31,8 @@ const Cuti_form = () => {
     function Sakit(event) {
       setSakit(event.target.checked); // Set show based on checkbox state
     }
-
+    const [detail, setDetail] = useState({});
+    const param = useParams();
     const [nama, setNama] = useState("");
     const [nrk, setNrk]  =useState("");
     const [hp,setHP] = useState("");
@@ -42,7 +43,6 @@ const Cuti_form = () => {
     const [cuti_df, setCuti_df] = useState("");
     const [alamat, setAlamat] = useState("");
     const [jabatan, setJabatan] = useState("");
-    const [image, setImage] = useState("")
     const navigate = useNavigate();
     const handleChangeNama = (event) => {
       setNama(event.target.value);
@@ -84,39 +84,49 @@ const Cuti_form = () => {
       setCuti_df(event.target.value);
       console.log(event.target.value);
     }
-    const handleChangeImage = (event) => {
-      setImage(event.target.files[0]);
-      console.log(event.target.files[0]);
+    const getDetail = async () => {
+        try {
+            const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/detail_surat.php?id=${param.id}`, {
+                headers: {}
+            });
+            console.log(response.data);
+            setDetail(response.data);            
+        } catch (error) {
+            console.log(error.response);
+        }
     }
-    const handlePostSurat = async (event) => {
-      event.preventDefault();
-      const payload = {
-        nama: nama,
-        nrk: nrk,
-        alamat: alamat,
-        no_hp: hp,
-        jabatan: jabatan,
-        keterangan: keterangan,
-        jenis_surat: jenis,
-        cuti: cuti_b,
-        cuti_date: cuti_d,
-        cuti_date_fin: cuti_df,
-        gambar: image,
-      };
-      try {
-        const response = await axios.post(`http://localhost/Simantep_API/MAWASDIRI/Cuti/new_surat.php`, payload, {
-          headers: {
-            "Content-Type" : "multipart/form-data"
-          }
-        })
-        console.log(response.data);
-        setTimeout(() => {
-          navigate("/Dashboard");
-        }, 1000);
-      } catch (error) {
-        console.log(error.response);
-      }
-    }
+    useEffect(() => {
+        getDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    const handleUpdateSurat = async (event) => {
+        event.preventDefault();
+        const payload = {
+          nama: nama,
+          nrk: nrk,
+          alamat: alamat,
+          no_hp: hp,
+          jabatan: jabatan,
+          keterangan: keterangan,
+          jenis_surat: jenis,
+          cuti: cuti_b,
+          cuti_date: cuti_d,
+          cuti_date_fin: cuti_df,
+        };
+        try {
+          const response = await axios.post(`http://localhost/Simantep_API/MAWASDIRI/Cuti/update_surat.php?id=${param.id}`, payload, {
+            headers: {
+              "Content-Type" : "multipart/form-data"
+            }
+          })
+          console.log(response.data);
+          setTimeout(() => {
+            navigate("/Dashboard");
+          }, 1000);
+        } catch (error) {
+          console.log(error.response);
+        }
+      }  
     return(
         <>
             <div className='main-dashboard'>
@@ -152,123 +162,128 @@ const Cuti_form = () => {
                         <div className='content-f'>
                             <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} placeholder='Nama' type="text"/>
+                                <input onChange={handleChangeNama} placeholder={detail.nama} type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} placeholder='NRK' type="text"/>
+                                <input onChange={handleChangeNRK} placeholder={detail.nrk} type="text"/>
                                 <label htmlFor="">No.Handphone</label>
-                                <input onChange={handleChnageHp} placeholder='No. HP' type="text"/>
+                                <input onChange={handleChnageHp} placeholder={detail.no_hp} type="text"/>
                                 <label htmlFor="">Jabatan</label>
-                                <input onChange={handleChangeJabatan} placeholder='Jabatan' type="text"/>
+                                <input onChange={handleChangeJabatan} placeholder={detail.jabatan} type="text"/>
                         </div>
                         <div className='content-tx'>
                             <h1>Alasan Cuti/Sakit/Izin</h1>
-                            <textarea onChange={handleChangeKeterangan} placeholder='Alasan Cuti/Sakit/Izin' name="" id=""></textarea>
+                            <textarea onChange={handleChangeKeterangan} placeholder={detail.keterangan} name="" id=""></textarea>
                         </div>
                         <div className='content-tx'>
                             <h1>Alamat Selama Cuti/Sakit/Izin</h1>
-                            <textarea onChange={handleChangeAlamat} placeholder='Alasan Cuti/Sakit/Izin' name="" id=""></textarea>
+                            <textarea onChange={handleChangeAlamat} placeholder={detail.alamat} name="" id=""></textarea>
                         </div>
                         <div className='content-f'>
                             <h1>Jenis Surat</h1>
                             <div className='check'>
-                                <input type="checkbox" name="" id="" value="Cuti"  onChange={(event) =>{
-                                  Cuti(event)
-                                  handleChangeJenis(event)
-                                  }}/>
+                                <input type="checkbox" name="" id="" value="Cuti" onChange={(event) => {
+                                    Cuti(event);
+                                    handleChangeJenis(event)
+                                }}/>
                                 <label htmlFor="">Cuti Kontrak</label>
+                                <label style={{display: detail.jenis_surat === "Cuti" ? "flex" : "none", width: 'auto'}} htmlFor="">anda sebelumnya memilih cuti kontrak</label>
                             </div>
                             {cuti && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Cuti Kontrak</label>
-                                        <input onChange={handleChangeCuti} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Dimulai Dari Tanggal</label>
                                         <div className='inp-date'>
-                                          <input onChange={handleChangeCutiDate} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
                                           <label className='text' htmlFor="">s.d</label>
-                                          <input onChange={handleChangeCutiDateFin} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
                                         </div>
                                     </div>
                                 )}
                             <div className='check'>
                                 <input type="checkbox" value="Cuti Alasan Penting" name="" id="" onClick={(event) => {
-                                  Cuti_alasan_penting(event)
-                                  handleChangeJenis(event)
-                                }}/>
+                                    Cuti_alasan_penting(event);
+                                    handleChangeJenis(event);
+                                    }}/>
                                 <label htmlFor="">Cuti Alasan Penting</label>
+                                <label style={{display: detail.jenis_surat === "Cuti Alasan Penting" ? "flex" : "none", width: 'auto', marginLeft: '85px'}} htmlFor="">Anda Sebelumnya Memilih Cuti Alasan Penting</label>
                             </div>
                             {show_imp && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Cuti Alasan Penting</label>
-                                        <input onChange={handleChangeCuti} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Dimulai Dari Tanggal</label>
                                         <div className='inp-date'>
-                                          <input onChange={handleChangeCutiDate} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
                                           <label className='text' htmlFor="">s.d</label>
-                                          <input onChange={handleChangeCutiDateFin} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
                                         </div>
                                     </div>
                                 )}
                             <div className='check'>
-                                <input type="checkbox" value="Izin" name="" id="" onClick={(event) =>{
-                                  Izin(event)
-                                  handleChangeJenis(event)
-                                }}/>
+                                <input type="checkbox" value="Izin" name="" id="" onClick={(event) => {
+                                    Izin(event);
+                                    handleChangeJenis(event);
+                                    }}/>
                                 <label htmlFor="">Izin</label>
+                                <label style={{display: detail.jenis_surat === "Izin" ? "flex" : "none", width: 'auto'}} htmlFor="">Anda Sebelumnya Memilih Izin</label>
                             </div>
                             {izin && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Izin</label>
-                                        <input onChange={handleChangeCuti} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Dimulai Dari Tanggal</label>
                                         <div className='inp-date'>
-                                          <input onChange={handleChangeCutiDate} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
                                           <label className='text' htmlFor="">s.d</label>
-                                          <input onChange={handleChangeCutiDateFin} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
                                         </div>
                                     </div>
                                 )}
                             <div className='check'>
-                                <input type="checkbox" value="Cuti Hamil" name="" id="" onClick={(event) => {
-                                  Hamil(event)
-                                  handleChangeJenis(event)
-                                }}/>
+                                <input type="checkbox" value="Cuti Hamil" name="" id="" onClick={(event)=> {
+                                    Hamil(event);
+                                    handleChangeJenis(event);
+                                    }}/>
                                 <label htmlFor="">Cuti Hamil</label>
+                                <label style={{display: detail.jenis_surat === "Cuti Hamil" ? "flex" : "none", width: 'auto'}} htmlFor="">Anda Sebelumnya Memilih Cuti Hamil</label>
                             </div>
                             {hamil && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Hamil</label>
-                                        <input onChange={handleChangeCuti} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Dimulai Dari Tanggal</label>
                                         <div className='inp-date'>
-                                          <input onChange={handleChangeCutiDate} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
                                           <label className='text' htmlFor="">s.d</label>
-                                          <input onChange={handleChangeCutiDateFin} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
                                         </div>
                                     </div>
                                 )}
                             <div className='check'>
                                 <input type="checkbox" value="Sakit" name="" id="" onClick={(event) => {
-                                  Sakit(event)
-                                  handleChangeJenis(event)
+                                    Sakit(event);
+                                    handleChangeJenis(event);
                                 }}/>
                                 <label htmlFor="">Cuti Sakit</label>
+                                <label style={{display: detail.jenis_surat === "Sakit" ? "flex" : "none", width: 'auto'}} htmlFor="">Anda Sebelumnya Memilih Sakit</label>
                             </div>
                             {sakit && ( // Conditionally render based on show state
                                   <div className='check-form'>
                                       <label htmlFor="">Sakit</label>
-                                      <input onChange={handleChangeCuti} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                      <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
                                       <label htmlFor="">Dimulai Dari Tanggal</label>
                                       <div className='inp-date'>
-                                        <input onChange={handleChangeCutiDate} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                        <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
                                         <label className='text' htmlFor="">s.d</label>
-                                        <input onChange={handleChangeCutiDateFin} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                        <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
                                       </div>
                                       <label htmlFor="">Bukti Surat Sakit</label>
-                                      <input onChange={handleChangeImage} style={{marginTop: '10px', paddingTop: '10px'}} type="File" name="" id="" />
+                                      <input placeholder={detail.gambar} style={{marginTop: '10px', paddingTop: '10px'}} type="File" name="" id="" />
                                   </div>
                                 )}
                         </div>
-                        <button onClick={handlePostSurat} className='submit' type="submit">Submit</button>
+                        <button className='submit' onClick={handleUpdateSurat} type="submit">Submit</button>
                         </form>
                     </div>
                 </div>
@@ -276,4 +291,4 @@ const Cuti_form = () => {
         </>
     )
 }
-export default Cuti_form
+export default Cuti_form_Update

@@ -47,7 +47,8 @@
 .main-dashboard .content-col .box .content{
     display: flex;
     width: 1183px;
-    height: 311px;
+    height: auto;
+    padding-bottom: 45px;
     flex-shrink: 0;    
     flex-direction: column;
     align-items: flex-start;

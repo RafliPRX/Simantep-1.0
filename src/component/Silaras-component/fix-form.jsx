@@ -7,6 +7,7 @@ const Fix_form = () => {
   const [nrk, setNrk] = useState("");
   const [unit, setUnits] = useState("");
   const [fixing, setFixing] = useState("");
+  const [image, setImage] = useState("")
   const navigate = useNavigate();
   const handleChangeNama = (event) => {
     console.log(event.target.value);
@@ -24,7 +25,10 @@ const Fix_form = () => {
     console.log(event.target.value);
     setFixing(event.target.value);
   }
-
+  const handleChangeImage = (event) => {
+    setImage(event.target.files[0]);
+    console.log(event.target.files[0]);
+  }
   const handleRequest = async (event) => {
     event.preventDefault();
     const payload = {
@@ -32,6 +36,7 @@ const Fix_form = () => {
       nrk: nrk,
       unit: unit,
       fix: fixing,
+      foto: image,
     };
     try {
       const respone = await axios.post(`http://localhost/Simantep_API/SILARAS/new_fix.php`, payload, {
@@ -90,7 +95,7 @@ const Fix_form = () => {
                             <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
                             <textarea onChange={handleChangeFixing} value={fixing} placeholder='Permintaan Perbaikan' name="" id=""></textarea>
                             <label htmlFor="">Bukti Gambar</label>
-                            <input type="file" name="" id="" />
+                            <input onChange={handleChangeImage} type="file" name="" id="" />
                         </div>
                         <button onClick={handleRequest} className='submit' type="submit">Submit</button>
                         </form>

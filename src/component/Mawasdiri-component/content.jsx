@@ -1,6 +1,41 @@
 import './content.css'
 import green from '../../assets/green.svg'
+import red from '../../assets/decline.svg'
+import white from '../../assets/unread.svg'
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
 const Content = () => {
+    const [surat, setSurat] = useState([]);
+    const getSurat = async () => {
+      try {
+        const response = await axios.get("http://localhost/Simantep_API/MAWASDIRI/Cuti/surat.php", {
+          headers: {}
+        })
+        console.log(response.data);
+        setSurat(response.data);
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
+    useEffect(() => {
+      getSurat();
+    },[])
+    const hadleDeleteSurat = async (id) => {
+      try {
+        const response = await axios.delete(`http://localhost/Simantep_API/MAWASDIRI/Cuti/delete_surat.php?id=${id}`, {
+          headers: {
+            "Content-Type" : "multipart/form-data"
+          }
+        });
+        console.log(response.data);
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
     return(
         <>
             <div className='main-dashboard'>
@@ -34,30 +69,45 @@ const Content = () => {
                     <div className='box'>
                         <div className='content'>
                             <h1>Progress Pengajuan Surat</h1>
-                            <table>
-                                <tr>
-                                    <th style={{textAlign:'center'}}>Nomor</th>
-                                    <th style={{textAlign:'center'}}>id Surat</th>
-                                    <th style={{textAlign:'center'}}>Nama</th>
-                                    <th style={{textAlign:'center'}}>Keterangan</th>
-                                    <th style={{textAlign:'center'}}>Jabatan</th>
-                                    <th style={{textAlign:'center'}}>PJ/PM/Koordinator</th>
-                                    <th style={{textAlign:'center'}}>Kepegawaian</th>
-                                    <th style={{textAlign:'center'}}>Kasubag Tata Usaha</th>
-                                    <th style={{textAlign:'center'}}>Surat</th>
-                                </tr>
-                                <tr>
-                                    <td style={{textAlign:'center'}}>1</td>
-                                    <td style={{textAlign:'center'}}>-</td>
-                                    <td style={{textAlign:'center'}}>Yudis</td>
-                                    <td style={{textAlign:'center'}}>Cuti</td>
-                                    <td style={{textAlign:'center'}}>Pengelola Data</td>
-                                    <td style={{textAlign:'center'}}><img src={green} alt="" />Approve</td>
-                                    <td style={{textAlign:'center'}}><img src={green} alt="" />Approve</td>
-                                    <td style={{textAlign:'center'}}><img src={green} alt="" />Approve</td>
-                                    <td style={{textAlign:'center'}}> <a href="">Download</a> </td>
-                                </tr>
-                            </table>
+                            {surat.length > 0 ? (
+                              <table>
+                                  <tr>
+                                      <th style={{textAlign:'center'}}>Nomor</th>
+                                      <th style={{textAlign:'center'}}>id Surat</th>
+                                      <th style={{textAlign:'center'}}>Nama</th>
+                                      <th style={{textAlign:'center'}}>Keterangan</th>
+                                      <th style={{textAlign:'center'}}>Jabatan</th>
+                                      <th style={{textAlign:'center'}}>Jenis Surat</th>
+                                      <th style={{textAlign:'center'}}>PJ/PM/Koordinator</th>
+                                      <th style={{textAlign:'center'}}>Kepegawaian</th>
+                                      <th style={{textAlign:'center'}}>Kasubag Tata Usaha</th>
+                                      <th style={{textAlign:'center'}}>Surat</th>
+                                  </tr>
+                                  {surat.map((item, index) =>(
+                                  <tr key={item.id_surat}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.id_surat}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan}</td>
+                                    <td style={{textAlign:'center'}}>{item.jabatan}</td>
+                                    <td style={{textAlign:'center'}}>{item.jenis_surat}</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '1' ? '' : 'none'}}><img src={white} alt="" />Unread</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '2' ? '' : 'none'}}><img src={red} alt="" />Delay</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '3' ? '' : 'none'}}><img src={green} alt="" />Agreed</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '1' ? '' : 'none'}}><img src={white} alt="" />Unread</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '2' ? '' : 'none'}}><img src={red} alt="" />Delay</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '3' ? '' : 'none'}}><img src={green} alt="" />Agreed</td>
+                                    <td style={{textAlign:'center', display: item.veri_3 === '1' ? '' : 'none'}}><img src={white} alt="" />Unread</td>
+                                    <td style={{textAlign:'center', display: item.veri_3 === '2' ? '' : 'none'}}><img src={red} alt="" />Delay</td>
+                                    <td style={{textAlign:'center', display: item.veri_3 === '3' ? '' : 'none'}}><img src={green} alt="" />Agreed</td>
+                                    <td style={{textAlign:'center'}}> <Link to={`/Cuti-detail/${item.id_surat}`}>Detail</Link> | 
+                                    <br /><button onClick={() => hadleDeleteSurat(item.id_surat)}>Hapus</button></td>
+                                  </tr>
+                                  ))}
+                              </table>
+                            ): (
+                              <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}
                         </div>
                     </div>
                 </div>

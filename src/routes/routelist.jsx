@@ -16,6 +16,7 @@ import Form_withdrawl from "../pages/Simak-page/form-withdrawl";
 import Proposed_Form from "../pages/Simak-page/proposed-form";
 import Fix_Detail from "../pages/silaras-page/fix-detail";
 import Form_vehicle from "../pages/silaras-page/form-Vehicle";
+import Cuti_Detail from "../pages/mawasdiri-page/cuti-detail";
 
 
 export const routeList = [
@@ -86,5 +87,9 @@ export const routeList = [
     {
         path: "/form-dana-LPJ/:id",
         element: <Detail_Form_Propose/>
+    },
+    {
+        path: "/Cuti-detail/:id",
+        element: <Cuti_Detail/>
     },
 ]

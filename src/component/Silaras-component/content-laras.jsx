@@ -95,7 +95,7 @@ const Content_laras = () => {
           console.log(response.data);
           setTimeout(() => {
             window.location.reload();
-          }, 1000);
+          }, 500);
         } catch (error) {
           console.log(error.response);
         }

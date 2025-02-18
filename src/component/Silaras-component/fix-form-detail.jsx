@@ -86,7 +86,7 @@ const Fix_form_Detail = () => {
                               <td>Bukti Gambar</td>
                             </tr>
                             <tr>
-                              <td className='input'>{detail.foto}</td>
+                              <td> <img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`http://localhost/Simantep_API/SILARAS/${detail.foto}`} alt="" /> </td>
                             </tr>
                           </table>
                       </div>

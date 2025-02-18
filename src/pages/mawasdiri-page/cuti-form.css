@@ -2,7 +2,6 @@
     display: flex;
     flex-direction: row;
     width: 1920px;
-    height: 1769px;
+    height: 2500px;
     background: #000E60;
-    overflow-y: hidden;
 }

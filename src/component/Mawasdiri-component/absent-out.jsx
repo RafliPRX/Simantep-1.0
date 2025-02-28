@@ -13,10 +13,10 @@ import VectorSource from 'ol/source/Vector'; // Importing VectorSource
 import { Icon, Style } from 'ol/style'; // Importing Icon and Style
 import Point from 'ol/geom/Point'; // Importing Point geometry
 import marker from '../../assets/marker.png'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const Absent = () => {
+const Absent_Out = () => {
     const mapRef = useRef(null); // Reference for the map
     const videoRef = useRef(null); // Reference for the video element
 
@@ -148,71 +148,14 @@ const Absent = () => {
 
 
     const navigate = useNavigate();
-    const [isTesting, setIsTesting] = useState(false); // Testing mode state
-    const testLocation = {
-
-        longitude: 117.21939071357754,
-        latitude: -0.4419968750231381
-    };
-    const calculateDistance = (pos1, pos2) => {
-
-        const R = 6371e3; // Earth radius in meters
-        const φ1 = pos1.latitude * Math.PI/180;
-        const φ2 = pos2.latitude * Math.PI/180;
-        const Δφ = (pos2.latitude - pos1.latitude) * Math.PI/180;
-        const Δλ = (pos2.longitude - pos1.longitude) * Math.PI/180;
-
-        const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) +
-                  Math.cos(φ1) * Math.cos(φ2) *
-                  Math.sin(Δλ/2) * Math.sin(Δλ/2);
-        const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-
-        return R * c;
-    };
-
+    const param = useParams();
     const handleAbsentIn = async (event) => {
         event.preventDefault();
         
-        // Get user's position or use test location
-        const position = isTesting ? testLocation : await new Promise((resolve) => {
-            navigator.geolocation.getCurrentPosition(
-                (pos) => resolve({
-                    longitude: pos.coords.longitude,
-                    latitude: pos.coords.latitude
-                }),
-                (err) => {
-                    console.error("Error getting position:", err);
-                    resolve(null);
-                }
-            );
-        });
-
-        
-        if (!position) {
-            alert("Failed to get your location");
-            return;
-        }
-
-        // Center point
-        const center = {
-            longitude: 117.21939071357754,
-            latitude: -0.4419968750231381
-        };
-
-        // Check distance
-        const distance = calculateDistance(position, center);
-        console.log(`Distance from center: ${distance.toFixed(2)} meters`);
-        if (distance > 70) {
-            alert(`Absent failed: You are ${distance.toFixed(2)} meters outside the allowed radius (70m)`);
-            return;
-        }
-
-
         // Capture image from video stream
         const canvas = canvasRef.current;
         const video = videoRef.current;
         if (!canvas || !video) return;
-
         
         const context = canvas.getContext('2d');
         canvas.width = video.videoWidth;
@@ -223,41 +166,42 @@ const Absent = () => {
         return new Promise((resolve) => {
             canvas.toBlob(async (blob) => {
                 const now = new Date();
-                const filename = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-Masuk.png`;
+                const filename = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-Keluar.png`;
                 const formData = new FormData();
-                formData.append('snap_in', blob, filename);
+                formData.append('snap_out', blob, filename);
 
                 
                 try {
-                const response = await axios.post(
-                    `http://localhost/Simantep_API/MAWASDIRI/Absen/absent_in.php`, 
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
+                    const response = await axios.post(
+                        `http://localhost/Simantep_API/MAWASDIRI/Absen/absent_out.php?id=${param.id}`, 
+                        formData,
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
                         }
+                    );
+                    console.log(response.data.message);
+                    if (response.data.message === 'Formulir berhasil') {
+                        alert("Absen keluar berhasil dicatat!");
+                        setTimeout(() => {
+                            navigate("/Dashboard");
+                        }, 1000);
+                    } else {
+                        const errorMessage = response.data.message || 'Gagal melakukan absen keluar';
+                        alert(`Gagal melakukan absen keluar: ${errorMessage}`);
+                        console.error('Absen keluar failed:', response.data);
                     }
-                );
-                console.log(response.data.message);
-                if (response.data.message === 'Formulir berhasil') {
-                    alert("Absent berhasil dicatat!");
-                    setTimeout(() => {
-                        navigate("/Dashboard");
-                    }, 1000);
-                } else {
-                    const errorMessage = response.data.message || 'Unknown error occurred';
-                    alert(`Gagal melakukan absent: ${errorMessage}`);
-                    console.error('Absent failed:', response.data);
-                }
 
                 } catch (error) {
                     const errorMessage = error.response?.data?.message || 
-                                      error.message || 'Unknown error occurred';
-                    alert(`Gagal melakukan absent: ${errorMessage}`);
-                    console.error('Absent failed:', error);
+                                      error.message || 
+                                      'Terjadi kesalahan saat melakukan absen keluar';
+                    alert(`Gagal melakukan absen keluar: ${errorMessage}`);
+                    console.error('Absen keluar failed:', error);
                     resolve(null);
-                }
 
+                }
             }, 'image/png');
         });
     }
@@ -288,7 +232,6 @@ const Absent = () => {
                         </clipPath>
                       </defs>
                     </svg>
-
                 <div className='pic'></div>
             </div>
             <div className='content-col'>
@@ -316,21 +259,10 @@ const Absent = () => {
                             <div id="map" style={{ height: "400px", width: "100%" }}></div>
                         </div>
                         <button onClick={handleAbsentIn} className='submit' type="submit">Absen</button>
-                        <div style={{ marginTop: '10px' }}>
-                            <label >
-                                <input 
-                                    type="checkbox"
-                                    checked={isTesting}
-                                    onChange={(e) => setIsTesting(e.target.checked)}
-                                />
-                                Testing Mode
-                            </label>
-                        </div>
                     </form>
                 </div>
             </div>
-
         </div>
     )
 }
-export default Absent;
+export default Absent_Out

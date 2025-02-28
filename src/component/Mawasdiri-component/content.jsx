@@ -6,20 +6,46 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 const Content = () => {
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+    
+
     const [surat, setSurat] = useState([]);
     const getSurat = async () => {
-      try {
-        const response = await axios.get("http://localhost/Simantep_API/MAWASDIRI/Cuti/surat.php", {
-          headers: {}
-        })
-        console.log(response.data);
-        setSurat(response.data);
-      } catch (error) {
-        console.log(error.response);
+      if (storedID === "6") {
+        try {
+          const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/surat.php?nama`, {
+            headers: {}
+          })
+          console.log(response.data);
+          setSurat(response.data);
+        } catch (error) {
+          console.log(error.response);
+        }
+      } else {
+        try {
+          const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/surat_by_name.php?nama=${storedUsername}`, {
+            headers: {}
+          })
+          console.log(response.data);
+          setSurat(response.data);
+        } catch (error) {
+          console.log(error.response);
+        }
+
       }
     }
     useEffect(() => {
       getSurat();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     const hadleDeleteSurat = async (id) => {
       try {
@@ -114,6 +140,6 @@ const Content = () => {
             </div>
         </>
     )
-}
+  }
 
 export default Content

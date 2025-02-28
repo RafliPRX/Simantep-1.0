@@ -25,9 +25,6 @@ const Absent = () => {
     const [selectedDevice, setSelectedDevice] = useState(null); // State to hold selected device
     const [capturedImage] = useState(null); // State to hold captured image
 
-
-
-
     // Access the camera
     const startCamera = async (deviceId) => {
         try {
@@ -110,7 +107,6 @@ const Absent = () => {
             mapRef.current = map;
         }
 
-
         // List available video devices
         const getVideoDevices = async () => {
             const devices = await navigator.mediaDevices.enumerateDevices();
@@ -136,9 +132,6 @@ const Absent = () => {
         };
     }, []);
 
-
-
-
     // Handle device selection change
     const handleDeviceChange = (event) => {
         const deviceId = event.target.value;
@@ -146,16 +139,13 @@ const Absent = () => {
         startCamera(deviceId); // Restart camera with the selected device
     };
 
-
     const navigate = useNavigate();
     const [isTesting, setIsTesting] = useState(false); // Testing mode state
     const testLocation = {
-
         longitude: 117.21939071357754,
         latitude: -0.4419968750231381
     };
     const calculateDistance = (pos1, pos2) => {
-
         const R = 6371e3; // Earth radius in meters
         const φ1 = pos1.latitude * Math.PI/180;
         const φ2 = pos2.latitude * Math.PI/180;
@@ -187,7 +177,6 @@ const Absent = () => {
             );
         });
 
-        
         if (!position) {
             alert("Failed to get your location");
             return;
@@ -207,18 +196,25 @@ const Absent = () => {
             return;
         }
 
-
         // Capture image from video stream
         const canvas = canvasRef.current;
         const video = videoRef.current;
         if (!canvas || !video) return;
 
-        
         const context = canvas.getContext('2d');
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0);
-        
+
+        const storedUsername = localStorage.getItem('nama');
+        const storeNrk = localStorage.getItem('nrk');
+        const storedSisaCuti = localStorage.getItem('sisa_cuti');
+        const storedFProfile = localStorage.getItem('f_profile');
+        console.log(storedUsername);
+        console.log(storedSisaCuti );
+        console.log(storedFProfile);
+        console.log(storeNrk);
+    
         // Convert canvas to Blob
         return new Promise((resolve) => {
             canvas.toBlob(async (blob) => {
@@ -226,33 +222,32 @@ const Absent = () => {
                 const filename = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-Masuk.png`;
                 const formData = new FormData();
                 formData.append('snap_in', blob, filename);
-
-                
+                formData.append('nama', storedUsername);
                 try {
-                const response = await axios.post(
-                    `http://localhost/Simantep_API/MAWASDIRI/Absen/absent_in.php`, 
-                    formData,
-                    {
-                        headers: {
-                            'Content-Type': 'multipart/form-data'
+                    const response = await axios.post(
+                        `http://localhost/Simantep_API/MAWASDIRI/Absen/absent_in.php`, 
+                        formData, // Combine formData and payload
+                        {
+                            headers: {
+                                'Content-Type': 'multipart/form-data'
+                            }
                         }
+                    );
+                    console.log(response.data.message);
+                    if (response.data.message === 'Formulir berhasil') {
+                        alert("Absent berhasil dicatat!");
+                        setTimeout(() => {
+                            navigate("/Dashboard");
+                        }, 1000);
+                    } else {
+                        const errorMessage = response.data.message || 'Unknown error occurred';
+                        alert(`Gagal melakukan absent: ${errorMessage}`);
+                        console.error('Absent failed:', response.data);
                     }
-                );
-                console.log(response.data.message);
-                if (response.data.message === 'Formulir berhasil') {
-                    alert("Absent berhasil dicatat!");
-                    setTimeout(() => {
-                        navigate("/Dashboard");
-                    }, 1000);
-                } else {
-                    const errorMessage = response.data.message || 'Unknown error occurred';
-                    alert(`Gagal melakukan absent: ${errorMessage}`);
-                    console.error('Absent failed:', response.data);
-                }
 
                 } catch (error) {
                     const errorMessage = error.response?.data?.message || 
-                                      error.message || 'Unknown error occurred';
+                                        error.message || 'Unknown error occurred';
                     alert(`Gagal melakukan absent: ${errorMessage}`);
                     console.error('Absent failed:', error);
                     resolve(null);
@@ -294,7 +289,6 @@ const Absent = () => {
             <div className='content-col'>
                 <div className='box'>
                     <form>
-
                         <div className='content-f'>
                         <h1>Kamera</h1>
                             <select onChange={handleDeviceChange} value={selectedDevice}>

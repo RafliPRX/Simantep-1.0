@@ -3,8 +3,19 @@ import './fix-form.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 const Fix_form = () => {
-  const [nama, setNama] = useState("");
-  const [nrk, setNrk] = useState("");
+  const storedUsername = localStorage.getItem('nama');
+  const storeNrk = localStorage.getItem('nrk');
+  const storedSisaCuti = localStorage.getItem('sisa_cuti');
+  const storedFProfile = localStorage.getItem('f_profile');
+  const storedID = localStorage.getItem('id_jabatan_sup');
+  console.log(storedUsername);
+  console.log(storedSisaCuti );
+  console.log(storedFProfile);
+  console.log(storeNrk);
+  console.log(storedID);
+
+  const [nama, setNama] = useState(storedUsername);
+  const [nrk, setNrk] = useState(storeNrk);
   const [unit, setUnits] = useState("");
   const [fixing, setFixing] = useState("");
   const [image, setImage] = useState("")
@@ -29,6 +40,7 @@ const Fix_form = () => {
     setImage(event.target.files[0]);
     console.log(event.target.files[0]);
   }
+
   const handleRequest = async (event) => {
     event.preventDefault();
     const payload = {
@@ -47,9 +59,11 @@ const Fix_form = () => {
       console.log(respone.data);
       setTimeout(() => {
         navigate("/dashboard-laras");
+        alert(respone.data.message);
       }, 1000);
     } catch (error) {
       console.log(error.respone);
+      alert("error code 105");
     }
   }
     return(
@@ -87,9 +101,9 @@ const Fix_form = () => {
                         <div className='content-f'>
                             <h1>Data Perbaikan</h1>
                             <label htmlFor="">Nama</label>
-                            <input onChange={handleChangeNama} value={nama} placeholder='Nama' type="text"/>
+                            <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
                             <label htmlFor="">NIP/NRK</label>
-                            <input onChange={handleChangeNRK} value={nrk} placeholder='NRK' type="text"/>
+                            <input onChange={handleChangeNRK} value={storeNrk} placeholder='NRK' type="text"/>
                             <label htmlFor="">Units</label>
                             <input onChange={handleChangeUnits} value={unit} placeholder='Units' type="text"/>
                             <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>

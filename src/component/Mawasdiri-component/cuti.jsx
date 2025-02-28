@@ -32,8 +32,19 @@ const Cuti_form = () => {
       setSakit(event.target.checked); // Set show based on checkbox state
     }
 
-    const [nama, setNama] = useState("");
-    const [nrk, setNrk]  =useState("");
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+
+    const [nama, setNama] = useState(storedUsername);
+    const [nrk, setNrk]  =useState(storeNrk);
     const [hp,setHP] = useState("");
     const [keterangan, setKeterangan] = useState("");
     const [jenis, setJenis] = useState("");
@@ -152,9 +163,9 @@ const Cuti_form = () => {
                         <div className='content-f'>
                             <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} placeholder='Nama' type="text"/>
+                                <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} placeholder='NRK' type="text"/>
+                                <input onChange={handleChangeNRK} value={storeNrk} placeholder='NRK' type="text"/>
                                 <label htmlFor="">No.Handphone</label>
                                 <input onChange={handleChnageHp} placeholder='No. HP' type="text"/>
                                 <label htmlFor="">Jabatan</label>
@@ -267,7 +278,7 @@ const Cuti_form = () => {
                                       <input onChange={handleChangeImage} style={{marginTop: '10px', paddingTop: '10px'}} type="File" name="" id="" />
                                   </div>
                                 )}
-                        </div>
+                          </div>
                         <button onClick={handlePostSurat} className='submit' type="submit">Submit</button>
                         </form>
                     </div>

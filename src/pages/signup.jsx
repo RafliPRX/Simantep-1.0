@@ -2,36 +2,33 @@ import { useState } from 'react';
 import './login.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const Login = () => {
+const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [nrk, setNRK] = useState('');
     const navigate = useNavigate();
 
     const handleLogin = async (event) => {
         event.preventDefault();
         const payload = {
             nama: username,
-            pass: password 
+            pass: password,
+            nrk: nrk
         };
         try {
-            const response = await axios.post(`http://localhost/Simantep_API/login.php`, payload, {
+            const response = await axios.post(`http://localhost/Simantep_API/signup.php`, payload, {
                 headers: {
                 'Content-Type': 'multipart/form-data',
                 }
             })
             console.log(response.data.status);
-            localStorage.setItem('nama', response.data.data.nama);
-            localStorage.setItem('nrk', response.data.data.nrk);
-            localStorage.setItem('sisa_cuti', response.data.data.sisa_cuti);
-            localStorage.setItem('f_profile', response.data.data.f_profile);
-            localStorage.setItem('id_jabatan_sup', response.data.data.id_jabatan_sup);
             setTimeout(() => {
-                alert("Welcome " + response.data.data.nama);
-                navigate('/Home');
+                alert(response.data.message);
+                navigate('/');
             }, 500);
         } catch (error) {
             console.log(error.response);
-            alert("Login failed. Please check your credentials.");
+            alert("error Signup code 101");
         }
     }
 
@@ -44,6 +41,11 @@ const Login = () => {
         setPassword(event.target.value);
         console.log(event.target.value);
     }
+
+    const handleChangeNRK = (event) => {
+        setNRK(event.target.value);
+        console.log(event.target.value);
+    }
     return(
         <>
         <div className='login'>
@@ -51,25 +53,19 @@ const Login = () => {
                 <div className='form-col'>
                     <form action="/Home">
                         <div className='header'>
-                            <h1>Sign in</h1>
-                            <h3>Enter Your Username and Password to Sign In</h3>
+                            <h1>Sign Up</h1>
+                            <h3>Create Your Username and Password</h3>
                         </div>
                         <div className='input-col'>
                             <label>Username</label>
                             <input onChange={handleChangeUsername} type="text" />
                             <label>Password</label>
                             <input onChange={handleChangePassword} type="password" />
-                            <div className='forget'>
-                                <div className='checkbox'>
-                                    <input type="checkbox" name="checkbox" id="" />
-                                    <label htmlFor="">Keep me logged in</label>
-                                </div>
-                                <a href="">Forget Password ?</a>    
-                            </div>
+                            <label>NRK</label>
+                            <input onChange={handleChangeNRK} type="text" />
                             <button onClick={handleLogin} >Sign In</button>
                             <div className='register'>
-                                <p>Not registered yet?</p>
-                                <a href="/signup">Create an Account</a>
+                                <a href='/'>Already registered ?</a>
                             </div>
                         </div> 
                     </form>
@@ -89,4 +85,4 @@ const Login = () => {
         </>
     )
 }
-export default Login
+export default Signup

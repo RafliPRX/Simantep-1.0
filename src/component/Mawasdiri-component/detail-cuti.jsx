@@ -175,7 +175,6 @@ const Cuti_Detail_Form = () => {
                                 </div>
                             </table>
                         </div>
-                        <button className='submit' type="submit">Submit</button>
                     </div>
                 </div>
             </div>        

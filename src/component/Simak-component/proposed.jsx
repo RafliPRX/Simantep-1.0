@@ -4,6 +4,17 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Proposed = () => {
+        const storedUsername = localStorage.getItem('nama');
+        const storeNrk = localStorage.getItem('nrk');
+        const storedSisaCuti = localStorage.getItem('sisa_cuti');
+        const storedFProfile = localStorage.getItem('f_profile');
+        const storedID = localStorage.getItem('id_jabatan_sup');
+        console.log(storedUsername);
+        console.log(storedSisaCuti );
+        console.log(storedFProfile);
+        console.log(storeNrk);
+        console.log(storedID);
+
         const [show, setShow] = useState(false); // Changed to boolean for clarity
     
         function handleShow(event) {
@@ -21,8 +32,8 @@ const Proposed = () => {
             setShow2(event.target.checked); // Set show based on checkbox state
         }
     
-        const [nama, setNama] = useState("");
-        const [nrk, setNRK] = useState("");
+        const [nama, setNama] = useState(storedUsername);
+        const [nrk, setNRK] = useState(storeNrk);
         const [jabatan, setJabatan] = useState("");
         const [units, setUnits] = useState("");
         const [kegiatan, setKegiatan] = useState("");
@@ -71,10 +82,12 @@ const Proposed = () => {
             console.log(response.data);
             setTimeout(() => {
                 navigate("/dashboard-simak");
+                alert(response.data.message);
             }, 1000);
                 console.log(response.data);
             } catch (error) {
                 console.error(error);
+                alert("error code 104");
             }
         }
     return(
@@ -112,9 +125,9 @@ const Proposed = () => {
                             <div className='content-f'>
                                 <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} placeholder='Nama' type="text"/>
+                                <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} placeholder='NIP/NRK' type="text"/>
+                                <input onChange={handleChangeNRK} value={storeNrk} placeholder='NIP/NRK' type="text"/>
                                 <label htmlFor="">Jabatan</label>
                                 <input onChange={handleChangeJabatan} placeholder='Jabatan' type="text"/>
                             </div>

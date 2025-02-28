@@ -1,48 +1,43 @@
-import { useState } from 'react';
+import { useState } from 'react'
 import './login.css'
-import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-const Login = () => {
-    const [username, setUsername] = useState('');
+import { useNavigate } from 'react-router-dom';
+const Login_ADM = () => {
+    const [username, setUsername] = useState('admin');
     const [password, setPassword] = useState('');
-    const navigate = useNavigate();
 
-    const handleLogin = async (event) => {
+    const handleChangePassword = (event) => {
+        setPassword(event.target.value);
+        console.log(event.target.value);
+    }
+    const handleChangeUsername = (event) => {
+        setUsername(event.target.value);
+        console.log(event.target.value);
+    }
+    const navigate = useNavigate();
+    const handleLoginADM = async (event) => {
         event.preventDefault();
         const payload = {
             nama: username,
-            pass: password 
+            pass: password
         };
         try {
-            const response = await axios.post(`http://localhost/Simantep_API/login.php`, payload, {
+            const response = await axios.post(`http://localhost/Simantep_API/login_adm.php`, payload, {
                 headers: {
-                'Content-Type': 'multipart/form-data',
+                    "Content-Type" : "multipart/form-data"
                 }
-            })
-            console.log(response.data.status);
+            });
+            console.log(response.data);
             localStorage.setItem('nama', response.data.data.nama);
-            localStorage.setItem('nrk', response.data.data.nrk);
-            localStorage.setItem('sisa_cuti', response.data.data.sisa_cuti);
-            localStorage.setItem('f_profile', response.data.data.f_profile);
-            localStorage.setItem('id_jabatan_sup', response.data.data.id_jabatan_sup);
             setTimeout(() => {
-                alert("Welcome " + response.data.data.nama);
                 navigate('/Home');
+            alert("Login successful: " + response.data.data.nama);
+
             }, 500);
         } catch (error) {
             console.log(error.response);
             alert("Login failed. Please check your credentials.");
         }
-    }
-
-    const handleChangeUsername = (event) => {
-        setUsername(event.target.value);
-        console.log(event.target.value);
-    }
-
-    const handleChangePassword = (event) => {
-        setPassword(event.target.value);
-        console.log(event.target.value);
     }
     return(
         <>
@@ -52,11 +47,11 @@ const Login = () => {
                     <form action="/Home">
                         <div className='header'>
                             <h1>Sign in</h1>
-                            <h3>Enter Your Username and Password to Sign In</h3>
+                            <h3>Enter Your Email and Password to Sign In</h3>
                         </div>
                         <div className='input-col'>
-                            <label>Username</label>
-                            <input onChange={handleChangeUsername} type="text" />
+                            <label>Email</label>
+                            <input onChange={handleChangeUsername} type="text" value="admin" />
                             <label>Password</label>
                             <input onChange={handleChangePassword} type="password" />
                             <div className='forget'>
@@ -64,13 +59,8 @@ const Login = () => {
                                     <input type="checkbox" name="checkbox" id="" />
                                     <label htmlFor="">Keep me logged in</label>
                                 </div>
-                                <a href="">Forget Password ?</a>    
                             </div>
-                            <button onClick={handleLogin} >Sign In</button>
-                            <div className='register'>
-                                <p>Not registered yet?</p>
-                                <a href="/signup">Create an Account</a>
-                            </div>
+                            <button onClick={handleLoginADM}>Sign In</button>
                         </div> 
                     </form>
                 </div>
@@ -89,4 +79,4 @@ const Login = () => {
         </>
     )
 }
-export default Login
+export default Login_ADM

@@ -1,21 +1,45 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
 import './content-laras.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 // import green from '../../assets/green.svg'
 const Content_laras = () => {
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+
     const [fix, setFix] = useState([]);
 
     const getFix = async () => {
+      if (storedID === "4") {
         try {
-            const response = await axios.get("http://localhost/Simantep_API/SILARAS/fix.php", {
-                headers: {}
-            });
-            console.log(response.data); // Log the response data
-            setFix(response.data);
+          const response = await axios.get("http://localhost/Simantep_API/SILARAS/fix.php", {
+              headers: {}
+          });
+          console.log(response.data); // Log the response data
+          setFix(response.data);
         } catch (error) {
             console.log(error.response);
         }
+      } else {
+        try {
+          const response = await axios.get(`http://localhost/Simantep_API/SILARAS/fix_by_name.php?nama=${storedUsername}`, {
+              headers: {}
+          });
+          console.log(response.data); // Log the response data
+          setFix(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+      }
     };
 
     useEffect(() => {
@@ -25,30 +49,54 @@ const Content_laras = () => {
     const [vehicle, setVehicle] = useState([]);
 
     const getVehicle = async () => {
+      if (storedID === "4") {
         try {
-            const response = await axios.get("http://localhost/Simantep_API/SILARAS/vehicle.php", {
-                headers: {}
-            })
-            console.log(response.data);
-            setVehicle(response.data);
+          const response = await axios.get("http://localhost/Simantep_API/SILARAS/vehicle.php", {
+              headers: {}
+          })
+          console.log(response.data);
+          setVehicle(response.data);
         } catch (error) {
             console.log(error);
         }
+      } else {
+        try {
+          const response = await axios.get(`http://localhost/Simantep_API/SILARAS/vehicle_by_name.php?nama=${storedUsername}`, {
+              headers: {}
+          })
+          console.log(response.data);
+          setVehicle(response.data);
+        } catch (error) {
+            console.log(error);
+        }
+      }
     };
     useEffect(() => {
         getVehicle();
     }, [])
     const [request, setRequest] = useState([]);
     const getRequest = async () => {
+      if (storedID === "4") {
         try {
-            const response = await axios.get("http://localhost/Simantep_API/SILARAS/request.php", {
-                headers: {}
-            })
-            console.log(response.data);
-            setRequest(response.data);
+          const response = await axios.get("http://localhost/Simantep_API/SILARAS/request.php", {
+              headers: {}
+          })
+          console.log(response.data);
+          setRequest(response.data);
         } catch (error) {
             console.log(error.response);
         }
+      } else {
+        try {
+          const response = await axios.get(`http://localhost/Simantep_API/SILARAS/request_by_name.php?nama=${storedUsername}`, {
+              headers: {}
+          })
+          console.log(response.data);
+          setRequest(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+      }
     };
     useEffect(() => {
         getRequest();

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import './content-simak.css'
 import green from '../../assets/green.svg'
 import white from '../../assets/unread.svg'
@@ -6,8 +7,20 @@ import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 const Content_simak = () => {
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+
     const [dana, setDana] = useState([]);
     const getDana = async () => {
+      if (storedID === "5") {
         try {
             const response = await axios.get("http://localhost/Simantep_API/SIMAK/Dana_RPD/dana.php", {
                 headers: {}
@@ -17,6 +30,17 @@ const Content_simak = () => {
         } catch (error) {
             console.error();
         }
+      } else {
+        try {
+            const response = await axios.get(`http://localhost/Simantep_API/SIMAK/Dana_RPD/dana_by_name.php?nama=${storedUsername}`, {
+                headers: {}
+            })
+            console.log(response.data);
+            setDana(response.data);
+        } catch (error) {
+            console.error();
+        }
+      }
     }
 
     useEffect(() => {
@@ -25,6 +49,7 @@ const Content_simak = () => {
 
     const [lpj, setLpj] = useState([]);
     const getLpj = async () => {
+      if (storedID === "5") {
         try {
             const response = await axios.get("http://localhost/Simantep_API/SIMAK/Dana_LPJ/dana_lpj.php", {
                 headers: {}
@@ -34,6 +59,17 @@ const Content_simak = () => {
         } catch (error) {
             console.log(error.response);
         }
+      } else {
+        try {
+            const response = await axios.get(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?nama=${storedUsername}`, {
+                headers: {}
+            })
+            console.log(response.data);
+            setLpj(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+      }  
     }
     useEffect(() => {
         getLpj();

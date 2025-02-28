@@ -3,8 +3,19 @@ import './fix-form'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 const Request = () => {
-    const [nama, setNama] = useState('')
-    const [nrk, setNRK] = useState('')
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+
+    const [nama, setNama] = useState(storedUsername)
+    const [nrk, setNRK] = useState(storeNrk)
     const [unit, setUnit] = useState('')
     const [barang, setBarang] = useState('')
     const navigate = useNavigate();
@@ -42,9 +53,11 @@ const Request = () => {
         console.log(response.data);
         setTimeout(() => {
           navigate("/dashboard-laras");
+          alert(response.data.message);
         }, 1000);
       } catch (error) {
         console.log(error.response);
+        alert("error code 105c");
       }
     }
     return(
@@ -82,9 +95,9 @@ const Request = () => {
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
                             <label htmlFor="">Nama</label>
-                            <input onChange={handleChangeNama} placeholder='Nama' type="text"/>
+                            <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
                             <label htmlFor="">NIP/NRK</label>
-                            <input onChange={handleChangeNRK} placeholder='NRK' type="text"/>
+                            <input onChange={handleChangeNRK} value={storeNrk} placeholder='NRK' type="text"/>
                             <label htmlFor="">Unit Kerja</label>
                             <input onChange={handleChangeUnit} placeholder='Unit Kerja' type="text"/>
                             <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>

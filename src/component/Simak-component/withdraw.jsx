@@ -4,6 +4,17 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Withdraw = () => {
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+
     const navigate = useNavigate();
     const [show, setShow] = useState(false); // Changed to boolean for clarity
 
@@ -22,8 +33,8 @@ const Withdraw = () => {
         setShow2(event.target.checked); // Set show based on checkbox state
     }
 
-    const [nama, setNama] = useState("");
-    const [nrk, setNRK] = useState("");
+    const [nama, setNama] = useState(storedUsername);
+    const [nrk, setNRK] = useState(storeNrk);
     const [jabatan, setJabatan] = useState("");
     const [kegiatan, setKegiatan] = useState("");
     const [rencana, setRencana] = useState("");
@@ -132,9 +143,11 @@ const Withdraw = () => {
             console.log(response.data);
             setTimeout(() => {
                 navigate('/dashboard-simak')
+                alert(response.data.message);
             }, 1000);
         } catch (error) {
             console.log(error.response);
+            alert("error code 104b");
         }
     }
     return (
@@ -172,9 +185,9 @@ const Withdraw = () => {
                             <div className='content-f'>
                                 <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} value={nama} placeholder='Nama' type="text"/>
+                                <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} value={nrk} placeholder='NIP/NRK' type="text"/>
+                                <input onChange={handleChangeNRK} value={storeNrk} placeholder='NIP/NRK' type="text"/>
                                 <label htmlFor="">Jabatan</label>
                                 <input onChange={handleChangeJabatan} value={jabatan} placeholder='Jabatan' type="text"/>
                             </div>

@@ -18,12 +18,22 @@ import Form_vehicle from "../pages/silaras-page/form-Vehicle";
 import Cuti_Detail from "../pages/mawasdiri-page/cuti-detail";
 import Absent_Page_Out from "../pages/mawasdiri-page/absent-page-out";
 import Absent_Page from "../pages/mawasdiri-page/absent-page-in";
+import Login_ADM from "../pages/login_adm";
+import Signup from "../pages/signup";
 
 
 export const routeList = [
     {
         path: "/",
         element: <Login/> 
+    },
+    {
+        path: "/signup",
+        element: <Signup/> 
+    },
+    {
+        path: "/admin",
+        element: <Login_ADM/> 
     },
     {
         path: "/Home",

@@ -3,7 +3,18 @@ import './fix-form.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const Vehicle = () => {
-    const [nama, setNama] = useState("");
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+
+    const [nama, setNama] = useState(storedUsername);
     const [unit, setUnits] = useState("");
     const [jenis, setJenis] = useState("");
     const [tanggal, setTanggal] = useState("");
@@ -53,10 +64,11 @@ const Vehicle = () => {
         console.log(response.data);
         setTimeout(() => {
           navigate("/dashboard-laras");
+          alert(response.data.message);
         }, 1000);
       } catch (error) {
         console.log(error.response);
-        
+        alert("error code 105b");
       }
     }
     return(
@@ -94,7 +106,7 @@ const Vehicle = () => {
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
                             <label htmlFor="">Nama</label>
-                            <input onChange={handleChangeNama} placeholder='Nama' type="text"/>
+                            <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
                             <label htmlFor="">Unit Kerja</label>
                             <input onChange={handleChangeUnits} placeholder='Unit Kerja' type="text"/>
                             <label htmlFor="">Jenis Peminjaman Kendaraan (Pilih Satu)</label>

@@ -4,6 +4,18 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 const Sidebar = () => {
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    const kelompok = parseInt(localStorage.getItem('no_kelompok')) + 1;
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+    console.log(kelompok);
 
     const handleDivClick = (href) => {
         window.location.href = href;
@@ -12,7 +24,7 @@ const Sidebar = () => {
     const [detected, setDetected] = useState("");
     const getDetected = async () => {
       try {
-        const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Absen/detect_absent.php`, {
+        const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Absen/detect_absent.php?nama=${storedUsername}`, {
           headers: {}
         });
         setDetected(response.data);
@@ -23,6 +35,7 @@ const Sidebar = () => {
     }
     useEffect(() => {
       getDetected();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
     const tanggal = new Date();
     const tahun = tanggal.getFullYear();

@@ -25,6 +25,7 @@ const Login = () => {
             localStorage.setItem('sisa_cuti', response.data.data.sisa_cuti);
             localStorage.setItem('f_profile', response.data.data.f_profile);
             localStorage.setItem('id_jabatan_sup', response.data.data.id_jabatan_sup);
+            localStorage.setItem('no_kelompok', response.data.data.no_kelompok);
             setTimeout(() => {
                 alert("Welcome " + response.data.data.nama);
                 navigate('/Home');

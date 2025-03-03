@@ -9,11 +9,13 @@ const Homepage = () => {
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
     const storedFProfile = localStorage.getItem('f_profile');
     const storedID = localStorage.getItem('id_jabatan_sup');
+    const kelompok = localStorage.getItem('no_kelompok');
     console.log(storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
     console.log(storeNrk);
     console.log(storedID);
+    console.log(kelompok);
 
     const scrollClick = () => {
         console.log('discover');

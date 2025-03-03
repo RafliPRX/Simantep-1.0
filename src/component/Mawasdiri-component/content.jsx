@@ -11,11 +11,14 @@ const Content = () => {
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
     const storedFProfile = localStorage.getItem('f_profile');
     const storedID = localStorage.getItem('id_jabatan_sup');
+    const kelompok = parseInt(localStorage.getItem('no_kelompok')) + 1;
     console.log(storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
     console.log(storeNrk);
     console.log(storedID);
+    console.log(kelompok);
+    
     
 
     const [surat, setSurat] = useState([]);
@@ -30,6 +33,17 @@ const Content = () => {
         } catch (error) {
           console.log(error.response);
         }
+      } else if (storedID > "2" && storedID < "9") {
+        try {
+          const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/surat_by_kelompok.php?no_kelompok=${kelompok}`, {
+            headers: {}
+          })
+          console.log(response.data);
+          setSurat(response.data);
+        } catch (error) {
+          console.log(error.response);
+        }
+
       } else {
         try {
           const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/surat_by_name.php?nama=${storedUsername}`, {
@@ -40,7 +54,6 @@ const Content = () => {
         } catch (error) {
           console.log(error.response);
         }
-
       }
     }
     useEffect(() => {

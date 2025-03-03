@@ -225,7 +225,7 @@ const Absent = () => {
                 formData.append('nama', storedUsername);
                 try {
                     const response = await axios.post(
-                        `http://localhost/Simantep_API/MAWASDIRI/Absen/absent_in.php`, 
+                        `https://simantepbareta.cloud/API/MAWASDIRI/Absen/absent_in.php`, 
                         formData, // Combine formData and payload
                         {
                             headers: {

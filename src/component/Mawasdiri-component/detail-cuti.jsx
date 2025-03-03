@@ -7,7 +7,7 @@ const Cuti_Detail_Form = () => {
     const param = useParams();
     const getDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/detail_surat.php?id=${param.id}`, {
+            const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/detail_surat.php?id=${param.id}`, {
                 headers: {}
             });
             console.log(response.data);

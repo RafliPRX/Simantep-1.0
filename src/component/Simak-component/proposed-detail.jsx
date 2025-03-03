@@ -8,7 +8,7 @@ const Proposed_Detail = () => {
         const [detail, setDetail] = useState({});
         const getDetail = async () => {
             try {
-                const response = await axios.get(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/detail_dana_LPJ.php?id=${param.id}`, {
+                const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/detail_dana_LPJ.php?id=${param.id}`, {
                     headers: {}
                 })
                 setDetail(response.data);
@@ -40,7 +40,7 @@ const Proposed_Detail = () => {
               veri_1: kasubag
             };
             try {
-              const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/answer_kasubag_lpj.php?id=${param.id}`, payload, {
+              const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/answer_kasubag_lpj.php?id=${param.id}`, payload, {
                 headers: {
                 'Content-Type': 'multipart/form-data',
                 }
@@ -60,7 +60,7 @@ const Proposed_Detail = () => {
             veri_2: head,
           };
           try {
-            const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/answer_head_lpj.php?id=${param.id}`, payload, {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/answer_head_lpj.php?id=${param.id}`, payload, {
               headers: {
               'Content-Type': 'multipart/form-data',
               }

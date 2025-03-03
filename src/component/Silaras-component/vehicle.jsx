@@ -56,7 +56,7 @@ const Vehicle = () => {
         durasi_pinjam:durasi,
       };
       try {
-        const response = await axios.post(`http://localhost/Simantep_API/SILARAS/new_vehicle.php`, payload, {
+        const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_vehicle.php`, payload, {
           headers: {
             "Content-Type" : "multipart/form-data"
           }

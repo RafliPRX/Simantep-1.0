@@ -41,7 +41,7 @@ const Vehicle_Update = () => {
     const [detail, setDetail] = useState({});
     const getDetail = async () => {
       try {
-        const response = await axios.get(`http://localhost/SIMANtep_API/SILARAS/detail_vehicle.php?id=${param.id}`, {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/detail_vehicle.php?id=${param.id}`, {
             headers: {}
         })
         setDetail(response.data);
@@ -72,7 +72,7 @@ const Vehicle_Update = () => {
         return;
       }
       try {
-        const response = await axios.post(`http://localhost/Simantep_API/SILARAS/update_vehicle.php`, payload, {
+        const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/update_vehicle.php`, payload, {
           headers: {
             "Content-Type" : "multipart/form-data"
           }

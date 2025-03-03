@@ -25,7 +25,7 @@ const Content = () => {
     const getSurat = async () => {
       if (storedID === "6") {
         try {
-          const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/surat.php?nama`, {
+          const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat.php`, {
             headers: {}
           })
           console.log(response.data);
@@ -35,7 +35,7 @@ const Content = () => {
         }
       } else if (storedID > "2" && storedID < "9") {
         try {
-          const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/surat_by_kelompok.php?no_kelompok=${kelompok}`, {
+          const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_kelompok.php?no_kelompok=${kelompok}`, {
             headers: {}
           })
           console.log(response.data);
@@ -46,7 +46,7 @@ const Content = () => {
 
       } else {
         try {
-          const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/surat_by_name.php?nama=${storedUsername}`, {
+          const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_name.php?nama=${storedUsername}`, {
             headers: {}
           })
           console.log(response.data);
@@ -62,7 +62,7 @@ const Content = () => {
     },[])
     const hadleDeleteSurat = async (id) => {
       try {
-        const response = await axios.delete(`http://localhost/Simantep_API/MAWASDIRI/Cuti/delete_surat.php?id=${id}`, {
+        const response = await axios.delete(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/delete_surat.php?id=${id}`, {
           headers: {
             "Content-Type" : "multipart/form-data"
           }

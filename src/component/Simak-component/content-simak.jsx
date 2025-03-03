@@ -22,7 +22,7 @@ const Content_simak = () => {
     const getDana = async () => {
       if (storedID === "5") {
         try {
-            const response = await axios.get("http://localhost/Simantep_API/SIMAK/Dana_RPD/dana.php", {
+            const response = await axios.get("https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana.php", {
                 headers: {}
             })
             console.log(response.data);
@@ -32,7 +32,7 @@ const Content_simak = () => {
         }
       } else {
         try {
-            const response = await axios.get(`http://localhost/Simantep_API/SIMAK/Dana_RPD/dana_by_name.php?nama=${storedUsername}`, {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_by_name.php?nama=${storedUsername}`, {
                 headers: {}
             })
             console.log(response.data);
@@ -51,7 +51,7 @@ const Content_simak = () => {
     const getLpj = async () => {
       if (storedID === "5") {
         try {
-            const response = await axios.get("http://localhost/Simantep_API/SIMAK/Dana_LPJ/dana_lpj.php", {
+            const response = await axios.get("https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj.php", {
                 headers: {}
             })
             console.log(response.data);
@@ -61,7 +61,7 @@ const Content_simak = () => {
         }
       } else {
         try {
-            const response = await axios.get(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?nama=${storedUsername}`, {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?nama=${storedUsername}`, {
                 headers: {}
             })
             console.log(response.data);
@@ -76,7 +76,7 @@ const Content_simak = () => {
     },[]);
     const handleDeleteRPD = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost/Simantep_API/SIMAK/Dana_RPD/delete_dana.php?id=${id}`, {
+            const response = await axios.delete(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/delete_dana.php?id=${id}`, {
                 headers: {
                     "Content-Type" : "multipart/form-data"
                 }
@@ -92,7 +92,7 @@ const Content_simak = () => {
     }
     const handleDeleteLPJ = async (id) => {
         try {
-            const response = await axios.delete(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/delete_dana_LPJ.php?id=${id}`, {
+            const response = await axios.delete(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/delete_dana_LPJ.php?id=${id}`, {
                 headers: {
                     "Content-Type" : "multipart/form-data"
                 }

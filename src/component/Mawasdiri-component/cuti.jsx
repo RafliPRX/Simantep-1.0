@@ -115,7 +115,7 @@ const Cuti_form = () => {
         gambar: image,
       };
       try {
-        const response = await axios.post(`http://localhost/Simantep_API/MAWASDIRI/Cuti/new_surat.php`, payload, {
+        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/new_surat.php`, payload, {
           headers: {
             "Content-Type" : "multipart/form-data"
           }

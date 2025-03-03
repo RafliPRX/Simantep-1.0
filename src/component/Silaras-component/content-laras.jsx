@@ -21,7 +21,7 @@ const Content_laras = () => {
     const getFix = async () => {
       if (storedID === "4") {
         try {
-          const response = await axios.get("http://localhost/Simantep_API/SILARAS/fix.php", {
+          const response = await axios.get("https://simantepbareta.cloud/API/SILARAS/fix.php", {
               headers: {}
           });
           console.log(response.data); // Log the response data
@@ -31,7 +31,7 @@ const Content_laras = () => {
         }
       } else {
         try {
-          const response = await axios.get(`http://localhost/Simantep_API/SILARAS/fix_by_name.php?nama=${storedUsername}`, {
+          const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?nama=${storedUsername}`, {
               headers: {}
           });
           console.log(response.data); // Log the response data
@@ -51,7 +51,7 @@ const Content_laras = () => {
     const getVehicle = async () => {
       if (storedID === "4") {
         try {
-          const response = await axios.get("http://localhost/Simantep_API/SILARAS/vehicle.php", {
+          const response = await axios.get("https://simantepbareta.cloud/API/SILARAS/vehicle.php", {
               headers: {}
           })
           console.log(response.data);
@@ -61,7 +61,7 @@ const Content_laras = () => {
         }
       } else {
         try {
-          const response = await axios.get(`http://localhost/Simantep_API/SILARAS/vehicle_by_name.php?nama=${storedUsername}`, {
+          const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?nama=${storedUsername}`, {
               headers: {}
           })
           console.log(response.data);
@@ -78,7 +78,7 @@ const Content_laras = () => {
     const getRequest = async () => {
       if (storedID === "4") {
         try {
-          const response = await axios.get("http://localhost/Simantep_API/SILARAS/request.php", {
+          const response = await axios.get("https://simantepbareta.cloud/API/SILARAS/request.php", {
               headers: {}
           })
           console.log(response.data);
@@ -88,7 +88,7 @@ const Content_laras = () => {
         }
       } else {
         try {
-          const response = await axios.get(`http://localhost/Simantep_API/SILARAS/request_by_name.php?nama=${storedUsername}`, {
+          const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/request_by_name.php?nama=${storedUsername}`, {
               headers: {}
           })
           console.log(response.data);
@@ -103,7 +103,7 @@ const Content_laras = () => {
     }, [])
     const handleDeleteFix = async (id) => {
         try {
-          const response = await axios.delete(`http://localhost/Simantep_API/SILARAS/delete_fix.php?id=${id}`, {
+          const response = await axios.delete(`https://simantepbareta.cloud/API/SILARAS/delete_fix.php?id=${id}`, {
             headers: {
               "Content-Type" : "multipart/form-data"
             }
@@ -119,7 +119,7 @@ const Content_laras = () => {
       const handleDeleteVehicle = async (id) => {
 
         try {
-          const response = await axios.delete(`http://localhost/Simantep_API/SILARAS/delete_vehicle.php?id=${id}`, {
+          const response = await axios.delete(`https://simantepbareta.cloud/API/SILARAS/delete_vehicle.php?id=${id}`, {
             headers: {
               "Content-Type" : "multipart/form-data"
             }
@@ -135,7 +135,7 @@ const Content_laras = () => {
       const handleDeleteRequest = async (id) => {
 
         try {
-          const response = await axios.delete(`http://localhost/Simantep_API/SILARAS/delete_request.php?id=${id}`, {
+          const response = await axios.delete(`https://simantepbareta.cloud/API/SILARAS/delete_request.php?id=${id}`, {
             headers: {
               "Content-Type" : "multipart/form-data"
             }

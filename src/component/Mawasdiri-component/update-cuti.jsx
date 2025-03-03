@@ -86,7 +86,7 @@ const Cuti_form_Update = () => {
     }
     const getDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Cuti/detail_surat.php?id=${param.id}`, {
+            const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/detail_surat.php?id=${param.id}`, {
                 headers: {}
             });
             console.log(response.data);
@@ -114,7 +114,7 @@ const Cuti_form_Update = () => {
           cuti_date_fin: cuti_df,
         };
         try {
-          const response = await axios.post(`http://localhost/Simantep_API/MAWASDIRI/Cuti/update_surat.php?id=${param.id}`, payload, {
+          const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/update_surat.php?id=${param.id}`, payload, {
             headers: {
               "Content-Type" : "multipart/form-data"
             }

@@ -39,7 +39,7 @@ const Request_Form_Update = () => {
         return;
       }
       try {
-        const response = await axios.post(`http://localhost/Simantep_API/SILARAS/update_request.php?id=${param.id}`, payload, {
+        const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/update_request.php?id=${param.id}`, payload, {
           headers: {
             "Content-Type" : "multipart/form-data"
           }
@@ -55,7 +55,7 @@ const Request_Form_Update = () => {
     const [request, setRequest] = useState([]);
     const getRequest = async () => {
         try {
-            const response = await axios.get(`http://localhost/Simantep_API/SILARAS/detail_request.php?id=${param.id}`, {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/detail_request.php?id=${param.id}`, {
                 headers: {}
             })
             console.log(response.data);

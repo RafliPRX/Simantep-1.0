@@ -16,7 +16,7 @@ const Signup = () => {
             nrk: nrk
         };
         try {
-            const response = await axios.post(`http://localhost/Simantep_API/signup.php`, payload, {
+            const response = await axios.post(`https://simantepbareta.cloud/API/signup.php`, payload, {
                 headers: {
                 'Content-Type': 'multipart/form-data',
                 }

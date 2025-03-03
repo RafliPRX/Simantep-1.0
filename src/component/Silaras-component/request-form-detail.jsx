@@ -7,7 +7,7 @@ const Request_Form_Detail = () => {
     const [request, setRequest] = useState([]);
     const getRequest = async () => {
         try {
-            const response = await axios.get(`http://localhost/Simantep_API/SILARAS/detail_request.php?id=${param.id}`, {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/detail_request.php?id=${param.id}`, {
                 headers: {}
             })
             console.log(response.data);

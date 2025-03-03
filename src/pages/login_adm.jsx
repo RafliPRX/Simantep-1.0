@@ -22,7 +22,7 @@ const Login_ADM = () => {
             pass: password
         };
         try {
-            const response = await axios.post(`http://localhost/Simantep_API/login_adm.php`, payload, {
+            const response = await axios.post(`https://simantepbareta.cloud/API/login_adm.php`, payload, {
                 headers: {
                     "Content-Type" : "multipart/form-data"
                 }

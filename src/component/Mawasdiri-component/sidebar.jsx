@@ -12,7 +12,7 @@ const Sidebar = () => {
     const [detected, setDetected] = useState("");
     const getDetected = async () => {
       try {
-        const response = await axios.get(`http://localhost/Simantep_API/MAWASDIRI/Absen/detect_absent.php`, {
+        const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Absen/detect_absent.php`, {
           headers: {}
         });
         setDetected(response.data);
@@ -34,7 +34,7 @@ const Sidebar = () => {
     const navigate = useNavigate();
     const handleLogout = async () => {
       try {
-        const response = await axios.get(`http://localhost/Simantep_API/logout_adm.php`, {
+        const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
           headers: {}
         });
         setTimeout(() => {

@@ -74,7 +74,7 @@ const Proposed = () => {
                 rencana_pelaksana: rencana,
             };
             try {
-                const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_LPJ/new_Dana_LPJ.php`, payload, {
+                const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/new_Dana_LPJ.php`, payload, {
                     headers: {
                         "Content-Type": "multipart/form-data",
                 }

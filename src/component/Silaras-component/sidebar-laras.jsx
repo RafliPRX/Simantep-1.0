@@ -10,7 +10,7 @@ const Sidebar_laras = () => {
     const navigate = useNavigate();
     const handleLogout = async () => {
       try {
-        const response = await axios.get(`http://localhost/Simantep_API/logout_adm.php`, {
+        const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
           headers: {}
         });
         setTimeout(() => {

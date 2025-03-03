@@ -173,7 +173,7 @@ const Absent_Out = () => {
                 
                 try {
                     const response = await axios.post(
-                        `http://localhost/Simantep_API/MAWASDIRI/Absen/absent_out.php?id=${param.id}`, 
+                        `https://simantepbareta.cloud/API/MAWASDIRI/Absen/absent_out.php?id=${param.id}`, 
                         formData,
                         {
                             headers: {

@@ -8,7 +8,7 @@ const Detail_Withdraw = () => {
     const [detail, setDetail] = useState([]);
     const getDetail = async () => {
         try {
-            const response = await axios.get(`http://localhost/Simantep_API/SIMAK/Dana_RPD/detail_dana.php?id=${param.id}`, {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/detail_dana.php?id=${param.id}`, {
                 headers: {}
             });
             setDetail(response.data);

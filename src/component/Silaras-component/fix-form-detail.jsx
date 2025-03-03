@@ -8,7 +8,7 @@ const Fix_form_Detail = () => {
   const [detail, setDetail] = useState({});
   const getDetail = async () => {
       try {
-        const response = await axios.get(`http://localhost/Simantep_API/SILARAS/detail_fix.php?id=${param.id}`, {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/detail_fix.php?id=${param.id}`, {
             headers: {}
         })
         setDetail(response.data);

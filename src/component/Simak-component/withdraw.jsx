@@ -135,7 +135,7 @@ const Withdraw = () => {
             metode: metode
         };
         try {
-            const response = await axios.post(`http://localhost/Simantep_API/SIMAK/Dana_RPD/new_Dana.php`, payload, {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/new_Dana.php`, payload, {
                 headers: {
                     "Content-Type" : "multipart/form-data",
                 }

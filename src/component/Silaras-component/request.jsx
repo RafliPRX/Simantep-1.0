@@ -45,7 +45,7 @@ const Request = () => {
         barang: barang,
       };
       try {
-        const response = await axios.post(`http://localhost/Simantep_API/SILARAS/new_request.php`, payload, {
+        const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_request.php`, payload, {
           headers: {
             "Content-Type" : "multipart/form-data"
           }

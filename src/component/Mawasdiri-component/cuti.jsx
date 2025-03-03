@@ -123,9 +123,11 @@ const Cuti_form = () => {
         console.log(response.data);
         setTimeout(() => {
           navigate("/Dashboard");
+          alert(response.data.message);
         }, 1000);
       } catch (error) {
         console.log(error.response);
+        alert("error code 103");
       }
     }
     return(

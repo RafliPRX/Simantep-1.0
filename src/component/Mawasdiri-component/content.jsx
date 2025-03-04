@@ -19,8 +19,6 @@ const Content = () => {
     console.log(storedID);
     console.log(kelompok);
     
-    
-
     const [surat, setSurat] = useState([]);
     const getSurat = async () => {
       if (storedID === "6") {

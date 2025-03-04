@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './login.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
@@ -32,6 +32,23 @@ const Signup = () => {
         }
     }
 
+    const [nama, setNama] = useState([]);
+    const getNama = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/get_nama.php`, {
+                headers: {} 
+            })
+            console.log(response.data);
+            setNama(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+
+    useEffect(() =>{
+        getNama();
+    },[]);
+
     const handleChangeUsername = (event) => {
         setUsername(event.target.value);
         console.log(event.target.value);
@@ -58,7 +75,12 @@ const Signup = () => {
                         </div>
                         <div className='input-col'>
                             <label>Username</label>
-                            <input onChange={handleChangeUsername} type="text" />
+                            <select onChange={handleChangeUsername}>
+                                    <option value="">Select Username</option>
+                                {nama.map((item, index) => (
+                                    <option key={index} value={item.nama}>{item.nama}</option>
+                                ))}
+                            </select>
                             <label>Password</label>
                             <input onChange={handleChangePassword} type="password" />
                             <label>NRK</label>

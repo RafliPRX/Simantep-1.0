@@ -1,11 +1,31 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './login.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+
 const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [fetchedName, setFetchedName] = useState(''); // New state for fetched name
+    const [usernames, setUsernames] = useState([]); // State to hold usernames for the select dropdown
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const fetchUsernames = async () => {
+            try {
+                const response = await axios.get(`https://simantepbareta.cloud/API/get_username.php`); // Ensure this endpoint is correct
+                console.log("Usernames fetched:", response.data); // Log the response for debugging
+                if (Array.isArray(response.data)) {
+                    setUsernames(response.data); // Set the usernames for the dropdown
+                } else {
+                    console.error("Unexpected data format:", response.data);
+                }
+            } catch (error) {
+                console.error("Error fetching usernames:", error);
+            }
+        };
+        fetchUsernames();
+    }, []);
 
     const handleLogin = async (event) => {
         event.preventDefault();
@@ -36,15 +56,36 @@ const Login = () => {
         }
     }
 
+    useEffect(() => {
+        const fetchName = async () => {
+            if (username) {
+                try {
+                    const response = await axios.get(`https://simantepbareta.cloud/API/get_username.php`);
+                    console.log(response.data); // Log the entire response for debugging
+                    console.log("Fetched Name:", response.data); // Log the fetched name for debugging
+                    setFetchedName(response.data.nama); // Assuming the API returns an object with a key 'nama'
+                } catch (error) {
+                    console.error("Error fetching name:", error);
+                    setFetchedName(''); // Clear name if there's an error
+                }
+            } else {
+                setFetchedName(''); // Clear name if username is empty
+            }
+        };
+        fetchName();
+    }, [username]);
+
     const handleChangeUsername = (event) => {
-        setUsername(event.target.value);
-        console.log(event.target.value);
+        const newUsername = event.target.value;
+        setUsername(newUsername);
+        console.log(newUsername);
     }
 
     const handleChangePassword = (event) => {
         setPassword(event.target.value);
         console.log(event.target.value);
     }
+
     return(
         <>
         <div className='login'>
@@ -57,7 +98,14 @@ const Login = () => {
                         </div>
                         <div className='input-col'>
                             <label>Username</label>
-                            <input onChange={handleChangeUsername} type="text" />
+                            <select onChange={handleChangeUsername}>
+                                <option value="">Select Username</option>
+                                {usernames.map((user) => (
+                                    <option key={user.id} value={user.nama}>{user.nama}</option> // Assuming each user has an id and nama
+                                ))}
+                            </select>
+                            {fetchedName && <p style={{ color: 'blue' }}>{fetchedName}</p>} {/* Display fetched name */}
+
                             <label>Password</label>
                             <input onChange={handleChangePassword} type="password" />
                             <div className='forget'>

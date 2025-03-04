@@ -65,6 +65,22 @@
     height: 400px;
     gap: 5px;
 }
+.login .col .form-col form .input-col select{
+    display: flex;
+    width: 415px;
+    height: 51px;
+    padding: 17px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 10px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: #000E60;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #FFF;
+}
 .login .col .form-col form .input-col label{
     width: 410px;
     height: 20px;

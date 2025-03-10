@@ -21,7 +21,7 @@ const Content = () => {
     
     const [surat, setSurat] = useState([]);
     const getSurat = async () => {
-      if (storedID === "6") {
+      if (storedID === "6" || storedID === "10") {
         try {
           const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat.php`, {
             headers: {}
@@ -54,8 +54,33 @@ const Content = () => {
         }
       }
     }
+    const [absent, setAbsent] = useState([]);
+    const getAbsent = async () => {
+      if (storedID === "6") {
+        try {
+          const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Absen/absent.php`, {
+            headers: {}
+          })
+          console.log(response.data);
+          setAbsent(response.data);
+        } catch (error) {
+          console.log(error.response);
+        }
+      } else {
+        try {
+          const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Absen/absent_byName.php?nama=${storedUsername}`, {
+            headers: {}
+          })
+          console.log(response.data);
+          setAbsent(response.data);
+        } catch (error) {
+          console.log(error.response);
+        }
+      }
+    }
     useEffect(() => {
       getSurat();
+      getAbsent();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     const hadleDeleteSurat = async (id) => {
@@ -145,6 +170,57 @@ const Content = () => {
                             ): (
                               <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}
+                        </div>
+                        <div className='content'>
+                            <h1>Absensi</h1>
+                            {absent.length > 0 ? (
+                              <table>
+                                  <tr>
+                                      <th style={{textAlign:'center'}}>Nomor</th>
+                                      <th style={{textAlign:'center'}}>Nama</th>
+                                      <th style={{textAlign:'center'}}>Tanggal</th>
+                                      <th style={{textAlign:'center'}}>Jam Masuk</th>
+                                      <th style={{textAlign:'center'}}>Jam Keluar</th>
+                                  </tr>
+                                  {absent.map((item, index) =>(
+                                  <tr key={item.id_surat}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama}</td>
+                                    <td style={{textAlign:'center'}}>{item.today}</td>
+                                    <td style={{textAlign:'center'}}>{item.jam_in}</td>
+                                    <td style={{textAlign:'center'}}>{item.jam_out}</td>
+                                  </tr>
+                                  ))}
+                              </table>
+                            ): (
+                              <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}
+                        </div>
+                        <div className='content'>
+                            <h1>Absensi</h1>
+                            {absent.length > 0 ? (
+                              <table>
+                                  <tr>
+                                      <th style={{textAlign:'center'}}>Nomor</th>
+                                      <th style={{textAlign:'center'}}>Nama</th>
+                                      <th style={{textAlign:'center'}}>Tanggal</th>
+                                      <th style={{textAlign:'center'}}>Jam Masuk</th>
+                                      <th style={{textAlign:'center'}}>Jam Keluar</th>
+                                  </tr>
+                                  {absent.map((item, index) =>(
+                                  <tr key={item.id_surat}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama}</td>
+                                    <td style={{textAlign:'center'}}>{item.today}</td>
+                                    <td style={{textAlign:'center'}}>{item.jam_in}</td>
+                                    <td style={{textAlign:'center'}}>{item.jam_out}</td>
+                                  </tr>
+                                  ))}
+                              </table>
+                            ): (
+                              <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}
+                            
                         </div>
                     </div>
                 </div>

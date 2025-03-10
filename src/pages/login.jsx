@@ -101,7 +101,8 @@ const Login = () => {
                             <select onChange={handleChangeUsername}>
                                 <option value="">Select Username</option>
                                 {usernames.map((user) => (
-                                    <option key={user.id} value={user.nama}>{user.nama}</option> // Assuming each user has an id and nama
+                                    <option key={user.nama} value={user.nama}>{user.nama}</option> // Assuming each user has a unique nama
+
                                 ))}
                             </select>
                             {fetchedName && <p style={{ color: 'blue' }}>{fetchedName}</p>} {/* Display fetched name */}

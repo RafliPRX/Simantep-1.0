@@ -103,3 +103,9 @@
     margin-left: 232px;
     margin-top: -41px;
 }
+@media only screen and (max-width: 480px) {
+    .banner{
+        scale: 0.3;
+        margin-right: 185px;
+    }
+}

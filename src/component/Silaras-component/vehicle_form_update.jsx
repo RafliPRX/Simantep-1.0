@@ -117,7 +117,7 @@ const Vehicle_Update = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box3'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>

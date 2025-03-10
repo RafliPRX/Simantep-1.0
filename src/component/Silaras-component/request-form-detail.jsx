@@ -1,8 +1,19 @@
 import { useEffect, useState } from 'react'
 import './fix-form'
 import axios from 'axios'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 const Request_Form_Detail = () => {
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+
     const param = useParams();
     const [request, setRequest] = useState([]);
     const getRequest = async () => {
@@ -21,6 +32,33 @@ const Request_Form_Detail = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
+    const [jawab, setJawab] = useState('');
+    const handleChangeJawaban = (event) => {
+      setJawab(event.target.value);
+      console.log(event.target.value);
+    }
+    const navigate = useNavigate();
+    const handleJawab = async (event) => {
+      event.preventDefault();
+      const payload = {
+        jawab: jawab,
+      }
+      try {
+        const response = axios.post(`https://simantepbareta.cloud/API/SILARAS/answer_request.php?id=${param.id}`,payload, {
+          headers: {
+            "Content-Type" : "multipart/form-data"
+          }
+        })
+        console.log(response.data);
+        setTimeout(() => {
+          navigate("/dashboard-laras");
+          alert(response.data.message);
+        }, 1000);
+      } catch (error) {
+        console.log(error.response);
+        alert(error.response);
+      }
+    }
     return(
         <>
             <div className='main-dashboard'>
@@ -51,7 +89,7 @@ const Request_Form_Detail = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box3'>
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
                             <table>
@@ -82,6 +120,31 @@ const Request_Form_Detail = () => {
                             </table>
                         </div>
                     </div>
+                    <div className='box3'>
+                      <form action="">
+                      <div className='content-f'>
+                          <h1>Data Perbaikan</h1>
+                          <table>
+                            <tr>
+                              <td>Jawaban</td>
+                            </tr>
+                            <tr>
+                              <td className='input'>{request.jawab}</td>
+                            </tr>
+                          </table>
+                      </div>
+                      </form>
+                  </div>
+                  <div style={{display: storedID == 4 ? 'flex' : 'none'}} className='box3'>
+                    <form action="">
+                      <div className='content-f'>
+                        <h1>Jawab</h1>
+                        <label htmlFor="">Jawaban</label>
+                        <textarea onChange={handleChangeJawaban} name="" id=""></textarea>
+                      </div>
+                      <button onClick={handleJawab} className='submit'>Kirim</button>
+                    </form>
+                  </div>
                 </div>
             </div>        
         </>

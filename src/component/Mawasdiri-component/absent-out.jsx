@@ -235,9 +235,8 @@ const Absent_Out = () => {
                 <div className='pic'></div>
             </div>
             <div className='content-col'>
-                <div className='box'>
+                <div className='box1'>
                     <form>
-
                         <div className='content-f'>
                         <h1>Kamera</h1>
                             <select onChange={handleDeviceChange} value={selectedDevice}>

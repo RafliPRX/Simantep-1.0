@@ -3,7 +3,18 @@ import './form.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 
-const Proposed_Detail = () => {        
+const Proposed_Detail = () => {
+        const storedUsername = localStorage.getItem('nama');
+        const storeNrk = localStorage.getItem('nrk');
+        const storedSisaCuti = localStorage.getItem('sisa_cuti');
+        const storedFProfile = localStorage.getItem('f_profile');
+        const storedID = localStorage.getItem('id_jabatan_sup');
+        console.log(storedUsername);
+        console.log(storedSisaCuti );
+        console.log(storedFProfile);
+        console.log(storeNrk);
+        console.log(storedID);
+      
         const param = useParams();
         const [detail, setDetail] = useState({});
         const getDetail = async () => {
@@ -33,7 +44,31 @@ const Proposed_Detail = () => {
           setHead(event.target.value);
           console.log(event.target.value);
         }
-
+        const [keterangan, setKeterangan] = useState('');
+        const handleChangeKeterangan = (event) => {
+          setKeterangan(event.target.value);
+          console.log(event.target.value);
+        }
+        const handleKeuangan = async (event) => {
+          event.preventDefault();
+          const payload = {
+            keterangan: keterangan
+          }
+          try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/answer_keuangan_lpj.php?id=${param.id}`, payload, {
+              headers: {
+              'Content-Type': 'multipart/form-data',
+              }
+            })
+            console.log(response.data);
+            setTimeout(() => {
+              navigate("/dashboard-simak");
+              alert(response.data.message);
+            })
+          } catch (error) {
+            console.log(error.response);
+          }
+        }
         const handleKasubagRequest = async (event) =>{
             event.preventDefault();
             const payload = {
@@ -78,7 +113,7 @@ const Proposed_Detail = () => {
         <>
             <div className='main-dashboard'>
                 <p>Simak/Form Pengajuan Proposal & LPJ</p>
-                <h1>Form Rencana Penarikan Dana</h1>
+                <h1>Form Pengajuan Proposal & LPJ</h1>
                 <div className='profile'>
                     <input placeholder='Search' type="text" />
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -104,7 +139,7 @@ const Proposed_Detail = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box2'>
                         <div className='content-f'>
                             <h1>Data Diri</h1>
                             <table>
@@ -146,7 +181,7 @@ const Proposed_Detail = () => {
                             </tr>
                             </table>
                         </div>
-                        <div className='content-f'>
+                        <div style={{display: storedID == 10 ? 'flex' : 'none'}} className='content-f'>
                           <h1>Jawab KASUBAG</h1>
                           <form action="">
                           <table>
@@ -162,26 +197,49 @@ const Proposed_Detail = () => {
                               <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
                             </tr>
                           </table>
+                          <button onClick={handleKasubagRequest} className='submit' type="submit">Submit</button>
                           </form>
                         </div>
-                        <button onClick={handleKasubagRequest} className='submit' type="submit">Submit</button>
-                        <div className='content-f'>
-                          <h1>Jawab KASUBAG</h1>
-                          <table>
-                            <tr style={{marginBottom: '15px'}}>
-                              <td>Jawaban</td>
-                            </tr>
-                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={2} id="" /></td>
-                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
-                            </tr>
-                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input  onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={3} id="" /></td>
-                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
-                            </tr>
-                          </table>
+                        <div style={{display: storedID == 12 ? 'flex' : 'none'}} className='content-f'>
+                          <h1>Jawab KEPALA BALAI</h1>
+                          <form action="">
+                            <table>
+                              <tr style={{marginBottom: '15px'}}>
+                                <td>Jawaban</td>
+                              </tr>
+                              <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={2} id="" /></td>
+                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
+                              </tr>
+                              <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input  onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={3} id="" /></td>
+                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
+                              </tr>
+                            </table>
+                          </form>
+                          <button onClick={handleHeadRequest} className='submit' type="submit">Submit</button>
                         </div>
-                        <button onClick={handleHeadRequest} className='submit' type="submit">Submit</button>
+                        <div style={{display: storedID == 5 ? 'flex' : 'none'}} className='content-f'>
+                          <h1>Keterangan Keuangan</h1>
+                          <form action="">
+                            <table>
+                              <tr style={{marginBottom: '15px'}}>
+                                <td>Jawaban</td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <label htmlFor="">Keterangan</label>
+                                </td>
+                              </tr>
+                              <tr>
+                                <td>
+                                  <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
+                                </td>
+                              </tr>
+                            </table>
+                          </form>
+                          <button onClick={handleKeuangan} className='submit' type="submit">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>        

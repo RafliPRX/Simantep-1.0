@@ -1,9 +1,20 @@
 import { useEffect, useState } from 'react';
 import './form.css';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Detail_Withdraw = () => {
+    const storedUsername = localStorage.getItem('nama');
+    const storeNrk = localStorage.getItem('nrk');
+    const storedSisaCuti = localStorage.getItem('sisa_cuti');
+    const storedFProfile = localStorage.getItem('f_profile');
+    const storedID = localStorage.getItem('id_jabatan_sup');
+    console.log(storedUsername);
+    console.log(storedSisaCuti );
+    console.log(storedFProfile);
+    console.log(storeNrk);
+    console.log(storedID);
+
     const param = useParams();
     const [detail, setDetail] = useState([]);
     const getDetail = async () => {
@@ -22,11 +33,37 @@ const Detail_Withdraw = () => {
         getDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
+    const [keterangan, setKeterangan] = useState('');
+    const navigate = useNavigate();
+    const handleChangeKeterangan = (event) => {
+      setKeterangan(event.target.value);
+      console.log(event.target.value);
+    }
+    const handleJawab = async (event) => {
+      event.preventDefault();
+      const payload = {
+        keterangan_keuangan: keterangan,
+      }
+      try {
+        const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/answer_dana_keuangan.php?id=${param.id}`, payload, {
+          headers: {
+          'Content-Type': 'multipart/form-data',
+          }
+        })
+        console.log(response.data);
+        setTimeout(() => {
+          navigate("/dashboard-simak");
+          alert(response.data.message);
+        })
+      } catch (error) {
+        console.error(error);
+      }
+    }
     return (
         <>
             <div className='main-dashboard'>
-                <p>Simak/Form Penarikan Dana</p>
-                <h1>Form Pengajuan Proposal & LPJ</h1>
+                <p>Simak/Form Rencana Penarikan Dana</p>
+                <h1>Form Rencana Penarikan Dana</h1>
                 <div className='profile'>
                     <input placeholder='Search' type="text" />
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -52,7 +89,7 @@ const Detail_Withdraw = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box2'>
                         <form action="">
                             <div className='content-f'>
                                 <h1>Data Diri</h1>
@@ -99,81 +136,97 @@ const Detail_Withdraw = () => {
                                     <tr>
                                       <td className='input'>{detail.units}</td>
                                     </tr>
-                                    <div style={{display: detail.units === 'Sosial' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'center', gap: '10px'}}>
+                                    <div style={{display: detail.units === 'Sosial' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
                                         <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 521211</td>
+                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>Kebutuhan Akun 521211</td>
                                         </tr>
                                         <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>{detail.acc_521211}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto' , paddingRight: '20px'}}>{detail.acc_521211}</td>
                                         </tr>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan 522141</td>
                                         </tr>
                                         <tr style={{}}>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingLeft: '20px'}}>- Sewa Tempat</td>  
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', marginLeft: '50px'}}>{detail.acc_522141_tempat}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', marginLeft: '50px', paddingRight: '20px'}}>{detail.acc_522141_tempat}</td>
                                         </tr>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingLeft: '20px'}}>- Sewa Kendaraan</td>  
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', marginLeft: '50px'}}>{detail.acc_522141_kendaraan}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', marginLeft: '50px', paddingRight: '20px'}}>{detail.acc_522141_kendaraan}</td>
                                         </tr>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 522151</td>
                                         </tr>
                                         <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>{detail.acc_522151}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_522151}</td>
                                         </tr>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 524113</td>
                                         </tr>
                                         <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>{detail.acc_524113}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_524113}</td>
                                         </tr>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 524114</td>
                                         </tr>
                                         <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>{detail.acc_524114}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_524114}</td>
                                         </tr>
                                     </div>
-                                    <div style={{display: detail.units === 'Medis' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'center', gap: '10px'}}>
+                                    <div style={{display: detail.units === 'Medis' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 521211</td>
                                         </tr>
                                         <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>{detail.acc_521211}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_521211}</td>
                                         </tr>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 522191</td>
                                         </tr>
                                         <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>{detail.acc_522191}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_522191}</td>
                                         </tr>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Keterangan</td>
                                         </tr>
                                         <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>{detail.keterangan}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.keterangan}</td>
                                         </tr>
                                     </div>
-                                    <div style={{display: detail.units === 'Manajemen' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'center', gap: '10px'}}>
+                                    <div style={{display: detail.units === 'Manajemen' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Total Permintaan Dana</td>
                                         </tr>
                                         <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>{detail.total_dana_manajemen}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.total_dana_manajemen}</td>
                                         </tr>
                                         <tr>
                                           <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Metode Pembayaran</td>
                                         </tr>
                                         <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>{detail.metode}</td>
+                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.metode}</td>
                                         </tr>
                                     </div>
+                                    <tr>
+                                      <td>Keterangan Keuangan</td>
+                                    </tr>
+                                    <tr>
+                                      <td className='input'>{detail.keterangan_keuangan}</td>
+                                    </tr>
                                 </table>
                             </div>
                         </form>
                     </div>
+                    <div style={{display: storedID == 5 ? 'flex' : 'none'}} className='box2'>
+                    <form action="">
+                      <div className='content-f'>
+                        <h1>Jawab</h1>
+                        <label htmlFor="">Jawaban</label>
+                        <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
+                      </div>
+                      <button onClick={handleJawab} className='submit'>Kirim</button>
+                    </form>
+                  </div>
                 </div>
             </div>        
         </>

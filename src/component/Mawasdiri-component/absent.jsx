@@ -238,7 +238,7 @@ const Absent = () => {
                         alert("Absent berhasil dicatat!");
                         setTimeout(() => {
                             navigate("/Dashboard");
-                        }, 1000);
+                        }, 500);
                     } else {
                         const errorMessage = response.data.message || 'Unknown error occurred';
                         alert(`Gagal melakukan absent: ${errorMessage}`);
@@ -287,7 +287,7 @@ const Absent = () => {
                 <div className='pic'></div>
             </div>
             <div className='content-col'>
-                <div className='box'>
+                <div className='box1'>
                     <form>
                         <div className='content-f'>
                         <h1>Kamera</h1>
@@ -310,7 +310,7 @@ const Absent = () => {
                             <div id="map" style={{ height: "400px", width: "100%" }}></div>
                         </div>
                         <button onClick={handleAbsentIn} className='submit' type="submit">Absen</button>
-                        <div style={{ marginTop: '10px' }}>
+                        <div style={{ marginTop: '10px', display:'none' }}>
                             <label >
                                 <input 
                                     type="checkbox"

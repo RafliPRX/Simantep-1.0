@@ -96,7 +96,7 @@ const Fix_form = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box3'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Perbaikan</h1>

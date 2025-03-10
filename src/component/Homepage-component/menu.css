@@ -92,3 +92,11 @@
     transform: scale(1.1);
     transition: all 0.4s ease-in-out;
 }
+@media only screen and (max-width: 480px) {
+    .menu{
+        display: flex;
+        scale: 0.3;
+        margin-top: -409px;
+        margin-right: 124px;
+    }
+}

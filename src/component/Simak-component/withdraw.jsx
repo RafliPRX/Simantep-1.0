@@ -153,8 +153,8 @@ const Withdraw = () => {
     return (
         <>
             <div className='main-dashboard'>
-                <p>Simak/Form Penarikan Dana</p>
-                <h1>Form Pengajuan Proposal & LPJ</h1>
+                <p>Simak/Form Rencana Penarikan Dana</p>
+                <h1>Form Rencana Penarikan Dana</h1>
                 <div className='profile'>
                     <input placeholder='Search' type="text" />
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -180,7 +180,7 @@ const Withdraw = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box2'>
                         <form action="">
                             <div className='content-f'>
                                 <h1>Data Diri</h1>

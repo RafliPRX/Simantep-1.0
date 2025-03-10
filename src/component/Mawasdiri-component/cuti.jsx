@@ -160,7 +160,7 @@ const Cuti_form = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box1'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Diri</h1>

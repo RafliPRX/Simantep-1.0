@@ -65,11 +65,11 @@
     height: 400px;
     gap: 5px;
 }
+
 .login .col .form-col form .input-col select{
     display: flex;
-    width: 415px;
-    height: 51px;
-    padding: 17px 24px;
+    width: 416px;
+    height: 50px;    padding: 17px 24px;
     flex-direction: column;
     align-items: flex-start;
     gap: 30px;
@@ -254,4 +254,24 @@
     margin-left: 54px;
     margin-top: -19px;
     background: url(../assets/simanteb-logo.png) rgb(255, 255, 255, 0) 50% / cover no-repeat;
+}
+
+@media only screen and (max-width: 480px) {
+    .login{
+        width: 570px;
+        display: flex;
+        justify-content: center;
+        overflow-y: hidden;
+    }
+    .login .col{
+        width: 483px;
+        scale: 0.7;
+        margin-bottom: 160px;
+    }
+    .login .col .form-col{
+        padding: 22px 30px;
+    }
+    .login .col .logo {
+      display: none;
+    }
 }

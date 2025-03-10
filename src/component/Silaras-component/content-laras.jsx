@@ -3,7 +3,9 @@ import { useEffect, useState } from 'react';
 import './content-laras.css'
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-// import green from '../../assets/green.svg'
+import green from '../../assets/green.svg'
+import white from '../../assets/unread.svg'
+import red from '../../assets/decline.svg'
 const Content_laras = () => {
     const storedUsername = localStorage.getItem('nama');
     const storeNrk = localStorage.getItem('nrk');
@@ -190,6 +192,7 @@ const Content_laras = () => {
                                 <th style={{textAlign:'center'}}>NIP/NRK</th>
                                 <th style={{textAlign:'center'}}>Unit Kerja</th>
                                 <th style={{textAlign:'center'}}>Permintaan Perbaikan</th>
+                                <th style={{textAlign:'center'}}>Approval Status</th>
                                 <th style={{textAlign:'center'}}>Detail</th>
                               </tr>
                               {fix.map((item, index) => (
@@ -200,6 +203,9 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center'}}>{item.nrk}</td>
                                   <td style={{textAlign:'center'}}>{item.unit}</td>
                                   <td style={{textAlign:'center'}}>{item.fix}</td>
+                                  <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                  <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                  <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
                                   <td style={{textAlign:'center'}}>
                                     <Link to={`/form-perbaikan/${item.id}`}>Lihat Disini |</Link>
                                     <br /><div><button className='putih' onClick={() => handleDeleteFix(item.id)}>Hapus</button></div>
@@ -223,9 +229,12 @@ const Content_laras = () => {
                                     <th style={{textAlign:'center'}}>Nama</th>
                                     <th style={{textAlign:'center'}}>Unit Kerja</th>
                                     <th style={{textAlign:'center'}}>Jenis Peminjaman Kendaraan</th>
+                                    <th style={{textAlign:'center'}}>Tujuan Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Keperluan Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Tanggal Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Jam Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Durasi Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Approval Status</th>
                                     <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
                               {vehicle.map((item, index) => (
@@ -235,9 +244,14 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     <td style={{textAlign:'center'}}>{item.unit}</td>
                                     <td style={{textAlign:'center'}}>{item.jenis}</td>
+                                    <td style={{textAlign:'center'}}>{item.tujuan}</td>
+                                    <td style={{textAlign:'center'}}>{item.keperluan}</td>
                                     <td style={{textAlign:'center'}}>{item.tanggal_pinjam}</td>
                                     <td style={{textAlign:'center'}}>{item.jam_pinjam}</td>
                                     <td style={{textAlign:'center'}}>{item.durasi_pinjam}</td>
+                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
                                     <td style={{textAlign:'center'}}><Link to={`/form-kendaraan-dinas/${item.id}`}>Lihat Disini|</Link>
                                     <br /><div><button onClick={() => handleDeleteVehicle(item.id)}>Hapus</button></div> 
                                     </td>
@@ -261,6 +275,7 @@ const Content_laras = () => {
                                    <th style={{textAlign:'center'}}>NIP/NRK</th>
                                    <th style={{textAlign:'center'}}>Unit Kerja</th>
                                    <th style={{textAlign:'center'}}>Permohonan Barang</th>
+                                   <th style={{textAlign:'center'}}>Approval Status</th>
                                    <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
                               {request.map((item, index) => (
@@ -271,6 +286,9 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{item.nrk}</td>
                                     <td style={{textAlign:'center'}}>{item.unit}</td>
                                     <td style={{textAlign:'center'}}>{item.barang}</td>
+                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
                                     <td style={{textAlign:'center'}}><Link to={`/form-permintaan-barang-baru/${item.id}`}>Lihat Disini|</Link>
                                     <br /><div><button onClick={() => handleDeleteRequest(item.id)}>Hapus</button></div>
                                 </td>

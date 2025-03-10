@@ -1,9 +1,20 @@
 import { useEffect, useState } from 'react';
 import './fix-form.css';
 import axios from 'axios';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const Fix_form_Detail = () => { 
+  const storedUsername = localStorage.getItem('nama');
+  const storeNrk = localStorage.getItem('nrk');
+  const storedSisaCuti = localStorage.getItem('sisa_cuti');
+  const storedFProfile = localStorage.getItem('f_profile');
+  const storedID = localStorage.getItem('id_jabatan_sup');
+  console.log(storedUsername);
+  console.log(storedSisaCuti );
+  console.log(storedFProfile);
+  console.log(storeNrk);
+  console.log(storedID);
+
   const param = useParams();
   const [detail, setDetail] = useState({});
   const getDetail = async () => {
@@ -22,7 +33,39 @@ const Fix_form_Detail = () => {
     getDetail();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
-
+  const [image, setImage] = useState(null);
+  const handleChangeImage = (event) => {
+    setImage(event.target.files[0]);
+    console.log(event.target.files[0]);
+  }
+  const [jawab, setJawaban] = useState('');
+  const handleChangeJawaban = (event) => {
+    setJawaban(event.target.value);
+    console.log(event.target.value);
+  }
+  const navigate = useNavigate();
+  const handleJawab = async (event) => {
+    event.preventDefault();
+    const payload = {
+      jawab: jawab,
+      bukti: image
+    }
+    try {
+      const response = axios.post(`https://simantepbareta.cloud/API/SILARAS/answer_fix.php?id=${param.id}`,payload, {
+        headers: {
+          "Content-Type" : "multipart/form-data"
+        }
+      })
+      console.log(response.data);
+      setTimeout(() => {
+        navigate("/dashboard-laras");
+        alert(response.data.message);
+      }, 1000);
+    } catch (error) {
+      console.log(error.response);
+      alert(error.response);
+    }
+  }
   return(
       <>
           <div className='main-dashboard'>
@@ -53,7 +96,7 @@ const Fix_form_Detail = () => {
                   <div className='pic'></div>
               </div>
               <div className='content-col'>
-                  <div className='box'>
+                  <div className='box3'>
                       <form action="">
                       <div className='content-f'>
                           <h1>Data Perbaikan</h1>
@@ -86,11 +129,44 @@ const Fix_form_Detail = () => {
                               <td>Bukti Gambar</td>
                             </tr>
                             <tr>
-                              <td> <img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`http://localhost/Simantep_API/SILARAS/${detail.foto}`} alt="" /> </td>
+                              <td> <img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.foto}`} alt="" /> </td>
                             </tr>
                           </table>
                       </div>
                       </form>
+                  </div>
+                  <div className='box3'>
+                      <form action="">
+                      <div className='content-f'>
+                          <h1>Data Perbaikan</h1>
+                          <table>
+                            <tr>
+                              <td>Jawaban</td>
+                            </tr>
+                            <tr>
+                              <td className='input'>{detail.jawab}</td>
+                            </tr>
+                            <tr>
+                              <td>Bukti Gambar</td>
+                            </tr>
+                            <tr>
+                              <td className='input'><img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.bukti}`} alt="" /></td>
+                            </tr>
+                          </table>
+                      </div>
+                      </form>
+                  </div>
+                  <div style={{display: storedID == 4 ? 'flex' : 'none'}} className='box3'>
+                    <form action="">
+                      <div className='content-f'>
+                        <h1>Jawab</h1>
+                        <label htmlFor="">Jawaban</label>
+                        <textarea onChange={handleChangeJawaban} name="" id=""></textarea>
+                        <label htmlFor="">Bukti Gambar</label>
+                        <input onChange={handleChangeImage} type="file" name="" id="" />
+                      </div>
+                      <button onClick={handleJawab} className='submit'>Kirim</button>
+                    </form>
                   </div>
               </div>
           </div>        

@@ -20,6 +20,8 @@ const Vehicle = () => {
     const [tanggal, setTanggal] = useState("");
     const [jam, setJam] = useState("");
     const [durasi, setDurasi] = useState("");
+    const [tujuan, setTujuan] = useState("");
+    const [keperluan, setKeperluan] = useState("");
     const navigate = useNavigate();
     const handleChangeNama = (event) => {
       console.log(event.target.value);
@@ -32,6 +34,14 @@ const Vehicle = () => {
     const handleChangeJenis = (event) => {
       console.log(event.target.value);
       setJenis(event.target.value);
+    }
+    const handleChangeTujuan = (event) => {
+      console.log(event.target.value);
+      setTujuan(event.target.value);
+    }
+    const handleChangeKeperluan = (event) => {
+      console.log(event.target.value);
+      setKeperluan(event.target.value);
     }
     const handleChangeTanggal = (event) => {
       console.log(event.target.value);
@@ -51,6 +61,8 @@ const Vehicle = () => {
         nama:nama,
         unit:unit,
         jenis:jenis,
+        tujuan:tujuan,
+        keperluan:keperluan,
         tanggal_pinjam:tanggal,
         jam_pinjam:jam,
         durasi_pinjam:durasi,
@@ -101,7 +113,7 @@ const Vehicle = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box3'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
@@ -122,12 +134,16 @@ const Vehicle = () => {
                                 <input onChange={handleChangeJenis} value={"Roda 6"} type="checkbox" name="" id="" />
                                 <label htmlFor="">Roda 6</label>
                             </div>
+                            <label htmlFor="">Tujuan Peminjaman</label>
+                            <input type="text" onChange={handleChangeTujuan} placeholder='Tujuan Peminjaman' />
+                            <label htmlFor="">Keperluan Peminjaman</label>
+                            <input type="text" onChange={handleChangeKeperluan} placeholder='Keperluan Peminjaman' />
                             <label htmlFor="">Tanggal Peminjaman</label>
                             <input onChange={handleChangeTanggal} placeholder='Tanggal Peminjaman' type="date"/>
                             <label htmlFor="">Jam Peminjaman</label>
                             <input onChange={handleChangeJam} placeholder='Jam Peminjaman' type="time"/>
                             <label htmlFor="">Durasi Peminjaman</label>
-                            <input onChange={handleChangeDurasi} placeholder='Durasi Peminjaman' type="time"/>
+                            <input onChange={handleChangeDurasi} placeholder='Durasi Peminjaman' type="text"/>
                         </div>
                         <button onClick={handleRequest} className='submit' type="submit">Submit</button>
                         </form>

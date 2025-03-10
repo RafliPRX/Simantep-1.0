@@ -1,36 +1,52 @@
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './sidebar-laras.css'
+import './sidebar-laras.css';
 import axios from 'axios';
+import menu from '../../assets/menu.svg'
 const Sidebar_laras = () => {
+    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
 
     const handleDivClick = (href) => {
         window.location.href = href;
-
     };
+
     const navigate = useNavigate();
     const handleLogout = async () => {
-      try {
-        const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
-          headers: {}
-        });
-        setTimeout(() => {
-          alert(response.data.message);
-          navigate('/');
-        }, 500);
-      } catch (error) {
-        console.log(error.response);
-      }
-    }
-  return(
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
+                headers: {}
+            });
+            setTimeout(() => {
+                alert(response.data.message);
+                navigate('/');
+            }, 500);
+        } catch (error) {
+            console.log(error.response);
+        }
+    };
+
+    const toggleSidebar = () => {
+        setIsSidebarVisible(!isSidebarVisible);
+    };
+
+    useEffect(() => {
+        const handleResize = () => setWindowWidth(window.innerWidth);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
+
+    return (
         <>
-            <div className='sidebar-2'>
-                <div className='sidebar-col'>
-                    <div className='logo-col' onClick={() => window.location.href = "/Home"}>
-                        <div className='logo'></div>
-                        <h2 >SIMANTEP</h2>
-                    </div>
-                    <div className='separator'></div>
-                    <div className='selected'>
+            {windowWidth > 480 ? (
+                <div className='sidebar-2'>
+                    <div className='sidebar-col'>
+                        <div className='logo-col' onClick={() => window.location.href = "/Home"}>
+                            <div className='logo'></div>
+                            <h2>SIMANTEP</h2>
+                        </div>
+                        <div className='separator'></div>
+                        <div className='selected'>
                         <div id='databasePegawai'
                              className='list'
                              onClick={() => handleDivClick('/dashboard-laras')}>
@@ -73,7 +89,7 @@ const Sidebar_laras = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>Penganjuan Form Peminjaman Kendaraan Dinas</p>
+                            <p>Pengajuan Form Peminjaman Kendaraan Dinas</p>
                         </div>
                         <div className='list' onClick={() => handleDivClick('/form-permohonan-BHP-ATK')}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -86,7 +102,7 @@ const Sidebar_laras = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>Penganjuan Form Permohonan BHP & ATK</p>
+                            <p>Pengajuan Form Permohonan BHP & ATK</p>
                         </div>
                         <div className='list' onClick={handleLogout}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
@@ -99,12 +115,46 @@ const Sidebar_laras = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>Sign Out</p>
+                                <p>Sign Out</p>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            ) : (
+                <>
+                    <img style={{width: "40px", height: "40px", position: "absolute", top: "10px", right: "10px"}} src={menu} alt="Toggle Sidebar" onClick={toggleSidebar} />
+                    {isSidebarVisible && (
+                        <div className='sidebar-2'>
+                            <div className='sidebar-col'>
+                                <div className='logo-col' onClick={() => window.location.href = "/Home"}>
+                                    <div className='logo'></div>
+                                    <h2>SIMANTEP</h2>
+                                </div>
+                                <div className='separator'></div>
+                                <div className='selected'>
+                                    <div id='databasePegawai' className='list' onClick={() => handleDivClick('/dashboard-laras')}>
+                                        <p>Database Sarpras</p>
+                                    </div>
+                                    <div id='Pengajuan-Cuti' className='list' onClick={() => handleDivClick('/form-perbaikan')}>
+                                        <p>Pengajuan Form Layanan Perbaikan</p>
+                                    </div>
+                                    <div className='list' onClick={() => handleDivClick('/form-kendaraan-dinas')}>
+                                        <p>Pengajuan Form Peminjaman Kendaraan Dinas</p>
+                                    </div>
+                                    <div className='list' onClick={() => handleDivClick('/form-permohonan-BHP-ATK')}>
+                                        <p>Pengajuan Form Permohonan BHP & ATK</p>
+                                    </div>
+                                    <div className='list' onClick={handleLogout}>
+                                        <p>Sign Out</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </>
+            )}
         </>
-    )
-}
-export default Sidebar_laras
+    );
+};
+
+export default Sidebar_laras;

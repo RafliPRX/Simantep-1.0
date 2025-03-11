@@ -123,7 +123,7 @@ const Request_Form_Detail = () => {
                     <div className='box3'>
                       <form action="">
                       <div className='content-f'>
-                          <h1>Data Perbaikan</h1>
+                          <h1>Jawaban Permintaan</h1>
                           <table>
                             <tr>
                               <td>Jawaban</td>

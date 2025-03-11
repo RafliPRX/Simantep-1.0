@@ -119,7 +119,40 @@ const Cuti_Detail_Form = () => {
         console.error(error);
       }
     }
-    return(
+    const [pdf, setPdf] = useState("");
+    const handleChangePDF = (event) => {
+      setPdf(event.target.files[0]);
+      console.log(event.target.files[0]);
+    }
+    const handleUploadPDF = async (event) => {
+      event.preventDefault();
+      const payload = {
+        pdf: pdf
+      };
+      try {
+        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/upload_pdf.php?id=${param.id}`,payload,{
+          headers: {
+            "Content-Type" : "multipart/form-data"
+          }
+        });
+        console.log(response.data);
+        setTimeout(() => {
+          navigate("/Dashboard");
+          alert(response.data.message);
+        },500)
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    const DownloadFile = () => {
+      const fileUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/${detail.pdf}`;
+      const link = document.createElement('a');
+      link.href = fileUrl;
+      link.download = detail.pdf;
+      link.click();
+    }
+    return (
+
         <>
             <div className='main-dashboard'>
                 <p>Mawasdiri/Pengajuan Cuti</p>
@@ -148,7 +181,7 @@ const Cuti_Detail_Form = () => {
                     </svg>
                     <div className='pic'></div>
                 </div>
-                <div className='content-col'>
+                <div className='content-col' id='pdf-content'>
                     <div className='box1'>
                         <div className='content-f'>
                             <h1>Data Diri</h1>
@@ -178,10 +211,16 @@ const Cuti_Detail_Form = () => {
                                   <td className='input'>{detail.no_hp}</td>
                                 </tr>
                                 <tr>
-                                  <td>Alasan</td>
+                                  <td>Alasan Selama Cuti/Izin/Sakit</td>
                                 </tr>
                                 <tr>
                                   <td className='input'>{detail.keterangan}</td>
+                                </tr>
+                                <tr>
+                                  <td>Alamat Selama Cuti/Izin/Sakit</td>
+                                </tr>
+                                <tr>
+                                  <td className='input'>{detail.alamat}</td>
                                 </tr>
                                 <tr>
                                   <td>Jenis Surat</td>
@@ -274,6 +313,10 @@ const Cuti_Detail_Form = () => {
                                 </div>
                             </table>
                         </div>
+                        <div style={{display: detail.pdf ? 'flex' : 'none'}} className='content-f'>
+                          <h1>Download Surat</h1>
+                          <button className='submit' onClick={DownloadFile}>Download</button>
+                        </div>
                         <div style={{display: storedID >= 2 && storedID <= 8 ? 'flex' : 'none' }} className='content-f'>
                           <h1>Jawab PJ</h1>
                             <form action="">
@@ -320,6 +363,14 @@ const Cuti_Detail_Form = () => {
                               <label htmlFor="">Alasan (Jika Menunda)</label>
                               <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
                               <button onClick={handleKasubagJawab} className='submit'>Kirim</button>
+                          </form>
+                        </div>
+                        <div style={{display: storedUsername === 'admin' ? 'flex' : 'none' }} className='content-f'>
+                          <h1>Upload File</h1>
+                            <form action="">
+                              <label htmlFor="">Upload File</label>
+                              <input type="file" onChange={handleChangePDF} name="" id="" />
+                              <button onClick={handleUploadPDF} className='submit'>Kirim</button>
                           </form>
                         </div>
                     </div>

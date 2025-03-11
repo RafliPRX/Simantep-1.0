@@ -3,6 +3,8 @@ import green from '../../assets/green.svg'
 import red from '../../assets/decline.svg'
 import white from '../../assets/unread.svg'
 import { useEffect, useState } from 'react';
+import * as XLSX from 'xlsx';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 const Content = () => {
@@ -21,13 +23,15 @@ const Content = () => {
     
     const [surat, setSurat] = useState([]);
     const getSurat = async () => {
-      if (storedID === "6" || storedID === "10") {
+      if (storedID === "6" || storedID === "10" || storedUsername === 'admin') {
         try {
           const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat.php`, {
             headers: {}
           })
           console.log(response.data);
           setSurat(response.data);
+          const audio = new Audio('../../assets/notification_sound.mp3'); // Ganti dengan path suara Anda
+          audio.play()
         } catch (error) {
           console.log(error.response);
         }
@@ -38,10 +42,11 @@ const Content = () => {
           })
           console.log(response.data);
           setSurat(response.data);
+          const audio = new Audio('../../assets/notification_sound.mp3'); // Ganti dengan path suara Anda
+          audio.play()
         } catch (error) {
           console.log(error.response);
         }
-
       } else {
         try {
           const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_name.php?nama=${storedUsername}`, {
@@ -49,13 +54,23 @@ const Content = () => {
           })
           console.log(response.data);
           setSurat(response.data);
+          const audio = new Audio('../../assets/notification_sound.mp3'); // Ganti dengan path suara Anda
+          audio.play()
         } catch (error) {
           console.log(error.response);
         }
       }
     }
     const [absent, setAbsent] = useState([]);
+    const downloadExcel = () => {
+        const ws = XLSX.utils.json_to_sheet(absent);
+        const wb = XLSX.utils.book_new();
+        XLSX.utils.book_append_sheet(wb, ws, "Absensi");
+        XLSX.writeFile(wb, "absent_data.xlsx");
+    }
+
     const getAbsent = async () => {
+
       if (storedID === "6") {
         try {
           const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Absen/absent.php`, {
@@ -150,7 +165,7 @@ const Content = () => {
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.id_surat}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
-                                    <td style={{textAlign:'center'}}>{item.keterangan}</td>
+                                    <td style={{textAlign:'center'}}>{item.Keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.jabatan}</td>
                                     <td style={{textAlign:'center'}}>{item.jenis_surat}</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '1' ? '' : 'none'}}><img src={white} alt="" />Unread</td>
@@ -173,7 +188,8 @@ const Content = () => {
                         </div>
                         <div className='content'>
                             <h1>Absensi</h1>
-                            {absent.length > 0 ? (
+                            {absent.length > 0 ? ( 
+
                               <table>
                                   <tr>
                                       <th style={{textAlign:'center'}}>Nomor</th>
@@ -191,36 +207,11 @@ const Content = () => {
                                     <td style={{textAlign:'center'}}>{item.jam_out}</td>
                                   </tr>
                                   ))}
-                              </table>
-                            ): (
+                              </table>                              
+                            ) : (
                               <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}
-                        </div>
-                        <div className='content'>
-                            <h1>Absensi</h1>
-                            {absent.length > 0 ? (
-                              <table>
-                                  <tr>
-                                      <th style={{textAlign:'center'}}>Nomor</th>
-                                      <th style={{textAlign:'center'}}>Nama</th>
-                                      <th style={{textAlign:'center'}}>Tanggal</th>
-                                      <th style={{textAlign:'center'}}>Jam Masuk</th>
-                                      <th style={{textAlign:'center'}}>Jam Keluar</th>
-                                  </tr>
-                                  {absent.map((item, index) =>(
-                                  <tr key={item.id_surat}>
-                                    <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.nama}</td>
-                                    <td style={{textAlign:'center'}}>{item.today}</td>
-                                    <td style={{textAlign:'center'}}>{item.jam_in}</td>
-                                    <td style={{textAlign:'center'}}>{item.jam_out}</td>
-                                  </tr>
-                                  ))}
-                              </table>
-                            ): (
-                              <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
-                            )}
-                            
+                            <button style={{marginLeft:'50px', display: storedID === '6' ? 'flex' : 'none'}} onClick={downloadExcel}>Download Excel</button>
                         </div>
                     </div>
                 </div>

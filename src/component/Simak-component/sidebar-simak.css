@@ -7,7 +7,7 @@
     flex-shrink: 0;
 }
 .sidebar-3 .sidebar-col{
-    width: 291px;
+    width: 338px;
     height: 1152px;
     flex-shrink: 0;
     background: #000B48;
@@ -78,7 +78,7 @@
 }
 .sidebar-3 .sidebar-col .selected .list p {
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 16px;
     font-style: normal;
     font-weight: 500;

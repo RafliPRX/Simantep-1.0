@@ -7,7 +7,7 @@ const Absent_Page_Out = () => {
         <>
             <div className='dashboard'>
                 <Sidebar/>
-                <Absent_Out/>
+                <Absent_Out title="Absensi Keluar"/>
             </div>
         </>
     )

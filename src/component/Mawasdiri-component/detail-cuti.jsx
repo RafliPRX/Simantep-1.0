@@ -7,16 +7,18 @@ const Cuti_Detail_Form = () => {
     const storeNrk = localStorage.getItem('nrk');
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
     const storedFProfile = localStorage.getItem('f_profile');
-    const storedID = localStorage.getItem('id_jabatan_sup');
+    const pj = localStorage.getItem('pj');
     const kelompok = localStorage.getItem('no_kelompok');
+    const status = localStorage.getItem('Status');
     console.log(storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
     console.log(storeNrk);
-    console.log(storedID);
+    console.log(pj);
     console.log(kelompok);
+    console.log(status);
     
-
+    
     const [detail, setDetail] = useState({});
     const param = useParams();
     const getDetail = async () => {
@@ -151,6 +153,23 @@ const Cuti_Detail_Form = () => {
       link.download = detail.pdf;
       link.click();
     }
+    const allowedValues = [
+      "Koordinator Layanan Rehabilitasi",
+      "Pj. Supervisi Klinis",
+      "Program Manager Layanan Rehabilitasi",
+      "Pj. Tata Kelola Klinik",
+      "Pj. Penunjang Medis",
+      "Pj. Vokasional",
+      "Pj. Pembina Jasmani dan Mental",
+      "Pj. Informasi dan Data",
+      "Pj. Layanan E-Corner",
+      "Pj. Pembendaharaan",
+      "Pj. Kepegawaian",
+      "Pj. Barang Milik Negara serta Operator Aset & Operator Persediaan",
+      "Pj. Rumah Tanggal dan Aset",
+      "Pj. Humas dan Kerjasama",
+      "Pj. Perencanaan Anggaran dan Pelaporan",
+    ];
     return (
 
         <>
@@ -158,8 +177,8 @@ const Cuti_Detail_Form = () => {
                 <p>Mawasdiri/Pengajuan Cuti</p>
                 <h1>Pengajuan Cuti</h1>
                 <div className='profile'>
-                    <input placeholder='Search' type="text" />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <p style={{fontFamily: 'Poppins', fontSize: '15px', marginTop: '22px'}}>{storedUsername}</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <g clipPath="url(#clip0_5_1232)">
                         <path d="M19.29 17.29L18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.62999 5.36 5.99999 7.92 5.99999 11V16L4.70999 17.29C4.07999 17.92 4.51999 19 5.40999 19H18.58C19.48 19 19.92 17.92 19.29 17.29ZM16 17H7.99999V11C7.99999 8.52 9.50999 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17ZM12 22C13.1 22 14 21.1 14 20H9.99999C9.99999 21.1 10.89 22 12 22Z" fill="white"/>
                       </g>
@@ -214,7 +233,7 @@ const Cuti_Detail_Form = () => {
                                   <td>Alasan Selama Cuti/Izin/Sakit</td>
                                 </tr>
                                 <tr>
-                                  <td className='input'>{detail.keterangan}</td>
+                                  <td className='input'>{detail.Keterangan}</td>
                                 </tr>
                                 <tr>
                                   <td>Alamat Selama Cuti/Izin/Sakit</td>
@@ -245,22 +264,6 @@ const Cuti_Detail_Form = () => {
                                     </tr>
                                 </div>
                                 <div style={{display: detail.jenis_surat === 'Cuti Alasan Penting' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
-                                    <tr>
-                                      <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Cuti Kontrak</td>
-                                    </tr>
-                                    <tr>
-                                      <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '35px'}}>{detail.cuti}</td>
-                                    </tr>
-                                    <tr>
-                                      <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Di mulai dari Tanggal</td>
-                                    </tr>
-                                    <tr style={{display: 'flex', flexDirection: 'row'}}>
-                                      <td className='input' style={{display: 'flex' ,alignItems: 'center', width: 'auto', paddingRight: '35px'}}>{detail.cuti_date}</td>
-                                      <td className='input' style={{display: 'flex' ,alignItems: 'center', width: 'auto', paddingRight: '35px'}}>s.d</td>
-                                      <td className='input' style={{display: 'flex' ,alignItems: 'center', width: 'auto', paddingRight: '35px'}}>{detail.cuti_date_fin}</td>
-                                    </tr>
-                                </div>
-                                <div style={{display: detail.jenis_surat === 'Izin' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
                                     <tr>
                                       <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Cuti Kontrak</td>
                                     </tr>
@@ -317,7 +320,7 @@ const Cuti_Detail_Form = () => {
                           <h1>Download Surat</h1>
                           <button className='submit' onClick={DownloadFile}>Download</button>
                         </div>
-                        <div style={{display: storedID >= 2 && storedID <= 8 ? 'flex' : 'none' }} className='content-f'>
+                        <div style={{display: allowedValues.includes(status) ? 'flex' : 'none' }} className='content-f'>
                           <h1>Jawab PJ</h1>
                             <form action="">
                               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -333,7 +336,7 @@ const Cuti_Detail_Form = () => {
                               <button onClick={handlePjJawab} className='submit'>Kirim</button>
                           </form>
                         </div>
-                        <div style={{display: storedID == 6 ? 'flex' : 'none' }} className='content-f'>
+                        <div style={{display: status == "Kepegawaian" ? 'flex' : 'none' }} className='content-f'>
                           <h1>Jawab Kepegawaian</h1>
                             <form action="">
                               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -349,7 +352,7 @@ const Cuti_Detail_Form = () => {
                               <button onClick={handleKepegJawab} className='submit'>Kirim</button>
                           </form>
                         </div>
-                        <div style={{display: storedID == 10 ? 'flex' : 'none' }} className='content-f'>
+                        <div style={{display: status == "Kasubbag" ? 'flex' : 'none' }} className='content-f'>
                           <h1>Jawab Kasubag</h1>
                             <form action="">
                               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>

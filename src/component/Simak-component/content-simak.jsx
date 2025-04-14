@@ -11,26 +11,37 @@ const Content_simak = () => {
     const storeNrk = localStorage.getItem('nrk');
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
     const storedFProfile = localStorage.getItem('f_profile');
-    const storedID = localStorage.getItem('id_jabatan_sup');
+    const pj = localStorage.getItem('pj');
+    const status = localStorage.getItem('Status');
     console.log(storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
     console.log(storeNrk);
-    console.log(storedID);
+    console.log(pj);
 
     const [dana, setDana] = useState([]);
+    const [pagination_dana, setPagination_Dana] = useState({
+        current_page: 1,
+    });
     const getDana = async () => {
-      if (storedID === "5") {
-        try {
-            const response = await axios.get("https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana.php", {
-                headers: {}
-            })
-            console.log(response.data);
-            setDana(response.data);
-        } catch (error) {
-            console.error();
-        }
-      } else {
+      if (status === "Pj. Pembendaharaan") {
+        axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana.php?page=${pagination_dana.current_page}`)
+        .then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+
+            const pagination_dana = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage, // Corrected to match the response structure
+
+            };
+            setDana(response); // Ensure absent is set to an empty array if response is undefined
+            console.log(response);
+            setPagination_Dana(pagination_dana);
+        })
+        .catch((err) => console.log(err))
+  } else {
         try {
             const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_by_name.php?nama=${storedUsername}`, {
                 headers: {}
@@ -48,17 +59,25 @@ const Content_simak = () => {
     },[]);
 
     const [lpj, setLpj] = useState([]);
+    const [pagination_lpj, setPagination_lpj] = useState({
+        current_page: 1,
+    })
     const getLpj = async () => {
-      if (storedID === "5") {
-        try {
-            const response = await axios.get("https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj.php", {
-                headers: {}
-            })
-            console.log(response.data);
-            setLpj(response.data);
-        } catch (error) {
-            console.log(error.response);
-        }
+      if (status === "Pj. Pembendaharaan") {
+        axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj.php?page=${pagination_lpj.current_page}`)
+        .then((res2) => {
+            console.log(res2.data.Data);
+            const response = res2.data.Data;
+
+            const pagination_lpj = {
+                total: res2.data.total_records,
+                current_page: res2.data.current_page,
+                nextPage: res2.data.nextPage, // Corrected to match the response structure
+            };
+            setLpj(response); // Ensure absent is set to an empty array if response is undefined
+            console.log(response);
+            setPagination_lpj(pagination_lpj);
+        })
       } else {
         try {
             const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?nama=${storedUsername}`, {
@@ -73,7 +92,31 @@ const Content_simak = () => {
     }
     useEffect(() => {
         getLpj();
-    },[]);
+    },[pagination_dana?.current_page, pagination_lpj?.current_page]);
+    const handleNext_Lpj = () => {
+        setPagination_lpj({
+            ...pagination_lpj,
+            current_page: pagination_lpj?.current_page + 1
+        })
+    }
+    const handlePrev_Lpj = () => {
+        setPagination_lpj({
+            ...pagination_lpj,
+            current_page: pagination_lpj?.current_page - 1
+        })
+    }
+    const handleNext_Dana = () => {
+        setPagination_Dana({
+            ...pagination_dana,
+            current_page: pagination_dana?.current_page + 1
+        })
+    }
+    const handlePrev_Dana = () => {
+        setPagination_Dana({
+            ...pagination_dana,
+            current_page: pagination_dana?.current_page - 1
+        })
+    }
     const handleDeleteRPD = async (id) => {
         try {
             const response = await axios.delete(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/delete_dana.php?id=${id}`, {
@@ -113,7 +156,7 @@ const Content_simak = () => {
                 <p>Simak/Dashboard</p>
                 <h1>Main Dashboard</h1>
                 <div className='profile'>
-                    <input placeholder='Search' type="text" />
+                <p style={{fontFamily: 'Poppins', fontSize: '15px', marginTop: '22px'}}>{storedUsername}</p>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <g clipPath="url(#clip0_5_1232)">
                         <path d="M19.29 17.29L18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.62999 5.36 5.99999 7.92 5.99999 11V16L4.70999 17.29C4.07999 17.92 4.51999 19 5.40999 19H18.58C19.48 19 19.92 17.92 19.29 17.29ZM16 17H7.99999V11C7.99999 8.52 9.50999 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17ZM12 22C13.1 22 14 21.1 14 20H9.99999C9.99999 21.1 10.89 22 12 22Z" fill="white"/>
@@ -137,9 +180,13 @@ const Content_simak = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box-s'>
                         <div className='content'>
                             <h1>Cek Progress Pengajuan RPD</h1>
+                            <div>
+                                <button onClick={handlePrev_Dana}>Previous</button>
+                                <button onClick={handleNext_Dana}>Next</button>
+                            </div>
                             {dana.length > 0 ? (
                             <table>
                             <tr>
@@ -166,10 +213,13 @@ const Content_simak = () => {
                                 <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}                        
                         </div>
-                    </div>
-                    <div className='box'>
+                    
                         <div className='content'>
                             <h1>Cek Progress Pengajuan Proposal dan LPJ</h1>
+                            <div>
+                                <button onClick={handlePrev_Lpj}>Previous</button>
+                                <button onClick={handleNext_Lpj}>Next</button>
+                            </div>
                             {lpj.length > 0 ? (
                             <table>
                                 <tr>
@@ -194,7 +244,7 @@ const Content_simak = () => {
                             {lpj.map((item, index) => (
                                 <tr key={item.id_lpj}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    <td style={{textAlign:'center'}}>{item.units}</td>
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>

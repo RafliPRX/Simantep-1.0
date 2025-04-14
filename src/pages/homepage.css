@@ -1,22 +1,130 @@
 .home{
     display: inline-flex;
     width: 1920px;
-    height: 2928px;
+    height: auto;
     background: #000E60;
     overflow-y: hidden;
     overflow-x: hidden;
     flex-direction: column;
+    padding-bottom: 150px;
+}
+.home .profile{
+    display: flex;
+    width: 1684px;
+    height: auto;
+    flex-shrink: 0;    
+    flex-direction: column;
+    align-items: flex-start;
+    flex-shrink: 0;
+    border-radius: 20px;
+    background: #000B48;
+    margin-top: 120px;
+    margin-left: 110px;
+    padding-left: 50px;
+    padding-top: 100px;
+    
+}
+.home .profile h1{
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 32px; /* 133.333% */
+    letter-spacing: -0.48px;
+    margin-top: 30px;
+    padding-left: 37px;
+}
+.home .profile-pic{
+    width: 150px;
+    height: 150px;
+    border-radius: 360px;
+    position: absolute;
+    margin-left: 921px;
+    margin-top: 862px;
+}
+.home .profile form{
+    display: flex;
+    flex-direction: column;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    gap: 10px;
+}
+.home .profile form label{
+    color: #A3AED0;
+    font-family: "poppins";
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: -0.24px;
+    margin-bottom: 15px;
+    margin-left: 38px;
+    width: 230px;
+}
+.home .profile form .u-profile{
+    display: flex;
+    flex: row;
+}
+.home .profile form .u-profile .file{
+    width: 1330px;
+}
+
+.home .profile form .u-profile button{
+    display: flex;
+    width: 239px;
+    height: 50px;
+    flex-shrink: 0;
+    margin-top: 30px;    
+    padding: 10px 8px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #D30ED8;
+    color: #FFF;
+    text-align: center;
+    font-family: "poppins";
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 100%; /* 14px */
+    letter-spacing: -0.28px;
+    border: none;
+    cursor: pointer;
+    margin-left: 30px;
+    margin-top: -3px;
+}
+.home .profile form input{
+    width: 1500px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #001274;
+    margin-bottom: 20px;
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: -0.24px;
+    padding-left: 35px;
+    margin-left: 35px;
 }
 .home .asset{
     position: absolute;
     width: 639px;
-    height: 831px;
+    height: 599px;
     flex-shrink: 0;
     background: url(../assets/Asset-1.png) rgb(255, 255, 255, 0) 0% / cover no-repeat;
     margin-left: 1000px;
     margin-left: 1171px;
     margin-top: 78px;
     transition: all 0.4s ease-in-out;
+    padding-top: 155px;
+    padding-right: 90px;
 }
 .home .asset:hover{
     transform: scale(1.1);
@@ -29,7 +137,22 @@
         align-items: center;
     }
     .home .asset{
-        scale: 0.3;
-        margin-left: 200px;   
+        margin-top: -228px;
+        scale: 0.23;
+        margin-left: 155px;    
     }
+    .home .profile {
+        scale: 0.27;
+        margin-left: -135px;
+        margin-top: -504px;
+    }
+    .home .profile-pic{
+        width: 50px;
+        height: 50px;
+        background-color: white;
+        border-radius: 360px;
+        position: absolute;
+        margin-left: -138px;
+        margin-top: 294px;    
+    }    
 }

@@ -21,7 +21,7 @@
     width: 1452px;
     height: 500px;
     flex-shrink: 0;
-    margin-left: 160px;
+    margin-left: 100px;
     padding-top: 238px;
 }
 .banner .banner-pic .text-group h1{
@@ -32,31 +32,31 @@
     justify-content: center;
     flex-shrink: 0;
     color: var(--Secondary-Primary-White, #FFF);
-    font-family: "DM Sans";
-    font-size: 125px;
+    font-family: "poppins";
+    font-size: 121px;
     font-style: normal;
     font-weight: 900;
-    line-height: 42px; /* 33.6% */
-    letter-spacing: -2.5px;
+    line-height: 42px;
+    letter-spacing: -2.5px
 }
 .banner .banner-pic .text-group h2{
     color: var(--Secondary-Primary-White, #FFF);
-    font-family: "DM Sans";
-    font-size: 70px;
+    font-family: "poppins";
+    font-size: 65px;
     font-style: normal;
     font-weight: 500;
     line-height: 84px;
-    letter-spacing: -1.4px;
+    letter-spacing: -3.4px;
 }
 .banner .banner-pic .text-group h3{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 40px;
     font-style: normal;
     font-weight: 500;
     line-height: 33px;
     letter-spacing: -0.92px;
-    margin-top: 57px;
+    margin-top: 44px;
     overflow-y: hidden;
 }
 .banner .banner-pic .text-group button{
@@ -66,7 +66,7 @@
     color: #FFF;
     color: var(--Secondary-Primary-Black, #000);
     text-align: center;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 18px;
     font-style: normal;
     font-weight: 500;
@@ -93,7 +93,7 @@
     color: #FFF;
 
     /* Body Text/ Medium/ Medium */
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -105,7 +105,8 @@
 }
 @media only screen and (max-width: 480px) {
     .banner{
-        scale: 0.3;
-        margin-right: 185px;
+        margin-top: -200px;
+        scale: 0.27;
+        margin-right: 230px;
     }
 }

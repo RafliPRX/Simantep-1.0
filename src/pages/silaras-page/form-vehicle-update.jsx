@@ -15,7 +15,7 @@ return(
         <div className="dashboard">
             <Sidebar_laras/>
             <div className="content">
-                <button className='switch' onClick={toggleForm}>
+                <button className='switch1' onClick={toggleForm}>
                     {showDetail ? 'Switch to Update Form' : 'Switch to Detail Form'}
                 </button>
                 {showDetail ?<Vehicle_Detail/> : <Vehicle_Update/>}

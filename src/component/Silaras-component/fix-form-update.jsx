@@ -4,6 +4,8 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 
 const Fix_form_Update = () => {
+  const storedUsername = localStorage.getItem('nama');
+
   const [nama, setNama] = useState("");
   const [nrk, setNrk] = useState("");
   const [unit, setUnits] = useState("");
@@ -80,8 +82,8 @@ const Fix_form_Update = () => {
               <p>Silaras/Form Perbaikan</p>
               <h1>Form Perbaikan</h1>
               <div className='profile'>
-                  <input placeholder='Search' type="text" />
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+              <p style={{fontFamily: 'Poppins', fontSize: '15px', marginTop: '22px'}}>{storedUsername}</p>
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <g clipPath="url(#clip0_5_1232)">
                       <path d="M19.29 17.29L18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.62999 5.36 5.99999 7.92 5.99999 11V16L4.70999 17.29C4.07999 17.92 4.51999 19 5.40999 19H18.58C19.48 19 19.92 17.92 19.29 17.29ZM16 17H7.99999V11C7.99999 8.52 9.50999 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17ZM12 22C13.1 22 14 21.1 14 20H9.99999C9.99999 21.1 10.89 22 12 22Z" fill="white"/>
                     </g>

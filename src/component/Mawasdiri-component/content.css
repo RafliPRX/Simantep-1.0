@@ -6,7 +6,7 @@
 }
 .main-dashboard p{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -16,7 +16,7 @@
 }
 .main-dashboard h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 34px;
     font-style: normal;
     font-weight: 700;
@@ -35,7 +35,7 @@
     overflow-y: hidden;
 }
 
-.main-dashboard .content-col .box .content{
+.main-dashboard .content-col .box-m .content{
     display: flex;
     width: 1610px;
     height: 345px;
@@ -44,7 +44,7 @@
     gap: 19px;
     flex-shrink: 0;
 }
-.main-dashboard .content-col .box .content{
+.main-dashboard .content-col .box-m .content{
     display: flex;
     width: 1183px;
     height: auto;
@@ -58,9 +58,9 @@
     margin-top: 20px;
     margin-left: 20px;
 }
-.main-dashboard .content-col .box .content h1{
+.main-dashboard .content-col .box-m .content h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -68,19 +68,19 @@
     letter-spacing: -0.48px;
     margin-top: 30px;
 }
-.main-dashboard .content-col .box .content table{
+.main-dashboard .content-col .box-m .content table{
     width:1183px;
     margin-left: 20px;
 }
-.main-dashboard .content-col .box .content table tr{
+.main-dashboard .content-col .box-m .content table tr{
     gap: 10px;
     width: 1183px;
     padding-left: 10px;
     text-align: center;
 }
-.main-dashboard .content-col .box .content table tr th{
+.main-dashboard .content-col .box-m .content table tr th{
     color: #A3AED0;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     text-align: center;
@@ -90,25 +90,25 @@
     width: 216px;
     gap: 10px;
 }
-.main-dashboard .content-col .box .content table tr td{
+.main-dashboard .content-col .box-m .content table tr td{
     color: #FFF;
     text-align: center;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: 24px; /* 171.429% */
     letter-spacing: -0.28px;
 }
-.main-dashboard .content-col .box .content table tr td img{
+.main-dashboard .content-col .box-m .content table tr td img{
     margin-right: 4px;
     vertical-align: middle;
 }
-.main-dashboard .content-col .box .content table tr td a{
+.main-dashboard .content-col .box-m .content table tr td a{
     text-decoration: none;
     color: #FFF;
 }
-.main-dashboard .content-col .box .content-f{
+.main-dashboard .content-col .box-m .content-f{
     display: flex;
     width: 1212px;
     height: 400px;
@@ -120,9 +120,9 @@
     background: #000B48;
     margin-top: 20px;
 }
-.main-dashboard .content-col .box .content-f h1{
+.main-dashboard .content-col .box-m .content-f h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -131,14 +131,14 @@
     margin-top: 30px;
     margin-bottom: 20px;
 }
-.main-dashboard .content-col .box .content-f{
+.main-dashboard .content-col .box-m .content-f{
     display: flex;
     flex-direction: column;
     margin-left: 29px;
 }
-.main-dashboard .content-col .box .content-f label{
+.main-dashboard .content-col .box-m .content-f label{
     color: #A3AED0;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -147,7 +147,7 @@
     margin-bottom: 15px;
     margin-left: 38px;
 }
-.main-dashboard .content-col .box .content-f input{
+.main-dashboard .content-col .box-m .content-f input{
     width: 1059px;
     height: 40px;
     flex-shrink: 0;
@@ -155,7 +155,7 @@
     background: #001274;
     margin-bottom: 20px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -164,7 +164,7 @@
     padding-left: 35px;
     margin-left: 35px;
 }
-.main-dashboard .content-col .box .content-f select{
+.main-dashboard .content-col .box-m .content-f select{
     width: 1059px;
     height: 40px;
     flex-shrink: 0;
@@ -172,7 +172,7 @@
     background: #001274;
     margin-bottom: 20px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -181,7 +181,7 @@
     padding-left: 35px;
     margin-left: 35px;
 }
-.main-dashboard .content-col .box .content-tx{
+.main-dashboard .content-col .box-m .content-tx{
     display: flex;
     width: 1212px;
     height: 400px;
@@ -194,9 +194,9 @@
     margin-top: 20px;
     margin-left: 20px;
 }
-.main-dashboard .content-col .box .content-tx h1{
+.main-dashboard .content-col .box-m .content-tx h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -205,7 +205,7 @@
     margin-top: 30px;
     margin-bottom: 20px;
 }
-.main-dashboard .content-col .box .content-tx textarea{
+.main-dashboard .content-col .box-m .content-tx textarea{
     width: 1059px;
     height: 255px;
     flex-shrink: 0;
@@ -213,7 +213,7 @@
     background: #001274;
     margin-bottom: 20px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -223,7 +223,7 @@
     margin-left: 35px;
     padding-top: 15px;
 }
-.main-dashboard .content-col .box .content-ty{
+.main-dashboard .content-col .box-m .content-ty{
     display: flex;
     width: 1212px;
     height: 470px;
@@ -237,9 +237,9 @@
     margin-left: 20px;
     gap: 25px;
 }
-.main-dashboard .content-col .box .content-ty h1{
+.main-dashboard .content-col .box-m .content-ty h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -247,13 +247,13 @@
     letter-spacing: -0.48px;
     margin-top: 30px;
 }
-.main-dashboard .content-col .box .content-ty .check{
+.main-dashboard .content-col .box-m .content-ty .check{
     display: flex;
     flex-direction: row;
     width: 1153px;
     gap: 10px;
 }
-.main-dashboard .content-col .box .content-ty .check input[type="checkbox"]{
+.main-dashboard .content-col .box-m .content-ty .check input[type="checkbox"]{
     width: 24px;
     height: 24px;
     flex-shrink: 0;
@@ -262,7 +262,7 @@
     margin-left: 28px;
     margin-top: 12px;
 }
-.main-dashboard .content-col .box .content-ty .check label{
+.main-dashboard .content-col .box-m .content-ty .check label{
     display: flex;
     width: 1025px;
     height: 46px;
@@ -272,14 +272,14 @@
     border-radius: 16px;
     background: #001274;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
     line-height: 28px; /* 175% */
     letter-spacing: -0.32px;
 }
-.main-dashboard .content-col .box .submit{
+.main-dashboard .content-col .box-m .submit{
     display: flex;
     padding: 9px 17px;
     justify-content: center;
@@ -289,7 +289,7 @@
     width: 168px;
     height: 50px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
@@ -302,12 +302,12 @@
     display: flex;
     position: fixed;
     flex-direction: row;
-    width: 300px;
+    width: auto;
     height: 61px;
     flex-shrink: 0;
     border-radius: 30px;
     background: #000B48;
-    margin-left: 1120px;
+    margin-left: 864px;
     margin-top: -75px;
     gap: 20px;
     z-index: 10;
@@ -322,7 +322,7 @@
     border-radius: 50px;
     border: none;
     color: #ffffff;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -356,9 +356,9 @@
     .main-dashboard .profile{
         display: none;
     }
-    .main-dashboard .content-col .box {
-        scale: 0.5;
-        margin-left: -312px;
-        margin-top: -53px;
+    .main-dashboard .content-col .box-m {
+        scale: 0.37;
+        margin-left: -386px;
+        margin-top: -222px;
     }
 }

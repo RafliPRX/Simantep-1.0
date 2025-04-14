@@ -31,8 +31,44 @@
     width: 415px;
     flex-direction: column;
     align-items: flex-start;
-    gap: 67px;
+    gap: 45px;
     flex-shrink: 0;
+}
+.login .col .form-col form .selection{
+    display: flex;
+    margin-top: -20px;
+    flex-direction: column;
+    gap: 15px;
+}
+.login .col .form-col form .selection .list{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.login .col .form-col form .selection .list .selection2{
+    display: flex;
+    flex-direction: column;
+    margin-left: 13px;
+    gap: 10px;
+}
+.login .col .form-col form .selection .list .selection2 .list2{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.login .col .form-col form .selection .list .check{
+    width: 20px;
+    height: 20px;
+}
+.login .col .form-col form .selection .list label{
+    color: #A3AED0;
+    font-family: "poppins";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 100%; /* 16px */
+    letter-spacing: -0.32px;
+    margin-left: 10px;
 }
 .login .col .form-col form .header{
     display: flex;
@@ -42,7 +78,7 @@
 }
 .login .col .form-col form .header h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 36px;
     font-style: normal;
     font-weight: 700;
@@ -51,7 +87,7 @@
 }
 .login .col .form-col form .header h3{
     color: #A3AED0;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -65,7 +101,20 @@
     height: 400px;
     gap: 5px;
 }
-
+.login .col .form-col form .input-col .status{
+    display: flex;
+    flex-direction: column;
+    margin-top: 5px;
+}
+.login .col .form-col form .input-col .status .list{
+    display: flex;
+    flex-direction: row;
+    gap: 12px;
+}
+.login .col .form-col form .input-col .status .list .checkbox{
+    width: 15px;
+    height: 15px;
+}
 .login .col .form-col form .input-col select{
     display: flex;
     width: 416px;
@@ -85,27 +134,68 @@
     width: 410px;
     height: 20px;
     color: #FFF;
-    font-family: "DM Sans";
-    font-size: 14px;
+    font-family: "poppins";
+    font-size: 17px;
     font-style: normal;
     font-weight: 500;
     line-height: 100%; /* 14px */
     letter-spacing: -0.28px;
 }
-.login .col .form-col form .input-col input{
-    display: flex;
+.login .col .form-col form .input-col .password-input-container {
+    position: relative;
     width: 363px;
+    margin-bottom: 10px;
+}
+
+.login .col .form-col form .input-col input {
+    display: flex;
+    width: 88%;
     height: 10px;
-    padding: 17px 24px;
+    padding: 17px 40px 17px 24px;
     flex-direction: column;
     align-items: flex-start;
     gap: 30px;
-    margin-bottom: 10px;
     flex-shrink: 0;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.10);
     background: #000E60;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #FFF;
+}
+
+.login .col .form-col form .input-col .password-input-container input {
+    display: flex;
+    width: 100%;
+    height: 10px;
+    padding: 17px 40px 17px 24px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 30px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.10);
+    background: #000E60;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+    color: #FFF;
+}
+
+.login .col .form-col form .input-col .toggle-password {
+    position: absolute;
+    right: -54px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #A3AED0;
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+    width: 52px;
+}
+
+.login .col .form-col form .input-col .toggle-password:hover {
     color: #FFF;
 }
 .login .col .form-col form .input-col input:focus{
@@ -114,10 +204,10 @@
 .login .col .form-col form .input-col .forget{
     display: flex;
     flex-direction: row;
-    width: 393px;
+    width: 453px;
     height: 20px;
     flex-shrink: 0;
-    gap: 132px;
+    gap: 144px;
 }
 .login .col .form-col form .input-col .forget .checkbox{
     display: flex;
@@ -140,7 +230,8 @@
 }
 .login .col .form-col form .input-col .forget .checkbox label{
     color: #FFF;
-    font-family: "DM Sans";
+    width: 120px;
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -149,7 +240,7 @@
 }
 .login .col .form-col form .input-col .forget a{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -172,7 +263,7 @@
     background: #D30ED8;
     color: #FFF;
     text-align: center;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -184,13 +275,13 @@
 .login .col .form-col form .input-col .register{
     display: flex;
     flex-direction: row;
-    width: 244px;
+    width: 290px;
     height: 40px;
     gap: 5px;
 }
 .login .col .form-col form .input-col .register p{
     color: var(--Secondary-Grey-600, #A3AED0);
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -199,7 +290,7 @@
 }
 .login .col .form-col form .input-col .register a{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 700;

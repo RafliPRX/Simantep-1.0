@@ -15,7 +15,7 @@ const Request_Detail = () =>  {
             <div className="dashboard">
                 <Sidebar_laras/>
                 <div className="content">
-                <button className='switch' onClick={toggleForm}>
+                <button className='switch2-l' onClick={toggleForm}>
                     {showDetail ? 'Switch to Update Form' : 'Switch to Detail Form'}
                 </button>
                 {showDetail ?<Request_Form_Detail/> : <Request_Form_Update/>}

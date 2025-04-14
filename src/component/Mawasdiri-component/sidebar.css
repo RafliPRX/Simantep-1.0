@@ -78,14 +78,14 @@
 }
 .sidebar .sidebar-col .selected .list p {
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
     line-height: 30px; /* 187.5% */
     letter-spacing: -0.32px;
     text-decoration: none;
-    width: 112px;
+    width: 199px;
     transition: all 0.5s ease-in-out;
 }
 .sidebar .sidebar-col .selected .list svg {

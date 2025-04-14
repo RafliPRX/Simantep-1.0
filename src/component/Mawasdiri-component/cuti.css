@@ -6,7 +6,7 @@
 }
 .main-dashboard p{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -16,7 +16,7 @@
 }
 .main-dashboard h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 34px;
     font-style: normal;
     font-weight: 700;
@@ -24,6 +24,7 @@
     letter-spacing: -0.68px;
     margin-left: 30px;
     margin-top: 5px;
+    margin-bottom: 10px;
 }
 .main-dashboard .content-col{
     display: flex;
@@ -58,7 +59,7 @@
 }
 .main-dashboard .content-col .box1 .content h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -78,7 +79,7 @@
 }
 .main-dashboard .content-col .box1 .content table tr th{
     color: #A3AED0;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     text-align: center;
@@ -91,7 +92,7 @@
 .main-dashboard .content-col .box1 .content table tr td{
     color: #FFF;
     text-align: center;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
@@ -131,7 +132,7 @@
     background: #001274;
     margin-bottom: 20px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -143,7 +144,7 @@
 }
 .main-dashboard .content-col .box1 .content-f table td{
     color: #A3AED0;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -156,7 +157,7 @@
 }
 .main-dashboard .content-col .box1 .content-f h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -173,7 +174,7 @@
 }
 .main-dashboard .content-col .box1 .content-f label{
     color: #A3AED0;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -191,7 +192,7 @@
     background: #001274;
     margin-bottom: 20px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -213,7 +214,7 @@
 }
 .main-dashboard .content-col .box1 .content table tr th{
     color: #A3AED0;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     text-align: center;
@@ -231,7 +232,7 @@
     background: #001274;
     margin-bottom: 20px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -248,7 +249,7 @@
     background: #001274;
     margin-bottom: 20px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -273,7 +274,7 @@
 }
 .main-dashboard .content-col .box1 .content-tx h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -290,7 +291,7 @@
     background: #001274;
     margin-bottom: 20px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -316,7 +317,7 @@
 }
 .main-dashboard .content-col .box1 .content-ty h1{
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 700;
@@ -351,7 +352,7 @@
 }
 .main-dashboard .content-col .box1 .content-f .check-form .inp-date .text{
     color: #A3AED0;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -364,7 +365,7 @@
 }
 .main-dashboard .content-col .box1 .content-f .check-form label{
     color: #A3AED0;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -382,7 +383,7 @@
     background: #001274;
     margin-bottom: 20px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 19px;
     font-style: normal;
     font-weight: 500;
@@ -420,7 +421,7 @@
     border-radius: 16px;
     background: #000B48;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -437,7 +438,7 @@
     border-radius: 16px;
     background: #001274;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 16px;
     font-style: normal;
     font-weight: 700;
@@ -451,10 +452,10 @@
     align-items: center;
     border-radius: 16px;
     background: #D30ED8;
-    width: 168px;
+    width: auto;
     height: 50px;
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
@@ -463,18 +464,38 @@
     margin-top: 26px;
     margin-left: 521px;
 }
+.main-dashboard .content-col .box1 .loader {
+    width: 100px;
+    height: 100px;
+    border: 20px solid #FFF;
+    border-bottom-color: #FF3D00;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+} 
 .main-dashboard .profile{
     display: flex;
     position: fixed;
     flex-direction: row;
-    width: 300px;
+    width: auto;
     height: 61px;
     flex-shrink: 0;
     border-radius: 30px;
     background: #000B48;
-    margin-left: 1120px;
+    margin-left: 864px;
     margin-top: -75px;
     gap: 20px;
+    z-index: 10;
 }
 .main-dashboard .profile input{
     width: 122px;
@@ -486,7 +507,7 @@
     border-radius: 50px;
     border: none;
     color: #ffffff;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -528,8 +549,8 @@
         display: none;
     }
     .main-dashboard .content-col .box1 {
-        scale: 0.5;
-        margin-left: -312px;
-        margin-top: -383px;
+        scale: 0.37;
+        margin-left: -383px;
+        margin-top: -556px;
     }
 }

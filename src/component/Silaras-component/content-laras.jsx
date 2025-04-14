@@ -11,98 +11,196 @@ const Content_laras = () => {
     const storeNrk = localStorage.getItem('nrk');
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
     const storedFProfile = localStorage.getItem('f_profile');
-    const storedID = localStorage.getItem('id_jabatan_sup');
+    const pj = localStorage.getItem('pj');
+    const status = localStorage.getItem('Status');
     console.log(storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
     console.log(storeNrk);
-    console.log(storedID);
-
+    console.log(pj);
+    console.log(status);
+    
     const [fix, setFix] = useState([]);
-
+    const [pagination_fix, setPagination_Fix] = useState({
+        current_page: 1,
+    });
     const getFix = async () => {
-      if (storedID === "4") {
+      if (status === "Pj. Rumah Tanggal dan Aset") {
         try {
-          const response = await axios.get("https://simantepbareta.cloud/API/SILARAS/fix.php", {
-              headers: {}
-          });
-          console.log(response.data); // Log the response data
-          setFix(response.data);
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/fix.php?page=${pagination_fix.current_page}`)
+          .then((res1) => {
+              console.log(res1.data.Data);
+              const response = res1.data.Data;
+
+              const pagination_fix = {
+                  total: res1.data.total_records,
+                  current_page: res1.data.current_page,
+                  nextPage: res1.data.nextPage, // Corrected to match the response structure    
+              }
+              setFix(response);
+              setPagination_Fix(pagination_fix);
+              console.log(response);
+          })
         } catch (error) {
             console.log(error.response);
         }
       } else {
         try {
-          const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?nama=${storedUsername}`, {
-              headers: {}
-          });
-          console.log(response.data); // Log the response data
-          setFix(response.data);
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?nama=${storedUsername}&page=${pagination_fix.current_page}`)
+          .then((res1) => {
+              console.log(res1.data.Data);
+              const response = res1.data.Data;
+
+              const pagination_fix = {
+                  total: res1.data.total_records,
+                  current_page: res1.data.current_page,
+                  nextPage: res1.data.nextPage, // Corrected to match the response structure    
+              }
+              setFix(response);
+              setPagination_Fix(pagination_fix);
+              console.log(response);
+          })
         } catch (error) {
             console.log(error.response);
         }
       }
     };
-
     useEffect(() => {
-        getFix();
-    }, []);
-
+      getFix();
+    }, [pagination_fix?.current_page]);
     const [vehicle, setVehicle] = useState([]);
-
+    const [pagination_vehicle, setPagination_Vehicle] = useState({
+      current_page: 1,
+    });
     const getVehicle = async () => {
-      if (storedID === "4") {
+      if (status === "Pj. Rumah Tanggal dan Aset") {
         try {
-          const response = await axios.get("https://simantepbareta.cloud/API/SILARAS/vehicle.php", {
-              headers: {}
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pagination_vehicle.current_page}`)
+          .then((res2) => {
+              console.log(res2.data.Data);
+              const response = res2.data.Data;
+
+              const pagination_vehicle = {
+                  total: res2.data.total_records,
+                  current_page: res2.data.current_page,
+                  nextPage: res2.data.nextPage, // Corrected to match the response structure    
+              }
+              setVehicle(response);
+              setPagination_Vehicle(pagination_vehicle);
+              console.log(response);
           })
-          console.log(response.data);
-          setVehicle(response.data);
         } catch (error) {
-            console.log(error);
+            console.log(error.response);
         }
       } else {
         try {
-          const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?nama=${storedUsername}`, {
-              headers: {}
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?nama=${storedUsername}&page=${pagination_vehicle.current_page}`)
+          .then((res2) => {
+              console.log(res2.data.Data);
+              const response = res2.data.Data;
+
+              const pagination_vehicle = {
+                  total: res2.data.total_records,
+                  current_page: res2.data.current_page,
+                  nextPage: res2.data.nextPage, // Corrected to match the response structure    
+              }
+              setVehicle(response);
+              setPagination_Vehicle(pagination_vehicle);
+              console.log(response);
           })
-          console.log(response.data);
-          setVehicle(response.data);
         } catch (error) {
-            console.log(error);
+            console.log(error.response);
         }
       }
-    };
+    }
     useEffect(() => {
-        getVehicle();
-    }, [])
+      getVehicle();
+    }, [pagination_vehicle?.current_page]);
+
     const [request, setRequest] = useState([]);
+    const [pagination_request, setPagination_Request] = useState({
+      current_page: 1,
+    })
     const getRequest = async () => {
-      if (storedID === "4") {
+      if (status === "Pj. Rumah Tanggal dan Aset") {
         try {
-          const response = await axios.get("https://simantepbareta.cloud/API/SILARAS/request.php", {
-              headers: {}
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/request.php?page=${pagination_request.current_page}`)
+          .then((res3) => {
+              console.log(res3.data.Data);
+              const response = res3.data.Data;
+
+              const pagination_request = {
+                  total: res3.data.total_records,
+                  current_page: res3.data.current_page,
+                  nextPage: res3.data.nextPage, // Corrected to match the response structure    
+              }
+              setRequest(response);
+              setPagination_Request(pagination_request);
+              console.log(response);
           })
-          console.log(response.data);
-          setRequest(response.data);
         } catch (error) {
             console.log(error.response);
         }
       } else {
         try {
-          const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/request_by_name.php?nama=${storedUsername}`, {
-              headers: {}
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/request_by_name.php?nama=${storedUsername}&page=${pagination_request.current_page}`)
+          .then((res3) => {
+              console.log(res3.data.Data);
+              const response = res3.data.Data;
+
+              const pagination_request = {
+                  total: res3.data.total_records,
+                  current_page: res3.data.current_page,
+                  nextPage: res3.data.nextPage, // Corrected to match the response structure    
+              }
+              setRequest(response);
+              setPagination_Request(pagination_request);
+              console.log(response);
           })
-          console.log(response.data);
-          setRequest(response.data);
         } catch (error) {
             console.log(error.response);
         }
       }
     };
     useEffect(() => {
-        getRequest();
-    }, [])
+      getRequest();
+    }, [pagination_request?.current_page]);
+    const handleNext_Fix = () => {
+        setPagination_Fix({
+            ...pagination_fix,
+            current_page: pagination_fix?.current_page + 1
+        })
+    }
+    const handlePrev_Fix = () => {
+      setPagination_Fix({
+            ...pagination_fix,
+            current_page: pagination_fix?.current_page - 1
+        })
+    }
+    const handleNext_Vehicle = () => {
+      setPagination_Vehicle({
+          ...pagination_vehicle,
+          current_page: pagination_vehicle?.current_page + 1
+      })
+    }
+    const handlePrev_Vehicle = () => {
+      setPagination_Vehicle({
+            ...pagination_vehicle,
+            current_page: pagination_vehicle?.current_page - 1
+        })
+    }
+    const handleNext_Request = () => {
+      setPagination_Request({
+          ...pagination_request,
+          current_page: pagination_request?.current_page + 1
+      })
+    }
+    const handlePrev_Request = () => {
+      setPagination_Request({
+            ...pagination_request,
+            current_page: pagination_request?.current_page - 1
+        })
+    }
     const handleDeleteFix = async (id) => {
         try {
           const response = await axios.delete(`https://simantepbareta.cloud/API/SILARAS/delete_fix.php?id=${id}`, {
@@ -156,8 +254,8 @@ const Content_laras = () => {
                 <p>Silaras/Dashboard</p>
                 <h1>Main Dashboard</h1>
                 <div className='profile'>
-                    <input placeholder='Search' type="text" />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <p style={{fontFamily: 'Poppins', fontSize: '15px', marginTop: '22px'}}>{storedUsername}</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <g clipPath="url(#clip0_5_1232)">
                         <path d="M19.29 17.29L18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.62999 5.36 5.99999 7.92 5.99999 11V16L4.70999 17.29C4.07999 17.92 4.51999 19 5.40999 19H18.58C19.48 19 19.92 17.92 19.29 17.29ZM16 17H7.99999V11C7.99999 8.52 9.50999 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17ZM12 22C13.1 22 14 21.1 14 20H9.99999C9.99999 21.1 10.89 22 12 22Z" fill="white"/>
                       </g>
@@ -183,6 +281,10 @@ const Content_laras = () => {
                     <div className='box'>
                         <div className='content'>
                             <h1>Daftar Form Perbaikan</h1>
+                            <div>
+                                <button onClick={handlePrev_Fix}>Previous</button>
+                                <button onClick={handleNext_Fix}>Next</button>
+                            </div>
                             {fix.length > 0 ? (
                             <table>
                               <tr>
@@ -217,10 +319,12 @@ const Content_laras = () => {
                                 <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}                        
                         </div>
-                    </div>
-                    <div className='box'>
                         <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
+                            <div>
+                                <button onClick={handlePrev_Vehicle}>Previous</button>
+                                <button onClick={handleNext_Vehicle}>Next</button>
+                            </div>
                             {vehicle.length > 0 ? (
                             <table>
                                 <tr>
@@ -262,10 +366,12 @@ const Content_laras = () => {
                                 <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}                        
                         </div>
-                    </div>
-                    <div className='box'>
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
+                            <div>
+                                <button onClick={handlePrev_Request}>Previous</button>
+                                <button onClick={handleNext_Request}>Next</button>
+                            </div>
                             {request.length > 0 ? (
                             <table>
                                 <tr>

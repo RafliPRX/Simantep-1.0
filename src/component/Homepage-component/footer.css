@@ -52,8 +52,8 @@
 }
 @media only screen and (max-width: 480px) {
     .footer{
-        scale: 0.3;
-        margin-top: -409px;
-        margin-right: 190px;    
+        scale: 0.27;
+        margin-top: 132px;
+        margin-right: 237px;
     }
 }

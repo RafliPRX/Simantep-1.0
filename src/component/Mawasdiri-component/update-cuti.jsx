@@ -3,6 +3,8 @@ import './cuti.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 const Cuti_form_Update = () => {
+    const storedUsername = localStorage.getItem('nama');
+
     const [cuti, setShow] = useState(false); // Changed to boolean for clarity
       
     function Cuti(event) {
@@ -13,13 +15,6 @@ const Cuti_form_Update = () => {
     function Cuti_alasan_penting(event) {
         setShow1(event.target.checked); // Set show based on checkbox state
     }
-
-    const [izin, setShow2] = useState(false); // Changed to boolean for clarity
-
-    function Izin(event) {
-        setShow2(event.target.checked); // Set show based on checkbox state
-    }
-
     const [hamil, setHamil] = useState(false); // Changed to boolean for clarity
 
     function Hamil(event) {
@@ -133,8 +128,8 @@ const Cuti_form_Update = () => {
                 <p>Mawasdiri/Pengajuan Cuti</p>
                 <h1>Pengajuan Cuti</h1>
                 <div className='profile'>
-                    <input placeholder='Search' type="text" />
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <p style={{fontFamily: 'Poppins', fontSize: '15px', marginTop: '22px'}}>{storedUsername}</p>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <g clipPath="url(#clip0_5_1232)">
                         <path d="M19.29 17.29L18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.62999 5.36 5.99999 7.92 5.99999 11V16L4.70999 17.29C4.07999 17.92 4.51999 19 5.40999 19H18.58C19.48 19 19.92 17.92 19.29 17.29ZM16 17H7.99999V11C7.99999 8.52 9.50999 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17ZM12 22C13.1 22 14 21.1 14 20H9.99999C9.99999 21.1 10.89 22 12 22Z" fill="white"/>
                       </g>
@@ -211,26 +206,6 @@ const Cuti_form_Update = () => {
                             {show_imp && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Cuti Alasan Penting</label>
-                                        <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Dimulai Dari Tanggal</label>
-                                        <div className='inp-date'>
-                                          <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
-                                          <label className='text' htmlFor="">s.d</label>
-                                          <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
-                                        </div>
-                                    </div>
-                                )}
-                            <div className='check'>
-                                <input type="checkbox" value="Izin" name="" id="" onClick={(event) => {
-                                    Izin(event);
-                                    handleChangeJenis(event);
-                                    }}/>
-                                <label htmlFor="">Izin</label>
-                                <label style={{display: detail.jenis_surat === "Izin" ? "flex" : "none", width: 'auto'}} htmlFor="">Anda Sebelumnya Memilih Izin</label>
-                            </div>
-                            {izin && ( // Conditionally render based on show state
-                                    <div className='check-form'>
-                                        <label htmlFor="">Izin</label>
                                         <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Dimulai Dari Tanggal</label>
                                         <div className='inp-date'>

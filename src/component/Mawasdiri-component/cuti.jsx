@@ -9,7 +9,6 @@ import "react-datepicker/dist/react-datepicker.css"; // Importing the CSS for th
 const Cuti_form = () => {
   const [cuti, setShow] = useState(false);
   const [cuti_imp, setCutiImp] = useState(false);
-  const [izin, setIzin] = useState(false);
   const [hamil, setHamil] = useState(false);
   const [sakit, setSakit] = useState(false);
   const [selectedStartDates, setSelectedStartDates] = useState(null); // State for start date
@@ -21,9 +20,6 @@ const Cuti_form = () => {
   function Cuti_Imp(event) {
     setCutiImp(event.target.checked); // Set show based on checkbox state
   }
-  function Izin(event) {
-    setIzin(event.target.checked); // Set show based on checkbox state
-  }
   function Hamil(event) {
     setHamil(event.target.checked); // Set show based on checkbox state
   }
@@ -33,6 +29,7 @@ const Cuti_form = () => {
 
   const storedUsername = localStorage.getItem('nama');
   const storeNrk = localStorage.getItem('nrk');
+  const pj = localStorage.getItem('pj');
   const [nama, setNama] = useState(storedUsername);
   const [nrk, setNrk] = useState(storeNrk);
   const [hp, setHP] = useState("");
@@ -101,6 +98,8 @@ const Cuti_form = () => {
       cuti_date: format(selectedStartDates, 'yyyy/MM/dd'), // Send formatted start date
       cuti_date_fin: format(selectedEndDates, 'yyyy/MM/dd'), // Send formatted end date
       gambar: image,
+      pj: pj,
+      f_profile: localStorage.getItem('f_profile')
     };
     try {
       const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/new_surat.php`, payload, {
@@ -125,8 +124,8 @@ const Cuti_form = () => {
         <p>Mawasdiri/Pengajuan Cuti</p>
         <h1>Pengajuan Cuti</h1>
         <div className='profile'>
-          <input placeholder='Search' type="text" />
-          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <p style={{fontFamily: 'Poppins', fontSize: '15px', marginTop: '22px'}}>{storedUsername}</p>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
             <g clipPath="url(#clip0_5_1232)">
               <path d="M19.29 17.29L18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.62999 5.36 5.99999 7.92 5.99999 11V16L4.70999 17.29C4.07999 17.92 4.51999 19 5.40999 19H18.58C19.48 19 19.92 17.92 19.29 17.29ZM16 17H7.99999V11C7.99999 8.52 9.50999 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17ZM12 22C13.1 22 14 21.1 14 20H9.99999C9.99999 21.1 10.89 22 12 22Z" fill="white"/>
             </g>
@@ -200,27 +199,6 @@ const Cuti_form = () => {
                 {cuti_imp && (
                   <div className='check-form'>
                     <label htmlFor="">Cuti Alasan Penting</label>
-                    <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
-                    <div className='inp-date'>
-                      <label htmlFor="">Dimulai Dari Tanggal</label>
-                      <DatePicker
-                        selectsRange={true}
-                        startDate={selectedStartDates}
-                        endDate={selectedEndDates}
-                        onChange={handleChangeCutiDate}
-                        dateFormat="yyyy/MM/dd"
-                        placeholderText="Select date range"
-                      />
-                    </div>
-                  </div>
-                )}
-                <div className='check'>
-                  <input type="checkbox" value='Izin' onChange={(event) => { Izin(event); handleChangeJenis(event); }} />
-                  <label htmlFor="">Izin</label>
-                </div>
-                {izin && (
-                  <div className='check-form'>
-                    <label htmlFor="">Izin</label>
                     <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
                     <div className='inp-date'>
                       <label htmlFor="">Dimulai Dari Tanggal</label>

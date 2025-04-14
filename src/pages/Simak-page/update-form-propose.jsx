@@ -14,11 +14,10 @@ const Detail_Form_Propose = () => {
             <div className='dashboard'>
             <Sidebar_simak/>
                 <div className='content'>
-                    <button className='switch' onClick={toggleForm}>
+                    <button className='switch1' onClick={toggleForm}>
                         {showDetail ? 'Switch to Update Form' : 'Switch to Detail Form'}
                     </button>
                     {showDetail ? <Proposed_Detail/> : <Proposed_Update/>}
-
                 </div>
             </div>
         </>

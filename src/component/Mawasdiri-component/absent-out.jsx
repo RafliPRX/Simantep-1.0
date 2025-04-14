@@ -15,8 +15,12 @@ import Point from 'ol/geom/Point'; // Importing Point geometry
 import marker from '../../assets/marker.png'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
+import PropTypes from "prop-types";
 
-const Absent_Out = () => {
+
+
+const Absent_Out = ({title}) => {
+    const storedUsername = localStorage.getItem('nama');
     const mapRef = useRef(null); // Reference for the map
     const videoRef = useRef(null); // Reference for the video element
 
@@ -24,6 +28,7 @@ const Absent_Out = () => {
     const [videoDevices, setVideoDevices] = useState([]); // State to hold video devices
     const [selectedDevice, setSelectedDevice] = useState(null); // State to hold selected device
     const [capturedImage] = useState(null); // State to hold captured image
+    const [isLoading, setIsLoading] = useState(false); // Loading state
 
 
 
@@ -149,9 +154,10 @@ const Absent_Out = () => {
 
     const navigate = useNavigate();
     const param = useParams();
-    const handleAbsentIn = async (event) => {
+const handleAbsentOut = async (event) => {
+
         event.preventDefault();
-        
+        setIsLoading(true); // Start loading
         // Capture image from video stream
         const canvas = canvasRef.current;
         const video = videoRef.current;
@@ -185,11 +191,13 @@ const Absent_Out = () => {
                     if (response.data.message === 'Formulir berhasil') {
                         alert("Absen keluar berhasil dicatat!");
                         setTimeout(() => {
+                            setIsLoading(false); // Stop loading before navigating
                             navigate("/Dashboard");
-                        }, 1000);
+                        }, 500);
                     } else {
                         const errorMessage = response.data.message || 'Gagal melakukan absen keluar';
                         alert(`Gagal melakukan absen keluar: ${errorMessage}`);
+                        setIsLoading(false); // Stop loading
                         console.error('Absen keluar failed:', response.data);
                     }
 
@@ -199,6 +207,7 @@ const Absent_Out = () => {
                                       'Terjadi kesalahan saat melakukan absen keluar';
                     alert(`Gagal melakukan absen keluar: ${errorMessage}`);
                     console.error('Absen keluar failed:', error);
+                    setIsLoading(false); // Stop loading
                     resolve(null);
 
                 }
@@ -209,10 +218,10 @@ const Absent_Out = () => {
         <div className='main-dashboard'>
 
             <p>Mawasdiri/Absensi</p>
-            <h1>Absensi</h1>
+            <h1>{title}</h1>
             <div className='profile'>
-                <input placeholder='Search' type="text" />
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+            <p style={{fontFamily: 'Poppins', fontSize: '15px', marginTop: '22px'}}>{storedUsername}</p>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <g clipPath="url(#clip0_5_1232)">
                         <path d="M19.29 17.29L18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.62999 5.36 5.99999 7.92 5.99999 11V16L4.70999 17.29C4.07999 17.92 4.51999 19 5.40999 19H18.58C19.48 19 19.92 17.92 19.29 17.29ZM16 17H7.99999V11C7.99999 8.52 9.50999 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17ZM12 22C13.1 22 14 21.1 14 20H9.99999C9.99999 21.1 10.89 22 12 22Z" fill="white"/>
                       </g>
@@ -257,7 +266,9 @@ const Absent_Out = () => {
                             <h1>Peta</h1>
                             <div id="map" style={{ height: "400px", width: "100%" }}></div>
                         </div>
-                        <button onClick={handleAbsentIn} className='submit' type="submit">Absen</button>
+                        <button onClick={handleAbsentOut} className='submit' type="submit">Absen Keluar</button>
+
+                        {isLoading && <div style={{position: 'absolute', marginTop: '-1598px', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}><span style={{position: 'absolute'}} className="loader"></span></div>} {/* Loading indicator */}
                     </form>
                 </div>
             </div>
@@ -265,3 +276,7 @@ const Absent_Out = () => {
     )
 }
 export default Absent_Out
+
+Absent_Out.propTypes = {
+    title: PropTypes.string
+};

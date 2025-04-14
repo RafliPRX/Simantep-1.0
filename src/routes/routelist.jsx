@@ -20,6 +20,8 @@ import Absent_Page_Out from "../pages/mawasdiri-page/absent-page-out";
 import Absent_Page from "../pages/mawasdiri-page/absent-page-in";
 import Login_ADM from "../pages/login_adm";
 import Signup from "../pages/signup";
+import Absent_Page_Malam from "../pages/mawasdiri-page/absent-page-in-malam";
+import Absent_Page_Out_Malam from "../pages/mawasdiri-page/absent-page-out-malam";
 
 
 export const routeList = [
@@ -77,11 +79,19 @@ export const routeList = [
     },
     {
         path: '/Absensi-Page',
-        element: <Absent_Page/>
+        element: <Absent_Page />
+    },
+    {
+        path: '/Absensi-Page-Malam',
+        element: <Absent_Page_Malam/>
     },
     {
         path: '/Absensi-Page-Keluar/:id',
         element: <Absent_Page_Out/>
+    },
+    {
+        path: '/Absensi-Page-Keluar-Malam/:id',
+        element: <Absent_Page_Out_Malam/>,
     },
     {
         path: "/form-perbaikan/:id",

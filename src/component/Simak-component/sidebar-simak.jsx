@@ -13,17 +13,26 @@ const Sidebar_simak = () => {
 
     const navigate = useNavigate();
     const handleLogout = async () => {
-        try {
-            const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
-                headers: {}
-            });
-            setTimeout(() => {
-                alert(response.data.message);
-                navigate('/');
-            }, 500);
-        } catch (error) {
-            console.log(error.response);
-        }
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
+          headers: {}
+        });
+        setTimeout(() => {
+          localStorage.removeItem('nama');
+          localStorage.removeItem('nrk');
+          localStorage.removeItem('sisa_cuti');
+          localStorage.removeItem('f_profile');
+          localStorage.removeItem('jabatan');
+          localStorage.removeItem('email');
+          localStorage.removeItem('Status');
+          localStorage.removeItem('pj');
+          localStorage.removeItem('Id_user');
+          alert(response.data.message);
+          navigate('/');
+        }, 1000);
+      } catch (error) {
+        console.log(error.response);
+      }
     };
 
     const toggleSidebar = () => {

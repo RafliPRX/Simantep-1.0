@@ -8,12 +8,13 @@ const Proposed_Detail = () => {
         const storeNrk = localStorage.getItem('nrk');
         const storedSisaCuti = localStorage.getItem('sisa_cuti');
         const storedFProfile = localStorage.getItem('f_profile');
-        const storedID = localStorage.getItem('id_jabatan_sup');
+        const pj = localStorage.getItem('pj');
+        const status = localStorage.getItem('Status');
         console.log(storedUsername);
         console.log(storedSisaCuti );
         console.log(storedFProfile);
         console.log(storeNrk);
-        console.log(storedID);
+        console.log(pj);
       
         const param = useParams();
         const [detail, setDetail] = useState({});
@@ -113,9 +114,9 @@ const Proposed_Detail = () => {
         <>
             <div className='main-dashboard'>
                 <p>Simak/Form Pengajuan Proposal & LPJ</p>
-                <h1>Form Pengajuan Proposal & LPJ</h1>
+                <h1>Form Pengajuan Proposal <br /> & LPJ</h1>
                 <div className='profile'>
-                    <input placeholder='Search' type="text" />
+                <p style={{fontFamily: 'Poppins', fontSize: '15px', marginTop: '22px'}}>{storedUsername}</p>
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                       <g clipPath="url(#clip0_5_1232)">
                         <path d="M19.29 17.29L18 16V11C18 7.93 16.36 5.36 13.5 4.68V4C13.5 3.17 12.83 2.5 12 2.5C11.17 2.5 10.5 3.17 10.5 4V4.68C7.62999 5.36 5.99999 7.92 5.99999 11V16L4.70999 17.29C4.07999 17.92 4.51999 19 5.40999 19H18.58C19.48 19 19.92 17.92 19.29 17.29ZM16 17H7.99999V11C7.99999 8.52 9.50999 6.5 12 6.5C14.49 6.5 16 8.52 16 11V17ZM12 22C13.1 22 14 21.1 14 20H9.99999C9.99999 21.1 10.89 22 12 22Z" fill="white"/>
@@ -139,7 +140,7 @@ const Proposed_Detail = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box2'>
+                    <div className='box2' style={{marginTop: '-224px'}}>
                         <div className='content-f'>
                             <h1>Data Diri</h1>
                             <table>
@@ -181,7 +182,7 @@ const Proposed_Detail = () => {
                             </tr>
                             </table>
                         </div>
-                        <div style={{display: storedID == 10 ? 'flex' : 'none'}} className='content-f'>
+                        <div style={{display: status == "Pj. Pembendaharaan" ? 'flex' : 'none'}} className='content-f'>
                           <h1>Jawab KASUBAG</h1>
                           <form action="">
                           <table>
@@ -200,7 +201,7 @@ const Proposed_Detail = () => {
                           <button onClick={handleKasubagRequest} className='submit' type="submit">Submit</button>
                           </form>
                         </div>
-                        <div style={{display: storedID == 12 ? 'flex' : 'none'}} className='content-f'>
+                        <div style={{display: status == "Kasubbag" ? 'flex' : 'none'}} className='content-f'>
                           <h1>Jawab KEPALA BALAI</h1>
                           <form action="">
                             <table>
@@ -219,7 +220,7 @@ const Proposed_Detail = () => {
                           </form>
                           <button onClick={handleHeadRequest} className='submit' type="submit">Submit</button>
                         </div>
-                        <div style={{display: storedID == 5 ? 'flex' : 'none'}} className='content-f'>
+                        <div style={{display: status == "Kepala Balai" ? 'flex' : 'none'}} className='content-f'>
                           <h1>Keterangan Keuangan</h1>
                           <form action="">
                             <table>

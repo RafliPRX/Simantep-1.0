@@ -59,7 +59,7 @@
     height: 260px;
     flex-shrink: 0;
     margin-top: 20px;
-    gap: 10px;
+    gap: 20px;
 }
 .sidebar-2 .sidebar-col .selected .list {
     display: flex;
@@ -78,7 +78,7 @@
 }
 .sidebar-2 .sidebar-col .selected .list p {
     color: #FFF;
-    font-family: "DM Sans";
+    font-family: "poppins";
     font-size: 16px;
     font-style: normal;
     font-weight: 500;

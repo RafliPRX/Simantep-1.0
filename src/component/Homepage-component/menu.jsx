@@ -4,7 +4,6 @@ import simak from '../../assets/simak.png'
 import silaras from '../../assets/silaras.png'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom'
 
 const Menu = () => {
     const storedUsername = localStorage.getItem('nama');
@@ -42,6 +41,23 @@ const Menu = () => {
             console.log(error.response);
         }
     }
+    const buka_surat = async (idNotif, idSurat, event) => {
+        event.preventDefault();
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/mark_as_read.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                window.location.href = `/Cuti-detail/${idSurat}`
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
     return(
         <>
             <div className='menu'>
@@ -58,11 +74,12 @@ const Menu = () => {
                         <div style={{background: `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
                         <h3>{storedUsername}</h3>
                         <div className='notification-list'>
+                        <div className='notification-sub'>                            
                         {notif.length > 0 ? (
-                          <div className='notification-sub'>
+                            <>                            
                             {notif.map((notifItem) => {
-                              return (
-                                <>                                
+                                return (
+                                <>
                                   <div style={{background: `url(https://simantepbareta.cloud/API/${notifItem.f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
                                   <div className='info'>
                                     <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='bullet'></div>
@@ -70,21 +87,22 @@ const Menu = () => {
                                     <h3>Subjek: {notifItem.subjek}</h3>
                                     <div className='button'>
                                         <button onClick={(event) => mark(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
-                                        <Link to={`/Cuti-detail/${notifItem.id_surat}`}>
-                                            <button className='buka'>Buka</button>
-                                        </Link>
+                                        <button onClick={(event) => buka_surat(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
                                     </div>
                                   </div>
-                                </>  
-                              );
-                            })}
-                          </div>
-                        ) : (
-                          <div className='info'>
-                            <h3>No Notification</h3>
-                          </div>
-                        )}                            
-                    </div>
+                                </> 
+                                );  
+                              })}  
+                            </>                     
+                            ) : (
+                            <>
+                                <div className='info'>
+                                    <h3>No Notification</h3>
+                                </div>
+                            </>
+                            )}                                    
+                        </div>
+                      </div>
                     </div>
                 </div>
                 <div className='menu-disp'>       
@@ -109,8 +127,8 @@ const Menu = () => {
                                       <div className='info'>
                                       <h3>Nama: {notif.sender}</h3>
                                       <h3>Subjek: {notif.subjek}</h3>
-                                  </div>
-                                  </>   
+                                    </div>
+                                    </>   
                                   })}  
                                 </>                     
                                 ) : (

@@ -5,6 +5,7 @@ import Menu from '../component/Homepage-component/menu';
 import './homepage.css';
 import { useState, useEffect } from 'react';
 import icon from '../assets/icon.png';
+import { useNavigate } from 'react-router-dom';
 
 const storedUsername = localStorage.getItem('nama');
 const storeNrk = localStorage.getItem('nrk');
@@ -133,6 +134,29 @@ const Homepage = () => {
         setProfile(event.target.files[0]);
         console.log(event.target.files[0]);
     } 
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
+          headers: {}
+        });
+        setTimeout(() => {
+          localStorage.removeItem('nama');
+          localStorage.removeItem('nrk');
+          localStorage.removeItem('sisa_cuti');
+          localStorage.removeItem('f_profile');
+          localStorage.removeItem('jabatan');
+          localStorage.removeItem('email');
+          localStorage.removeItem('Status');
+          localStorage.removeItem('pj');
+          localStorage.removeItem('Id_user');
+          alert(response.data.message);
+          navigate('/');
+        }, 1000);
+      } catch (error) {
+        console.log(error.response);
+      }
+    };
     const uploadProfile = async (event) => {
         event.preventDefault();
         const payload ={
@@ -150,8 +174,8 @@ const Homepage = () => {
               icon: 'https://simantepbareta.cloud/API/LOGO%20BNN%20AI%20HD%20TERBARU%202023.png'
             });
             setTimeout(() => {
-                window.location.reload();
-            }, 400);
+                handleLogout();
+            }, 2000);
         } catch (error) {
             console.log(error.response);
         }

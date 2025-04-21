@@ -70,7 +70,7 @@ const Menu = () => {
                             <button onClick={() => window.location.href = "/Dashboard"}>Masuk</button>
                         </div>
                     </div>
-                    <div className='notification'>
+                    <div className='notif-col'>
                         <div style={{background: `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
                         <h3>{storedUsername}</h3>
                         <div className='notification-list'>
@@ -114,7 +114,7 @@ const Menu = () => {
                             <button onClick={() => window.location.href = "/dashboard-simak"}>Masuk</button>
                         </div>
                     </div>
-                    <div className='notification'>
+                    <div className='notif-col'>
                         <div style={{background: `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
                         <h3>{storedUsername}</h3>
                         <div className='notification-list'>
@@ -151,7 +151,7 @@ const Menu = () => {
                             <button onClick={() => window.location.href = "/Dashboard-laras"}>Masuk</button>
                         </div>
                     </div>
-                    <div className='notification'>
+                    <div className='notif-col'>
                         <div style={{background: `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
                         <h3>{storedUsername}</h3>
                         <div className='notification-list'>

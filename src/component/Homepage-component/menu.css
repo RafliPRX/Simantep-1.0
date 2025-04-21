@@ -42,7 +42,7 @@
     margin-left: 70px;
     margin-top: 52px;
 }
-.menu .menu-disp .notification{
+.menu .menu-disp .notif-col{
     display: flex;
     flex-direction: column;
     width: auto;
@@ -57,14 +57,14 @@
     transition: all 1.1s ease-in-out;
     padding-left: 77px;
 }
-.menu .menu-disp:hover .notification{
+.menu .menu-disp:hover .notif-col{
     opacity: 1;
     transform: translateY(0px);
     border-top-right-radius: 0%;
     border-top-left-radius: 0%;
     transition: all 1.1s ease-in-out;
 }
-.menu .menu-disp .notification .pic{
+.menu .menu-disp .notif-col .pic{
     width: 50px;
     height: 50px;
     border-radius: 360px;
@@ -75,7 +75,7 @@
     justify-content: space-around;
     margin-left: 156px;
 }
-.menu .menu-disp .notification h3{
+.menu .menu-disp .notif-col h3{
     width: auto;
     height: auto;
     flex-shrink: 0;
@@ -89,11 +89,11 @@
     margin-top: 13px;
     margin-left: 42px;
 }
-.menu .menu-disp .notification .notification-list{
+.menu .menu-disp .notif-col .notification-list{
     display: flex;
     flex-direction: row;
 }
-.menu .menu-disp .notification .notification-list .notification-sub{
+.menu .menu-disp .notif-col .notification-list .notification-sub{
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -101,7 +101,7 @@
     align-items: center;
     padding-left: 106px;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .pic{
+.menu .menu-disp .notif-col .notification-list .notification-sub .pic{
     display: flex;
     width: 50px;
     height: 50px;
@@ -109,12 +109,12 @@
     margin-left: -120px;
     margin-top: 0;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .info{
+.menu .menu-disp .notif-col .notification-list .notification-sub .info{
     display: flex;
     flex-direction: column;
     gap: 9px;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .info .bullet{
+.menu .menu-disp .notif-col .notification-list .notification-sub .info .bullet{
     position: absolute;
     width: 13px;
     height: 13px;
@@ -123,13 +123,13 @@
     left: 100px;
     top: 128px;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .info .button{
+.menu .menu-disp .notif-col .notification-list .notification-sub .info .button{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     margin-top: 15px;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .info .button .mark-read{
+.menu .menu-disp .notif-col .notification-list .notification-sub .info .button .mark-read{
     width: 142px;
     height: 38px;
     flex-shrink: 0;
@@ -147,11 +147,11 @@
     cursor: pointer;
     transition: all 0.4s ease-in-out;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .info .button .mark-read:hover{
+.menu .menu-disp .notif-col .notification-list .notification-sub .info .button .mark-read:hover{
     transform: scale(1.1);
     transition: all 0.4s ease-in-out;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .info .button .buka{
+.menu .menu-disp .notif-col .notification-list .notification-sub .info .button .buka{
     width: 100px;
     height: 38px;
     flex-shrink: 0;
@@ -169,11 +169,11 @@
     cursor: pointer;
     transition: all 0.4s ease-in-out;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .info .button .buka:hover{
+.menu .menu-disp .notif-col .notification-list .notification-sub .info .button .buka:hover{
     transform: scale(1.1);
     transition: all 0.4s ease-in-out;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .info h3{
+.menu .menu-disp .notif-col .notification-list .notification-sub .info h3{
     width: auto;
     height: auto;
     flex-shrink: 0;
@@ -186,7 +186,7 @@
     letter-spacing: 0.6px;
     margin-left: 4px;
 }
-.menu .menu-disp .notification .notification-list .notification-sub .info .line{
+.menu .menu-disp .notif-col .notification-list .notification-sub .info .line{
     width: 100px;
     height: 5px;
     background: #FFF;

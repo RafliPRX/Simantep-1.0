@@ -8,7 +8,7 @@
     flex-direction: column;
     padding-bottom: 150px;
 }
-.home .profile{
+.home .profile-info{
     display: flex;
     width: 1684px;
     height: auto;
@@ -24,7 +24,7 @@
     padding-top: 100px;
     
 }
-.home .profile h1{
+.home .profile-info h1{
     color: #FFF;
     font-family: "poppins";
     font-size: 24px;
@@ -43,14 +43,14 @@
     margin-left: 921px;
     margin-top: 862px;
 }
-.home .profile form{
+.home .profile-info form{
     display: flex;
     flex-direction: column;
     padding-top: 30px;
     padding-bottom: 30px;
     gap: 10px;
 }
-.home .profile form label{
+.home .profile-info form label{
     color: #A3AED0;
     font-family: "poppins";
     font-size: 19px;
@@ -62,15 +62,15 @@
     margin-left: 38px;
     width: 230px;
 }
-.home .profile form .u-profile{
+.home .profile-info form .u-profile{
     display: flex;
     flex: row;
 }
-.home .profile form .u-profile .file{
+.home .profile-info form .u-profile .file{
     width: 1330px;
 }
 
-.home .profile form .u-profile button{
+.home .profile-info form .u-profile button{
     display: flex;
     width: 239px;
     height: 50px;
@@ -96,7 +96,7 @@
     margin-left: 30px;
     margin-top: -3px;
 }
-.home .profile form input{
+.home .profile-info form input{
     width: 1500px;
     height: 40px;
     flex-shrink: 0;
@@ -141,7 +141,7 @@
         scale: 0.23;
         margin-left: 155px;    
     }
-    .home .profile {
+    .home .profile-info {
         scale: 0.27;
         margin-left: -135px;
         margin-top: -504px;

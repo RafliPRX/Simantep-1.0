@@ -1,0 +1,127 @@
+.profile{
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    width: auto;
+    height: 61px;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: #000B48;
+    margin-left: 864px;
+    margin-top: -75px;
+    gap: 20px;
+    z-index: 10;
+    padding-right: 30px;
+}
+.notification {
+    display: flex;
+    position: fixed;
+    flex-direction: row;
+    width: auto;
+    height: auto;
+    flex-shrink: 0;
+    border-radius: 30px;
+    background: #000B48;
+    margin-left: 864px;
+    margin-top: -75px;
+    gap: 20px;
+    z-index: 10;
+    padding-right: 30px;
+    top: 215px;
+    left: 306px;
+    padding-bottom: 10px;
+    padding-left: 10px;
+}
+.profile input{
+    width: 122px;
+    height: 41px;
+    flex-shrink: 0;
+    background: #000E60;
+    margin-left: 13px;
+    margin-top: 11px;
+    border-radius: 50px;
+    border: none;
+    color: #ffffff;
+    font-family: "poppins";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 142.857% */
+    letter-spacing: -0.28px;
+    padding-left: 10px;
+}
+.profile svg{
+    margin-top: 20px;
+    transition: all 0.4s ease-in-out;
+}
+.profile .pic-profile{
+    width: 33.686px;
+    height: 33.686px;
+    flex-shrink: 0;
+    background: url(../../assets/profile.jpg) lightgray 50% / cover no-repeat;
+    border-radius: 50px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+}
+.profile .pic-profile:hover{
+    transform: scale3d(1.1, 1.1, 1.1);
+    transition: all 0.4s ease-in-out;
+}
+.profile svg:hover{
+    transform: scale(1.1);
+    transition: all 0.4s ease-in-out;
+}
+.notification .pic{
+    width: 37px;
+    height: 37px;
+    flex-shrink: 0;
+    background: url(../../assets/profile.jpg) lightgray 50% / cover no-repeat;
+    border-radius: 50px;
+    margin-top: 15px;
+    cursor: pointer;
+    transition: all 0.4s ease-in-out;
+}
+.notification .info{
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    padding-top: 7px;
+}
+.notification .info p{
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    margin-left: 4px;
+}
+.notification .info .mark-read-deleted{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.notification .info .mark-read-deleted button{
+    display: flex;
+    padding: 9px 17px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 16px;
+    background: #D30ED8;
+    width: auto;
+    height: 30px;
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 28px;
+    letter-spacing: -0.32px;
+    border: 0;
+    transition: all 0.4s ease-in-out;
+}
+.notification .info .mark-read-deleted button:hover{
+    transform: scale(1.1);
+    transition: all 0.4s ease-in-out;
+}

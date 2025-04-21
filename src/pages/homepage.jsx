@@ -185,7 +185,7 @@ const Homepage = () => {
             <div className='home'>
                 <Banner onDiscoveryClick={scrollClick} />
                 <div className='asset'></div>
-                <div className='profile'>
+                <div className='profile-info'>
                     <h1>Data Diri</h1>
                     <form>
                         <label htmlFor="">Nama</label>

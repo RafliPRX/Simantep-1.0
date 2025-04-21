@@ -120,7 +120,7 @@ const Proposed = () => {
                     <div className='pic'></div>
                 </div>
                 <div className='content-col'>
-                    <div className='box2' style={{marginTop: '-224px'}}>
+                    <div className='box2'>
                         <form action="">
                             <div className='content-f'>
                                 <h1>Data Diri</h1>

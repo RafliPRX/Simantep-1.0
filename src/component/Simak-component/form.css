@@ -14,6 +14,25 @@
     margin-left: 33px;
     margin-top: 65px;
 }
+.main-dashboard .load-cuti{
+    width: 100px;
+    height: 100px;
+    border: 20px solid #FFF;
+    border-bottom-color: #FF3D00;
+    border-radius: 50%;
+    display: inline-block;
+    box-sizing: border-box;
+    animation: rotation 1s linear infinite;
+    }
+
+    @keyframes rotation {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
 .main-dashboard h1{
     color: #FFF;
     font-family: "poppins";
@@ -167,6 +186,36 @@
     letter-spacing: -0.24px;
     padding-left: 35px;
     margin-left: 35px;
+}
+.main-dashboard .content-col .box1 .content-f .toggle-password {
+    position: absolute;
+    right: 350px;
+    top: 50%;
+    transform: translateY(307%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #A3AED0;
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+    width: 52px;
+}
+.main-dashboard .content-col .box1 .content-f .toggle-password-2 {
+    position: absolute;
+    right: 350px;
+    top: 50%;
+    transform: translateY(800%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #A3AED0;
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+    width: 52px;
 }
 .main-dashboard .content-col .box2 .content-f textarea{
     width: 1059px;

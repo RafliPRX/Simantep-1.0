@@ -1,0 +1,193 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<sim-project version="14.82" multi-file="no" uid="simp7ec81cfe8796428da56ae7021123564d" creation-date="07/23/2025 10:33:26">
+  <meta>
+    <name>Filter Absent Pegawai DFD</name>
+    <authors>Rafli </authors>
+    <description />
+  </meta>
+  <counters diagrams="1" models="1">
+    <entity-names>
+      <counter>
+        <item-type type-id="dfd-external" type="External" />
+        <value>1</value>
+      </counter>
+      <counter>
+        <item-type type-id="dfd-process" type="Process" />
+        <value>4</value>
+      </counter>
+      <counter>
+        <item-type type-id="text" type="Text" />
+        <value>2</value>
+      </counter>
+    </entity-names>
+    <entity-ids>
+      <counter>
+        <item-type type-id="dfd-external" type="External" />
+        <value>2</value>
+      </counter>
+      <counter>
+        <item-type type-id="universal-connector" type="Universal Connector" />
+        <value>9</value>
+      </counter>
+      <counter>
+        <item-type type-id="dfd-data-flow" type="Data Flow" />
+        <value>9</value>
+      </counter>
+      <counter>
+        <item-type type-id="text" type="Text" />
+        <value>6</value>
+      </counter>
+    </entity-ids>
+    <diagrams />
+    <fields />
+  </counters>
+  <alias-groups />
+  <management uid="md-36203474defb44d7ab18000f5efeea23" name="" task-id-sequence="0">
+    <persons>
+      <person id="">
+        <first-name />
+        <last-name />
+        <role />
+        <e-mail />
+        <phone-number />
+        <description />
+        <color>#00000000</color>
+      </person>
+    </persons>
+    <teams />
+    <sprints />
+    <projects />
+    <modules />
+    <tasks />
+    <to-dos />
+  </management>
+  <glossary id="glsr-2f360062a4f7468bbe7ce16fad4f9289" name="" order-index="-1" />
+  <types default="UML">
+    <type-sets>
+      <type-set file="UmlTypes.xml" />
+    </type-sets>
+    <custom-types>
+      <parameters />
+      <types />
+    </custom-types>
+  </types>
+  <items />
+  <models>
+    <model id="pa772a9085ac04a0e939240fa623465e4_876059405" name="Model1" namespace="" order-index="1" expanded="true">
+      <meta>
+        <authors>
+          <author> </author>
+        </authors>
+        <description />
+        <creation-date>07/23/2025 10:34:23</creation-date>
+        <change-date>01/01/0001 00:00:00</change-date>
+        <revision-count>0</revision-count>
+        <version />
+      </meta>
+      <abstract-items />
+      <sub-models />
+      <diagram type="gane-sarson-data-flow" id="p1223466a8a044811bd575d1045104985_332709151" name="Diagram1" order-index="1" uid="" name-style="" auto-routed-paths="false" default-line-style="default">
+        <style>
+          <background-color index="1" color="#FFFFFFFF" />
+          <background-color index="2" color="#FFFFFFFF" />
+          <background-type type="solid" />
+        </style>
+        <meta>
+          <authors>
+            <author> </author>
+          </authors>
+          <description />
+          <creation-date>07/23/2025 10:34:23</creation-date>
+          <change-date>07/23/2025 14:03:50</change-date>
+          <revision-count>0</revision-count>
+          <version />
+        </meta>
+        <abstract-items>
+          <item id="06370836d29b40979f3b4a4005b9a501" cid="ELEM004" type="text" name="Text1" style-class="Transparent" creator="" creation-date="07/23/2025 14:03:43">
+            <style class="Transparent" />
+            <drawing-text />
+          </item>
+          <item id="b3ad8c2e866041d4bd6af9606244e58e" cid="DFE001" type="dfd-external" name="User" creator="" creation-date="07/23/2025 13:51:22" />
+          <item id="78a1e43352f841cfa4467fd32e7da959" cid="DFF004" type="dfd-data-flow" name="Request Search" creator="" creation-date="07/23/2025 13:52:51" from="b3ad8c2e866041d4bd6af9606244e58e" />
+          <item id="d011bb6e5d54476997df95dbee704a06" cid="ELEM005" type="text" name="Text2" style-class="Transparent" creator="" creation-date="07/23/2025 14:03:50">
+            <style class="Transparent" />
+            <drawing-text>
+              <text>DFD LEVEL 0 
+
+Bagian Fungsi Filter Pegawai
+</text>
+            </drawing-text>
+          </item>
+          <item id="e5b94fb7ee78409a9bb48e07a93deb4d" cid="1" type="dfd-process" name="Filter Pegawai" creator="" creation-date="07/23/2025 13:51:55" />
+          <item id="7e63f7c9dac744b0b5030a2585ca731a" cid="DFF008" type="dfd-data-flow" creator="" creation-date="07/23/2025 14:00:17" to="b3ad8c2e866041d4bd6af9606244e58e" />
+          <item id="dafc47d6374a41549d94f10b18aae3a7" cid="ELEM006" type="universal-connector" name="Offline Data" creator="" creation-date="07/23/2025 13:58:55" from="cdc2828458424c919a62f17aa16b5685">
+            <connector />
+          </item>
+          <item id="cdc2828458424c919a62f17aa16b5685" cid="ELEM003" type="universal-connector" creator="" creation-date="07/23/2025 13:58:19" from="e5b94fb7ee78409a9bb48e07a93deb4d">
+            <connector />
+          </item>
+          <item id="74182a03904f46fdac1134c59dc49e6c" cid="DFF005" type="dfd-data-flow" name="Online Data" creator="" creation-date="07/23/2025 13:53:29" from="e5b94fb7ee78409a9bb48e07a93deb4d" to="b3ad8c2e866041d4bd6af9606244e58e" />
+        </abstract-items>
+        <layer id="8de566ede2b2428c8d6ec2cf0bef2db5" name="Default" visible="true" enabled="true" locked="false">
+          <item id="b3ad8c2e866041d4bd6af9606244e58e" iid="8ef32f3097464c4391ee09a23f6c9b95" creation-date="07/23/2025 13:51:22" order-index="0" type="entity">
+            <layout ax="240" ay="227" awidth="120" aheight="70" x="240" y="227" width="120" height="70" />
+          </item>
+          <item id="e5b94fb7ee78409a9bb48e07a93deb4d" iid="2d453928b70b4e408fb05370d0c27ce7" creation-date="07/23/2025 13:51:55" order-index="1" type="entity">
+            <layout ax="563" ay="217" awidth="120" aheight="90" x="563" y="217" width="120" height="90" />
+          </item>
+          <item id="78a1e43352f841cfa4467fd32e7da959" iid="d0c45db5f825435985ba559c23a636fb" creation-date="07/23/2025 13:52:51" order-index="2" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="360" y1="280" x2="563" y2="281" start-border-pos="0.4392857142857143" end-border-pos="0.8222222253680229" start-local-pos="53" end-local-pos="64" name-position="0,20">
+              <points>
+                <point x="360" y="280" />
+                <point x="563" y="281" />
+              </points>
+            </layout>
+            <relation from="b3ad8c2e866041d4bd6af9606244e58e" from-iid="8ef32f3097464c4391ee09a23f6c9b95" />
+          </item>
+          <item id="74182a03904f46fdac1134c59dc49e6c" iid="1835fa910c744158a7faf9a0f302652b" creation-date="07/23/2025 13:53:29" order-index="3" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="563" y1="240" x2="360" y2="240" start-border-pos="0.9361111111111111" end-border-pos="0.2964285723865032" start-local-pos="23" end-local-pos="13" name-position="-0.5,17">
+              <points>
+                <point x="563" y="240" />
+                <point x="360" y="240" />
+              </points>
+            </layout>
+            <relation from="e5b94fb7ee78409a9bb48e07a93deb4d" from-iid="2d453928b70b4e408fb05370d0c27ce7" to="b3ad8c2e866041d4bd6af9606244e58e" to-iid="8ef32f3097464c4391ee09a23f6c9b95" />
+          </item>
+          <item id="cdc2828458424c919a62f17aa16b5685" iid="58506b67949d45b5955e998aac9567e3" creation-date="07/23/2025 13:58:19" order-index="4" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-to-fields="false" auto-path="" x1="623" y1="217" x2="623" y2="147" start-border-pos="0.125" end-border-pos="-1" start-local-pos="60" name-position="0,20">
+              <points>
+                <point x="623" y="217" />
+                <point x="623" y="147" />
+              </points>
+            </layout>
+            <relation from="e5b94fb7ee78409a9bb48e07a93deb4d" from-iid="2d453928b70b4e408fb05370d0c27ce7" />
+          </item>
+          <item id="dafc47d6374a41549d94f10b18aae3a7" iid="f1988fb5a903418fa2fffae2965a7763" creation-date="07/23/2025 13:58:55" order-index="5" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-to-fields="false" auto-path="" x1="623" y1="148" x2="300" y2="148" start-border-pos="0.9857142857142858" end-border-pos="0.5606060606060606" start-local-pos="11" end-local-pos="37" name-position="-0.5,20">
+              <points>
+                <point x="623" y="148" />
+                <point x="300" y="148" />
+              </points>
+            </layout>
+            <relation from="cdc2828458424c919a62f17aa16b5685" from-iid="58506b67949d45b5955e998aac9567e3" />
+          </item>
+          <item id="7e63f7c9dac744b0b5030a2585ca731a" iid="d252b2d2c5684e6d843bd2084e294803" creation-date="07/23/2025 14:00:17" order-index="6" type="relation">
+            <layout line-style="oblique" lock-start-point="true" lock-end-point="true" lock-to-fields="false" auto-path="" x1="300" y1="147" x2="300" y2="227" start-border-pos="-1" end-border-pos="0.125" end-local-pos="60" name-position="0,20">
+              <points>
+                <point x="300" y="147" />
+                <point x="300" y="227" />
+              </points>
+            </layout>
+            <relation to="b3ad8c2e866041d4bd6af9606244e58e" to-iid="8ef32f3097464c4391ee09a23f6c9b95" />
+          </item>
+          <item id="06370836d29b40979f3b4a4005b9a501" iid="ffcae9bcde4c4c1f82c9e96cddc1321b" creation-date="07/23/2025 14:03:43" order-index="7" type="drawing-text">
+            <layout ax="447" ay="147" awidth="250" aheight="41" x="447" y="147" width="250" height="41" />
+          </item>
+          <item id="d011bb6e5d54476997df95dbee704a06" iid="58679f7e97554a928ba53b18141004b5" creation-date="07/23/2025 14:03:50" order-index="8" type="drawing-text">
+            <layout ax="333" ay="30" awidth="250" aheight="100" x="333" y="30" width="250" height="100" />
+          </item>
+        </layer>
+      </diagram>
+    </model>
+  </models>
+</sim-project>

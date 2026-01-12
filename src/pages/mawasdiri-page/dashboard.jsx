@@ -1,7 +1,7 @@
 import Content from '../../component/Mawasdiri-component/content'
 import Sidebar from '../../component/Mawasdiri-component/sidebar'
 import './dashboard.css'
-const Dashboard = () => {
+const Dashboard = () => {    
     return(
         <>
             <div className='dashboard'>

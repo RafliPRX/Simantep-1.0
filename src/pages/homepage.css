@@ -1,18 +1,18 @@
 .home{
+    position: relative;
     display: inline-flex;
-    width: 1920px;
-    height: auto;
+    width: 100%;
+    height: 100vh;
     background: #000E60;
-    overflow-y: hidden;
+    overflow-y: auto;
     overflow-x: hidden;
     flex-direction: column;
     padding-bottom: 150px;
 }
 .home .profile-info{
     display: flex;
-    width: 1684px;
-    height: auto;
-    flex-shrink: 0;    
+    width: 90%;
+    height: 105vh;
     flex-direction: column;
     align-items: flex-start;
     flex-shrink: 0;
@@ -23,6 +23,10 @@
     padding-left: 50px;
     padding-top: 100px;
     
+}
+.home .profile-info .field{
+    display: flex;
+    flex-direction: column;
 }
 .home .profile-info h1{
     color: #FFF;
@@ -49,6 +53,7 @@
     padding-top: 30px;
     padding-bottom: 30px;
     gap: 10px;
+    width: 100%;
 }
 .home .profile-info form label{
     color: #A3AED0;
@@ -97,8 +102,9 @@
     margin-top: -3px;
 }
 .home .profile-info form input{
-    width: 1500px;
-    height: 40px;
+    display: flex;
+    width: 90%;
+    height: 5vh;
     flex-shrink: 0;
     border-radius: 16px;
     background: #001274;
@@ -113,18 +119,16 @@
     padding-left: 35px;
     margin-left: 35px;
 }
-.home .asset{
+.home .asset {
     position: absolute;
-    width: 639px;
-    height: 599px;
-    flex-shrink: 0;
-    background: url(../assets/Asset-1.png) rgb(255, 255, 255, 0) 0% / cover no-repeat;
-    margin-left: 1000px;
-    margin-left: 1171px;
-    margin-top: 78px;
+    background: url(/src/assets/Asset-1.png) rgb(255, 255, 255, 0) 0% / cover no-repeat;
+    width: 50%;
+    max-width: 697px;
+    height: 100vh;
+    background-size: contain;
+    background-position: center right;
     transition: all 0.4s ease-in-out;
-    padding-top: 155px;
-    padding-right: 90px;
+    margin-left: 1180px;
 }
 .home .asset:hover{
     transform: scale(1.1);

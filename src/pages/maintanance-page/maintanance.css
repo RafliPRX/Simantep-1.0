@@ -1,0 +1,27 @@
+.maintanance-background {
+    display: flex;
+    width: 100%;
+    min-height: 100vh;
+    background: #000E60;
+    overflow-y: auto;
+    overflow-x: hidden;
+    flex-direction: column;
+    box-sizing: border-box;  
+}
+.maintanance-background .box {
+    background: #8c24ad;
+    width: 75%;
+    padding: 2rem;
+    margin: auto;
+    text-align: center;
+    color: white;
+    border-radius: 10px;
+    font-size: 25px;
+    font-family: poppins;
+}
+.maintanance-background .box h1{
+    margin-bottom: 2rem;
+}
+.maintanance-background .box h2{
+    margin-bottom: 1rem;
+}

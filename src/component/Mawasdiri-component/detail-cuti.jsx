@@ -4,6 +4,9 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile';
 const Cuti_Detail_Form = () => {
+    const { role } = useParams();
+    const { level } =useParams();
+    const { role_sp } = useParams();
     const storedUsername = localStorage.getItem('nama');
     const storeNrk = localStorage.getItem('nrk');
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
@@ -11,6 +14,7 @@ const Cuti_Detail_Form = () => {
     const pj = localStorage.getItem('pj');
     const kelompok = localStorage.getItem('no_kelompok');
     const status = localStorage.getItem('Status');
+    const [isLoading, setIsLoading] = useState(false);
     console.log(storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
@@ -59,10 +63,15 @@ const Cuti_Detail_Form = () => {
     }
     const navigate = useNavigate();
     const handlePjJawab = async (event) =>{
+      setIsLoading(true);
       event.preventDefault();
+      const nama_b_value = Number(pjJawab) === 3 ? "Chandra Hutama Yahrinanda" : detail.nama;
+      const kode_role_b_value = Number(pjJawab) === 3 ? "B-01" : "";
       const payload = {
         veri_1: pjJawab,
-        alasan: alasan
+        alasan: alasan,
+        kode_role_b: kode_role_b_value,
+        nama_b: nama_b_value,
       }
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/pj_answer.php?id=${param.id}`, payload, {
@@ -72,7 +81,8 @@ const Cuti_Detail_Form = () => {
         });
         console.log(response.data.message);
         setTimeout(() => {
-          navigate("/Dashboard");
+          setIsLoading(false);
+          navigate(`/Dashboard/${level}/${role}/${role_sp}`);
           alert(response.data.message);
         }, 1000);
       } catch (error) {
@@ -81,10 +91,15 @@ const Cuti_Detail_Form = () => {
     }
     
     const handleKepegJawab = async (event) =>{
+      setIsLoading(true);
       event.preventDefault();
+      const nama_a_value = Number(kepegJawab) === 3 ? "Kanif Anshori" : detail.nama;
+      const kode_role_a_value = Number(kepegJawab) === 3 ? "A-02" : "";
       const payload = {
         veri_2: kepegJawab,
-        alasan: alasan
+        alasan: alasan,
+        kode_role_a: kode_role_a_value,
+        nama_a: nama_a_value,
       }
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/kepeg_answer.php?id=${param.id}`, payload, {
@@ -94,7 +109,8 @@ const Cuti_Detail_Form = () => {
         });
         console.log(response.data);
         setTimeout(() => {
-          navigate("/Dashboard");
+          setIsLoading(false);
+          navigate(`/Dashboard/${level}/${role}/${role_sp}`);
           alert(response.data.message);
         }, 1000);
       } catch (error) {
@@ -102,10 +118,15 @@ const Cuti_Detail_Form = () => {
       }
     }
     const handleKasubagJawab = async (event) =>{
+      setIsLoading(true);
       event.preventDefault();
+      const nama_sp_value = Number(kasubagJawab) === 3 ? "Raeza Noorinda Oktaviani" : detail.nama;
       const payload = {
         veri_3: kasubagJawab,
-        alasan: alasan
+        alasan: alasan,
+        nama_sp: nama_sp_value,
+
+
       }
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/kasubag_answer.php?id=${param.id}`, payload, {
@@ -115,7 +136,8 @@ const Cuti_Detail_Form = () => {
         });
         console.log(response.data);
         setTimeout(() => {
-          navigate("/Dashboard");
+          setIsLoading(false);
+          navigate(`/Dashboard/${level}/${role}/${role_sp}`);
           alert(response.data.message);
         }, 1000);
       } catch (error) {
@@ -128,6 +150,7 @@ const Cuti_Detail_Form = () => {
       console.log(event.target.files[0]);
     }
     const handleUploadPDF = async (event) => {
+      setIsLoading(true);
       event.preventDefault();
       const payload = {
         pdf: pdf
@@ -140,7 +163,8 @@ const Cuti_Detail_Form = () => {
         });
         console.log(response.data);
         setTimeout(() => {
-          navigate("/Dashboard");
+          setIsLoading(false);
+          navigate(`/Dashboard/${level}/${role}/${role_sp}`);
           alert(response.data.message);
         },500)
       } catch (error) {
@@ -153,36 +177,22 @@ const Cuti_Detail_Form = () => {
       link.href = fileUrl;
       link.download = detail.pdf;
       link.click();
-    }
-    const allowedValues = [
-      "Koordinator Layanan Rehabilitasi",
-      "Pj. Supervisi Klinis",
-      "Program Manager Layanan Rehabilitasi",
-      "Pj. Tata Kelola Klinik",
-      "Pj. Penunjang Medis",
-      "Pj. Vokasional",
-      "Pj. Pembina Jasmani dan Mental",
-      "Pj. Informasi dan Data",
-      "Pj. Layanan E-Corner",
-      "Pj. Pembendaharaan",
-      "Pj. Kepegawaian",
-      "Pj. Barang Milik Negara serta Operator Aset & Operator Persediaan",
-      "Pj. Rumah Tanggal dan Aset",
-      "Pj. Humas dan Kerjasama",
-      "Pj. Perencanaan Anggaran dan Pelaporan",
-    ];
+    }    
     return (
 
         <>
             <div className='main-dashboard'>
+            {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+                    <span style={{position: 'absolute', top : '1500px'}} className="load-cuti"></span>
+            </div>}   
                 <p>Mawasdiri/Pengajuan Cuti</p>
                 <h1>Pengajuan Cuti</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile}/>             
+                <Profile nama={storedUsername} f_profile={storedFProfile} feature="mawasdiri" />           
                 <div className='content-col' id='pdf-content'>
                     <div className='box1'>
                         <div className='content-f'>
                             <h1>Data Diri</h1>
-                            <table>
+                            <table style={{marginLeft: 20}}>
                                 <tr>
                                   <td>Nama</td>
                                 </tr>
@@ -193,7 +203,7 @@ const Cuti_Detail_Form = () => {
                                   <td>NIP/NRK</td>
                                 </tr>
                                 <tr>
-                                  <td className='input'>{detail.nrk}</td>
+                                  <td className='input'>{detail.nrk_nip}</td>
                                 </tr>
                                 <tr>
                                   <td>Jabatan</td>
@@ -298,7 +308,8 @@ const Cuti_Detail_Form = () => {
                           <h1>Download Surat</h1>
                           <button className='submit' onClick={DownloadFile}>Download</button>
                         </div>
-                        <div style={{display: allowedValues.includes(status) ? 'flex' : 'none' }} className='content-f'>
+                        {level === "level-2" &&
+                        <div className='content-f'>
                           <h1>Jawab PJ</h1>
                             <form action="">
                               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -314,7 +325,9 @@ const Cuti_Detail_Form = () => {
                               <button onClick={handlePjJawab} className='submit'>Kirim</button>
                           </form>
                         </div>
-                        <div style={{display: status == "Kepegawaian" ? 'flex' : 'none' }} className='content-f'>
+                        }
+                        {level === "level-3" &&
+                        <div className='content-f'>
                           <h1>Jawab Kepegawaian</h1>
                             <form action="">
                               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -330,7 +343,9 @@ const Cuti_Detail_Form = () => {
                               <button onClick={handleKepegJawab} className='submit'>Kirim</button>
                           </form>
                         </div>
-                        <div style={{display: status == "Kasubbag" ? 'flex' : 'none' }} className='content-f'>
+                        }                        
+                        {level === "level-4" &&
+                        <div className='content-f'>
                           <h1>Jawab Kasubag</h1>
                             <form action="">
                               <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
@@ -346,14 +361,17 @@ const Cuti_Detail_Form = () => {
                               <button onClick={handleKasubagJawab} className='submit'>Kirim</button>
                           </form>
                         </div>
-                        <div style={{display: storedUsername === 'admin' ? 'flex' : 'none' }} className='content-f'>
-                          <h1>Upload File</h1>
-                            <form action="">
-                              <label htmlFor="">Upload File</label>
-                              <input type="file" onChange={handleChangePDF} name="" id="" />
-                              <button onClick={handleUploadPDF} className='submit'>Kirim</button>
-                          </form>
-                        </div>
+                        }
+                        {role_sp === "S-02" &&
+                          <div className='content-f'>
+                            <h1>Upload File</h1>
+                              <form action="">
+                                <label htmlFor="">Upload File</label>
+                                <input type="file" onChange={handleChangePDF} name="" id="" />
+                                <button onClick={handleUploadPDF} className='submit'>Kirim</button>
+                            </form>
+                          </div>
+                        }                        
                     </div>
                 </div>
             </div>        

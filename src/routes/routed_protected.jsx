@@ -1,13 +1,12 @@
 import { Outlet, Navigate } from "react-router-dom";
-
-const id = localStorage.getItem('id');
 // eslint-disable-next-line react/prop-types
 const RoutedProtected = ({ children }) => {
-if (!id) {
-    return <Navigate to="/" />;
-    }
+    const storedidAkun = localStorage.getItem('id_akun');
+    if (!storedidAkun) {
+        return <Navigate to="/" />;
+        }
 
-    return <> {children || <Outlet/>}</>
+        return <> {children || <Outlet/>}</>
 };
 
 export default RoutedProtected

@@ -11,7 +11,7 @@ const Banner = ({onDiscoveryClick}) => {
                         <h3>Balai Rehabilitasi BNN Tanah Merah</h3>
                         <button onClick={onDiscoveryClick}>Discover Now</button>
                         <a href="https://wa.me/6287777165162 ">Need Help ?</a>
-                    </div>
+                    </div>                                        
                 </div>
             </div>
         </>

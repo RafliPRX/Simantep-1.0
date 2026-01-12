@@ -11,9 +11,12 @@
     overflow-x: hidden;   
 }
 .banner .banner-pic{
+    display: flex;
+    position: relative;
     width: 1789px;
     height: 1144px;
     flex-shrink: 0;
+    gap: 100px;
     margin-top: -129px;
     background: url(../../assets/Login.png) lightgray 50% / cover no-repeat;
 }

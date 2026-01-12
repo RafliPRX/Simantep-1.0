@@ -1,79 +1,15 @@
-import { useEffect } from 'react';
 import './profile.css';
 import PropTypes from "prop-types";
 import { useState } from 'react';
-import axios from 'axios';
+import default_pic from '../assets/profile.jpg';
+import Info from './info';
+import Info_Simak from './info_simak';
+import Info_Silaras from './info_silaras';
 const Profile = (
-    {nama, f_profile}
+    {nama, f_profile, feature}
 ) => {
-    const [notif_surat, setNotif_surat] = useState([]);
-    const getNotif_Surat = async () => {
-        try {
-            const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/notifikasi_surat_all.php?nama=${nama}` , {
-                headers: {"Content-Type": "multipart/form-data"},
-            });
-            console.log(response.data);
-            setNotif_surat(response.data);
-        } catch (error) {
-            console.log(error.response);
-        }
-    }
-    const mark = async (idNotif, event) => {
-      event.preventDefault();
-      const payload = {
-          stat: "Disable"
-      }
-      try {
-          const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/mark_as_read.php?id=${idNotif}`, payload, {
-              headers: {"Content-Type": "multipart/form-data"},
-          })
-          console.log(response.data);
-          setTimeout(() => {
-              window.location.reload();
-          }, 2000);
-      } catch (error) {
-          console.log(error.response);
-      }
-    }
-    const deleted = async (idNotif, event) => {
-      event.preventDefault();
-      const payload = {
-          stat: "Disable"
-      }
-      try {
-          const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/delete_notif_surat.php?id=${idNotif}`, payload, {
-              headers: {"Content-Type": "multipart/form-data"},
-          })
-          console.log(response.data);
-          setTimeout(() => {
-              window.location.reload();
-          }, 2000);
-      } catch (error) {
-          console.log(error.response);
-      }
-    }
-    const buka_surat = async (idNotif, idSurat, event) => {
-      event.preventDefault();
-      const payload = {
-          stat: "Disable"
-      }
-      try {
-          const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/mark_as_read.php?id=${idNotif}`, payload, {
-              headers: {"Content-Type": "multipart/form-data"},
-          })
-          console.log(response.data);
-          setTimeout(() => {
-              window.location.href = `/Cuti-detail/${idSurat}`
-          }, 2000);
-      } catch (error) {
-          console.log(error.response);
-      }
-    }
-    useEffect(() => {
-        getNotif_Surat();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
     const [show, setShow] = useState(false)
+
     const get_Show = () => {
         setShow(!show)
     }
@@ -101,33 +37,17 @@ const Profile = (
                     </clipPath>
                   </defs>
                 </svg>
-                <div style={{background: f_profile === '' ? `url(../../assets/profile.jpg)` : `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundSize: "76%", backgroundPosition: "50% 5%"}} className='pic-profile'></div>
+                <div style={{background: f_profile === '' ? `url(${default_pic})` : `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundSize: "76%", backgroundPosition: "50% 5%"}} className='pic-profile'></div>
             </div>
-            {notif_surat.length > 0 ? (
-              <div style={{transition: "all .5s", opacity: !show ? "0" : "1", visibility: !show ? "hidden" : "visible"}} className="notification">
-                {notif_surat.map((notif) => (
-                    <>
-                    <div style={{background: notif.f_profile === '' ? `url(../../assets/profile.jpg)` : `url(https://simantepbareta.cloud/API/${notif.f_profile})`, backgroundSize: "89%", backgroundPosition: "34% 5%"}} className='pic'></div>
-                    <div className='info'>
-                      <p style={{ marginTop: '0px' }}>{notif.sender}</p>
-                      <p style={{ marginTop: '0px' }}>{notif.subjek}</p>
-                      <div className='mark-read-deleted'>
-                        <button onClick={(event) => mark(notif.id_notif, event)}>Telah dibaca</button>
-                        <button onClick={(event) => deleted(notif.id_notif, event)}>Hapus</button>
-                        <button onClick={(event) => buka_surat(notif.id_notif, notif.id_surat, event)}>Buka</button>
-                      </div>
-                  </div>
-                  </>                  
-                ))}
-              </div>          
-            ) : (
-              <div style={{transition: "all .5s", opacity: !show ? "0" : "1", visibility: !show ? "hidden" : "visible"}} className="notification">
-                <div className='info'>
-                  <p style={{ marginTop: '0px' }}>Tidak ada notifikasi</p>
-                </div>
-              </div>
-            )
-          }
+            <div style={{transition: "all .5s", opacity: !show ? "0" : "1", visibility: !show ? "hidden" : "visible", display: feature === 'mawasdiri' ? "flex" : "none"}} className="notification">
+              <Info nama={nama}/>
+            </div>
+            <div style={{transition: "all .5s", opacity: !show ? "0" : "1", visibility: !show ? "hidden" : "visible", display: feature === 'simak' ? "flex" : "none"}} className="notification">
+              <Info_Simak nama={nama}/>
+            </div>
+            <div style={{transition: "all .5s", opacity: !show ? "0" : "1", visibility: !show ? "hidden" : "visible", display: feature === 'silaras' ? "flex" : "none"}} className="notification">
+              <Info_Silaras nama={nama}/>
+            </div>    
         </>
     )
 }
@@ -136,5 +56,6 @@ export default Profile
 
 Profile.propTypes = {
     nama: PropTypes.string,
-    f_profile: PropTypes.string
+    f_profile: PropTypes.string,
+    feature: PropTypes.string
 };

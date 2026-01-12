@@ -6,18 +6,20 @@ import axios from 'axios';
 const Signup = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [nrk, setNRK] = useState('');
-    const [pj_id, setPJID] = useState('');
+    const [nrk, setNRK] = useState('');    
     const [nama, setNama] = useState('');
     const [jabatan, setJabatan] = useState('');
+    const [nama_role, setNamaRole] = useState('');
+    const [akses_level, setAksesLevel] = useState('1');
+    const [id_number, setId_Number] = useState('');
+    const [re_password, setRe_Password] =useState('');
     const navigate = useNavigate();
-    const [ppnpn, setPPNPN] = useState(false);
-    const [pppk, setPPPK] = useState(false);
-    const [pj, setPj] = useState([]);
-    const [status, setStatus] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [showPassword, setShowPassword] = useState({
-        ppnpn: false,
-        pppk: false
+        Password: false,
+    });
+    const [showRePassword, setShowRePassword] = useState({
+        REPassword: false,
     });
 
     const togglePasswordVisibility = (field) => {
@@ -26,65 +28,56 @@ const Signup = () => {
             [field]: !prev[field]
         }));
     }
+    const toggleRePasswordVisibility = (field) => {
+        setShowRePassword(prev => ({
+            ...prev,
+            [field]: !prev[field]
+        }));
+    }
     const handleLogin_ppnpn = async (event) => {
-        event.preventDefault();
-        const payload = {
-            email: username,
-            nama: nama,
-            pass: password,
-            nrk: nrk,
-            pj: pj_id,
-            jabatan: jabatan,
-        };
-        try {
-            const response = await axios.post(`https://simantepbareta.cloud/API/signup_lowlevel_ppnpn.php`, payload, {
-                headers: {
-                'Content-Type': 'multipart/form-data',
-                }
-            })
-            console.log(response.data.status);
-            setTimeout(() => {
-                alert(response.data.message);
-                navigate('/');
-            }, 500);
-        } catch (error) {
-            console.log(error.response);
-            alert("error Signup code 101");
-        }
-    }
-    const handleLogin_pppk = async (event) => {
-        event.preventDefault();
-        const payload = {
-            email: username,
-            nama: nama,
-            pass: password,
-            nrk: nrk,
-            pj: pj_id,
-            jabatan: jabatan,
-            Stat: status
-        };
-        try {
-            const response = await axios.post(`https://simantepbareta.cloud/API/signup_lowlevel_pppkasn.php`, payload, {
-                headers: {
-                'Content-Type': 'multipart/form-data',
-                }
-            })
-            console.log(response.data.status);
-            setTimeout(() => {
-                alert(response.data.message);
-                navigate('/');
-            }, 500);
-        } catch (error) {
-            console.log(error.response);
-            alert("error Signup code 101");
-        }
-    }
-    const handlePPNPN = (event) => {
-        setPPNPN(event.target.checked);
-    }
-    const handlePPPK = (event) => {
-        setPPPK(event.target.checked);
-    }
+       event.preventDefault();
+      setIsLoading(true);
+
+      if (password !== re_password) {
+        alert("Password and Re-Password do not match!");
+        setIsLoading(false);
+        return;
+      }
+
+      if (password.length < 8) {
+        alert("Password Minimal 8 Karakter!");
+        setIsLoading(false);
+        return;
+      }
+
+      const payload = {
+        id_number: id_number,
+        nama: nama,
+        username: username,
+        pass: password,
+        re_pass: re_password,
+        nrk_nip: nrk,
+        jabatan: jabatan,
+        akses_level: akses_level,
+      };
+      try {
+        const response = await axios.post(`https://simantepbareta.cloud/API/Admin_API/new_account.php`, payload, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+        console.log(response.data);
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate("/");
+          alert(response.data.message);
+        }, 1000);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error.response);
+        alert("error code 103");
+      }
+    }    
     const handleChangeUsername = (event) => {
         const value = event.target.value;
         if (value.includes(' ')) {
@@ -100,144 +93,112 @@ const Signup = () => {
         setPassword(event.target.value);
         console.log("pass: "+event.target.value);
     }
-
+    const handleChangeRePassword = (event) => {
+        setRe_Password(event.target.value);
+        console.log("Re-pass: "+event.target.value);
+    }
     const handleChangeNRK = (event) => {
         setNRK(event.target.value);
         console.log("nrk: "+event.target.value);
     }
     const handleChangeNama = (event) => {
         setNama(event.target.value);
-        console.log("nama: "+event.target.value);
+        const selectedIdentityData = allIdentity_lv1.find((identitas) => identitas.nama === event.target.value);
+        if (selectedIdentityData) {
+            setNamaRole(selectedIdentityData.nama_role);
+            setAksesLevel(selectedIdentityData.akses_level);
+            setId_Number(selectedIdentityData.id_number);
+        }
     }
     const handleChangeJabatan = (event) => {
         setJabatan(event.target.value);
         console.log("jabatan: "+event.target.value);
     }
-    const handleChangePJ = (event) => {
-        setPJID(event.target.value);
-        console.log("PJ: "+event.target.value);
-    }
-    const handleChangeStatus = (event) => {
-        setStatus(event.target.value);
-        console.log("status: "+event.target.value);
-    }
-    const getPJ = async () => {
-        try {
-            const response = await axios.get(`https://simantepbareta.cloud/API/get_PJ_Midlevel.php`, {
-                headers: {
-                    'Content-Type': 'application/json',
-                }
-            })
-            console.log(response.data);
-            setPj(response.data);
-        } catch (error) {
-            console.log(error.response);
-        }
+    const [allIdentity_lv1, setAllIdentity_lv1] = useState([]);
+    const getIdentity = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getIdentity_lv1.php`;
+        let url = baseUrl;
+        axios.get(url).then((res2) => {
+            console.log(res2.data.Data);
+            const response = res2.data.Data;
+            setAllIdentity_lv1(response);
+            console.log(response);
+        })        
+        .catch((error) => {
+            console.log(error);
+        });
     }
     useEffect(() => {
-        getPJ();
+        getIdentity();
     },[]);
     return(
         <>
         <div className='login'>
+            {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+                    <span style={{position: 'absolute', top : '500px'}} className="load-cuti"></span>
+            </div>}
             <div className='col'>
                 <div className='form-col' style={{padding: "144px 57px"}}>
                     <form action="/Home" style={{marginTop: "-228px"}}>
                         <div className='header'>
                             <h1>Sign Up</h1>
                             <h3>Create Your Username and Password</h3>
-                        </div>
-                        <div className='selection'>
-                            <div className='list'>
-                                <input onChange={handlePPNPN} className='check' type="checkbox" name="" id="" />
-                                <label htmlFor="">PPNPN</label>
-                            </div>
-                            <div className='list'>
-                                <input onChange={handlePPPK} className='check' type="checkbox" name="" id="" />
-                                <label htmlFor="">ASN</label>
-                            </div>
-                        </div>
-                        {ppnpn && (
-                        <div className='input-col'>
-                            <label>Username/Email</label>
-                            <input onChange={handleChangeUsername} placeholder='Username atau Email' type="text" />
+                        </div>  
+                        <div className='input-col'>                            
                             <label>Nama</label>
-                            <input type="text" onChange={handleChangeNama} placeholder='Nama Lengkap Beserta Gelar' name="" id="" />
+                            <select onChange={handleChangeNama} name="" id="">
+                                  <option value="" selected>Pilih Nama</option>
+                                  {allIdentity_lv1.map((item) => (
+                                      <>                                                                                      
+                                        <option value={item.nama}>{item.nama}</option>                                        
+                                      </>
+                                  ))}
+                                </select>
+                            <label>Username</label>
+                            <input onChange={handleChangeUsername} placeholder='Username' type="text" />    
                             <label>Password</label>
                             <div className="password-input-container">
                                 <input 
                                     onChange={handleChangePassword} 
                                     placeholder='isi password' 
-                                    type={showPassword.ppnpn ? "text" : "password"} 
+                                    type={showPassword.Password ? "text" : "password"} 
                                 />
                                 <button 
                                     type="button" 
                                     className="toggle-password" 
-                                    onClick={() => togglePasswordVisibility('ppnpn')}
+                                    onClick={() => togglePasswordVisibility('Password')}
                                 >
-                                    {showPassword.ppnpn ? <FaEyeSlash /> : <FaEye />}
+                                    {showPassword.Password ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                             </div>
-                            
+                            <label>Re-Password</label>
+                            <div className="password-input-container">
+                                <input 
+                                    onChange={handleChangeRePassword} 
+                                    placeholder='isi password' 
+                                    type={showRePassword.REPassword ? "text" : "password"} 
+                                />
+                                <button 
+                                    type="button" 
+                                    className="toggle-password" 
+                                    onClick={() => toggleRePasswordVisibility('REPassword')}
+                                >
+                                    {showRePassword.REPassword ? <FaEyeSlash /> : <FaEye />}
+                                </button>
+                            </div>
                             <label>NRK/NIP</label>
                             <input onChange={handleChangeNRK} placeholder='NRK atau NIP' type="text" />
                             <label>Jabatan</label>
                             <input onChange={handleChangeJabatan} placeholder='jabatan' type="Jabatan" />
-                            <label>Penanggung Jawab</label>
-                            <select onChange={handleChangePJ} name="" id="">
-                                <option value="">Pilih Penanggung Jawab</option>
-                                {pj.map((item, index) => (
-                                    <option key={index} value={item.Stat}>{item.nama}-{item.Stat}</option>
-                                ))}
-                            </select>
+                            <label>Satuan Kerja</label>
+                            <input value={nama_role} placeholder='jabatan' type="Jabatan" />
+                            {/* <label>Nomor ID</label>
+                            <input value={id_number} placeholder='jabatan' type="Jabatan" /> */}
                             <button onClick={handleLogin_ppnpn} >Sign In</button>
                             <div className='register'>
                                 <a href='/'>Already registered ?</a>
                             </div>
-                        </div>                         
-                        )}
-                        {pppk && (
-                        <div className='input-col'>
-                            <label>Username/Email</label>
-                            <input type="text" onChange={handleChangeUsername} placeholder='Username atau Email' name="" id="" />
-                            <label htmlFor="">Nama</label>
-                            <input type="text" onChange={handleChangeNama} placeholder='Nama Lengkap Beserta Gelar' name="" id="" />
-                            <label>Password</label>
-                            <div className="password-input-container">
-                                <input 
-                                    onChange={handleChangePassword}
-                                    placeholder='Password' 
-                                    type={showPassword.pppk ? "text" : "password"} 
-                                />
-                                <button 
-                                    type="button" 
-                                    className="toggle-password" 
-                                    onClick={() => togglePasswordVisibility('pppk')}
-                                >
-                                    {showPassword.pppk ? <FaEyeSlash /> : <FaEye />}
-                                </button>
-                            </div>
-                            <label>NRK/NIP</label>
-                            <input onChange={handleChangeNRK} placeholder='NRK/NIP' type="text" />
-                            <label htmlFor="">Jabatan</label>
-                            <input type="text" onChange={handleChangeJabatan} placeholder='jabatan' name="" id="" />
-                            <label htmlFor="">Status</label>
-                            <div className='status'>
-                                <div className='list'>
-                                    <input onChange={handleChangeStatus} value="PNS" className='checkbox' type="checkbox" name="" id="" />
-                                    <label htmlFor="">PNS</label>
-                                </div>
-                                <div className='list'>
-                                    <input onChange={handleChangeStatus} value="PPPK" className='checkbox' type="checkbox" name="" id="" />
-                                    <label htmlFor="">PPPK</label>
-                                </div>
-                            </div>
-                            <button onClick={handleLogin_pppk} >Sign In</button>
-                            <div className='register'>
-                                <a href='/'>Already registered ?</a>
-                            </div>
-                        </div>                         
-                        )}
+                        </div>
                     </form>
                 </div>
                 <div className='logo'>

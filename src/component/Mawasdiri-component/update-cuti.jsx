@@ -136,7 +136,7 @@ const Cuti_form_Update = () => {
                 </div>}   
                 <p>Mawasdiri/Pengajuan Cuti</p>
                 <h1>Pengajuan Cuti</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile}/>
+                <Profile nama={storedUsername} f_profile={storedFProfile} feature="mawasdiri" />
                 <div className='content-col'>
                     <div className='box1'>
                         <form action="">

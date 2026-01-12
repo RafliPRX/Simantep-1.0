@@ -30,9 +30,9 @@ const Login_ADM = () => {
             console.log(response.data);
             localStorage.setItem('nama', response.data.data.nama);
             setTimeout(() => {
-                navigate('/Home');
-            alert("Login successful: " + response.data.data.nama);
-
+                navigate('/Home-Admin');
+                alert("Login successful: " + response.data.data.nama);
+                window.location.reload();
             }, 500);
         } catch (error) {
             console.log(error.response);

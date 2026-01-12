@@ -274,7 +274,7 @@ const Absent = ({title}) => {
 
             <p>Mawasdiri/Absensi</p>
             <h1>{title}</h1>
-            <Profile nama={storedUsername} f_profile={storedFProfile}/>
+            <Profile nama={storedUsername} f_profile={storedFProfile} feature="mawasdiri" />
             <div className='content-col'>
                 <div className='box1'>
                     <form>
@@ -299,7 +299,7 @@ const Absent = ({title}) => {
                             <div id="map" style={{ height: "400px", width: "100%" }}></div>
                         </div>
                         <button onClick={handleAbsentIn} className='submit' type="submit">Absen Masuk</button>
-                        {isLoading && <div style={{position: 'absolute', marginTop: '-1598px', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}><span style={{position: 'absolute'}} className="loader"></span></div>} {/* Loading indicator */}
+                        {isLoading && <div style={{position: 'absolute', marginTop: '-1598px', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}><span style={{position: 'absolute'}} className="load-cuti"></span></div>} {/* Loading indicator */}
                         <div style={{ marginTop: '10px', display:'block' }}>
                             <label >
                                 <input 

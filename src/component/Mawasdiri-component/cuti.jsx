@@ -1,7 +1,7 @@
 import axios from 'axios';
 import './cuti.css';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker'; // Importing the date picker
 import { format } from 'date-fns'; // Importing format function
 import "react-datepicker/dist/react-datepicker.css"; // Importing the CSS for the date picker
@@ -15,6 +15,45 @@ const Cuti_form = () => {
   const [selectedStartDates, setSelectedStartDates] = useState(null); // State for start date
   const [selectedEndDates, setSelectedEndDates] = useState(null); // State for end date
   const [isLoading, setIsLoading] = useState(false);
+  const storeidNumber = localStorage.getItem('id_number');
+  const [identity, setIdentity] = useState([]);
+  const [nama, setNama] = useState(identity.nama);
+  const [jabatan, setJabatan] = useState(identity.nama);
+  const [nrk_nip, setNrk_Nip] = useState(identity.nrk_nip);  
+  const [kode_role_c, setKode_role_c] = useState(identity.kode_role_c);
+  const { level } = useParams();
+  const { role } = useParams();
+  const getIdentity = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setIdentity(response.data);
+        setNama(response.data.nama);
+        setJabatan(response.data.jabatan);
+        setNrk_Nip(response.data.nrk_nip);
+        setKode_role_c(response.data.kode_role_c);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+  const [identityPJ, setIdentityPJ] = useState([]);
+  const [nama_pj, setNama_pj] = useState(identityPJ.nama);
+  console.log("nama PJ: " + nama_pj);
+  const role_c = kode_role_c;
+  const getIdentityPJ = async (role_c) => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/getIdentity_PJ.php?kode_role_c=${role_c}` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setIdentityPJ(response.data);
+        setNama_pj(response.data.nama);
+      } catch (error) {
+        console.log(error);
+      }
+    }  
   function Cuti(event) {
     setShow(event.target.checked); // Set show based on checkbox state
   }
@@ -27,33 +66,17 @@ const Cuti_form = () => {
   function Sakit(event) {
     setSakit(event.target.checked); // Set show based on checkbox state
   }
-
-  const storedUsername = localStorage.getItem('nama');
-  const storeNrk = localStorage.getItem('nrk');
-  const storedFProfile = localStorage.getItem('f_profile');
-  console.log(storedFProfile);
-  const pj = localStorage.getItem('pj');
-  const [nama, setNama] = useState(storedUsername);
-  const [nrk, setNrk] = useState(storeNrk);
+  
   const [hp, setHP] = useState("");
   const [keterangan, setKeterangan] = useState("");
   const [jenis, setJenis] = useState("");
   const [cuti_b, setCuti_b] = useState("");
-  const [alamat, setAlamat] = useState("");
-  const [jabatan, setJabatan] = useState("");
+  const [alamat, setAlamat] = useState("");  
   const [image, setImage] = useState("");
   const navigate = useNavigate();
 
   const handleChangeNama = (event) => {
     setNama(event.target.value);
-    console.log(event.target.value);
-  }
-  const handleChangeJabatan = (event) => {
-    setJabatan(event.target.value);
-    console.log(event.target.value);
-  }
-  const handleChangeNRK = (event) => {
-    setNrk(event.target.value);
     console.log(event.target.value);
   }
   const handleChangeAlamat = (event) => {
@@ -88,33 +111,32 @@ const Cuti_form = () => {
   };
   
   const handlePostSurat = async (event) => {
+    setIsLoading(true);
     event.preventDefault();
     setIsLoading(true);
     const payload = {
-      nama: nama,
-      nrk: nrk,
+      id_number: storeidNumber,
+      kode_role_c: kode_role_c,
+      nama_c: nama_pj,
       alamat: alamat,
       no_hp: hp,
-      jabatan: jabatan,
       keterangan: keterangan,
       jenis_surat: jenis,
       cuti: cuti_b,
       cuti_date: format(selectedStartDates, 'yyyy/MM/dd'), // Send formatted start date
       cuti_date_fin: format(selectedEndDates, 'yyyy/MM/dd'), // Send formatted end date
       gambar: image,
-      pj: pj,
-      f_profile: localStorage.getItem('f_profile')
     };
     try {
       const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/new_surat.php`, payload, {
         headers: {
           "Content-Type": "multipart/form-data"
         }
-      });
+      });      
       console.log(response.data);
       setTimeout(() => {
         setIsLoading(false);
-        navigate("/Dashboard");
+        navigate(`/Dashboard/${level}/${role}`);
         alert(response.data.message);
       }, 1000);
     } catch (error) {
@@ -123,7 +145,13 @@ const Cuti_form = () => {
       alert("error code 103");
     }
   }
-
+  useEffect(() => {
+    getIdentity();
+    if (kode_role_c) {
+      getIdentityPJ(role_c);
+    }   
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [kode_role_c]);
   return (
     <>
       <div className='main-dashboard'>
@@ -132,20 +160,24 @@ const Cuti_form = () => {
         </div>} 
         <p>Mawasdiri/Pengajuan Cuti</p>
         <h1>Pengajuan Cuti</h1>
-        <Profile nama={storedUsername} f_profile={storedFProfile}/>
+        <Profile nama={nama} feature="mawasdiri" />
         <div className='content-col'>
           <div className='box1'>
             <form onSubmit={handlePostSurat}>
               <div className='content-f'>
                 <h1>Data Diri</h1>
                 <label htmlFor="">Nama</label>
-                <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text" />
-                <label htmlFor="">NIP/NRK</label>
-                <input onChange={handleChangeNRK} value={storeNrk} placeholder='NRK' type="text" />
+                <input onChange={handleChangeNama} value={nama} placeholder='Nama' type="text" />
+                <label htmlFor="">NRK</label>
+                <input value={nrk_nip} placeholder='No. HP' type="text" />                
                 <label htmlFor="">No.Handphone</label>
                 <input onChange={handleChangeHp} placeholder='No. HP' type="text" />
                 <label htmlFor="">Jabatan</label>
-                <input onChange={handleChangeJabatan} placeholder='Jabatan' type="text" />
+                <input value={jabatan} placeholder='No. HP' type="text" />
+                <label htmlFor="">ID Number</label>
+                <input value={storeidNumber} placeholder='No. HP' type="text" />
+                <label htmlFor="">Nama PJ</label>
+                <input value={nama_pj} placeholder='Nama PJ' type="text" />
               </div>
               <div className='content-tx'>
                 <h1>Alasan Cuti/Sakit/Izin</h1>

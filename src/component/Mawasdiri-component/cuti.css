@@ -4,7 +4,7 @@
     flex-shrink: 0;
     overflow-y: hidden;
 }
-.main-dashboard .load{
+.main-dashboard .load-cuti{
     width: 100px;
     height: 100px;
     border: 20px solid #FFF;
@@ -138,6 +138,38 @@
     background: #000B48;
     margin-top: 20px;
 }
+.main-dashboard .content-col .box1 .tab-identity{
+    display: flex;
+    max-width: 100%;
+    flex-shrink: 0;    
+    flex-direction: row;
+    background: #000E60;
+    margin-left: 32px;
+}
+.main-dashboard .content-col .box1 .tab-identity .identity-list{
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0 ;
+    border-bottom: 2px solid #A3AED0;
+    gap: 65px;
+}
+.main-dashboard .content-col .box1 .tab-identity .identity-list .identity-item{
+    padding: 10px 20px;
+    cursor: pointer;
+    font-family: "poppins";
+    font-weight: 500;
+    color: #ffffff;
+    transition: all 0.3s ease;
+}
+.main-dashboard .content-col .box1 .tab-identity .identity-list .identity-item:hover{
+    color: #D30ED8;
+}
+.main-dashboard .content-col .box1 .tab-identity .identity-list .identity-item.active{
+    border-bottom: 3px solid #D30ED8;
+    color: #D30ED8;
+    font-weight: 700;
+}
 .main-dashboard .content-col .box1 .content-f table{
     display: flex;
     flex-direction: column;
@@ -259,6 +291,21 @@
     letter-spacing: -0.24px;
     padding-left: 35px;
     margin-left: 35px;
+}
+.main-dashboard .content-col .box1 .content-f input .toggle-password {
+    position: absolute;
+    right: -54px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #A3AED0;
+    font-size: 1rem;
+    padding: 0;
+    margin: 0;
+    z-index: 2;
+    width: 52px;
 }
 .main-dashboard .content-col .box1 .content-f textarea{
     width: 1059px;

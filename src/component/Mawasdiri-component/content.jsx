@@ -56,7 +56,18 @@ const Content = () => {
             console.log(error);
         });
     }
-    
+    const handleNext_Surat = () => {
+        setPagination_surat({
+            ...pagination_surat,
+            currentPage: pagination_surat.currentPage + 1,
+        })
+    }
+    const handlePrev_Surat = () => {
+        setPagination_surat({
+            ...pagination_surat,
+            currentPage: pagination_surat.currentPage - 1,
+        })
+    }  
     const deletedSurat = async (id) => {
         try {
           const response = await axios.delete(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/delete_surat.php?id=${id}`, {
@@ -83,30 +94,42 @@ const Content = () => {
         currentPage: 1,
     });        
     const getSurat_role_c = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_c.php?kode_role=${role}&page=${pagination_surat.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_c.php?kode_role=${role}&page=${pagination_surat_role_c.currentPage}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
             const response = res1.data.Data;
-            const pagination_surat = {
+            const pagination_surat_c = {
                 total: res1.data.total_records,
                 currentPage: res1.data.current_page,
                 nextPage: res1.data.nextPage,
             }
             setSurat_role_c(response);
-            setPagination_surat_role_c(pagination_surat);
+            setPagination_surat_role_c(pagination_surat_c);
             console.log(response);
         })
         .catch((error) => {
             console.log(error);
         });
     }
+    const handleNext_Surat_c = () => {
+        setPagination_surat_role_c({
+            ...pagination_surat_role_c,
+            currentPage: pagination_surat_role_c.currentPage + 1,
+        })
+    }
+    const handlePrev_Surat_c = () => {
+        setPagination_surat_role_c({
+            ...pagination_surat_role_c,
+            currentPage: pagination_surat_role_c.currentPage - 1,
+        })
+    }  
     const [surat_role_b, setSurat_role_b] = useState([]);
     const [pagination_surat_role_b, setPagination_surat_role_b] = useState({
         currentPage: 1,
     });        
     const getSurat_role_b = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_b.php?kode_role=${role}&page=${pagination_surat.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_b.php?kode_role=${role}&page=${pagination_surat_role_b.currentPage}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -124,12 +147,24 @@ const Content = () => {
             console.log(error);
         });
     }
+    const handleNext_Surat_b = () => {
+        setPagination_surat_role_b({
+            ...pagination_surat_role_b,
+            currentPage: pagination_surat_role_b.currentPage + 1,
+        })
+    }
+    const handlePrev_Surat_b = () => {
+        setPagination_surat_role_b({
+            ...pagination_surat_role_b,
+            currentPage: pagination_surat_role_b.currentPage - 1,
+        })
+    }  
     const [surat_role_a, setSurat_role_a] = useState([]);
     const [pagination_surat_role_a, setPagination_surat_role_a] = useState({
         currentPage: 1,
     });        
     const getSurat_role_a = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a.php?kode_role=${role}&page=${pagination_surat.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a.php?kode_role=${role}&page=${pagination_surat_role_a.currentPage}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -147,12 +182,24 @@ const Content = () => {
             console.log(error);
         });
     }
+    const handleNext_Surat_a = () => {
+        setPagination_surat_role_a({
+            ...pagination_surat_role_a,
+            currentPage: pagination_surat_role_a.currentPage + 1,
+        })
+    }
+    const handlePrev_Surat_a = () => {
+        setPagination_surat_role_a({
+            ...pagination_surat_role_a,
+            currentPage: pagination_surat_role_a.currentPage - 1,
+        })
+    }  
     const [surat_role_sp, setSurat_role_sp] = useState([]);
     const [pagination_surat_role_sp, setPagination_surat_role_sp] = useState({
         currentPage: 1,
     });        
     const getSurat_role_sp = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_sp.php?page=${pagination_surat.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_sp.php?page=${pagination_surat_role_sp.currentPage}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -170,6 +217,18 @@ const Content = () => {
             console.log(error);
         });
     }
+    const handleNext_Surat_sp = () => {
+        setPagination_surat_role_sp({
+            ...pagination_surat_role_sp,
+            currentPage: pagination_surat_role_sp.currentPage + 1,
+        })
+    }
+    const handlePrev_Surat_sp = () => {
+        setPagination_surat_role_sp({
+            ...pagination_surat_role_sp,
+            currentPage: pagination_surat_role_sp.currentPage - 1,
+        })
+    }  
     const handleOpenSurat = (id) => {
         navigate(`/Dashboard/${level}/${role}/${role_sp}/Cuti-detail/${id}`);
     }
@@ -202,10 +261,10 @@ const Content = () => {
                                 {role_sp === '0' ? (
                                     <>
                                         <h1>Progress Pengajuan Surat</h1>
-                                        {/* <div>
+                                        <div>
                                             <button onClick={handlePrev_Surat}>Previous</button>
                                             <button onClick={handleNext_Surat}>Next</button>
-                                        </div> */}
+                                        </div>
                                         {surat.length > 0 ? (
                                             <table>
                                                 <tr>
@@ -248,7 +307,10 @@ const Content = () => {
                                 ) : role_sp === 'S-02' ? (
                                     <>
                                         <h1>Progress Pengajuan Surat</h1>
-                                        {/* show only surat that belong to S-02 and hide delete button */}
+                                        <div>
+                                            <button onClick={handlePrev_Surat_sp}>Previous</button>
+                                            <button onClick={handleNext_Surat_sp}>Next</button>
+                                        </div>
                                         {surat_role_sp.length > 0 ? (
                                             <table>
                                                 <tr>
@@ -299,10 +361,10 @@ const Content = () => {
                         {level ==='level-2' && 
                             <>
                                 <h1>Progress Pengajuan Surat</h1>                        
-                                {/* <div>
-                                    <button onClick={handlePrev_Surat}>Previous</button>
-                                    <button onClick={handleNext_Surat}>Next</button>
-                                </div> */}
+                                <div>
+                                    <button onClick={handlePrev_Surat_c}>Previous</button>
+                                    <button onClick={handleNext_Surat_c}>Next</button>
+                                </div>
                                 {surat_role_c.length > 0 ? (
                                     <table>
                                         <tr>
@@ -346,10 +408,10 @@ const Content = () => {
                         {level ==='level-3' && 
                             <>
                                 <h1>Progress Pengajuan Surat</h1>                        
-                                {/* <div>
-                                    <button onClick={handlePrev_Surat}>Previous</button>
-                                    <button onClick={handleNext_Surat}>Next</button>
-                                </div> */}
+                                <div>
+                                    <button onClick={handlePrev_Surat_b}>Previous</button>
+                                    <button onClick={handleNext_Surat_b}>Next</button>
+                                </div>
                                 {surat_role_b.length > 0 ? (
                                     <table>
                                         <tr>
@@ -393,10 +455,10 @@ const Content = () => {
                         {level ==='level-4' && 
                             <>
                                 <h1>Progress Pengajuan Surat</h1>                        
-                                {/* <div>
-                                    <button onClick={handlePrev_Surat}>Previous</button>
-                                    <button onClick={handleNext_Surat}>Next</button>
-                                </div> */}
+                                <div>
+                                    <button onClick={handlePrev_Surat_a}>Previous</button>
+                                    <button onClick={handleNext_Surat_a}>Next</button>
+                                </div>
                                 {surat_role_a.length > 0 ? (
                                     <table>
                                         <tr>

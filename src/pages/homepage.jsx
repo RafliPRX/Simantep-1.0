@@ -54,7 +54,7 @@ const updateNotif_surat = async (event, idNotif) => {
     console.log(error.response);
   }
 }
-const Notification_Surat = (title, options, id_surat, idNotif, level, role) => {
+const Notification_Surat = (title, options, id_surat, idNotif, level, role, role_sp) => {
   if (!("Notification" in window)) {
     console.log("This browser does not support notifications");
     return;
@@ -65,7 +65,7 @@ const Notification_Surat = (title, options, id_surat, idNotif, level, role) => {
     notification.onclick = (event) => {
       event.preventDefault(); // Prevent the default action
       updateNotif_surat(idNotif);
-      window.location.href = `/Dashboard/${level}/${role}/Cuti-detail/${id_surat}`; // Redirect to '/home'
+      window.location.href = `/Dashboard/${level}/${role}/${role_sp}/Cuti-detail/${id_surat}`; // Redirect to '/home'
     };
   } else {
     Notification.requestPermission().then(permission => {
@@ -73,7 +73,7 @@ const Notification_Surat = (title, options, id_surat, idNotif, level, role) => {
         const notification = new Notification(title, options, id_surat, idNotif);
         notification.onclick = () => {
           updateNotif_surat(idNotif);
-          window.location.href = `/Cuti-detail/${id_surat}`;
+          window.location.href = `/Dashboard/${level}/${role}/${role_sp}/Cuti-detail/${id_surat}`;
         };
       } else {
         console.log("Notification permission denied");
@@ -82,7 +82,7 @@ const Notification_Surat = (title, options, id_surat, idNotif, level, role) => {
   }
 };
 
-const Notification_Lpj = (title, options, id_LPJ, id_Notif) => {
+const Notification_Lpj = (title, options, id_LPJ, id_Notif, level, role, role_sp) => {
   if (!("Notification" in window)) {
     console.log("This browser does not support notifications");
     return;
@@ -91,7 +91,7 @@ const Notification_Lpj = (title, options, id_LPJ, id_Notif) => {
     const notification = new Notification(title, options, id_LPJ, id_Notif);
     notification.onclick = (event) => {
       event.preventDefault(); // Prevent the default action
-      window.location.href = `/form-dana-LPJ/${id_LPJ}`; // Redirect to '/home'
+      window.location.href = `/dashboard-simak/${level}/${role}/${role_sp}/form-dana-LPJ/${id_LPJ}`; // Redirect to '/home'
     };
   } else {
     Notification.requestPermission().then(permission => {
@@ -99,7 +99,7 @@ const Notification_Lpj = (title, options, id_LPJ, id_Notif) => {
         const notification = new Notification(title, options, id_LPJ, id_Notif);
         notification.onclick = () => {
           updateNotif_surat(id_Notif);
-          window.location.href = `/form-dana-LPJ/${id_LPJ}`;
+          window.location.href = `/dashboard-simak/${level}/${role}/${role_sp}/form-dana-LPJ/${id_LPJ}`;
         };
       } else {
         console.log("Notification permission denied");
@@ -210,18 +210,7 @@ const Notification_Bhp = (title, options, idFix, id_Notif) => {
 
 const Homepage = () => {
     const { level } = useParams();    
-    const [notif_lpj, setNotif_lpj] = useState([]);
-    const getNotif_lpj = async () => {
-      try {
-        const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/notif_lpj_byName_Actv.php?nama=${storedUsername}` , {
-          headers: {"Content-Type": "application/json"},
-        });
-        console.log(response.data);
-        setNotif_lpj(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    
     const [notif_dana, setNotif_dana] = useState([]);
     const getNotif_Dana = async () => {
       try {
@@ -285,6 +274,7 @@ const Homepage = () => {
     const [jabatan, setJabatan] = useState(identity.jabatan);    
     const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
     const [akses_level, setAkses_level] = useState(identity.akses_level);
+    const [role_sp, setRole_sp] = useState(identity.role_sp);
     const getIdentity = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
@@ -302,6 +292,7 @@ const Homepage = () => {
         setKode_role_a(response.data.kode_role_a || '');
         setNama_role_b(response.data.nama_role_b);
         setNama_role_a(response.data.nama_role_a);
+        setRole_sp(response.data.role_sp);
         setJabatan(response.data.jabatan);
         setNrk_nip(response.data.nrk_nip);
         setAkses_level(response.data.akses_level);
@@ -332,6 +323,18 @@ const Homepage = () => {
         console.log(error);
       }
     }
+    const [notif_lpj, setNotif_lpj] = useState([]);
+    const getNotif_lpj = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/notif_lpj_byName_Actv.php?nama=${nama}` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setNotif_lpj(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     useEffect(() => {
       getIdentity();      
       const timeoutId = setTimeout(() => {
@@ -352,17 +355,17 @@ const Homepage = () => {
               Notification_Surat(notif.nama, {
                 body: notif.subjek,
                 icon: `${icon}`
-              }, notif.id_surat, notif.id_notif, level, dynamic_kode_role());
+              }, notif.id_surat, notif.id_notif, level, dynamic_kode_role(), role_sp);
             }
           });
         }
         if (notif_lpj.length > 0) {
           notif_lpj.map((Notif) => {
             if (Notification.permission === "granted") {
-              Notification_Lpj(Notif.sender, {
+              Notification_Lpj(Notif.nama, {
                 body: Notif.subjek,
                 icon: `${icon}`
-              }, Notif.id_lpj, Notif.id_notif);
+              }, Notif.id_lpj, Notif.id_notif, level, dynamic_kode_role(), role_sp);
             }
           });
         }

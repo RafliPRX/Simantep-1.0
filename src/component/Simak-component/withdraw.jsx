@@ -34,6 +34,7 @@ const Withdraw = () => {
         setShow2(event.target.checked); // Set show based on checkbox state
     }
 
+    
     const [isLoading, setIsLoading] = useState(false);
     const [nama, setNama] = useState(storedUsername);
     const [nrk, setNRK] = useState(storeNrk);

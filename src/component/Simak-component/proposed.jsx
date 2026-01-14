@@ -1,7 +1,7 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './form.css'
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile';
 
 const Proposed = () => {
@@ -15,6 +15,9 @@ const Proposed = () => {
         console.log(storedFProfile);
         console.log(storeNrk);
         console.log(storedID);
+        const { role } = useParams();
+        const { level } = useParams();
+        const { role_sp } = useParams();
         const [isLoading, setIsLoading] = useState(false);
 
         const [show, setShow] = useState(false); // Changed to boolean for clarity
@@ -33,26 +36,52 @@ const Proposed = () => {
         function handleShow2(event) {
             setShow2(event.target.checked); // Set show based on checkbox state
         }
-    
-        const [nama, setNama] = useState(storedUsername);
-        const [nrk, setNRK] = useState(storeNrk);
-        const [jabatan, setJabatan] = useState("");
+                
+        const storeidNumber = localStorage.getItem('id_number');
+        console.log("id Number: " + storeidNumber);        
+        const [identity, setIdentity] = useState([]);
+        const [nrk_nip, setNrk_Nip] = useState(identity.nrk_nip);
+        const [jabatan, setJabatan] = useState(identity.jabatan);
+        const [nama, setNama] = useState(identity.nama);
+        const getIdentity = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
+            headers: {"Content-Type": "application/json"},
+            });
+            console.log(response.data);
+            setIdentity(response.data);
+            setNama(response.data.nama);
+            setJabatan(response.data.jabatan);
+            setNrk_Nip(response.data.nrk_nip);
+            setJabatan(response.data.jabatan);
+        } catch (error) {
+            console.log(error);
+            }
+        }
+        const [nama_apr, setNama_apr] = useState([]);
+        const [nama_apr_lv1, setNama_apr_lv1] = useState(nama_apr.nama);
+        console.log("nama apr lv1: " + nama_apr_lv1);        
+        const getApr_lv1 = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/lpj_approve_lv1.php?kode_role_a=A-02` , {
+            headers: {"Content-Type": "application/json"},
+            });
+            console.log(response.data.Data[0]);
+            setNama_apr(response.data.Data[0]);
+            setNama_apr_lv1(response.data.Data[0].nama);            
+        } catch (error) {
+            console.log(error);
+            }
+        }
+        useEffect(() => {
+            getIdentity();
+            getApr_lv1();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, []);        
         const [units, setUnits] = useState("");
         const [kegiatan, setKegiatan] = useState("");
         const [rencana, setRencana] = useState("");
-        const navigate = useNavigate();
-        const handleChangeNama = (event) => {
-            setNama(event.target.value);
-            console.log(event.target.value);
-        }
-        const handleChangeNRK = (event) => {
-            setNRK(event.target.value);
-            console.log(event.target.value);
-        }
-        const handleChangeJabatan = (event) => {
-            setJabatan(event.target.value);
-            console.log(event.target.value);
-        }
+        const navigate = useNavigate();        
         const handleChangeUnits = (event) => {
             setUnits(event.target.value);
             console.log(event.target.value);
@@ -69,12 +98,11 @@ const Proposed = () => {
             setIsLoading(true);
             event.preventDefault();
             const payload = {
-                nama: nama,
-                nrk: nrk,
-                jabatan: jabatan,
+                id_number: storeidNumber,
                 units: units,
                 nama_kegiatan: kegiatan,
                 rencana_pelaksana: rencana,
+                nama_veri_1: nama_apr_lv1,
             };
             try {
                 const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/new_Dana_LPJ.php`, payload, {
@@ -85,7 +113,7 @@ const Proposed = () => {
             console.log(response.data);
             setTimeout(() => {
                 setIsLoading(false);
-                navigate("/dashboard-simak");
+                navigate(`/dashboard-simak/${level}/${role}/${role_sp}`);
                 alert(response.data.message);
             }, 1000);
                 console.log(response.data);
@@ -109,11 +137,13 @@ const Proposed = () => {
                             <div className='content-f'>
                                 <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
+                                <input value={nama} placeholder='Nama' type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} value={storeNrk} placeholder='NIP/NRK' type="text"/>
+                                <input value={nrk_nip} placeholder='NIP/NRK' type="text"/>
                                 <label htmlFor="">Jabatan</label>
-                                <input onChange={handleChangeJabatan} placeholder='Jabatan' type="text"/>
+                                <input value={jabatan} placeholder='Jabatan' type="text"/>
+                                {/* <label htmlFor="">Nama APR Lv1</label>
+                                <input value={nama_apr_lv1} placeholder='Nama APR Lv1' type="text"/> */}
                             </div>
 
                             <div className='content-f'>

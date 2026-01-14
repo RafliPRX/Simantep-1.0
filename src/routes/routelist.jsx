@@ -172,7 +172,7 @@ export const routeList = [
         ),
     },
     {
-        path: '/dashboard-simak',
+        path: '/dashboard-simak/:level/:role/:role_sp',
         element: (
             <RoutedProtected>
                 <Dashboard_simak/>
@@ -180,7 +180,7 @@ export const routeList = [
         ),
     },
     {
-        path: '/Withdrawl-form',
+        path: '/dashboard-simak/:level/:role/:role_sp/Withdrawl-form',
         element: (
             <RoutedProtected>
                 <Form_withdrawl/>
@@ -188,7 +188,7 @@ export const routeList = [
         ),
     },
     {
-        path: '/Propose-form',
+        path: '/dashboard-simak/:level/:role/:role_sp/Proposed-form',
         element: (
             <RoutedProtected>
                 <Proposed_Form/>
@@ -260,7 +260,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/form-dana-LPJ/:id",
+        path: "/dashboard-simak/:level/:role/:role_sp/form-dana-LPJ/:id",
         element: (
             <RoutedProtected>
                 <Detail_Form_Propose/>

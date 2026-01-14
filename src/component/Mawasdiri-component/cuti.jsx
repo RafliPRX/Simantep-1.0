@@ -23,6 +23,7 @@ const Cuti_form = () => {
   const [kode_role_c, setKode_role_c] = useState(identity.kode_role_c);
   const { level } = useParams();
   const { role } = useParams();
+  const { role_sp } = useParams();
   const getIdentity = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
@@ -136,7 +137,7 @@ const Cuti_form = () => {
       console.log(response.data);
       setTimeout(() => {
         setIsLoading(false);
-        navigate(`/Dashboard/${level}/${role}`);
+        navigate(`/Dashboard/${level}/${role}/${role_sp}`);
         alert(response.data.message);
       }, 1000);
     } catch (error) {
@@ -174,8 +175,8 @@ const Cuti_form = () => {
                 <input onChange={handleChangeHp} placeholder='No. HP' type="text" />
                 <label htmlFor="">Jabatan</label>
                 <input value={jabatan} placeholder='No. HP' type="text" />
-                <label htmlFor="">ID Number</label>
-                <input value={storeidNumber} placeholder='No. HP' type="text" />
+                {/* <label htmlFor="">ID Number</label>
+                <input value={storeidNumber} placeholder='No. HP' type="text" /> */}
                 <label htmlFor="">Nama PJ</label>
                 <input value={nama_pj} placeholder='Nama PJ' type="text" />
               </div>

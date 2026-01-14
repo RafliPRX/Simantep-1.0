@@ -5,7 +5,7 @@ import white from '../../assets/unread.svg'
 import red from '../../assets/decline.svg'
 import { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Profile from '../profile'
 const Content_simak = () => {
     const storedUsername = localStorage.getItem('nama');
@@ -19,7 +19,11 @@ const Content_simak = () => {
     console.log(storedFProfile);
     console.log(storeNrk);
     console.log(pj);
+    const { role } = useParams();
+    // const { level } = useParams();
+    const { role_sp } = useParams();
 
+    const storeidNumber = localStorage.getItem('id_number');
     const [dana, setDana] = useState([]);
     const [pagination_dana, setPagination_Dana] = useState({
         current_page: 1,
@@ -71,38 +75,24 @@ const Content_simak = () => {
     const [pagination_lpj, setPagination_lpj] = useState({
         current_page: 1,
     })
-    const getLpj = async () => {
-      if (storedUsername  === "Pj. Pembendaharaan" || storedUsername === "Kanif Anshori S.Pd.I" || storedUsername === "Bambang Styawan, S.Pd., M.M., M.Si,") {
-        axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj.php?page=${pagination_lpj.current_page}`)
-        .then((res2) => {
-            console.log(res2.data.Data);
-            const response = res2.data.Data;
-
+    const getLpj = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?id_number=${storeidNumber}&page=${pagination_lpj.current_page}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
             const pagination_lpj = {
-                total: res2.data.total_records,
-                current_page: res2.data.current_page,
-                nextPage: res2.data.nextPage, // Corrected to match the response structure
-            };
-            setLpj(response); // Ensure absent is set to an empty array if response is undefined
-            console.log(response);
+                total: res1.data.total_records,
+                currentPage: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setLpj(response);
             setPagination_lpj(pagination_lpj);
-        })
-      } else {
-        axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?nama=${storedUsername}&page=${pagination_lpj.current_page}`)
-        .then((res2) => {
-            console.log(res2.data.Data);
-            const response = res2.data.Data;
-
-            const pagination_lpj = {
-                total: res2.data.total_records,
-                current_page: res2.data.current_page,
-                nextPage: res2.data.nextPage, // Corrected to match the response structure
-            };
-            setLpj(response); // Ensure absent is set to an empty array if response is undefined
             console.log(response);
-            setPagination_lpj(pagination_lpj);
         })
-      }  
+        .catch((error) => {
+            console.log(error);
+        });
     }
     useEffect(() => {
         getLpj();
@@ -213,13 +203,14 @@ const Content_simak = () => {
                                 <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}                        
                         </div>
-                    
-                        <div className='content'>
+                        {(role !== "C-04" || role_sp === "S-04") && (
+                          <div className='content'>
                             <h1>Cek Progress Pengajuan Proposal dan LPJ</h1>
                             <div>
                                 <button onClick={handlePrev_Lpj}>Previous</button>
                                 <button onClick={handleNext_Lpj}>Next</button>
                             </div>
+                            
                             {lpj.length > 0 ? (
                             <table>
                                 <tr>
@@ -265,8 +256,9 @@ const Content_simak = () => {
                             </table>
                             ) : (
                                 <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
-                            )}                        
-                        </div>
+                            )}
+                          </div>      
+                        )}                        
                     </div>
                 </div>
             </div>

@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import axios from 'axios';
 import './cuti.css';
 import { useEffect, useState } from 'react';
@@ -15,15 +16,14 @@ const Cuti_Detail_Form = () => {
     const kelompok = localStorage.getItem('no_kelompok');
     const status = localStorage.getItem('Status');
     const [isLoading, setIsLoading] = useState(false);
-    console.log(storedUsername);
+    console.log("nama di storage: "+storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
     console.log(storeNrk);
     console.log(pj);
     console.log(kelompok);
     console.log(status);
-    
-    
+        
     const [detail, setDetail] = useState({});
     const param = useParams();
     const getDetail = async () => {
@@ -37,10 +37,33 @@ const Cuti_Detail_Form = () => {
             console.log(error.response);
         }
     }
+    const [notif_new, setNotif_new] = useState([]);
+    const [id_Notif, setId_notif] = useState(null);
+    const getNotif_new = async () => {
+      try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/notifikasi_surat_by_Receive.php?nama=${storedUsername}`, {
+                headers: {}
+            });
+            console.log(response.data);
+            // If there is at least one notification, use it; otherwise mark as no data
+            if (response.data && Array.isArray(response.data) && response.data.length > 0 && response.data[0].id_notif) {
+                setNotif_new(response.data[0]);
+                setId_notif(response.data[0].id_notif);
+            } else {
+                // No notification found
+                setNotif_new(null);
+                setId_notif(null);
+            }
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
     useEffect(() => {
         getDetail();
+        getNotif_new();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    console.log("id_notif yg diambil: "+ id_Notif);
     const [pjJawab, setPjJawab] = useState("");
     const [alasan, setAlasan] = useState("");
     const [kepegJawab, setKepegJawab] = useState("");
@@ -62,9 +85,7 @@ const Cuti_Detail_Form = () => {
       console.log(event.target.value);
     }
     const navigate = useNavigate();
-    const handlePjJawab = async (event) =>{
-      setIsLoading(true);
-      event.preventDefault();
+    const handlePjJawab = async () =>{
       const nama_b_value = Number(pjJawab) === 3 ? "Chandra Hutama Yahrinanda" : detail.nama;
       const kode_role_b_value = Number(pjJawab) === 3 ? "B-01" : "";
       const payload = {
@@ -89,10 +110,7 @@ const Cuti_Detail_Form = () => {
         console.error(error);
       }
     }
-    
-    const handleKepegJawab = async (event) =>{
-      setIsLoading(true);
-      event.preventDefault();
+    const handleKepegJawab = async () =>{
       const nama_a_value = Number(kepegJawab) === 3 ? "Kanif Anshori" : detail.nama;
       const kode_role_a_value = Number(kepegJawab) === 3 ? "A-02" : "";
       const payload = {
@@ -117,16 +135,12 @@ const Cuti_Detail_Form = () => {
         console.error(error);
       }
     }
-    const handleKasubagJawab = async (event) =>{
-      setIsLoading(true);
-      event.preventDefault();
+    const handleKasubagJawab = async () =>{
       const nama_sp_value = Number(kasubagJawab) === 3 ? "Raeza Noorinda Oktaviani" : detail.nama;
       const payload = {
         veri_3: kasubagJawab,
         alasan: alasan,
         nama_sp: nama_sp_value,
-
-
       }
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/kasubag_answer.php?id=${param.id}`, payload, {
@@ -144,16 +158,28 @@ const Cuti_Detail_Form = () => {
         console.error(error);
       }
     }
+    const mark = async (idNotif) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/mark_as_read.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
     const [pdf, setPdf] = useState("");
     const handleChangePDF = (event) => {
       setPdf(event.target.files[0]);
       console.log(event.target.files[0]);
     }
-    const handleUploadPDF = async (event) => {
-      setIsLoading(true);
-      event.preventDefault();
+    const handleUploadPDF = async () => {
       const payload = {
-        pdf: pdf
+        pdf: pdf,
+        nama_last: detail.nama,
       };
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/upload_pdf.php?id=${param.id}`,payload,{
@@ -177,9 +203,56 @@ const Cuti_Detail_Form = () => {
       link.href = fileUrl;
       link.download = detail.pdf;
       link.click();
-    }    
+    }
+    const handlePj = async (idNotif, event) => {
+      event.preventDefault();
+      try {
+        setIsLoading(true);
+        await mark(idNotif, event);
+        await handlePjJawab(event);
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);
+      }      
+    }
+    const handleKepeg = async (idNotif, event) => {
+      event.preventDefault();
+      try {
+        setIsLoading(true);
+        await mark(idNotif, event);
+        await handleKepegJawab(event);
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);
+      }      
+    }
+    const handleKasubag = async (idNotif, event) => {
+      event.preventDefault();
+      try {
+        setIsLoading(true);
+        await mark(idNotif, event);
+        await handleKasubagJawab(event);
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);
+      }      
+    }
+    const handleSp = async (idNotif, event) => {
+      event.preventDefault();
+      try {
+        setIsLoading(true);
+        await mark(idNotif, event);
+        await handleUploadPDF();
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);
+      }      
+    }
     return (
-
         <>
             <div className='main-dashboard'>
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
@@ -322,7 +395,8 @@ const Cuti_Detail_Form = () => {
                               </div>
                               <label htmlFor="">Alasan (Jika Menunda)</label>
                               <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
-                              <button onClick={handlePjJawab} className='submit'>Kirim</button>
+                              <button onClick={(e) => handlePj(id_Notif, e)} className='submit' disabled={!id_Notif}>Kirim</button>
+                              {!id_Notif && <p style={{color: 'red', marginTop: '8px'}}>No Data</p>}
                           </form>
                         </div>
                         }
@@ -340,7 +414,8 @@ const Cuti_Detail_Form = () => {
                               </div>
                               <label htmlFor="">Alasan (Jika Menunda)</label>
                               <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
-                              <button onClick={handleKepegJawab} className='submit'>Kirim</button>
+                              <button onClick={(e) => handleKepeg(id_Notif, e)} className='submit' disabled={!id_Notif}>Kirim</button>
+                              {!id_Notif && <p style={{color: 'red', marginTop: '8px'}}>No Data</p>}
                           </form>
                         </div>
                         }                        
@@ -358,7 +433,9 @@ const Cuti_Detail_Form = () => {
                               </div>
                               <label htmlFor="">Alasan (Jika Menunda)</label>
                               <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
-                              <button onClick={handleKasubagJawab} className='submit'>Kirim</button>
+                              <button onClick={(e) => handleKasubag(id_Notif, e)} className='submit' disabled={!id_Notif}>Kirim</button>
+                              {!id_Notif && <p style={{color: 'red', marginTop: '8px'}}>No Data</p>}
+                              <input type="hidden" value={id_Notif || ''} name="" id="" />
                           </form>
                         </div>
                         }
@@ -368,7 +445,8 @@ const Cuti_Detail_Form = () => {
                               <form action="">
                                 <label htmlFor="">Upload File</label>
                                 <input type="file" onChange={handleChangePDF} name="" id="" />
-                                <button onClick={handleUploadPDF} className='submit'>Kirim</button>
+                                <button onClick={(e) => handleSp(id_Notif, e)} className='submit' disabled={!id_Notif}>Kirim</button>
+                                {!id_Notif && <p style={{color: 'red', marginTop: '8px'}}>No Data</p>}
                             </form>
                           </div>
                         }                        

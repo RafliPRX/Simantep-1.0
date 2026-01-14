@@ -73,6 +73,7 @@ const Proposed = () => {
             console.log(error);
             }
         }
+        
         useEffect(() => {
             getIdentity();
             getApr_lv1();

@@ -17,6 +17,9 @@ const Proposed_Detail = () => {
         console.log(storedFProfile);
         console.log(storeNrk);
         console.log(pj);
+        const { role } = useParams();
+        const { level } = useParams();
+        const { role_sp } = useParams();
       
         const param = useParams();
         const [detail, setDetail] = useState({});
@@ -31,8 +34,24 @@ const Proposed_Detail = () => {
                 console.error(error);
             }
         }
+        const [nama_apr_ls_lv2, setNama_apr_ls_lv2] = useState([]);
+        const [nama_apr_lv2, setNama_apr_lv2] = useState(nama_apr_ls_lv2.nama);
+        console.log("nama apr lv2: " + nama_apr_lv2);        
+        const getApr_lv2 = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/lpj_approve_lv1.php?kode_role_a=A-01` , {
+            headers: {"Content-Type": "application/json"},
+            });
+            console.log(response.data.Data[0]);
+            setNama_apr_ls_lv2(response.data.Data[0]);
+            setNama_apr_lv2(response.data.Data[0].nama);            
+        } catch (error) {
+            console.log(error);
+            }
+        }
         useEffect(() => {
             getDetail();
+            getApr_lv2();
         // eslint-disable-next-line react-hooks/exhaustive-deps
         },[]);
 
@@ -67,7 +86,7 @@ const Proposed_Detail = () => {
             console.log(response.data);
             setTimeout(() => {
               setIsLoading(false);
-              navigate("/dashboard-simak");
+              navigate(`/dashboard-simak/${level}/${role}/${role_sp}`);
               alert(response.data.message);
             })
           } catch (error) {
@@ -78,7 +97,8 @@ const Proposed_Detail = () => {
             setIsLoading(true);
             event.preventDefault();
             const payload = {
-              veri_1: kasubag
+              veri_1: kasubag,
+              nama_veri_2: nama_apr_lv2
             };
             try {
               const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/answer_kasubag_lpj.php?id=${param.id}`, payload, {
@@ -89,7 +109,7 @@ const Proposed_Detail = () => {
               console.log(response.data);
               setTimeout(() => {
                   setIsLoading(false);
-                  navigate("/dashboard-simak");
+                  navigate(`/dashboard-simak/${level}/${role}/${role_sp}`);
               }, 1000);  
             } catch (error) {
               console.log(error.response);
@@ -111,7 +131,7 @@ const Proposed_Detail = () => {
             console.log(response.data);
             setTimeout(() => {
                 setIsLoading(false);
-                navigate("/dashboard-simak");
+                navigate(`/dashboard-simak/${level}/${role}/${role_sp}`);
             }, 1000);  
           } catch (error) {
             console.log(error.response);
@@ -142,7 +162,7 @@ const Proposed_Detail = () => {
                               <td>NIP/NRK</td>
                             </tr>
                             <tr>
-                              <td className='input'>{detail.nrk}</td>
+                              <td className='input'>{detail.nrk_nip}</td>
                             </tr>
                             <tr>
                               <td>NIP/NRK</td>
@@ -170,7 +190,8 @@ const Proposed_Detail = () => {
                             </tr>
                             </table>
                         </div>
-                        <div style={{display: storedUsername == "Kanif Anshori S.Pd.I" ? 'flex' : 'none'}} className='content-f'>
+                        { role === "A-02" && (
+                        <div className='content-f'>
                           <h1>Jawab KASUBAG</h1>
                           <form action="">
                           <table>
@@ -178,17 +199,18 @@ const Proposed_Detail = () => {
                               <td>Jawaban</td>
                             </tr>
                             <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" /></td>
-                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
-                            </tr>
-                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
                               <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="3" id="" /></td>
                               <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
+                            </tr>
+                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" /></td>
+                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
                             </tr>
                           </table>
                           <button onClick={handleKasubagRequest} className='submit' type="submit">Submit</button>
                           </form>
                         </div>
+                        )}                        
                         <div style={{display: status == "Bambang Styawan, S.Pd., M.M., M.Si," ? 'flex' : 'none'}} className='content-f'>
                           <h1>Jawab KEPALA BALAI</h1>
                           <form action="">
@@ -197,12 +219,12 @@ const Proposed_Detail = () => {
                                 <td>Jawaban</td>
                               </tr>
                               <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={2} id="" /></td>
-                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
+                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={3} id="" /></td>
+                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
                               </tr>
                               <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input  onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={3} id="" /></td>
-                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
+                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input  onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={2} id="" /></td>
+                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
                               </tr>
                             </table>
                           </form>

@@ -10,7 +10,6 @@ const Proposed_Detail = () => {
         const storedSisaCuti = localStorage.getItem('sisa_cuti');
         const storedFProfile = localStorage.getItem('f_profile');
         const pj = localStorage.getItem('pj');
-        const status = localStorage.getItem('Status');
         const [isLoading, setIsLoading] = useState(false);
         console.log(storedUsername);
         console.log(storedSisaCuti );
@@ -49,9 +48,49 @@ const Proposed_Detail = () => {
             console.log(error);
             }
         }
+        const [nama_apr_ls_lv3, setNama_apr_ls_lv3] = useState([]);
+        const [nama_apr_lv3, setNama_apr_lv3] = useState(nama_apr_ls_lv3.nama);
+        console.log("nama apr lv3: " + nama_apr_lv3);        
+        const getApr_lv3 = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/lpj_approve_keuangan.php?kode_role_c=C-04` , {
+            headers: {"Content-Type": "application/json"},
+            });
+            console.log(response.data.Data[0]);
+            setNama_apr_ls_lv3(response.data.Data[0]);
+            setNama_apr_lv3(response.data.Data[0].nama);            
+        } catch (error) {
+            console.log(error);
+            }
+        }
+        // eslint-disable-next-line no-unused-vars
+        const [notif_new, setNotif_new] = useState([]);
+        const [id_Notif, setId_notif] = useState(null);
+        console.log("id_notif Lpj: " + id_Notif);
+        const getNotif_new = async () => {
+          try {
+                const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/notifikasi_lpj_by_Receive.php?nama=${storedUsername}`, {
+                    headers: {}
+                });
+                console.log(response.data);
+                // If there is at least one notification, use it; otherwise mark as no data
+                if (response.data && Array.isArray(response.data) && response.data.length > 0 && response.data[0].id_notif) {
+                    setNotif_new(response.data[0]);
+                    setId_notif(response.data[0].id_notif);
+                } else {
+                    // No notification found
+                    setNotif_new(null);
+                    setId_notif(null);
+                }
+            } catch (error) {
+                console.log(error.response);
+            }
+        }
         useEffect(() => {
             getDetail();
             getApr_lv2();
+            getApr_lv3();
+            getNotif_new();
         // eslint-disable-next-line react-hooks/exhaustive-deps
         },[]);
 
@@ -71,11 +110,10 @@ const Proposed_Detail = () => {
           setKeterangan(event.target.value);
           console.log(event.target.value);
         }
-        const handleKeuangan = async (event) => {
-          setIsLoading(true);
-          event.preventDefault();
+        const handleKeuanganRequest = async () => {
           const payload = {
-            keterangan: keterangan
+            keterangan: keterangan,
+            last_nama: detail.nama,
           }
           try {
             const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/answer_keuangan_lpj.php?id=${param.id}`, payload, {
@@ -93,12 +131,11 @@ const Proposed_Detail = () => {
             console.log(error.response);
           }
         }
-        const handleKasubagRequest = async (event) =>{
-            setIsLoading(true);
-            event.preventDefault();
+        const handleKasubagRequest = async () =>{
+            const veri_2_value = Number(kasubag) === 3 ? nama_apr_lv2 : detail.nama;
             const payload = {
               veri_1: kasubag,
-              nama_veri_2: nama_apr_lv2
+              nama_veri_2: veri_2_value
             };
             try {
               const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/answer_kasubag_lpj.php?id=${param.id}`, payload, {
@@ -110,17 +147,18 @@ const Proposed_Detail = () => {
               setTimeout(() => {
                   setIsLoading(false);
                   navigate(`/dashboard-simak/${level}/${role}/${role_sp}`);
+                  alert(response.data.message);
               }, 1000);  
             } catch (error) {
               console.log(error.response);
               
             }
         }
-        const handleHeadRequest = async (event) =>{
-          setIsLoading(true);
-          event.preventDefault();
+        const handleHeadRequest = async () =>{
+          const veri_3_value = Number(head) === 3 ? nama_apr_lv3 : detail.nama;
           const payload = {
             veri_2: head,
+            last_veri_3: veri_3_value
           };
           try {
             const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/answer_head_lpj.php?id=${param.id}`, payload, {
@@ -132,11 +170,61 @@ const Proposed_Detail = () => {
             setTimeout(() => {
                 setIsLoading(false);
                 navigate(`/dashboard-simak/${level}/${role}/${role_sp}`);
+                alert(response.data.message);
             }, 1000);  
           } catch (error) {
             console.log(error.response);
             
           }
+      }
+      const mark = async (idNotif) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/mark_lpj.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+      }
+      const handleKasubag = async (idNotif, event) => {
+        event.preventDefault();
+        try {
+          setIsLoading(true);
+          await mark(idNotif, event);
+          await handleKasubagRequest(event);
+        } catch (error) {
+          console.log(error);        
+        } finally {
+          setIsLoading(false);
+        }      
+      }
+      const handleHead = async (idNotif, event) => {
+        event.preventDefault();
+        try {
+          setIsLoading(true);
+          await mark(idNotif, event);
+          await handleHeadRequest(event);
+        } catch (error) {
+          console.log(error);        
+        } finally {
+          setIsLoading(false);
+        }      
+      }
+      const handleKeuangan = async (idNotif, event) => {
+        event.preventDefault();
+        try {
+          setIsLoading(true);
+          await mark(idNotif);
+          await handleKeuanganRequest();
+        } catch (error) {
+          console.log(error);        
+        } finally {
+          setIsLoading(false);
+        }      
       }
     return(
         <>
@@ -207,11 +295,12 @@ const Proposed_Detail = () => {
                               <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
                             </tr>
                           </table>
-                          <button onClick={handleKasubagRequest} className='submit' type="submit">Submit</button>
+                          <button onClick={(e) => handleKasubag(id_Notif, e)} className='submit' type="submit">Submit</button>
                           </form>
                         </div>
-                        )}                        
-                        <div style={{display: status == "Bambang Styawan, S.Pd., M.M., M.Si," ? 'flex' : 'none'}} className='content-f'>
+                        )}
+                        { role === "A-01" && (
+                        <div className='content-f'>
                           <h1>Jawab KEPALA BALAI</h1>
                           <form action="">
                             <table>
@@ -228,9 +317,11 @@ const Proposed_Detail = () => {
                               </tr>
                             </table>
                           </form>
-                          <button onClick={handleHeadRequest} className='submit' type="submit">Submit</button>
+                          <button onClick={(e) => handleHead(id_Notif, e)} className='submit' type="submit">Submit</button>
                         </div>
-                        <div style={{display: storedUsername == "Pj. Pembendaharaan" ? 'flex' : 'none'}} className='content-f'>
+                        )}
+                        { role === "C-04" && (
+                        <div className='content-f'>
                           <h1>Keterangan Keuangan</h1>
                           <form action="">
                             <table>
@@ -249,8 +340,9 @@ const Proposed_Detail = () => {
                               </tr>
                             </table>
                           </form>
-                          <button onClick={handleKeuangan} className='submit' type="submit">Submit</button>
+                          <button onClick={(e) =>handleKeuangan(id_Notif, e)} className='submit' type="submit">Submit</button>
                         </div>
+                        )}                        
                     </div>
                 </div>
             </div>        

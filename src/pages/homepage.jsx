@@ -88,7 +88,7 @@ const Notification_Lpj = (title, options, id_LPJ, id_Notif, level, role, role_sp
     return;
   }
   if (Notification.permission === "granted") {
-    const notification = new Notification(title, options, id_LPJ, id_Notif);
+    const notification = new Notification(title, options, id_LPJ, id_Notif, level, role, role_sp);
     notification.onclick = (event) => {
       event.preventDefault(); // Prevent the default action
       window.location.href = `/dashboard-simak/${level}/${role}/${role_sp}/form-dana-LPJ/${id_LPJ}`; // Redirect to '/home'
@@ -96,7 +96,7 @@ const Notification_Lpj = (title, options, id_LPJ, id_Notif, level, role, role_sp
   } else {
     Notification.requestPermission().then(permission => {
       if (permission === "granted") {
-        const notification = new Notification(title, options, id_LPJ, id_Notif);
+        const notification = new Notification(title, options, id_LPJ, id_Notif, level, role, role_sp);
         notification.onclick = () => {
           updateNotif_surat(id_Notif);
           window.location.href = `/dashboard-simak/${level}/${role}/${role_sp}/form-dana-LPJ/${id_LPJ}`;
@@ -107,24 +107,24 @@ const Notification_Lpj = (title, options, id_LPJ, id_Notif, level, role, role_sp
     });
   }
 } 
-const Notification_Dana = (title, options, idDana, id_Notif) => {
+const Notification_Dana = (title, options, idDana, id_Notif,  level, role, role_sp) => {
   if (!("Notification" in window)) {
     console.log("This browser does not support notifications");
     return;
   }
   if (Notification.permission === "granted") {
-    const notification = new Notification(title, options, idDana, id_Notif);
+    const notification = new Notification(title, options, idDana, id_Notif,  level, role, role_sp);
     notification.onclick = (event) => {
       event.preventDefault(); // Prevent the default action
-      window.location.href = `/form-dana-RPD/${idDana}`; // Redirect to '/home'
+      window.location.href = `/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${idDana}`; // Redirect to '/home'
     };
   } else {
     Notification.requestPermission().then(permission => {
       if (permission === "granted") {
-        const notification = new Notification(title, options, idDana, id_Notif);
+        const notification = new Notification(title, options, idDana, id_Notif, level, role, role_sp);
         notification.onclick = () => {
           updateNotif_surat(id_Notif);
-          window.location.href = `/form-dana-RPD/${idDana}`;
+          window.location.href = `/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${idDana}`;
         };
       } else {
         console.log("Notification permission denied");
@@ -209,20 +209,7 @@ const Notification_Bhp = (title, options, idFix, id_Notif) => {
 } 
 
 const Homepage = () => {
-    const { level } = useParams();    
-    
-    const [notif_dana, setNotif_dana] = useState([]);
-    const getNotif_Dana = async () => {
-      try {
-        const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/notifikasi_dana_Actv.php?nama=${storedUsername}` , {
-          headers: {"Content-Type": "application/json"},
-        });
-        console.log(response.data);
-        setNotif_dana(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    const { level } = useParams();            
     const [notif_fix, setNotif_fix] = useState([]);
     const getNotif_Fix = async () => {
       try {
@@ -246,19 +233,7 @@ const Homepage = () => {
       } catch (error) {
         console.log(error);
       }
-    }
-    const [notif_bhp, setNotif_bhp] = useState([]);
-    const getNotif_Bhp = async () => {
-      try {
-        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_bhp_byName_Actv.php?nama=${storedUsername}` , {
-          headers: {"Content-Type": "application/json"},
-        });
-        console.log(response.data);
-        setNotif_bhp(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    }    
     const [identity, setIdentity] = useState([]);
     const [nama, setNama] = useState(identity.nama);
     const [username, setUsername] = useState(identity.username);
@@ -335,6 +310,30 @@ const Homepage = () => {
         console.log(error);
       }
     }
+    const [notif_dana, setNotif_dana] = useState([]);
+    const getNotif_Dana = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/notifikasi_dana_Actv.php?nama=${nama}` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setNotif_dana(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    const [notif_bhp, setNotif_bhp] = useState([]);
+    const getNotif_Bhp = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_bhp_byName_Actv.php?nama=${nama}` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setNotif_bhp(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     useEffect(() => {
       getIdentity();      
       const timeoutId = setTimeout(() => {
@@ -372,10 +371,10 @@ const Homepage = () => {
         if (notif_dana.length > 0) {
           notif_dana.map((Notif) => {
             if (Notification.permission === "granted") {
-              Notification_Dana(Notif.sender, {
+              Notification_Dana(Notif.nama, {
                 body: Notif.subjek,
                 icon: `${icon}`
-              }, Notif.id_dana, Notif.id_notif);
+              }, Notif.id_dana, Notif.id_notif, level, dynamic_kode_role(), role_sp);
             }
           });
         }

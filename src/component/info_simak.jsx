@@ -147,7 +147,7 @@ const Info_Simak = ({nama}) => {
                     <>
                     <div className='info'>
                       <div style={{background: notif.f_profile === '' ? `url(${default_pic})` : `url(https://simantepbareta.cloud/API/${notif.f_profile})`, backgroundSize: notif.f_profile === '' ? "173%" : "89%", backgroundPosition: notif.f_profile === '' ? "48% 10%" : "34% 5%"}} className='pic'></div>
-                      <p style={{ marginTop: '0px' }}>{notif.sender}</p>
+                      <p style={{ marginTop: '0px' }}>{notif.nama}</p>
                       <p style={{ marginTop: '0px' }}>{notif.subjek}</p>
                       <div className='mark-read-deleted'>
                         <button onClick={(event) => mark_lpj(notif.id_notif, event)}>Telah dibaca</button>
@@ -174,7 +174,7 @@ const Info_Simak = ({nama}) => {
                   <>
                   <div className='info'>
                     <div style={{background: notif.f_profile === '' ? `url(${default_pic})` : `url(https://simantepbareta.cloud/API/${notif.f_profile})`, backgroundSize: notif.f_profile === '' ? "173%" : "89%", backgroundPosition: notif.f_profile === '' ? "48% 10%" : "34% 5%"}} className='pic'></div>
-                    <p style={{ marginTop: '0px' }}>{notif.sender}</p>
+                    <p style={{ marginTop: '0px' }}>{notif.nama}</p>
                     <p style={{ marginTop: '0px' }}>{notif.subjek}</p>
                     <div className='mark-read-deleted'>
                       <button onClick={(event) => mark_rpd(notif.id_notif, event)}>Telah dibaca</button>

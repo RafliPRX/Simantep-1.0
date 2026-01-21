@@ -28,49 +28,48 @@ const Content_simak = () => {
     const [pagination_dana, setPagination_Dana] = useState({
         current_page: 1,
     });
-    const getDana = async () => {
-      if (storedUsername === "Pj. Pembendaharaan") {
-        axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana.php?page=${pagination_dana.current_page}`)
-        .then((res1) => {
+    const getDana = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_by_name.php?id_number=${storeidNumber}&page=${pagination_dana.current_page}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
             console.log(res1.data.Data);
             const response = res1.data.Data;
-
             const pagination_dana = {
                 total: res1.data.total_records,
                 current_page: res1.data.current_page,
-                nextPage: res1.data.nextPage, // Corrected to match the response structure
-
-            };
-            setDana(response); // Ensure absent is set to an empty array if response is undefined
-            console.log(response);
+                nextPage: res1.data.nextPage,
+            }
+            setDana(response);
             setPagination_Dana(pagination_dana);
-            console.log(pagination_dana);
-        })
-        .catch((err) => console.log(err))
-    } else {
-        axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_by_name.php?nama=${storedUsername}&page=${pagination_dana.current_page}`)
-        .then((res1) => {
-            console.log(res1.data.Data);
-            const response = res1.data.Data;
-          
-            const pagination_dana = {
-                total: res1.data.total_records,
-                current_page: res1.data.current_page,
-                nextPage: res1.data.nextPage, // Corrected to match the response structure
-              
-            };
-            setDana(response); // Ensure absent is set to an empty array if response is undefined
             console.log(response);
-            setPagination_Dana(pagination_dana);
         })
-        .catch((err) => console.log(err))
-      }
+        .catch((error) => {
+            console.log(error);
+        });
     }
-
-    useEffect(() => {
-        getDana();
-    },[pagination_dana?.current_page]);
-
+    const [dana_moneymaker, setDana_moneymaker] = useState([]);
+    const [pagination_dana_moneymaker, setPagination_Dana_moneymaker] = useState({
+        current_page: 1,
+    });
+    const getDana_moneymaker = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana.php?page=${pagination_dana_moneymaker.current_page}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_dana = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setDana_moneymaker(response);
+            setPagination_Dana_moneymaker(pagination_dana);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     const [lpj, setLpj] = useState([]);
     const [pagination_lpj, setPagination_lpj] = useState({
         current_page: 1,
@@ -164,11 +163,16 @@ const Content_simak = () => {
         });
     }
     useEffect(() => {
+        getDana();
+        getDana_moneymaker();
         getLpj();
         getLpj_lv1();
         getLpj_lv2();
         getLpj_keuangan();
-    },[pagination_lpj?.current_page, pagination_lpj_lv1?.current_page, pagination_lpj_lv2?.current_page, pagination_lpj_keuangan?.current_page]);
+    },[
+        pagination_lpj?.current_page, pagination_lpj_lv1?.current_page, pagination_lpj_lv2?.current_page, pagination_lpj_keuangan?.current_page,
+        pagination_dana?.current_page, pagination_dana_moneymaker?.current_page
+    ]);
     const handleNext_Lpj = () => {
         setPagination_lpj({
             ...pagination_lpj,
@@ -282,6 +286,7 @@ const Content_simak = () => {
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />
                 <div className='content-col'>
                     <div className='box-s'>
+                        {(role !== "C-04" || role_sp === "S-02") && (
                         <div className='content'>
                             <h1>Cek Progress Pengajuan RPD</h1>
                             <div>
@@ -304,7 +309,7 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_keuangan}</td>
                                     <td style={{textAlign:'center'}}>
-                                        <Link to={`/form-dana-RPD/${item.id_dana}`}>Buka</Link>| <br />
+                                        <Link to={`/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${item.id_dana}`}>Buka</Link>| <br />
                                         <div><button onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
                                     </td>
                                 </tr>
@@ -314,7 +319,42 @@ const Content_simak = () => {
                                 <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}                        
                         </div>
-                        {(role !== "C-04" || role_sp === "S-02") && (
+                        )}
+                        {role === "C-04" && (
+                            <div className='content'>
+                            <h1>Cek Progress Pengajuan RPD</h1>
+                            <div>
+                                <button onClick={handlePrev_Dana}>Previous</button>
+                                <button onClick={handleNext_Dana}>Next</button>
+                            </div>
+                            {dana_moneymaker.length > 0 ? (
+                            <table>
+                            <tr>
+                                <th style={{textAlign:'center'}}>Nomor</th>
+                                <th style={{textAlign:'center'}}>Nama Kegiatan</th>
+                                <th style={{textAlign:'center'}}>Tanggal Pelaksanaan</th>
+                                <th style={{textAlign:'center'}}>Feedback Bagian Keuangan</th>
+                                <th style={{textAlign:'center'}}>Detail</th>
+                            </tr>
+                            {dana_moneymaker.map((item, index) => (
+                                <tr key={item.id_dana}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
+                                    <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_keuangan}</td>
+                                    <td style={{textAlign:'center'}}>
+                                        <Link to={`/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${item.id_dana}`}>Buka</Link>| <br />
+                                        <div><button onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
+                                    </td>
+                                </tr>
+                                ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
+                        </div>
+                        )}
+                        {(role_sp === "0" || role !== "C-04") && (
                           <div className='content'>
                             <h1>Cek Progress Pengajuan Proposal dan LPJ</h1>
                             <div>
@@ -357,8 +397,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center', display: item.veri_2 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
                                     <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
-                                    <td style={{textAlign:'center'}}>-</td>
-                                    <td style={{textAlign:'center'}}>21/1/2025 <br /> 12:00</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
                                     <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
                                     <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
@@ -369,7 +409,62 @@ const Content_simak = () => {
                             )}
                           </div>
                         )}
-                        { role === "C-04" && (
+                        {role_sp === "S-02" && (
+                          <div className='content'>
+                            <h1>Cek Progress Pengajuan Proposal dan LPJ</h1>
+                            <div>
+                                <button onClick={handlePrev_Lpj}>Previous</button>
+                                <button onClick={handleNext_Lpj}>Next</button>
+                            </div>
+                            {lpj_keuangan.length > 0 ? (
+                            <table>
+                                <tr>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>KASUBAG TATA USAHA</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>KEPALA BALAI</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>KEUANGAN</th>
+                                    <th style={{textAlign:'center'}} rowSpan={2}>Detail</th>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
+                                    <th>Keterangan</th>
+                                    <th>Tanggal & Jam di Terima</th>
+                                </tr>
+                            {lpj_keuangan.map((item, index) => (
+                                <tr key={item.id_lpj}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.units}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
+                                    <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
+                                    <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
+                                    <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
+                                    <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
+                                </tr>                                
+                            ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}
+                          </div>
+                        )}
+                        {role === "C-04" && (
                           <div className='content'>
                             <h1>Cek Progress Pengajuan Proposal dan LPJ Keuangan</h1>
                             <div>
@@ -413,8 +508,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center', display: item.veri_2 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
                                     <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
-                                    <td style={{textAlign:'center'}}>-</td>
-                                    <td style={{textAlign:'center'}}>21/1/2025 <br /> 12:00</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
                                     <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
                                     <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
@@ -469,8 +564,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center', display: item.veri_2 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
                                     <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
-                                    <td style={{textAlign:'center'}}>-</td>
-                                    <td style={{textAlign:'center'}}>21/1/2025 <br /> 12:00</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
                                     <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
                                     <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
@@ -524,8 +619,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center', display: item.veri_2 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
                                     <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
-                                    <td style={{textAlign:'center'}}>-</td>
-                                    <td style={{textAlign:'center'}}>21/1/2025 <br /> 12:00</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
                                     <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
                                     <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                

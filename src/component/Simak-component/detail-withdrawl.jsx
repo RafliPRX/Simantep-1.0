@@ -5,12 +5,15 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile';
 
 const Detail_Withdraw = () => {
+    const { role } = useParams();
+    const { level } = useParams();
+    const { role_sp } = useParams();
     const storedUsername = localStorage.getItem('nama');
     const storeNrk = localStorage.getItem('nrk');
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
     const storedFProfile = localStorage.getItem('f_profile');
+    const storeidNumber = localStorage.getItem('id_number');
     const pj = localStorage.getItem('pj');
-    const status = localStorage.getItem('Status');
     const [isLoading, setIsLoading] = useState(false);
     console.log(storedUsername);
     console.log(storedSisaCuti );
@@ -31,9 +34,23 @@ const Detail_Withdraw = () => {
             console.error(error);
         }
     }
-
+    const [notif_detail, setNotifDetail] = useState({});
+    console.log("id notif yang diambil: "+notif_detail?.id_notif);
+    
+    const getNotifDetail = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/notifikasi_dana_Actv_byDetail.php?id=${param.id}`, {
+                headers: {}
+            });
+            setNotifDetail(response.data[0]);
+            console.log(response.data[0]);
+        } catch (error) {
+            console.error(error);
+        }
+    }
     useEffect(() => {
         getDetail();
+        getNotifDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[]);
     const [keterangan, setKeterangan] = useState('');
@@ -42,11 +59,11 @@ const Detail_Withdraw = () => {
       setKeterangan(event.target.value);
       console.log(event.target.value);
     }
-    const handleJawab = async (event) => {
-      setIsLoading(true);
-      event.preventDefault();
+    const handleJawabRequest = async () => {
       const payload = {
+        last_sent_to: detail.nama,
         keterangan_keuangan: keterangan,
+        last_sent_to_id: storeidNumber,
       }
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/answer_dana_keuangan.php?id=${param.id}`, payload, {
@@ -56,14 +73,38 @@ const Detail_Withdraw = () => {
         })
         console.log(response.data);
         setTimeout(() => {
-          setIsLoading(false);
-          navigate("/dashboard-simak");
+          navigate(`/dashboard-simak/${level}/${role}/${role_sp}`);
           alert(response.data.message);
         })
       } catch (error) {
         console.error(error);
       }
     }
+    const mark = async (notifId) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/mark_Dana.php?id=${notifId}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const handleJawab = async (notifId ,event) => {
+        event.preventDefault();
+        try {
+          setIsLoading(true);
+          await mark(notifId);
+          await handleJawabRequest();
+        } catch (error) {
+          console.log(error);        
+        } finally {
+          setIsLoading(false);
+        }      
+      }
     return (
         <>
             <div className='main-dashboard'>
@@ -89,13 +130,13 @@ const Detail_Withdraw = () => {
                                       <td>NIP/NRK</td>
                                     </tr>
                                     <tr>
-                                      <td className='input'>{detail.NRK}</td>
+                                      <td className='input'>{detail.nrk_nip}</td>
                                     </tr>
                                     <tr>
                                       <td>Jabatan</td>
                                     </tr>
                                     <tr>
-                                      <td className='input'>{detail.jabatan_pj}</td>
+                                      <td className='input'>{detail.jabatan}</td>
                                     </tr>
                                     <tr>
                                       <td>Nama Kegiatan</td>
@@ -110,13 +151,7 @@ const Detail_Withdraw = () => {
                                       <td className='input'>{detail.rencana_pelaksana}</td>
                                     </tr>
                                     <tr>
-                                      <td>Jabatan</td>
-                                    </tr>
-                                    <tr>
-                                      <td className='input'>{detail.jabatan_pj}</td>
-                                    </tr>
-                                    <tr>
-                                      <td>Jabatan</td>
+                                      <td>Units</td>
                                     </tr>
                                     <tr>
                                       <td className='input'>{detail.units}</td>
@@ -202,16 +237,30 @@ const Detail_Withdraw = () => {
                             </div>
                         </form>
                     </div>
-                    <div style={{display: status == "Pj. Pembendaharaan" ? 'flex' : 'none'}} className='box2'>
-                    <form action="">
-                      <div className='content-f'>
-                        <h1>Jawab</h1>
-                        <label htmlFor="">Jawaban</label>
-                        <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
-                      </div>
-                      <button onClick={handleJawab} className='submit'>Kirim</button>
-                    </form>
-                  </div>
+                    {role === "C-04" && (
+                    <div className='box2'>
+                      <form action="">
+                        <div className='content-f'>
+                          <h1>Jawab</h1>
+                          <label htmlFor="">Jawaban</label>
+                          <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
+                        </div>
+                        <button onClick={(e) => handleJawab(notif_detail?.id_notif, e)} className='submit'>Kirim</button>
+                      </form>
+                    </div>
+                    )}
+                    {role_sp === "S-04" && (
+                    <div className='box2'>
+                      <form action="">
+                        <div className='content-f'>
+                          <h1>Jawab</h1>
+                          <label htmlFor="">Jawaban</label>
+                          <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
+                        </div>
+                        <button onClick={(e) => handleJawab(notif_detail?.id_notif, e)} className='submit'>Kirim</button>
+                      </form>
+                    </div>
+                    )}
                 </div>
             </div>        
         </>

@@ -1,10 +1,13 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './form.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile';
 
 const Withdraw = () => {
+    const { level } = useParams();
+    const { role } = useParams();
+    const { role_sp } = useParams();
     const storedUsername = localStorage.getItem('nama');
     const storeNrk = localStorage.getItem('nrk');
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
@@ -15,7 +18,27 @@ const Withdraw = () => {
     console.log(storedFProfile);
     console.log(storeNrk);
     console.log(storedID);
-
+    const storeidNumber = localStorage.getItem('id_number');
+    console.log("id Number: " + storeidNumber);        
+    const [identity, setIdentity] = useState([]);
+    const [nrk_nip, setNrk_Nip] = useState(identity.nrk_nip);
+    const [jabatan, setJabatan] = useState(identity.jabatan);
+    const [nama, setNama] = useState(identity.nama);
+    const getIdentity = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
+            headers: {"Content-Type": "application/json"},
+            });
+            console.log(response.data);
+            setIdentity(response.data);
+            setNama(response.data.nama);
+            setJabatan(response.data.jabatan);
+            setNrk_Nip(response.data.nrk_nip);
+            setJabatan(response.data.jabatan);
+        } catch (error) {
+            console.log(error);
+        }
+    }    
     const navigate = useNavigate();
     const [show, setShow] = useState(false); // Changed to boolean for clarity
 
@@ -33,12 +56,28 @@ const Withdraw = () => {
     function handleShow2(event) {
         setShow2(event.target.checked); // Set show based on checkbox state
     }
-
     
+    const [nama_apr_ls_lv3, setNama_apr_ls_lv3] = useState([]);
+    const [nama_apr_lv3, setNama_apr_lv3] = useState(nama_apr_ls_lv3.nama);
+    console.log("nama apr lv3: " + nama_apr_lv3);        
+    const getMoney_user = async () => {
+    try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/lpj_approve_keuangan.php?kode_role_c=C-04` , {
+        headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data.Data[0]);
+        setNama_apr_ls_lv3(response.data.Data[0]);
+        setNama_apr_lv3(response.data.Data[0].nama);            
+    } catch (error) {
+        console.log(error);
+        }
+    }
+    useEffect(() => {
+        getIdentity();
+        getMoney_user();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const [isLoading, setIsLoading] = useState(false);
-    const [nama, setNama] = useState(storedUsername);
-    const [nrk, setNRK] = useState(storeNrk);
-    const [jabatan, setJabatan] = useState("");
     const [kegiatan, setKegiatan] = useState("");
     const [rencana, setRencana] = useState("");
     const [units, setUnits] = useState("");
@@ -51,19 +90,7 @@ const Withdraw = () => {
     const [totaldana, setTotalDana] = useState("");
     const [metode, setMetode] =useState("");
     const [tempat, setTempat] = useState("");
-    const [kendaraan, setKendaraan] = useState("");
-    const handleChangeNama = (event) => {
-        setNama(event.target.value);
-        console.log(event.target.value);
-    }
-    const handleChangeNRK = (event) => {
-        setNRK(event.target.value);
-        console.log(event.target.value);
-    }
-    const handleChangeJabatan = (event) => {
-        setJabatan(event.target.value);
-        console.log(event.target.value);
-    }
+    const [kendaraan, setKendaraan] = useState(""); 
     const handleChangeKegiatan = (event) => {
         setKegiatan(event.target.value);
         console.log(event.target.value);
@@ -120,10 +147,8 @@ const Withdraw = () => {
         setIsLoading(true);
         event.preventDefault();
         const payload = {
-            nama:nama,
-            NRK:nrk,
-            jabatan_pj:jabatan,
-            nama_kegiatan:kegiatan,
+            id_number: storeidNumber,
+            nama_kegiatan: kegiatan,
             units: units,
             rencana_pelaksana: rencana,
             acc_521211: akun211,
@@ -136,7 +161,8 @@ const Withdraw = () => {
             keterangan: keterangan,
             total_dana_manajemen: totaldana,
             keterangan_keuangan: '',
-            metode: metode
+            metode: metode,
+            sent_to: nama_apr_lv3,
         };
         try {
             const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/new_Dana.php`, payload, {
@@ -147,7 +173,7 @@ const Withdraw = () => {
             console.log(response.data);
             setTimeout(() => {
                 setIsLoading(false);
-                navigate('/dashboard-simak')
+                navigate(`/dashboard-simak/${level}/${role}/${role_sp}`)
                 alert(response.data.message);
             }, 1000);
         } catch (error) {
@@ -170,11 +196,11 @@ const Withdraw = () => {
                             <div className='content-f'>
                                 <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
+                                <input value={nama} placeholder='Nama' type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} value={storeNrk} placeholder='NIP/NRK' type="text"/>
+                                <input value={nrk_nip} placeholder='NIP/NRK' type="text"/>
                                 <label htmlFor="">Jabatan</label>
-                                <input onChange={handleChangeJabatan} value={jabatan} placeholder='Jabatan' type="text"/>
+                                <input value={jabatan} placeholder='Jabatan' type="text"/>
                             </div>
 
                             <div className='content-f'>

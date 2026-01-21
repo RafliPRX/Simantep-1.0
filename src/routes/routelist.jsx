@@ -252,7 +252,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/form-dana-RPD/:id",
+        path: "/dashboard-simak/:level/:role/:role_sp/form-dana-RPD/:id",
         element: (
             <RoutedProtected>
                 <Detail_Form_withdrawl/>

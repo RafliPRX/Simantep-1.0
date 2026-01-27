@@ -210,18 +210,6 @@ const Notification_Bhp = (title, options, idFix, id_Notif) => {
 
 const Homepage = () => {
     const { level } = useParams();            
-    const [notif_fix, setNotif_fix] = useState([]);
-    const getNotif_Fix = async () => {
-      try {
-        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_fix_byName_Actv.php?nama=${storedUsername}` , {
-          headers: {"Content-Type": "application/json"},
-        });
-        console.log(response.data);
-        setNotif_fix(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }
     const [notif_vehicle, setNotif_Vehicle] = useState([]);
     const getNotif_Vehicle = async () => {
       try {
@@ -334,6 +322,18 @@ const Homepage = () => {
         console.log(error);
       }
     }
+    const [notif_fix, setNotif_fix] = useState([]);
+    const getNotif_Fix = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_fix_byName_Actv.php?nama=${nama}` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setNotif_fix(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     useEffect(() => {
       getIdentity();      
       const timeoutId = setTimeout(() => {
@@ -381,7 +381,7 @@ const Homepage = () => {
         if (notif_fix.length > 0) {
           notif_fix.map((Notif) => {
             if (Notification.permission === "granted") {
-              Notification_Fix(Notif.sender, {
+              Notification_Fix(Notif.nama, {
                 body: Notif.subjek,
                 icon: `${icon}`
               }, Notif.id_fix, Notif.id_notif);

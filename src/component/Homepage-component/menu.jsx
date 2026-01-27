@@ -121,6 +121,57 @@ const Menu = ({
             console.log(error.response);
         }
     }
+    const mark_Fix = async (idNotif, event) => {
+        event.preventDefault();
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_fix.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const mark_Vehicle = async (idNotif, event) => {
+        event.preventDefault();
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_vehicle.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const mark_Bhp = async (idNotif, event) => {
+        event.preventDefault();
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_bhp.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                window.location.reload();
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
     const buka_lpj = async (idNotif, idLpj, event) => {
         event.preventDefault();
         const payload = {
@@ -132,7 +183,7 @@ const Menu = ({
             })
             console.log(response.data);
             setTimeout(() => {
-                window.location.href = `/form-dana-LPJ/${idLpj}`
+                window.location.href = `/dashboard-simak/level-${akses_level}/${kode_role}/${kode_role_sp}/form-dana-LPJ/${idLpj}`
             }, 2000);
         } catch (error) {
             console.log(error.response);
@@ -149,7 +200,7 @@ const Menu = ({
             })
             console.log(response.data);
             setTimeout(() => {
-                window.location.href = `/form-dana-RPD/${idDana}`
+                window.location.href = `/dashboard-simak/level-${akses_level}/${kode_role}/${kode_role_sp}/form-dana-RPD/${idDana}`
             }, 2000);
         } catch (error) {
             console.log(error.response);
@@ -166,7 +217,24 @@ const Menu = ({
             })
             console.log(response.data);
             setTimeout(() => {
-                window.location.href = `/Cuti-detail/${idSurat}`
+                window.location.href = `/Dashboard/level-${akses_level}/${kode_role}/${kode_role_sp}/Cuti-detail/${idSurat}`
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const buka_fix = async (idNotif, idSurat, event) => {
+        event.preventDefault();
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_fix.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}/form-perbaikan/${idSurat}`
             }, 2000);
         } catch (error) {
             console.log(error.response);
@@ -330,7 +398,7 @@ const Menu = ({
                         <div className='text'>
                             <h3>SI LARAS</h3>
                             <h5>Sistem Layanan sarana dan Prasarana</h5>
-                            <button onClick={() => window.location.href = "/Dashboard-laras"}>Masuk</button>
+                            <button onClick={() => window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
                         </div>
                     </div>
                     <div className='notif-col'>
@@ -353,11 +421,11 @@ const Menu = ({
                                                   <div style={{background: `url(https://simantepbareta.cloud/API/${notifItem.f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
                                                   <div className='info'>
                                                     <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='bullet'></div>
-                                                    <h3>Nama: {notifItem.sender}</h3>
+                                                    <h3>Nama: {notifItem.nama}</h3>
                                                     <h3>Subjek: {notifItem.subjek}</h3>
                                                     <div className='button'>
-                                                        <button onClick={(event) => mark(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
-                                                        <button onClick={(event) => buka_surat(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
+                                                        <button onClick={(event) => mark_Fix(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
+                                                        <button onClick={(event) => buka_fix(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
                                                     </div>
                                                   </div>
                                                 </> 
@@ -383,10 +451,10 @@ const Menu = ({
                                                   <div style={{background: `url(https://simantepbareta.cloud/API/${notifItem.f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
                                                   <div className='info'>
                                                     <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='bullet'></div>
-                                                    <h3>Nama: {notifItem.sender}</h3>
+                                                    <h3>Nama: {notifItem.nama}</h3>
                                                     <h3>Subjek: {notifItem.subjek}</h3>
                                                     <div className='button'>
-                                                        <button onClick={(event) => mark(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
+                                                        <button onClick={(event) => mark_Vehicle(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
                                                         <button onClick={(event) => buka_surat(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
                                                     </div>
                                                   </div>
@@ -413,10 +481,10 @@ const Menu = ({
                                                   <div style={{background: `url(https://simantepbareta.cloud/API/${notifItem.f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
                                                   <div className='info'>
                                                     <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='bullet'></div>
-                                                    <h3>Nama: {notifItem.sender}</h3>
+                                                    <h3>Nama: {notifItem.nama}</h3>
                                                     <h3>Subjek: {notifItem.subjek}</h3>
                                                     <div className='button'>
-                                                        <button onClick={(event) => mark(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
+                                                        <button onClick={(event) => mark_Bhp(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
                                                         <button onClick={(event) => buka_surat(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
                                                     </div>
                                                   </div>

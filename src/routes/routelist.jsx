@@ -140,7 +140,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-laras",
+        path: "/dashboard-laras/:level/:role/:role_sp",
         element: (
             <RoutedProtected>
                 <Dashboard_laras/>
@@ -148,7 +148,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/form-perbaikan",
+        path: "/dashboard-laras/:level/:role/:role_sp/form-perbaikan",
         element: (
             <RoutedProtected>
                 <Fix/>
@@ -156,7 +156,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/form-kendaraan-dinas",
+        path: "/dashboard-laras/:level/:role/:role_sp/form-kendaraan-dinas",
         element: (
             <RoutedProtected>
                 <Form_vehicle/>
@@ -164,7 +164,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/form-permohonan-BHP-ATK",
+        path: "/dashboard-laras/:level/:role/:role_sp/form-permohonan-BHP-ATK",
         element: (
             <RoutedProtected>
                 <Form_request/>
@@ -201,7 +201,7 @@ export const routeList = [
             <RoutedProtected>
                 <Absent_Page/>
             </RoutedProtected>
-        ),    
+        ),
     },
     {
         path: '/Absensi-Page-Malam',
@@ -228,7 +228,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/form-perbaikan/:id",
+        path: "/dashboard-laras/:level/:role/:role_sp/form-perbaikan/:id",
         element: (
             <RoutedProtected>
                 <Fix_Detail/>
@@ -236,7 +236,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/form-kendaraan-dinas/:id",
+        path: "/dashboard-laras/:level/:role/:role_sp/form-kendaraan-dinas/:id",
         element: (
             <RoutedProtected>
                 <Form_vehicle_Detail/>
@@ -244,7 +244,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/form-permintaan-barang-baru/:id",
+        path: "/dashboard-laras/:level/:role/:role_sp/form-permintaan-barang-baru/:id",
         element: (
             <RoutedProtected>
                 <Request_Detail/>

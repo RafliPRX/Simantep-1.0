@@ -1,34 +1,62 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './fix-form.css';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile';
 const Fix_form = () => {
-  const storedUsername = localStorage.getItem('nama');
-  const storeNrk = localStorage.getItem('nrk');
-  const storedSisaCuti = localStorage.getItem('sisa_cuti');
+  const storeidNumber = localStorage.getItem('id_number');
+  console.log('id_number: ' + storeidNumber);
   const storedFProfile = localStorage.getItem('f_profile');
-  const storedID = localStorage.getItem('id_jabatan_sup');
-  console.log(storedUsername);
-  console.log(storedSisaCuti );
-  console.log(storedFProfile);
-  console.log(storeNrk);
-  console.log(storedID);
+  const [identity, setIdentity] = useState([]);
+  const [nama, setNama] = useState(identity.nama);
+  const [jabatan, setJabatan] = useState(identity.jabatan);    
+  const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
+  const [isLoading, setIsLoading] = useState(false);
+  const { level } = useParams();
+  const { role } = useParams();
+  const { role_sp } = useParams();
+  const [identity_pjSarpras, setIdentity_PJSarpras] = useState([]);
+  const [nama_pjSarpras, setNama_PJSarpras] = useState(identity_pjSarpras.nama);
+  console.log("nama pj Sarpras: " + nama_pjSarpras);
+  
+  const getIdentity_pjSarpras = async () => {
+    try {
+      const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/get_pjSarpras_Identity.php?kode_role_c=C-03` , {
+        headers: {"Content-Type": "application/json"},
+      });
+      console.log(response.data);
+      setIdentity_PJSarpras(response.data.Data[0]);
+      setNama_PJSarpras(response.data.Data[0].nama);
+         
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
-  const [nama, setNama] = useState(storedUsername);
-  const [nrk, setNrk] = useState(storeNrk);
+  const getIdentity = async () => {
+    try {
+      const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
+        headers: {"Content-Type": "application/json"},
+      });
+      console.log(response.data);
+      setIdentity(response.data);
+      setNama(response.data.nama);
+      setJabatan(response.data.jabatan);
+      setNrk_nip(response.data.nrk_nip);
+         
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  useEffect(() => {
+    getIdentity();
+    getIdentity_pjSarpras();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   const [unit, setUnits] = useState("");
   const [fixing, setFixing] = useState("");
   const [image, setImage] = useState("")
   const navigate = useNavigate();
-  const handleChangeNama = (event) => {
-    console.log(event.target.value);
-    setNama(event.target.value);
-  }
-  const handleChangeNRK = (event) => {
-    console.log(event.target.value);
-    setNrk(event.target.value);
-  }
   const handleChangeUnits = (event) => {
     console.log(event.target.value);
     setUnits(event.target.value);
@@ -44,13 +72,14 @@ const Fix_form = () => {
 
   const handleRequest = async (event) => {
     event.preventDefault();
+    setIsLoading(true);
     const payload = {
-      nama: nama,
-      nrk: nrk,
+      id_number: storeidNumber,
       unit: unit,
       fix: fixing,
       foto: image,
-      f_profile: storedFProfile
+      f_profile: storedFProfile,
+      sent_to: nama_pjSarpras
     };
     try {
       const respone = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_fix.php`, payload, {
@@ -60,7 +89,8 @@ const Fix_form = () => {
       });
       console.log(respone.data);
       setTimeout(() => {
-        navigate("/dashboard-laras");
+        setIsLoading(false);
+        navigate(`/dashboard-laras/${level}/${role}/${role_sp}`);
         alert(respone.data.message);
       }, 1000);
     } catch (error) {
@@ -71,18 +101,23 @@ const Fix_form = () => {
     return(
         <>
             <div className='main-dashboard'>
+              {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+                <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
+            </div>} 
                 <p>Silaras/Form Perbaikan</p>
                 <h1>Form Perbaikan</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
+                <Profile nama={nama} f_profile={storedFProfile} feature="silaras" />                 
                 <div className='content-col'>
                     <div className='box3'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Perbaikan</h1>
                             <label htmlFor="">Nama</label>
-                            <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
+                            <input value={nama} placeholder='Nama' type="text"/>
                             <label htmlFor="">NIP/NRK</label>
-                            <input onChange={handleChangeNRK} value={storeNrk} placeholder='NRK' type="text"/>
+                            <input  value={nrk_nip} placeholder='NRK' type="text"/>
+                            <label htmlFor="">Jabatan</label>
+                            <input  value={jabatan} placeholder='Jabatan' type="text"/>
                             <label htmlFor="">Units</label>
                             <input onChange={handleChangeUnits} value={unit} placeholder='Units' type="text"/>
                             <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>

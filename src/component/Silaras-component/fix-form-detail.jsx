@@ -17,8 +17,12 @@ const Fix_form_Detail = () => {
   console.log(storeNrk);
   console.log(pj);
   console.log(status);
-  
+  const [isLoading, setIsLoading] = useState(false);  
+  const { role } = useParams();
+  const { role_sp } = useParams();
+  const { level } = useParams();
   const param = useParams();
+  const storeidNumber = localStorage.getItem('id_number');
   const [detail, setDetail] = useState({});
   const getDetail = async () => {
       try {
@@ -31,9 +35,23 @@ const Fix_form_Detail = () => {
         console.log(error.response);
       }
   };
-  
+  const [notif_detail, setNotifDetail] = useState({});
+  console.log("id notif yang diambil: "+notif_detail?.id_notif);
+    
+  const getNotifDetail = async () => {
+      try {
+          const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_fix_byReceive.php?id=${param.id}`, {
+              headers: {}
+          });
+          setNotifDetail(response.data[0]);
+          console.log(response.data[0]);
+      } catch (error) {
+          console.error(error);
+      }
+  }
   useEffect(() => {
     getDetail();
+    getNotifDetail();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   },[]);
   const [image, setImage] = useState(null);
@@ -47,11 +65,13 @@ const Fix_form_Detail = () => {
     console.log(event.target.value);
   }
   const navigate = useNavigate();
-  const handleJawab = async (event) => {
-    event.preventDefault();
+  const handleJawab_sarpras = async () => {
     const payload = {
       jawab: jawab,
-      bukti: image
+      Approval: '3',
+      bukti: image,
+      last_sent_to: detail.nama,
+      last_sent_to_id: storeidNumber,
     }
     try {
       const response = axios.post(`https://simantepbareta.cloud/API/SILARAS/answer_fix.php?id=${param.id}`,payload, {
@@ -61,7 +81,7 @@ const Fix_form_Detail = () => {
       })
       console.log(response.data);
       setTimeout(() => {
-        navigate("/dashboard-laras");
+        navigate(`/dashboard-laras/${level}/${role}/${role_sp}`);
         alert(response.data.message);
       }, 1000);
     } catch (error) {
@@ -69,9 +89,37 @@ const Fix_form_Detail = () => {
       alert(error.response);
     }
   }
+  const mark_Fix = async (idNotif) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_fix.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+  }
+  const handleJawab = async (notifId ,event) => {
+      event.preventDefault();
+      try {
+        setIsLoading(true);
+        await mark_Fix(notifId);
+        await handleJawab_sarpras();
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);
+      }      
+  }
   return(
       <>
           <div className='main-dashboard'>
+          {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+                <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
+            </div>}  
               <p>Silaras/Form Perbaikan</p>
               <h1>Form Perbaikan</h1>
               <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />              
@@ -91,7 +139,7 @@ const Fix_form_Detail = () => {
                               <td>NIP/NRK</td>
                             </tr>
                             <tr>
-                              <td className='input'>{detail.nrk}</td>
+                              <td className='input'>{detail.nrk_nip}</td>
                             </tr>
                             <tr>
                               <td>Units</td>
@@ -136,7 +184,8 @@ const Fix_form_Detail = () => {
                       </div>
                       </form>
                   </div>
-                  <div style={{display: status === "Pj. Rumah Tanggal dan Aset" ? 'flex' : 'none'}} className='box3'>
+                  {role === 'C-03' && (
+                  <div className='box3'>
                     <form action="">
                       <div className='content-f'>
                         <h1>Jawab</h1>
@@ -145,9 +194,24 @@ const Fix_form_Detail = () => {
                         <label htmlFor="">Bukti Gambar</label>
                         <input onChange={handleChangeImage} type="file" name="" id="" />
                       </div>
-                      <button onClick={handleJawab} className='submit'>Kirim</button>
+                      <button onClick={(e) => handleJawab(notif_detail.id_notif, e)} className='submit'>Kirim</button>
                     </form>
                   </div>
+                  )}
+                  {role_sp === 'S-03' && (
+                  <div className='box3'>
+                    <form action="">
+                      <div className='content-f'>
+                        <h1>Jawab</h1>
+                        <label htmlFor="">Jawaban</label>
+                        <textarea onChange={handleChangeJawaban} name="" id=""></textarea>
+                        <label htmlFor="">Bukti Gambar</label>
+                        <input onChange={handleChangeImage} type="file" name="" id="" />
+                      </div>
+                      <button onClick={(e) => handleJawab(notif_detail.id_notif, e)} className='submit'>Kirim</button>
+                    </form>
+                  </div>
+                  )}
               </div>
           </div>        
       </>

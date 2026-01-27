@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import './content-laras.css'
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import green from '../../assets/green.svg'
 import white from '../../assets/unread.svg'
 import red from '../../assets/decline.svg'
@@ -14,72 +14,78 @@ const Content_laras = () => {
     const storedFProfile = localStorage.getItem('f_profile');
     const pj = localStorage.getItem('pj');
     const status = localStorage.getItem('Status');
+    const storeidNumber = localStorage.getItem('id_number');
     console.log(storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
     console.log(storeNrk);
     console.log(pj);
     console.log(status);
-    
+    const { level } = useParams();
+    const { role } = useParams();
+    const { role_sp } = useParams();
     const [fix, setFix] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
     const [pagination_fix, setPagination_Fix] = useState({
         current_page: 1,
     });
-    const getFix = async () => {
-      if (status === "Pj. Rumah Tanggal dan Aset") {
-        try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/fix.php?page=${pagination_fix.current_page}`)
-          .then((res1) => {
-              console.log(res1.data.Data);
-              const response = res1.data.Data;
-
-              const pagination_fix = {
-                  total: res1.data.total_records,
-                  current_page: res1.data.current_page,
-                  nextPage: res1.data.nextPage, // Corrected to match the response structure    
-              }
-              setFix(response);
-              setPagination_Fix(pagination_fix);
-              console.log(response);
-          })
-        } catch (error) {
-            console.log(error.response);
-        }
-      } else {
-        try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?nama=${storedUsername}&page=${pagination_fix.current_page}`)
-          .then((res1) => {
-              console.log(res1.data.Data);
-              const response = res1.data.Data;
-
-              const pagination_fix = {
-                  total: res1.data.total_records,
-                  current_page: res1.data.current_page,
-                  nextPage: res1.data.nextPage, // Corrected to match the response structure    
-              }
-              setFix(response);
-              setPagination_Fix(pagination_fix);
-              console.log(response);
-          })
-        } catch (error) {
-            console.log(error.response);
-        }
-      }
-    };
+    const getFix = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?id=${storeidNumber}&page=${pagination_fix.current_page}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_dana = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setFix(response);
+            setPagination_Fix(pagination_dana);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    const [fix_sarpras, setFix_Sarpras] = useState([]);
+    const [pagination_fix_sarpras, setPagination_Fix_Sarpras] = useState({
+        current_page: 1,
+    });
+    const getFix_Sarpras = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix.php?page=${pagination_fix_sarpras.current_page}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_dana = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setFix_Sarpras(response);
+            setPagination_Fix_Sarpras(pagination_dana);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     useEffect(() => {
       getFix();
-    }, [pagination_fix?.current_page]);
+      getFix_Sarpras();
+    }, [pagination_fix?.current_page, pagination_fix_sarpras?.current_page]);
     const [vehicle, setVehicle] = useState([]);
     const [pagination_vehicle, setPagination_Vehicle] = useState({
       current_page: 1,
     });
-    const getVehicle = async () => {
+    const getVehicle = async (pageNum) => {
       if (status === "Pj. Rumah Tanggal dan Aset") {
         try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pagination_vehicle.current_page}`)
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pageNum}`)
           .then((res2) => {
               console.log(res2.data.Data);
-              const response = res2.data.Data;
+              const response = res2.data.Data || [];
 
               const pagination_vehicle = {
                   total: res2.data.total_records,
@@ -92,13 +98,14 @@ const Content_laras = () => {
           })
         } catch (error) {
             console.log(error.response);
+            setVehicle([]);
         }
       } else {
         try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?nama=${storedUsername}&page=${pagination_vehicle.current_page}`)
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?nama=${storedUsername}&page=${pageNum}`)
           .then((res2) => {
               console.log(res2.data.Data);
-              const response = res2.data.Data;
+              const response = res2.data.Data || [];
 
               const pagination_vehicle = {
                   total: res2.data.total_records,
@@ -111,24 +118,25 @@ const Content_laras = () => {
           })
         } catch (error) {
             console.log(error.response);
+            setVehicle([]);
         }
       }
     }
     useEffect(() => {
-      getVehicle();
-    }, [pagination_vehicle?.current_page]);
+      getVehicle(pagination_vehicle?.current_page);
+    }, [pagination_vehicle?.current_page, status, storedUsername]);
 
     const [request, setRequest] = useState([]);
     const [pagination_request, setPagination_Request] = useState({
       current_page: 1,
     })
-    const getRequest = async () => {
+    const getRequest = async (pageNum) => {
       if (status === "Pj. Rumah Tanggal dan Aset") {
         try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/request.php?page=${pagination_request.current_page}`)
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/request.php?page=${pageNum}`)
           .then((res3) => {
               console.log(res3.data.Data);
-              const response = res3.data.Data;
+              const response = res3.data.Data || [];
 
               const pagination_request = {
                   total: res3.data.total_records,
@@ -141,13 +149,14 @@ const Content_laras = () => {
           })
         } catch (error) {
             console.log(error.response);
+            setRequest([]);
         }
       } else {
         try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/request_by_name.php?nama=${storedUsername}&page=${pagination_request.current_page}`)
+          axios.get(`https://simantepbareta.cloud/API/SILARAS/request_by_name.php?nama=${storedUsername}&page=${pageNum}`)
           .then((res3) => {
               console.log(res3.data.Data);
-              const response = res3.data.Data;
+              const response = res3.data.Data || [];
 
               const pagination_request = {
                   total: res3.data.total_records,
@@ -160,12 +169,13 @@ const Content_laras = () => {
           })
         } catch (error) {
             console.log(error.response);
+            setRequest([]);
         }
       }
     };
     useEffect(() => {
-      getRequest();
-    }, [pagination_request?.current_page]);
+      getRequest(pagination_request?.current_page);
+    }, [pagination_request?.current_page, status, storedUsername]);
     const handleNext_Fix = () => {
         setPagination_Fix({
             ...pagination_fix,
@@ -203,6 +213,7 @@ const Content_laras = () => {
         })
     }
     const handleDeleteFix = async (id) => {
+        setIsLoading(true);
         try {
           const response = await axios.delete(`https://simantepbareta.cloud/API/SILARAS/delete_fix.php?id=${id}`, {
             headers: {
@@ -211,6 +222,7 @@ const Content_laras = () => {
           });
           console.log(response.data);
           setTimeout(() => {
+            setIsLoading(false);
             window.location.reload();
           }, 1000);
         } catch (error) {
@@ -252,11 +264,15 @@ const Content_laras = () => {
       return(
         <>
             <div className='main-dashboard'>
+              {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+                <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
+              </div>}
                 <p>Silaras/Dashboard</p>
                 <h1>Main Dashboard</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />
                 <div className='content-col'>
                     <div className='box'>
+                      { (role_sp === "0" && role !== "C-03" ) &&
                         <div className='content'>
                             <h1>Daftar Form Perbaikan</h1>
                             <div>
@@ -278,17 +294,17 @@ const Content_laras = () => {
                               {fix.map((item, index) => (
                                 <tr key={item.id}>
                                   <td style={{textAlign:'center'}}>{index + 1}</td>
-                                  <td style={{textAlign:'center'}}>{item.id}</td>
+                                  <td style={{textAlign:'center'}}>{item.id_fix}</td>
                                   <td style={{textAlign:'center'}}>{item.nama}</td>
-                                  <td style={{textAlign:'center'}}>{item.nrk}</td>
+                                  <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
                                   <td style={{textAlign:'center'}}>{item.unit}</td>
                                   <td style={{textAlign:'center'}}>{item.fix}</td>
                                   <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
                                   <td style={{textAlign:'center'}}>
-                                    <Link to={`/form-perbaikan/${item.id}`}>Lihat Disini |</Link>
-                                    <br /><div><button className='putih' onClick={() => handleDeleteFix(item.id)}>Hapus</button></div>
+                                    <Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${item.id_fix}`}>Lihat Disini |</Link>
+                                    <br /><div><button className='putih' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
                                   </td>
                                 </tr>
                               ))}
@@ -297,7 +313,93 @@ const Content_laras = () => {
                                 <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}                        
                         </div>
+                      }
+                      {role === "C-03" && (
                         <div className='content'>
+                            <h1>Daftar Form Perbaikan</h1>
+                            <div>
+                                <button onClick={handlePrev_Fix}>Previous</button>
+                                <button onClick={handleNext_Fix}>Next</button>
+                            </div>
+                            {fix_sarpras.length > 0 ? (
+                            <table>
+                              <tr>
+                                <th style={{textAlign:'center'}}>Nomor</th>
+                                <th style={{textAlign:'center'}}>id Form</th>
+                                <th style={{textAlign:'center'}}>Nama</th>
+                                <th style={{textAlign:'center'}}>NIP/NRK</th>
+                                <th style={{textAlign:'center'}}>Unit Kerja</th>
+                                <th style={{textAlign:'center'}}>Permintaan Perbaikan</th>
+                                <th style={{textAlign:'center'}}>Approval Status</th>
+                                <th style={{textAlign:'center'}}>Detail</th>
+                              </tr>
+                              {fix_sarpras.map((item, index) => (
+                                <tr key={item.id}>
+                                  <td style={{textAlign:'center'}}>{index + 1}</td>
+                                  <td style={{textAlign:'center'}}>{item.id_fix}</td>
+                                  <td style={{textAlign:'center'}}>{item.nama}</td>
+                                  <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
+                                  <td style={{textAlign:'center'}}>{item.unit}</td>
+                                  <td style={{textAlign:'center'}}>{item.fix}</td>
+                                  <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                  <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                  <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
+                                  <td style={{textAlign:'center'}}>
+                                    <Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${item.id_fix}`}>Lihat Disini |</Link>
+                                    <br /><div><button className='putih' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
+                                  </td>
+                                </tr>
+                              ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
+                        </div>
+                      )}
+                      {role_sp === "S-03" && (
+                        <div className='content'>
+                            <h1>Daftar Form Perbaikan</h1>
+                            <div>
+                                <button onClick={handlePrev_Fix}>Previous</button>
+                                <button onClick={handleNext_Fix}>Next</button>
+                            </div>
+                            {fix_sarpras.length > 0 ? (
+                            <table>
+                              <tr>
+                                <th style={{textAlign:'center'}}>Nomor</th>
+                                <th style={{textAlign:'center'}}>id Form</th>
+                                <th style={{textAlign:'center'}}>Nama</th>
+                                <th style={{textAlign:'center'}}>NIP/NRK</th>
+                                <th style={{textAlign:'center'}}>Unit Kerja</th>
+                                <th style={{textAlign:'center'}}>Permintaan Perbaikan</th>
+                                <th style={{textAlign:'center'}}>Approval Status</th>
+                                <th style={{textAlign:'center'}}>Detail</th>
+                              </tr>
+                              {fix_sarpras.map((item, index) => (
+                                <tr key={item.id}>
+                                  <td style={{textAlign:'center'}}>{index + 1}</td>
+                                  <td style={{textAlign:'center'}}>{item.id_fix}</td>
+                                  <td style={{textAlign:'center'}}>{item.nama}</td>
+                                  <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
+                                  <td style={{textAlign:'center'}}>{item.unit}</td>
+                                  <td style={{textAlign:'center'}}>{item.fix}</td>
+                                  <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                  <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                  <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
+                                  <td style={{textAlign:'center'}}>
+                                    <Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${item.id_fix}`}>Lihat Disini |</Link>
+                                    <br /><div><button className='putih' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
+                                  </td>
+                                </tr>
+                              ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
+                        </div>
+                      )}
+                      { (role_sp === "0" && role !== "C-03" ) &&(
+                          <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
                             <div>
                                 <button onClick={handlePrev_Vehicle}>Previous</button>
@@ -344,6 +446,7 @@ const Content_laras = () => {
                                 <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}                        
                         </div>
+                      )}
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
                             <div>

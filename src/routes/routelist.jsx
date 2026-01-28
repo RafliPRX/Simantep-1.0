@@ -31,6 +31,8 @@ import Account_Create_Form from "../pages/Admin-Page/account_create_form";
 import Detail_Form_RoleLv1 from "../pages/Admin-Page/role_detail";
 import Detail_Form_IdentityLv1 from "../pages/Admin-Page/identity_detail";
 import Detail_Form_Account from "../pages/Admin-Page/account_detail";
+import Dashboard_Corner from "../pages/E-Corner-Page/dashboard_corner";
+import Klien_form from "../pages/E-Corner-Page/klien-form";
 // import Maintanance from "../pages/maintanance-page/maintanance";
 
 
@@ -275,4 +277,20 @@ export const routeList = [
             </RoutedProtected>
         ),
     },
+    {
+        path: "/Dashboard-E-Corner/:level/:role/:role_sp",
+        element: (
+            <RoutedProtected>
+                <Dashboard_Corner/>
+            </RoutedProtected>
+        ),
+    },
+    {
+        path: "/Dashboard-E-Corner/:level/:role/:role_sp/New_Klien",
+        element: (
+            <RoutedProtected>
+                <Klien_form/>
+            </RoutedProtected>
+        ),
+    },    
 ]

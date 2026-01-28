@@ -1,16 +1,17 @@
-.menu{
-    display: flex;
+.menu {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(3, 1fr);
     width: 1684px;
     height: 750px;
-    padding-right: 20px;
-    justify-content: center;
-    align-items: center;
     gap: 50px;
     flex-shrink: 0;
     background: #000E60;
     margin-top: 163px;
     padding-left: 110px;
-    padding-top: 100px;  
+    padding-right: 20px;
+    padding-top: 100px;
+    margin-bottom: 800px;
 }
 .menu .menu-disp{
     display: flex;

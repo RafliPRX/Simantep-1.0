@@ -234,6 +234,7 @@ const Homepage = () => {
     const [nama_role_a, setNama_role_a] = useState(identity.nama_role_a);
     const [kode_role_a, setKode_role_a] = useState(identity.kode_role_a);
     const [kode_role_sp, setKode_role_sp] = useState(identity.kode_role_sp);
+    const [nama_role_sp, setNama_role_sp] = useState(identity.nama_role_sp);
     const [jabatan, setJabatan] = useState(identity.jabatan);    
     const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
     const [akses_level, setAkses_level] = useState(identity.akses_level);
@@ -259,7 +260,8 @@ const Homepage = () => {
         setJabatan(response.data.jabatan);
         setNrk_nip(response.data.nrk_nip);
         setAkses_level(response.data.akses_level);
-        setKode_role_sp(response.data.kode_role_sp); 
+        setKode_role_sp(response.data.kode_role_sp);
+        setNama_role_sp(response.data.nama_role_sp);
       } catch (error) {
         console.log(error);
       }
@@ -506,7 +508,11 @@ const Homepage = () => {
                         <div className='field'>
                           <label htmlFor="kode_role">Akses Level</label>
                           <input disabled value={akses_level} type="text" />
-                        </div>      
+                        </div>
+                        <div className='field'>
+                          <label htmlFor="kode_role">Spesial Akses</label>
+                          <input disabled value={nama_role_sp} type="text" />
+                        </div>  
                         {/* <label htmlFor="">Upload foto Profile</label>
                         <div className='u-profile'>
                             <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />

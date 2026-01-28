@@ -505,6 +505,18 @@ const Menu = ({
                         </div>
                     </div>
                 </div>
+                {kode_role_sp === 'S-06' &&(
+                <div className='menu-disp'>
+                    <div className='card'>
+                        <div className='pic' style={{backgroundImage: `url(${absen})`, backgroundColor: "lightgray", backgroundSize: "cover" }}></div>
+                        <div className='text'>
+                            <h3>E-Corner</h3>
+                            <h5>Khusus Admin E-Corner</h5>
+                            <button onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                        </div>
+                    </div>
+                </div>
+                )}                
             </div>
         </>
     )

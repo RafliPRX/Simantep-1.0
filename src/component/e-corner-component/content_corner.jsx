@@ -7,6 +7,8 @@ import Profile from '../profile';
 import { useNavigate, useParams } from 'react-router-dom';
 // import DatePicker from 'react-datepicker';
 // import * as xlsx from 'xlsx';
+import DatePicker from 'react-datepicker';
+import { format } from 'date-fns';
 
 const Content_Corner = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -15,7 +17,6 @@ const Content_Corner = () => {
     const { role_sp } = useParams();
     const navigate = useNavigate();
     const storeidNumber = localStorage.getItem('id_number');
-    // const [isLoading, setIsLoading] = useState('false')
     const [identity, setIdentity] = useState([]);
     const [nama, setNama] = useState(identity.nama);
     const getIdentity = async () => {
@@ -85,9 +86,10 @@ const Content_Corner = () => {
             console.log(error);
         });
     }
-    const deletedSurat = async (id) => {
+    const deletedClient = async (id) => {
+        setIsLoading(true)
         try {
-          const response = await axios.delete(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/delete_surat.php?id=${id}`, {
+          const response = await axios.delete(`https://simantepbareta.cloud/API/E-corner/deleted_client.php?id=${id}`, {
             headers: { "Content-Type": "application/json" },
           });
           console.log(response.data);
@@ -103,10 +105,9 @@ const Content_Corner = () => {
     }
     const confirmDeleteCorner = (id) => {
         if (window.confirm("Apakah Anda yakin Surat ini di Hapuskan ?")) {
-            deletedSurat(id);
+            deletedClient(id);
         }
     }    
-    
     const [minggu, setMinggu] = useState('');
     const [bulan, setBulan] = useState('');
     const handleChangeMinggu = (event) => {
@@ -123,6 +124,14 @@ const Content_Corner = () => {
     const [pagination_search, setPagination_Search] = useState({
         currentPage: 1,
     });
+    const [startDate, setStartDate] = useState(null);
+    const [endDate, setEndDate] = useState(null);
+    const handleChangeDate = (date) => {
+        setStartDate(date[0]);
+        setEndDate(date[1])
+        console.log(date[0]);
+        console.log(date[1]);        
+    }
     const handleGetKlienSearch = async () => {
         setIsLoading(true)
         const baseUrl = `https://simantepbareta.cloud/API/E-corner/get_client_ecorner_for_admin_search.php?page=${pagination_search.currentPage}&id_bulan=${bulan}&id_minggu=${minggu}`;
@@ -145,7 +154,7 @@ const Content_Corner = () => {
         });
     }    
     const handleOpenCorner = (id) => {
-        navigate(`/Dashboard/${level}/${role}/${role_sp}/Cuti-detail/${id}`);
+        navigate(`/Dashboard-E-Corner/${ level }/${role}/${role_sp}/Update_Klien/${id}`);
     }
     useEffect(() => {
     getIdentity();
@@ -181,7 +190,9 @@ const Content_Corner = () => {
         setIsLoading(true);
         event.preventDefault();
         const payload = {
-        id_bulan: bulan,                   
+        id_bulan: bulan,
+        startDate: format(startDate, 'yyyy/MM/dd'),
+        endDate: format(endDate, 'yyyy/MM/dd'),
         stat: "Active",
         };
         try {
@@ -240,7 +251,7 @@ const Content_Corner = () => {
                                                 <td style={{ textAlign: 'center' }}>{item.rooms}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.time}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.days}</td>                                                
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item.id_surat)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item.id_surat)} className='B-deleted'>Deleted</button> </td>  
+                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item.id_corner)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item.id_corner)} className='B-deleted'>Deleted</button> </td>  
                                                 </tr>
                                             ))} 
                                         </table>
@@ -279,6 +290,15 @@ const Content_Corner = () => {
                                         <option value="3">Minggu ke 3</option>
                                         <option value="4">Minggu ke 4</option>
                                     </select>
+                                    <label htmlFor="date">Tanggal</label>
+                                    <DatePicker
+                                        selectsRange={true}
+                                        startDate={startDate}
+                                        endDate={endDate}
+                                        onChange={handleChangeDate}
+                                        dateFormat="yyyy/MM/dd"
+                                        placeholderText="Select date range"
+                                    />
                                     <button className='cari' onClick={() => handleGetKlienSearch()} type="button">Cari</button>
                                     <button className='active' onClick={(event) => handleActiveWeek(event)} type="button">Aktifkan</button>
                                 </form>
@@ -286,7 +306,7 @@ const Content_Corner = () => {
                                 <form action="">
                                     <label htmlFor="">id: {id_week}</label>
                                     <label htmlFor="Bulan">Bulan saat ini : {month}</label>                                    
-                                    <label style={{marginRight:"50px"}} htmlFor="Minngu">Minggu Saat ini : {week}</label>
+                                    <label style={{marginRight:"50px"}} htmlFor="Minngu">Minggu Saat ini : {week}</label>                                    
                                     <button className='reset' onClick={(event) => handleResetWeek(event)} type="button">Reset</button>
                                 </form>
                             </>
@@ -319,7 +339,7 @@ const Content_Corner = () => {
                                                 <td style={{ textAlign: 'center' }}>{item.rooms}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.time}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.days}</td>                                                
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item.id_surat)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item.id_surat)} className='B-deleted'>Deleted</button> </td>  
+                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item.id_corner)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item.id_corner)} className='B-deleted'>Deleted</button> </td>  
                                                 </tr>
                                             ))} 
                                         </table>

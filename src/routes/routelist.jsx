@@ -33,6 +33,7 @@ import Detail_Form_IdentityLv1 from "../pages/Admin-Page/identity_detail";
 import Detail_Form_Account from "../pages/Admin-Page/account_detail";
 import Dashboard_Corner from "../pages/E-Corner-Page/dashboard_corner";
 import Klien_form from "../pages/E-Corner-Page/klien-form";
+import Klien_form_Update from "../pages/E-Corner-Page/klien-form-update";
 // import Maintanance from "../pages/maintanance-page/maintanance";
 
 
@@ -292,5 +293,13 @@ export const routeList = [
                 <Klien_form/>
             </RoutedProtected>
         ),
-    },    
+    },
+    {
+        path: "/Dashboard-E-Corner/:level/:role/:role_sp/Update_Klien/:id",
+        element: (
+            <RoutedProtected>
+                <Klien_form_Update/>
+            </RoutedProtected>
+        ),
+    },
 ]

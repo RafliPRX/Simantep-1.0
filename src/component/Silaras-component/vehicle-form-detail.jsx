@@ -10,7 +10,10 @@ const Vehicle_Detail = () => {
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
     const storedFProfile = localStorage.getItem('f_profile');
     const pj = localStorage.getItem('pj');
-    const Status = localStorage.getItem('Status');
+    const [isLoading, setIsLoading] = useState(false);
+    const {role} = useParams();
+    const {role_sp} = useParams();
+    const {level} = useParams();
     console.log(storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
@@ -49,9 +52,12 @@ const Vehicle_Detail = () => {
     const navigate = useNavigate();
     const handleJawab = async (event) => {
       event.preventDefault();
+      setIsLoading(true);
       const payload = {
         jawab: jawab,
-        Approval: status
+        Approval: status,
+        last_sent_to: detail.nama,
+        last_sent_to_id: detail.id_number
       }
       try {
         const response = axios.post(`https://simantepbareta.cloud/API/SILARAS/answer_vehicle.php?id=${param.id}`,payload, {
@@ -61,10 +67,12 @@ const Vehicle_Detail = () => {
       })
       console.log(response.data);
       setTimeout(() => {
-        navigate("/dashboard-laras");
+        setIsLoading(false);
+        navigate(`/dashboard-laras/${level}/${role}/${role_sp}`);
         alert(response.data.message);
       }, 1000);
       } catch (error) {
+        setIsLoading(false);
         console.log(error.response);
         alert(error.response);  
       }
@@ -72,6 +80,9 @@ const Vehicle_Detail = () => {
     return(
         <>
             <div className='main-dashboard'>
+              {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+                <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
+              </div>} 
                 <p>Silaras/Form Peminjaman Kendaraan Dinas</p>
                 <h1>Form Peminjaman <br /> Kendaraan Dinas</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
@@ -85,6 +96,18 @@ const Vehicle_Detail = () => {
                               </tr>
                               <tr>
                                 <td className='input'>{detail.nama}</td>
+                              </tr>
+                              <tr>
+                                <td>NRK/NIP</td>
+                              </tr>
+                              <tr>
+                                <td className='input'>{detail.nrk_nip}</td>
+                              </tr>
+                              <tr>
+                                <td>Jabatan</td>
+                              </tr>
+                              <tr>
+                                <td className='input'>{detail.jabatan}</td>
                               </tr>
                               <tr>
                                 <td>Unit Kerja</td>
@@ -132,7 +155,8 @@ const Vehicle_Detail = () => {
                       </div>
                       </form>
                   </div>
-                  <div style={{display: Status == 4 ? 'flex' : 'none'}}  className='box3'>
+                  {role === "C-03" && (
+                    <div className='box3'>
                     <form action="">
                       <div className='content-f'>
                         <h1>Jawab</h1>
@@ -150,6 +174,8 @@ const Vehicle_Detail = () => {
                       <button onClick={handleJawab} className='submit'>Kirim</button>
                     </form>
                   </div>
+                  )}
+                  
                 </div>
             </div>        
         </>

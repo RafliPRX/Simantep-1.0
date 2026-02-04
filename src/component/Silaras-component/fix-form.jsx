@@ -78,7 +78,6 @@ const Fix_form = () => {
       unit: unit,
       fix: fixing,
       foto: image,
-      f_profile: storedFProfile,
       sent_to: nama_pjSarpras
     };
     try {

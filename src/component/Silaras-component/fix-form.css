@@ -207,6 +207,23 @@
     padding-left: 35px;
     margin-left: 35px;
 }
+.main-dashboard .content-col .box3 .content-f select{
+    width: 1059px;
+    height: 48px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #001274;
+    margin-bottom: 20px;
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: -0.24px;
+    padding-left: 35px;
+    margin-left: 35px;
+}
 .main-dashboard .content-col .box3 .content-f textarea{
     width: 1059px;
     height: 255px;

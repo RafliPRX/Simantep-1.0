@@ -9,7 +9,6 @@ import { useParams } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 
 const storedidAkun = localStorage.getItem('id_akun');
-const storedUsername = localStorage.getItem('id_akun');
 const storeidNumber = localStorage.getItem('id_number');
 console.log('id_akun: ' +storedidAkun);
 console.log('id_number: ' +storeidNumber);
@@ -209,19 +208,7 @@ const Notification_Bhp = (title, options, idFix, id_Notif) => {
 } 
 
 const Homepage = () => {
-    const { level } = useParams();            
-    const [notif_vehicle, setNotif_Vehicle] = useState([]);
-    const getNotif_Vehicle = async () => {
-      try {
-        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_vehicle_byName_Actv.php?nama=${storedUsername}` , {
-          headers: {"Content-Type": "application/json"},
-        });
-        console.log(response.data);
-        setNotif_Vehicle(response.data);
-      } catch (error) {
-        console.log(error);
-      }
-    }    
+    const { level } = useParams();                
     const [identity, setIdentity] = useState([]);
     const [nama, setNama] = useState(identity.nama);
     const [username, setUsername] = useState(identity.username);
@@ -336,6 +323,18 @@ const Homepage = () => {
         console.log(error);
       }
     }
+    const [notif_vehicle, setNotif_Vehicle] = useState([]);
+    const getNotif_Vehicle = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_vehicle_byName_Actv.php?nama=${nama}` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setNotif_Vehicle(response.data);
+      } catch (error) {
+        console.log(error);
+      }
+    }
     useEffect(() => {
       getIdentity();      
       const timeoutId = setTimeout(() => {
@@ -393,17 +392,17 @@ const Homepage = () => {
         if (notif_vehicle.length > 0) {
           notif_vehicle.map((Notif) => {
             if (Notification.permission === "granted") {
-              Notification_Vehicle(Notif.sender, {
+              Notification_Vehicle(Notif.nama, {
                 body: Notif.subjek,
                 icon: `${icon}`
-              }, Notif.id_pinjam, Notif.id_notif);
+              }, Notif.id_vehicle, Notif.id_notif);
             }
           });
         }
         if (notif_bhp.length > 0) {
           notif_bhp.map((Notif) => {
             if (Notification.permission === "granted") {
-              Notification_Bhp(Notif.sender, {
+              Notification_Bhp(Notif.nama, {
                 body: Notif.subjek,
                 icon: `${icon}`
               }, Notif.id_bhp, Notif.id_notif);

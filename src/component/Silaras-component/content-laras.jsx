@@ -79,102 +79,102 @@ const Content_laras = () => {
     const [pagination_vehicle, setPagination_Vehicle] = useState({
       current_page: 1,
     });
-    const getVehicle = async (pageNum) => {
-      if (status === "Pj. Rumah Tanggal dan Aset") {
-        try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pageNum}`)
-          .then((res2) => {
-              console.log(res2.data.Data);
-              const response = res2.data.Data || [];
-
-              const pagination_vehicle = {
-                  total: res2.data.total_records,
-                  current_page: res2.data.current_page,
-                  nextPage: res2.data.nextPage, // Corrected to match the response structure    
-              }
-              setVehicle(response);
-              setPagination_Vehicle(pagination_vehicle);
-              console.log(response);
-          })
-        } catch (error) {
-            console.log(error.response);
-            setVehicle([]);
-        }
-      } else {
-        try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?nama=${storedUsername}&page=${pageNum}`)
-          .then((res2) => {
-              console.log(res2.data.Data);
-              const response = res2.data.Data || [];
-
-              const pagination_vehicle = {
-                  total: res2.data.total_records,
-                  current_page: res2.data.current_page,
-                  nextPage: res2.data.nextPage, // Corrected to match the response structure    
-              }
-              setVehicle(response);
-              setPagination_Vehicle(pagination_vehicle);
-              console.log(response);
-          })
-        } catch (error) {
-            console.log(error.response);
-            setVehicle([]);
-        }
-      }
+    const getVehicle = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?id=${storeidNumber}&page=${pagination_vehicle.current_page}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_dana = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setVehicle(response);
+            setPagination_Vehicle(pagination_dana);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    const [vehicle_sarpras, setVehicle_sarpras] = useState([]);
+    const [pagination_vehicle_sarpras, setPagination_Vehicle_Sarpras] = useState({
+      current_page: 1,
+    });
+    const getVehicle_sarpras = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pagination_vehicle_sarpras.current_page}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_dana = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setVehicle_sarpras(response);
+            setPagination_Vehicle_Sarpras(pagination_dana);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
     useEffect(() => {
-      getVehicle(pagination_vehicle?.current_page);
-    }, [pagination_vehicle?.current_page, status, storedUsername]);
+      getVehicle();
+      getVehicle_sarpras();
+    }, [pagination_vehicle?.current_page, pagination_vehicle_sarpras?.current_page]);
 
     const [request, setRequest] = useState([]);
     const [pagination_request, setPagination_Request] = useState({
       current_page: 1,
     })
-    const getRequest = async (pageNum) => {
-      if (status === "Pj. Rumah Tanggal dan Aset") {
-        try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/request.php?page=${pageNum}`)
-          .then((res3) => {
-              console.log(res3.data.Data);
-              const response = res3.data.Data || [];
-
-              const pagination_request = {
-                  total: res3.data.total_records,
-                  current_page: res3.data.current_page,
-                  nextPage: res3.data.nextPage, // Corrected to match the response structure    
-              }
-              setRequest(response);
-              setPagination_Request(pagination_request);
-              console.log(response);
-          })
-        } catch (error) {
-            console.log(error.response);
-            setRequest([]);
-        }
-      } else {
-        try {
-          axios.get(`https://simantepbareta.cloud/API/SILARAS/request_by_name.php?nama=${storedUsername}&page=${pageNum}`)
-          .then((res3) => {
-              console.log(res3.data.Data);
-              const response = res3.data.Data || [];
-
-              const pagination_request = {
-                  total: res3.data.total_records,
-                  current_page: res3.data.current_page,
-                  nextPage: res3.data.nextPage, // Corrected to match the response structure    
-              }
-              setRequest(response);
-              setPagination_Request(pagination_request);
-              console.log(response);
-          })
-        } catch (error) {
-            console.log(error.response);
-            setRequest([]);
-        }
-      }
-    };
+    const getRequest = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request_by_name.php?id=${storeidNumber}&page=${pagination_request.current_page}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_dana = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setRequest(response);
+            setPagination_Request(pagination_dana);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    const [request_sapras, setRequest_Sapras] = useState([]);
+    const [pagination_request_sapras, setPagination_Request_Sapras] = useState({
+      current_page: 1,
+    })
+    const getRequest_Sapras = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request.php?page=${pagination_request_sapras.current_page}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_dana = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setRequest_Sapras(response);
+            setPagination_Request_Sapras(pagination_dana);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     useEffect(() => {
-      getRequest(pagination_request?.current_page);
+      getRequest();
+      getRequest_Sapras();
     }, [pagination_request?.current_page, status, storedUsername]);
     const handleNext_Fix = () => {
         setPagination_Fix({
@@ -230,7 +230,7 @@ const Content_laras = () => {
         }
       }
       const handleDeleteVehicle = async (id) => {
-
+        setIsLoading(true);
         try {
           const response = await axios.delete(`https://simantepbareta.cloud/API/SILARAS/delete_vehicle.php?id=${id}`, {
             headers: {
@@ -240,13 +240,14 @@ const Content_laras = () => {
           console.log(response.data);
           setTimeout(() => {
             window.location.reload();
+            setIsLoading(false);
           }, 1000);
         } catch (error) {
           console.log(error.response);
         }
       }
       const handleDeleteRequest = async (id) => {
-
+        setIsLoading(true);
         try {
           const response = await axios.delete(`https://simantepbareta.cloud/API/SILARAS/delete_request.php?id=${id}`, {
             headers: {
@@ -256,6 +257,7 @@ const Content_laras = () => {
           console.log(response.data);
           setTimeout(() => {
             window.location.reload();
+            setIsLoading(false);
           }, 500);
         } catch (error) {
           console.log(error.response);
@@ -424,7 +426,7 @@ const Content_laras = () => {
                               {vehicle.map((item, index) => (
                                 <tr key={item.id}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.id}</td>
+                                    <td style={{textAlign:'center'}}>{item.id_vehicle}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     <td style={{textAlign:'center'}}>{item.unit}</td>
                                     <td style={{textAlign:'center'}}>{item.jenis}</td>
@@ -436,8 +438,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><Link to={`/form-kendaraan-dinas/${item.id}`}>Lihat Disini|</Link>
-                                    <br /><div><button onClick={() => handleDeleteVehicle(item.id)}>Hapus</button></div> 
+                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${item.id_vehicle}`}>Lihat Disini|</Link>
+                                    <br /><div><button onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
                                     </td>
                                 </tr>
                           ))}
@@ -447,6 +449,105 @@ const Content_laras = () => {
                             )}                        
                         </div>
                       )}
+                      { role === "C-03" && (
+                        <div className='content'>
+                            <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
+                            <div>
+                                <button onClick={handlePrev_Vehicle}>Previous</button>
+                                <button onClick={handleNext_Vehicle}>Next</button>
+                            </div>
+                            {vehicle_sarpras.length > 0 ? (
+                            <table>
+                                <tr>
+                                    <th style={{textAlign:'center'}}>Nomor</th>
+                                    <th style={{textAlign:'center'}}>id Form</th>
+                                    <th style={{textAlign:'center'}}>Nama</th>
+                                    <th style={{textAlign:'center'}}>Unit Kerja</th>
+                                    <th style={{textAlign:'center'}}>Jenis Peminjaman Kendaraan</th>
+                                    <th style={{textAlign:'center'}}>Tujuan Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Keperluan Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Tanggal Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Jam Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Durasi Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Approval Status</th>
+                                    <th style={{textAlign:'center'}}>Detail</th>
+                                </tr>
+                              {vehicle_sarpras.map((item, index) => (
+                                <tr key={item.id}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.id_vehicle}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama}</td>
+                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    <td style={{textAlign:'center'}}>{item.jenis}</td>
+                                    <td style={{textAlign:'center'}}>{item.tujuan}</td>
+                                    <td style={{textAlign:'center'}}>{item.keperluan}</td>
+                                    <td style={{textAlign:'center'}}>{item.tanggal_pinjam}</td>
+                                    <td style={{textAlign:'center'}}>{item.jam_pinjam}</td>
+                                    <td style={{textAlign:'center'}}>{item.durasi_pinjam}</td>
+                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
+                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${item.id_vehicle}`}>Lihat Disini|</Link>
+                                    <br /><div><button onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
+                                    </td>
+                                </tr>
+                          ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
+                        </div>
+                      )}
+                      { role === "S-03" && (
+                        <div className='content'>
+                            <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
+                            <div>
+                                <button onClick={handlePrev_Vehicle}>Previous</button>
+                                <button onClick={handleNext_Vehicle}>Next</button>
+                            </div>
+                            {vehicle_sarpras.length > 0 ? (
+                            <table>
+                                <tr>
+                                    <th style={{textAlign:'center'}}>Nomor</th>
+                                    <th style={{textAlign:'center'}}>id Form</th>
+                                    <th style={{textAlign:'center'}}>Nama</th>
+                                    <th style={{textAlign:'center'}}>Unit Kerja</th>
+                                    <th style={{textAlign:'center'}}>Jenis Peminjaman Kendaraan</th>
+                                    <th style={{textAlign:'center'}}>Tujuan Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Keperluan Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Tanggal Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Jam Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Durasi Peminjaman</th>
+                                    <th style={{textAlign:'center'}}>Approval Status</th>
+                                    <th style={{textAlign:'center'}}>Detail</th>
+                                </tr>
+                              {vehicle_sarpras.map((item, index) => (
+                                <tr key={item.id}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.id_vehicle}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama}</td>
+                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    <td style={{textAlign:'center'}}>{item.jenis}</td>
+                                    <td style={{textAlign:'center'}}>{item.tujuan}</td>
+                                    <td style={{textAlign:'center'}}>{item.keperluan}</td>
+                                    <td style={{textAlign:'center'}}>{item.tanggal_pinjam}</td>
+                                    <td style={{textAlign:'center'}}>{item.jam_pinjam}</td>
+                                    <td style={{textAlign:'center'}}>{item.durasi_pinjam}</td>
+                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
+                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${item.id_vehicle}`}>Lihat Disini|</Link>
+                                    <br /><div><button onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
+                                    </td>
+                                </tr>
+                          ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
+                        </div>
+                      )}
+                      {(role_sp === "0" && role !== "C-03" ) && (
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
                             <div>
@@ -468,16 +569,16 @@ const Content_laras = () => {
                               {request.map((item, index) => (
                                 <tr key={item.id}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.id}</td>
+                                    <td style={{textAlign:'center'}}>{item.id_bhp}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
-                                    <td style={{textAlign:'center'}}>{item.nrk}</td>
+                                    <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
                                     <td style={{textAlign:'center'}}>{item.unit}</td>
                                     <td style={{textAlign:'center'}}>{item.barang}</td>
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><Link to={`/form-permintaan-barang-baru/${item.id}`}>Lihat Disini|</Link>
-                                    <br /><div><button onClick={() => handleDeleteRequest(item.id)}>Hapus</button></div>
+                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${item.id_bhp}`}>Lihat Disini|</Link>
+                                    <br /><div><button onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
                                 </td>
                             </tr>
                           ))}
@@ -486,6 +587,48 @@ const Content_laras = () => {
                                 <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
                             )}                        
                         </div>
+                      )}
+                      { role === "C-03" && (
+                        <div className='content'>
+                            <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
+                            <div>
+                                <button onClick={handlePrev_Request}>Previous</button>
+                                <button onClick={handleNext_Request}>Next</button>
+                            </div>
+                            {request_sapras.length > 0 ? (
+                            <table>
+                                <tr>
+                                   <th style={{textAlign:'center'}}>Nomor</th>
+                                   <th style={{textAlign:'center'}}>id Form</th>
+                                   <th style={{textAlign:'center'}}>Nama</th>
+                                   <th style={{textAlign:'center'}}>NIP/NRK</th>
+                                   <th style={{textAlign:'center'}}>Unit Kerja</th>
+                                   <th style={{textAlign:'center'}}>Permohonan Barang</th>
+                                   <th style={{textAlign:'center'}}>Approval Status</th>
+                                   <th style={{textAlign:'center'}}>Detail</th>
+                                </tr>
+                              {request_sapras.map((item, index) => (
+                                <tr key={item.id}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.id_bhp}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama}</td>
+                                    <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
+                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    <td style={{textAlign:'center'}}>{item.barang}</td>
+                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
+                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${item.id_bhp}`}>Lihat Disini|</Link>
+                                    <br /><div><button onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
+                                </td>
+                            </tr>
+                          ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
+                        </div>
+                      )}
                     </div>
                 </div>
             </div>

@@ -79,7 +79,7 @@ const Request_Form_Update = () => {
                 <h1>Form Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
                 <div className='content-col'>
-                    <div className='box3' style={{marginTop: '-277px'}}>
+                    <div className='box3'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>

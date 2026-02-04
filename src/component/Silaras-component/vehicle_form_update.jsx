@@ -97,7 +97,7 @@ const Vehicle_Update = () => {
                 <h1>Form Peminjaman <br /> Kendaraan Dinas</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
                 <div className='content-col'>
-                    <div className='box3' style={{marginTop: '-274px'}}>
+                    <div className='box3'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>

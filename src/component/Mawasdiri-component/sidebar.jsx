@@ -108,7 +108,7 @@ const Sidebar = () => {
                             </svg>
                             <p href="Cuti-form">Pengajuan Cuti</p>
                         </div>
-                        <div>
+                        {/* <div>
                           <div className='list' onClick={SubMenuPagi}>
                           <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-sun">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
@@ -123,7 +123,7 @@ const Sidebar = () => {
                           </svg>                          
                           <p>Absensi Pagi</p>
                           </div>                        
-                        </div>
+                        </div> */}
                         {/* {isSubMenuPagi && (
                           <div style={{marginLeft: '30px'}}>
                             <div className='list' onClick={() => handleDivClick('/Absensi-Page')}>
@@ -145,7 +145,7 @@ const Sidebar = () => {
                             </div>
                           </div>
                         )} */}
-                        <div>
+                        {/* <div>
                           <div className='list' onClick={SubMenuMalam}>
                           <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-moon">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -153,7 +153,7 @@ const Sidebar = () => {
                           </svg>                            
                           <p>Absensi Malam</p>
                           </div>                        
-                        </div>
+                        </div> */}
                         {/* {isSubMenuMalam && (
                           <div style={{marginLeft: '30px'}}>
                             <div className='list' onClick={() => handleDivClick('/Absensi-Page-Malam')}>

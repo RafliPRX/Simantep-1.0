@@ -1,9 +1,12 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import './fix-form'
 import axios from 'axios'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import Profile from '../profile'
 const Request = () => {
+    const {level} = useParams();
+    const {role} = useParams();
+    const {role_sp} = useParams();
     const storedUsername = localStorage.getItem('nama');
     const storeNrk = localStorage.getItem('nrk');
     const storedSisaCuti = localStorage.getItem('sisa_cuti');
@@ -14,21 +17,50 @@ const Request = () => {
     console.log(storedFProfile);
     console.log(storeNrk);
     console.log(storedID);
-
-    const [nama, setNama] = useState(storedUsername)
-    const [nrk, setNRK] = useState(storeNrk)
+    const [isLoading, setIsLoading] = useState(false);
+    const storeidNumber = localStorage.getItem('id_number');
     const [unit, setUnit] = useState('')
     const [barang, setBarang] = useState('')
     const navigate = useNavigate();
-
-    const handleChangeNama = (event) => {
-      console.log(event.target.value);
-      setNama(event.target.value);
+    const [identity_pjSarpras, setIdentity_PJSarpras] = useState([]);
+    const [nama_pjSarpras, setNama_PJSarpras] = useState(identity_pjSarpras.nama);
+    const [identity, setIdentity] = useState([]);
+    const [nama, setNama] = useState("");
+    const [jabatan, setJabatan] = useState(identity.jabatan);    
+    const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
+    const getIdentity_pjSarpras = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/get_pjSarpras_Identity.php?kode_role_c=C-03` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setIdentity_PJSarpras(response.data.Data[0]);
+        setNama_PJSarpras(response.data.Data[0].nama);
+          
+      } catch (error) {
+        console.log(error);
+      }
     }
-    const handleChangeNRK = (event) => {
-      console.log(event.target.value);
-      setNRK(event.target.value);
+    const getIdentity = async () => {
+    try {
+      const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
+        headers: {"Content-Type": "application/json"},
+      });
+      console.log(response.data);
+      setIdentity(response.data);
+      setNama(response.data.nama);
+      setJabatan(response.data.jabatan);
+      setNrk_nip(response.data.nrk_nip);
+         
+      } catch (error) {
+        console.log(error);
+      }
     }
+    useEffect(() => {
+      getIdentity();
+      getIdentity_pjSarpras();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
     const handleChangeUnit = (event) => {
       console.log(event.target.value);
       setUnit(event.target.value);
@@ -39,12 +71,14 @@ const Request = () => {
     }
     const hadleRequest = async (event) => {
       event.preventDefault();
+      setIsLoading(true);
       const payload = {
-        nama: nama,
-        nrk: nrk,
+        id_number: storeidNumber,
         unit: unit,
         barang: barang,
-        f_profile: storedFProfile
+        f_profile: storedFProfile,
+        sent_to: nama_pjSarpras,
+        
       };
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_request.php`, payload, {
@@ -54,17 +88,22 @@ const Request = () => {
         });
         console.log(response.data);
         setTimeout(() => {
-          navigate("/dashboard-laras");
+          navigate(`/dashboard-laras/${level}/${role}/${role_sp}`);
           alert(response.data.message);
+          setIsLoading(false);
         }, 1000);
       } catch (error) {
         console.log(error.response);
         alert("error code 105c");
+        setIsLoading(false);
       }
     }
     return(
         <>
             <div className='main-dashboard'>
+              {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+                <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
+              </div>} 
                 <p>Silaras/Form Permohonan BHP & ATK</p>
                 <h1>Form Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
@@ -74,9 +113,11 @@ const Request = () => {
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
                             <label htmlFor="">Nama</label>
-                            <input onChange={handleChangeNama} value={storedUsername} placeholder='Nama' type="text"/>
+                            <input value={nama} placeholder='Nama' type="text"/>
                             <label htmlFor="">NIP/NRK</label>
-                            <input onChange={handleChangeNRK} value={storeNrk} placeholder='NRK' type="text"/>
+                            <input value={nrk_nip} placeholder='NRK' type="text"/>
+                            <label htmlFor="">Jabatan</label>
+                            <input value={jabatan} placeholder='NRK' type="text"/>
                             <label htmlFor="">Unit Kerja</label>
                             <input onChange={handleChangeUnit} placeholder='Unit Kerja' type="text"/>
                             <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>

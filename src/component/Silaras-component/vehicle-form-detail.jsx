@@ -83,99 +83,83 @@ const Vehicle_Detail = () => {
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>} 
-                <p>Silaras/Form Peminjaman Kendaraan Dinas</p>
-                <h1>Form Peminjaman <br /> Kendaraan Dinas</h1>
+                <p>Silaras/Formulir Peminjaman Kendaraan Dinas</p>
+                <h1>Formulir Peminjaman <br /> Kendaraan Dinas</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
                 <div className='content-col'>
-                    <div className='box3'>                      
+                  <div className='box3'>
+                        <form action="">
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
-                            <table>
-                              <tr>
-                                <td>Nama</td>
-                              </tr>
-                              <tr>
-                                <td className='input'>{detail.nama}</td>
-                              </tr>
-                              <tr>
-                                <td>NRK/NIP</td>
-                              </tr>
-                              <tr>
-                                <td className='input'>{detail.nrk_nip}</td>
-                              </tr>
-                              <tr>
-                                <td>Jabatan</td>
-                              </tr>
-                              <tr>
-                                <td className='input'>{detail.jabatan}</td>
-                              </tr>
-                              <tr>
-                                <td>Unit Kerja</td>
-                              </tr>
-                              <tr>
-                                <td className='input'>{detail.unit}</td>
-                              </tr>
-                              <tr>
-                                <td>Jenis Kendaraan Peminjaman</td>
-                              </tr>
-                              <tr>
-                                <td className='input'>{detail.jenis}</td>
-                              </tr>
-                              <tr>
-                                <td>Tanggal Peminjaman</td>
-                              </tr>
-                              <tr>
-                                <td className='input'>{detail.tanggal_pinjam}</td>
-                              </tr>
-                              <tr>
-                                <td>Jam Peminjaman</td>
-                              </tr>
-                              <tr>
-                                <td className='input'>{detail.jam_pinjam}</td>
-                              </tr>
-                              <tr>
-                                <td>Durasi Pinjam</td>
-                              </tr>
-                              <tr>
-                                <td className='input'>{detail.durasi_pinjam}</td>
-                              </tr>
-                            </table>
-                        </div>
-                      <form action="">
-                      <div className='content-f'>
-                          <h1>Jawaban Peminjaman</h1>
-                          <table>
-                            <tr>
-                              <td>Jawaban</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.jawab}</td>
-                            </tr>
-                          </table>
+                            <label htmlFor="">Nama</label>
+                            <input name='nama' value={detail.nama} disabled type="text"/>
+                            <label htmlFor="">NRK/NIP</label>
+                            <input name='nrk' value={detail.nrk_nip} disabled type="text"/>
+                            <label htmlFor="">Jabatan</label>
+                            <input name='jabatan' value={detail.jabatan} disabled type="text"/>
+                            <label htmlFor="">Unit Kerja</label>
+                            <input required value={detail.unit} disabled type="text"/>
+                            <label htmlFor="">Jenis Peminjaman Kendaraan (Pilih Satu)</label>
+                            <div className='check'>
+                                <input checked={detail.jenis === "Roda 2"}  value={"Roda 2"} type="checkbox" name="" id="" />
+                                <label htmlFor="">Roda 2</label>
+                            </div> 
+                            <div className='check'> 
+                                <input checked={detail.jenis === "Roda 4"}  value={"Roda 4"} type="checkbox" name="" id="" />
+                                <label htmlFor="" >Roda 4</label>
+                            </div> 
+                            <div className='check'> 
+                                <input checked={detail.jenis === "Roda 6"}  value={"Roda 6"} type="checkbox" name="" id="" />
+                                <label htmlFor="">Roda 6</label>
+                            </div>
+                            <label htmlFor="">Tanggal Peminjaman</label>
+                            <input required value={detail.tanggal_pinjam} disabled type="date"/>
+                            <label htmlFor="">Jam Peminjaman</label>
+                            <input required value={detail.jam_pinjam} disabled type="time"/>
+                            <label htmlFor="">Durasi Peminjaman</label>
+                            <input required value={detail.durasi_pinjam} disabled type="text"/>
+                        </div>                        
+                        </form>
+                    </div>
+                    {detail.Approval !== "1" && (
+                      <div className='box3'>
+                        <form action="">
+                          <div className='content-f'>
+                            <h1>Jawab</h1>
+                            <label htmlFor="">Jawaban</label>
+                            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                              <input  style={{width: '20px', height: '20px'}} checked={detail.Approval === "3"} type="checkbox" value='3' name="" id="" />
+                              <label htmlFor="">Menerima</label>
+                            </div>
+                            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                              <input style={{width: '20px', height: '20px'}} checked={detail.Approval === "2"} type="checkbox" value='2' name="" id="" />
+                              <label htmlFor="">Menolak</label>
+                            </div>
+                            <textarea value={detail.jawab} disabled name="" id=""></textarea>
+                          </div>
+                        </form>
                       </div>
-                      </form>
-                  </div>
-                  {role === "C-03" && (
-                    <div className='box3'>
-                    <form action="">
-                      <div className='content-f'>
-                        <h1>Jawab</h1>
-                        <label htmlFor="">Jawaban</label>
-                        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                          <input onChange={handleChangeStatus} style={{width: '20px', height: '20px'}} type="checkbox" value='3' name="" id="" />
-                          <label htmlFor="">Menerima</label>
-                        </div>
-                        <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                          <input onChange={handleChangeStatus} style={{width: '20px', height: '20px'}} type="checkbox" value='2' name="" id="" />
-                          <label htmlFor="">Menolak</label>
-                        </div>
-                        <textarea onChange={handleChangeJawaban} name="" id=""></textarea>
+                    )}                      
+                    {role === "C-03" && (
+                      <div className='box3'>
+                        <form action="">
+                          <div className='content-f'>
+                            <h1>Jawab</h1>
+                            <label htmlFor="">Jawaban</label>
+                            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                              <input onChange={handleChangeStatus} style={{width: '20px', height: '20px'}} type="checkbox" value='3' name="" id="" />
+                              <label htmlFor="">Menerima</label>
+                            </div>
+                            <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                              <input onChange={handleChangeStatus} style={{width: '20px', height: '20px'}} type="checkbox" value='2' name="" id="" />
+                              <label htmlFor="">Menolak</label>
+                            </div>
+                            <textarea onChange={handleChangeJawaban} name="" id=""></textarea>
+                          </div>
+                          <button onClick={handleJawab} className='submit'>Kirim</button>
+                        </form>
                       </div>
-                      <button onClick={handleJawab} className='submit'>Kirim</button>
-                    </form>
-                  </div>
-                  )}
-                  
+                    )}                  
                 </div>
             </div>        
         </>

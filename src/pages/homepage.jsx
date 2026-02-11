@@ -5,7 +5,7 @@ import Menu from '../component/Homepage-component/menu';
 import './homepage.css';
 import { useState, useEffect } from 'react';
 import icon from '../assets/icon.png';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 // import { useNavigate } from 'react-router-dom';
 
 const storedidAkun = localStorage.getItem('id_akun');
@@ -415,9 +415,28 @@ const Homepage = () => {
       };
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [notif_lpj, notif_surat, notif_dana, notif_fix, notif_vehicle, notif_bhp]);
-    const scrollClick = () => {
-        console.log('discover');
-        window.scrollTo({top: 1100, behavior: 'smooth'});
+    const navigate = useNavigate();
+    const handleLogout = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
+          headers: {}
+        });
+        setTimeout(() => {
+          localStorage.removeItem('nama');
+          localStorage.removeItem('nrk');
+          localStorage.removeItem('sisa_cuti');
+          localStorage.removeItem('f_profile');
+          localStorage.removeItem('jabatan');
+          localStorage.removeItem('email');
+          localStorage.removeItem('Status');
+          localStorage.removeItem('pj');
+          localStorage.removeItem('Id_user');
+          alert(response.data.message);
+          navigate('/');
+        }, 1000);
+      } catch (error) {
+        console.log(error.response);
+      }
     };
     // const [profile, setProfile] = useState("");
     // const handleChangeProfile = (event) => {
@@ -473,7 +492,7 @@ const Homepage = () => {
     return (
         <>
             <div className='home'>
-                <Banner onDiscoveryClick={scrollClick} />
+                <Banner Logout={handleLogout} />
                 <div className='asset'></div>
                 {level === 'level-1' && 
                   <>
@@ -497,18 +516,18 @@ const Homepage = () => {
                           <input disabled value={jabatan} type="text" />
                         </div>
                         <div className='field'>
-                          <label htmlFor="nama_role">Satuan Kerja</label>
+                          <label htmlFor="nama_role">Unit Kerja</label>
                           <input disabled value={nama_role} type="text" />
                         </div>
                         <div className='field'>
-                          <label htmlFor="kode_role">Kode Satuan Kerja</label>
+                          <label htmlFor="kode_role">Kode Unit Kerja</label>
                           <input disabled value={kode_role} type="text" />
                         </div>
-                        <div className='field'>
+                        <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Akses Level</label>
                           <input disabled value={akses_level} type="text" />
                         </div>
-                        <div className='field'>
+                        <div style={{display:"none"}} className='field'>
                           <label htmlFor="kode_role">Spesial Akses</label>
                           <input disabled value={nama_role_sp} type="text" />
                         </div>  
@@ -543,14 +562,14 @@ const Homepage = () => {
                           <input disabled value={jabatan} type="text" />
                         </div>
                         <div className='field'>
-                          <label htmlFor="nama_role">Satuan Kerja</label>
+                          <label htmlFor="nama_role">Unit Kerja</label>
                           <input disabled value={nama_role_c} type="text" />
                         </div>
                         <div className='field'>
-                          <label htmlFor="kode_role">Kode Satuan Kerja</label>
+                          <label htmlFor="kode_role">Kode Unit Kerja</label>
                           <input disabled value={kode_role_c} type="text" />
                         </div>
-                        <div className='field'>
+                        <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Akses Level</label>
                           <input disabled value={akses_level} type="text" />
                         </div>      
@@ -585,14 +604,14 @@ const Homepage = () => {
                           <input disabled value={jabatan} type="text" />
                         </div>
                         <div className='field'>
-                          <label htmlFor="nama_role">Satuan Kerja</label>
+                          <label htmlFor="nama_role">Unit Kerja</label>
                           <input disabled value={nama_role_b} type="text" />
                         </div>
                         <div className='field'>
-                          <label htmlFor="kode_role">Kode Satuan Kerja</label>
+                          <label htmlFor="kode_role">Kode Unit Kerja</label>
                           <input disabled value={kode_role_b} type="text" />
                         </div>
-                        <div className='field'>
+                        <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Akses Level</label>
                           <input disabled value={akses_level} type="text" />
                         </div>      
@@ -627,14 +646,14 @@ const Homepage = () => {
                           <input disabled value={jabatan} type="text" />
                         </div>
                         <div className='field'>
-                          <label htmlFor="nama_role">Satuan Kerja</label>
+                          <label htmlFor="nama_role">Unit Kerja</label>
                           <input disabled value={nama_role_a} type="text" />
                         </div>
                         <div className='field'>
-                          <label htmlFor="kode_role">Kode Satuan Kerja</label>
+                          <label htmlFor="kode_role">Kode Unit Kerja</label>
                           <input disabled value={kode_role_a} type="text" />
                         </div>
-                        <div className='field'>
+                        <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Akses Level</label>
                           <input disabled value={akses_level} type="text" />
                         </div>      

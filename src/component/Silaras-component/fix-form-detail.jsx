@@ -17,7 +17,7 @@ const Fix_form_Detail = () => {
   console.log(storeNrk);
   console.log(pj);
   console.log(status);
-  const [isLoading, setIsLoading] = useState(false);  
+  const [isLoading, setIsLoading] = useState(false);
   const { role } = useParams();
   const { role_sp } = useParams();
   const { level } = useParams();
@@ -120,67 +120,36 @@ const Fix_form_Detail = () => {
           {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>}  
-              <p>Silaras/Form Perbaikan</p>
-              <h1>Form Perbaikan</h1>
+              <p>Silaras/Formulir Perbaikan</p>
+              <h1>Formulir Perbaikan</h1>
               <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />              
               <div className='content-col'>
                   <div className='box3'>
                       <form action="">
                       <div className='content-f'>
                           <h1>Data Perbaikan</h1>
-                          <table>
-                            <tr>
-                              <td>Nama</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.nama}</td>
-                            </tr>
-                            <tr>
-                              <td>NIP/NRK</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.nrk_nip}</td>
-                            </tr>
-                            <tr>
-                              <td>Units</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.unit}</td>
-                            </tr>
-                            <tr>
-                              <td>Permintaan Perbaikan (Deskripsikan Perbaikan)</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.fix}</td>
-                            </tr>
-                            <tr>
-                              <td>Bukti Gambar</td>
-                            </tr>
-                            <tr>
-                              <td> <img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.foto}`} alt="" /> </td>
-                            </tr>
-                          </table>
+                          <label htmlFor="">Nama</label>
+                          {/* <input type="text" value={param.id} /> */}
+                          <input value={detail.nama} disabled type="text"/>
+                          <label htmlFor="">NIP/NRK</label>
+                          <input value={detail.nrk_nip} disabled type="text"/>
+                          <label htmlFor="">Units</label>
+                          <input value={detail.unit} disabled type="text"/>
+                          <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
+                          <textarea value={detail.fix} disabled name="" id=""></textarea>
+                          <label htmlFor="">Gambar Bukti</label>
+                          <img style={{width: '600px', height: 'auto', borderRadius: '10px', marginLeft: "35px", marginBottom: "10px"}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.foto}`} alt="" />
                       </div>
-                      </form>
+                    </form>
                   </div>
                   <div className='box3'>
                       <form action="">
                       <div className='content-f'>
                           <h1>Jawaban Perbaikan</h1>
-                          <table>
-                            <tr>
-                              <td>Jawaban</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.jawab}</td>
-                            </tr>
-                            <tr>
-                              <td>Bukti Gambar</td>
-                            </tr>
-                            <tr>
-                              <td className='input'><img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.bukti}`} alt="" /></td>
-                            </tr>
-                          </table>
+                            <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
+                            <textarea value={detail.jawab} name="" id=""></textarea>
+                            <label htmlFor="">Bukti Gambar</label>
+                            <img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.bukti}`} alt="" />
                       </div>
                       </form>
                   </div>

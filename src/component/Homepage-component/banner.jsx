@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import './banner.css'
-const Banner = ({onDiscoveryClick}) => {
+const Banner = ({Logout}) => {
     return(
         <>
             <div className='banner'>
@@ -9,9 +9,9 @@ const Banner = ({onDiscoveryClick}) => {
                         <h1>Selamat Datang</h1>
                         <h2>di Sistem Manajemen Terpadu</h2>
                         <h3>Balai Rehabilitasi BNN Tanah Merah</h3>
-                        <button onClick={onDiscoveryClick}>Discover Now</button>
-                        <a href="https://wa.me/6287777165162 ">Need Help ?</a>
-                    </div>                                        
+                        <button onClick={Logout}>Log Out</button>
+                        <a href="https://wa.me/6287777165162 ">Butuh Bantuan ?</a>
+                    </div>
                 </div>
             </div>
         </>

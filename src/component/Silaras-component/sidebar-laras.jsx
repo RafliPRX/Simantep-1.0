@@ -126,7 +126,7 @@ const Sidebar_laras = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-                                <p>Sign Out</p>
+                                <p>Log Out</p>
                             </div>
                         </div>
                     </div>
@@ -137,26 +137,26 @@ const Sidebar_laras = () => {
                     {isSidebarVisible && (
                         <div className='sidebar-2'>
                             <div className='sidebar-col'>
-                                <div className='logo-col' onClick={() => window.location.href = "/Home"}>
+                                <div className='logo-col' onClick={() => window.location.href = `/Home/${level}`}>
                                     <div className='logo'></div>
                                     <h2>SIMANTEP</h2>
                                 </div>
                                 <div className='separator'></div>
                                 <div className='selected'>
-                                    <div id='databasePegawai' className='list' onClick={() => handleDivClick('/dashboard-laras')}>
+                                    <div id='databasePegawai' className='list' onClick={() => handleDivClick(`/dashboard-laras/${level}/${role}/${role_sp}`)}>
                                         <p>Database Sarpras</p>
                                     </div>
-                                    <div id='Pengajuan-Cuti' className='list' onClick={() => handleDivClick('/form-perbaikan')}>
+                                    <div id='Pengajuan-Cuti' className='list' onClick={() => handleDivClick(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan`)}>
                                         <p>Pengajuan Form Layanan Perbaikan</p>
                                     </div>
-                                    <div className='list' onClick={() => handleDivClick('/form-kendaraan-dinas')}>
+                                    <div className='list' onClick={() => handleDivClick(`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas`)}>
                                         <p>Pengajuan Form Peminjaman Kendaraan Dinas</p>
                                     </div>
-                                    <div className='list' onClick={() => handleDivClick('/form-permohonan-BHP-ATK')}>
+                                    <div className='list' onClick={() => handleDivClick(`/dashboard-laras/${level}/${role}/${role_sp}/form-permohonan-BHP-ATK`)}>
                                         <p>Pengajuan Form Permohonan BHP & ATK</p>
                                     </div>
                                     <div className='list' onClick={handleLogout}>
-                                        <p>Sign Out</p>
+                                        <p>Log Out</p>
                                     </div>
                                 </div>
                             </div>

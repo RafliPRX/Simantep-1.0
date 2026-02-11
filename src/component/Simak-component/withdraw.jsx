@@ -188,7 +188,7 @@ const Withdraw = () => {
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>} 
                 <p>Simak/Form Rencana Penarikan Dana</p>
-                <h1>Form Rencana Penarikan <br /> Dana</h1>
+                <h1>Formulir Rencana Penarikan <br /> Dana</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                
                 <div className='content-col'>
                     <div className='box2'>
@@ -218,20 +218,20 @@ const Withdraw = () => {
                                 </div>
                                 {show && ( // Conditionally render based on show state
                                     <div className='check-form'>
-                                        <label htmlFor="">Kebutuhan Akun 521211</label>
+                                        <label htmlFor="">Kebutuhan Akun 521211 (Rp.)</label>
                                         <input onChange={handleChangeAkun211} value={akun211} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522141</label><br /><br />
+                                        <label htmlFor="">Kebutuhan Akun 522141 (Rp.)</label><br /><br />
                                         <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
                                         <label style={{width: '200px'}} htmlFor="">Sewa Tempat</label><br /><br />                  
                                         <input onChange={handleChangeTempat} value={tempat} placeholder='Sewa Tempat' type="text" name="" id="" />
                                         <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
                                         <label style={{width: '200px'}} htmlFor="">Sewa Kendaraan</label><br /><br />                  
                                         <input onChange={handleChangeKendaraan} value={kendaraan} placeholder='Sewa Kendaraan' type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522151</label>
+                                        <label htmlFor="">Kebutuhan Akun 522151 (Rp.)</label>
                                         <input onChange={handleChangeAkun151} value={akun151} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 524113</label>
+                                        <label htmlFor="">Kebutuhan Akun 524113 (Rp.)</label>
                                         <input onChange={handleChangeAkun113} value={akun113} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 524114</label>
+                                        <label htmlFor="">Kebutuhan Akun 524114 (Rp.)</label>
                                         <input onChange={handleChangeAkun114} value={akun114} style={{marginTop: '10px'}} type="text" name="" id="" />
                                     </div>
                                 )}
@@ -244,9 +244,9 @@ const Withdraw = () => {
                                 </div>
                                 {show1 && ( // Conditionally render based on show state
                                     <div className='check-form'>
-                                        <label htmlFor="">Kebutuhan Akun 521211</label>
+                                        <label htmlFor="">Kebutuhan Akun 521211 (Rp.)</label>
                                         <input onChange={handleChangeAkun211} value={akun211} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522191</label>
+                                        <label htmlFor="">Kebutuhan Akun 522191 (Rp.)</label>
                                         <input onChange={handleChangeAkun191} value={akun191} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Keterangan</label>
                                         <input onChange={handleChangeKeterangan} value={keterangan} style={{marginTop: '10px'}} type="text" name="" id="" />
@@ -260,7 +260,7 @@ const Withdraw = () => {
                                 </div>
                                 {show2 && ( // Conditionally render based on show state
                                     <div className='check-form'>
-                                        <label htmlFor="">Total Permintaan Dana</label>
+                                        <label htmlFor="">Total Permintaan Dana (Rp.)</label>
                                         <input onChange={handleChangeDana} value={totaldana} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Metode Pembayaran</label>
                                         <input onChange={handleChangeMetode} value={metode} style={{marginTop: '10px'}} type="text" name="" id="" />

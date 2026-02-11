@@ -228,8 +228,8 @@ const Proposed_Detail = () => {
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>} 
-                <p>Simak/Form Pengajuan Proposal & LPJ</p>
-                <h1>Form Pengajuan Proposal <br /> & LPJ</h1>
+                <p>Simak/Formulir Pengajuan Proposal & LPJ</p>
+                <h1>Formulir Pengajuan Proposal <br /> & LPJ</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />
                 <div className='content-col'>
                     <div className='box2'>

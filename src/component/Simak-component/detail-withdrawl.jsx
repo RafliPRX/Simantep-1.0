@@ -111,8 +111,8 @@ const Detail_Withdraw = () => {
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>} 
-                <p>Simak/Form Rencana Penarikan Dana</p>
-                <h1>Form Rencana Penarikan <br /> Dana</h1>
+                <p>Simak/Formulir Rencana Penarikan Dana</p>
+                <h1>Formulir Rencana Penarikan <br /> Dana</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                
                 <div className='content-col'>
                     <div className='box2'>

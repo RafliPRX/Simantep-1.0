@@ -84,73 +84,101 @@ const Request_Form_Detail = () => {
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>} 
-                <p>Silaras/Form Permohonan BHP & ATK</p>
-                <h1>Form Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
+                <p>Silaras/Formulir Permohonan BHP & ATK</p>
+                <h1>Formulir Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
+                <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" /> 
                 <div className='content-col'>
-                    <div className='box3'>
+                    <div className='box3' id='box_request'>
+                        <form action="">
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
+                            <label htmlFor="">Nama</label>
+                            <input value={request.nama} disabled placeholder='Nama' type="text"/>
+                            <label htmlFor="">NIP/NRK</label>
+                            <input value={request.nrk_nip} disabled placeholder='NRK' type="text"/>
+                            <label htmlFor="">Jabatan</label>
+                            <input value={request.jabatan} disabled placeholder='NRK' type="text"/>
+                            <label htmlFor="">Unit Kerja</label>
+                            <input value={request.unit} disabled placeholder='Unit Kerja' type="text"/>
+                            <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>
                             <table>
-                                <tr>
-                                  <td>Nama</td>
+                              <tbody>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>No</th>
+                                  <th className='barang-jenis'>Nama Barang</th>
+                                  <th className='barang-jumlah'>Jumlah</th>
+                                  <th className='barang-satuan'>Satuan</th>
                                 </tr>
-                                <tr>
-                                  <td className='input'>{request.nama}</td>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>1</th>
+                                  <th className='barang-jenis'><input value={request.barang} disabled type="text" /></th>
+                                  <th className='barang-jumlah'><input value={request.jumlah_barang} disabled type="text" /></th>
+                                  <th className='barang-satuan'><input value={request.satuan} disabled type="text" /></th>
                                 </tr>
-                                <tr>
-                                  <td>NIP/NRK</td>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>2</th>
+                                  <th className='barang-jenis'><input value={request.barang2} disabled type="text" /></th>
+                                  <th className='barang-jumlah'><input value={request.jumlah_barang2} disabled type="text" /></th>
+                                  <th className='barang-satuan'><input value={request.satuan2} disabled type="text" /></th>
+
                                 </tr>
-                                <tr>
-                                  <td className='input'>{request.nrk_nip}</td>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>3</th>
+                                  <th className='barang-jenis'><input value={request.barang3} disabled type="text" /></th>
+                                  <th className='barang-jumlah'><input value={request.jumlah_barang3} disabled type="text" /></th>
+                                  <th className='barang-satuan'><input value={request.satuan3} disabled type="text" /></th>
                                 </tr>
-                                <tr>
-                                  <td>Unit Kerja</td>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>4</th>
+                                  <th className='barang-jenis'><input value={request.barang4} disabled type="text" /></th>
+                                  <th className='barang-jumlah'><input value={request.jumlah_barang4} disabled type="text" /></th>
+                                  <th className='barang-satuan'><input value={request.satuan4} disabled type="text" /></th>
                                 </tr>
-                                <tr>
-                                  <td className='input'>{request.unit}</td>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>5</th>
+                                  <th className='barang-jenis'><input value={request.barang5} disabled type="text" /></th>
+                                  <th className='barang-jumlah'><input value={request.jumlah_barang5} disabled type="text" /></th>
+                                  <th className='barang-satuan'><input value={request.satuan5} disabled type="text" /></th>
                                 </tr>
-                                <tr>
-                                  <td>Permohonan Barang</td>
-                                </tr>
-                                <tr>
-                                  <td className='input'>{request.barang}</td>
-                                </tr>
+                              </tbody>
                             </table>
-                        </div>
-                      <form action="">
-                      <div className='content-f'>
-                          <h1>Jawaban Permintaan</h1>
-                          <table>
-                            <tr>
-                              <td>Jawaban</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{request.jawab}</td>
-                            </tr>
-                          </table>
+                        </div>                       
+                        </form>
+                    </div>
+                    {request.Approval !== "1" && (
+                      <div className='box3'>
+                        <form action="">
+                          <div className='content-f'>
+                            <h1>Jawab</h1>
+                            <label htmlFor="">Approval</label>
+                            <select name="approval" id="approval" disabled value={request.Approval}>
+                              <option value="3">Setuju</option>
+                              <option value="2">Tolak</option>
+                            </select>
+                            <label htmlFor="">Jawaban</label>
+                            <textarea value={request.jawab} disabled name="jawaban" id="jawaban"></textarea>
+                          </div>
+                        </form>
                       </div>
-                      </form>
-                  </div>
-                  {role === "C-03" && (
-                  <div className='box3'>
-                    <form action="">
-                      <div className='content-f'>
-                        <h1>Jawab</h1>
-                        <label htmlFor="">Approval</label>
-                        <select name="approval" id="approval" onChange={handleChangeApproval}>
-                          <option value="">Approval: </option>
-                          <option value="3">Setuju</option>
-                          <option value="2">Tolak</option>
-                        </select>
-                        <label htmlFor="">Jawaban</label>
-                        <textarea onChange={handleChangeJawaban} name="jawaban" id="jawaban"></textarea>
+                    )}                    
+                    {role === "C-03" && (
+                      <div className='box3'>
+                        <form action="">
+                          <div className='content-f'>
+                            <h1>Jawab</h1>
+                            <label htmlFor="">Approval</label>
+                            <select name="approval" id="approval" onChange={handleChangeApproval}>
+                              <option value="3">Setuju</option>
+                              <option value="2">Tolak</option>
+                            </select>
+                            <label htmlFor="">Jawaban</label>
+                            <textarea onChange={handleChangeJawaban} name="jawaban" id="jawaban"></textarea>
+                          </div>
+                          <button onClick={handleJawab} className='submit'>Kirim</button>
+                        </form>
                       </div>
-                      <button onClick={handleJawab} className='submit'>Kirim</button>
-                    </form>
-                  </div>
-                  )}                  
-                </div>
+                    )}                                 
+                </div>                                
             </div>        
         </>
     )

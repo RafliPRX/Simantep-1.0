@@ -25,24 +25,56 @@ const Update_Withdraw = () => {
     function handleShow2(event) {
         setShow2(event.target.checked); // Set show based on checkbox state
     }
+    const [detail, setDetail] = useState([]);
+    const getDetail = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/detail_dana.php?id=${param.id}`, {
+                headers: {}
+            });
+            setDetail(response.data);
+            console.log(response.data);
+            setNama(response.data.nama);
+            setNRK(response.data.nrk_nip);
+            setJabatan(response.data.jabatan);
+            setKegiatan(response.data.nama_kegiatan);
+            setRencana(response.data.rencana_pelaksana);
+            setUnits(response.data.units);
+            setAkun211(response.data.acc_521211);
+            setAkun113(response.data.acc_524113);
+            setAkun151(response.data.acc_522151);
+            setAkun191(response.data.acc_522191);
+            setAkun114(response.data.acc_524114);
+            setKeterangan(response.data.keterangan);
+            setTotalDana(response.data.total_dana_manajemen);
+            setMetode(response.data.metode);
+            setTempat(response.data.acc_522141_tempat);
+            setKendaraan(response.data.acc_522141_kendaraan);
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
+    useEffect(() => {
+        getDetail();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    },[]);
     const [isLoading, setIsLoading] = useState(false);
-    const [nama, setNama] = useState("");
-    const [nrk, setNRK] = useState("");
-    const [jabatan, setJabatan] = useState("");
-    const [kegiatan, setKegiatan] = useState("");
-    const [rencana, setRencana] = useState("");
-    const [units, setUnits] = useState("");
-    const [akun211, setAkun211] = useState("");
-    const [akun113, setAkun113] = useState("");
-    const [akun151, setAkun151] = useState("");
-    const [akun191, setAkun191] = useState("");
-    const [akun114, setAkun114] = useState("");
-    const [keterangan, setKeterangan] = useState("");
-    const [totaldana, setTotalDana] = useState("");
-    const [metode, setMetode] =useState("");
-    const [tempat, setTempat] = useState("");
-    const [kendaraan, setKendaraan] = useState("");
+    const [nama, setNama] = useState(detail.nama || "");
+    const [nrk, setNRK] = useState(detail.nrk_nip || "");
+    const [jabatan, setJabatan] = useState(detail.jabatan || "");
+    const [kegiatan, setKegiatan] = useState(detail.nama_kegiatan || "");
+    const [rencana, setRencana] = useState(detail.rencana_pelaksana || "");
+    const [units, setUnits] = useState(detail.units || "");
+    const [akun211, setAkun211] = useState(detail.acc_521211 || "");
+    const [akun113, setAkun113] = useState(detail.acc_524113 || "");
+    const [akun151, setAkun151] = useState(detail.acc_522151 || "");
+    const [akun191, setAkun191] = useState(detail.acc_522191 || "");
+    const [akun114, setAkun114] = useState(detail.acc_524114 || "");
+    const [keterangan, setKeterangan] = useState(detail.keterangan || "");
+    const [totaldana, setTotalDana] = useState(detail.total_dana_manajemen || "");
+    const [metode, setMetode] =useState(detail.metode || "");
+    const [tempat, setTempat] = useState(detail.acc_522141_tempat || "");
+    const [kendaraan, setKendaraan] = useState(detail.acc_522141_kendaraan || "");
     const handleChangeNama = (event) => {
         setNama(event.target.value);
         console.log(event.target.value);
@@ -144,43 +176,27 @@ const Update_Withdraw = () => {
         } catch (error) {
             console.log(error.response);
         }
-    }
-    const [detail, setDetail] = useState([]);
-    const getDetail = async () => {
-        try {
-            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/detail_dana.php?id=${param.id}`, {
-                headers: {}
-            });
-            setDetail(response.data);
-            console.log(response.data);
-        } catch (error) {
-            console.error(error);
-        }
-    }
-
-    useEffect(() => {
-        getDetail();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    },[]);
+    }    
     return (
         <>
             <div className='main-dashboard'>
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>} 
-                <p>Simak/Form Rencana Penarikan Dana</p>
-                <h1>Form Rencana Penarikan <br /> Dana</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                <div className='content-col'>
+                <p>Simak/Formulir Rencana Penarikan Dana</p>
+                <h1>Mengubah Formulir  Rencana Penarikan <br /> Dana</h1>
+                <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                
+                <div className='content-col'>
                     <div className='box2'>
                         <form action="">
                             <div className='content-f'>
                                 <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} value={nama} placeholder={detail.nama} type="text"/>
+                                <input onChange={handleChangeNama} disabled value={nama} placeholder={detail.nama} type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} value={nrk} placeholder={detail.NRK} type="text"/>
+                                <input onChange={handleChangeNRK} disabled value={nrk} placeholder={detail.NRK} type="text"/>
                                 <label htmlFor="">Jabatan</label>
-                                <input onChange={handleChangeJabatan} value={jabatan} placeholder={detail.jabatan_pj} type="text"/>
+                                <input onChange={handleChangeJabatan} disabled value={jabatan} placeholder={detail.jabatan_pj} type="text"/>
                             </div>
 
                             <div className='content-f'>
@@ -190,14 +206,13 @@ const Update_Withdraw = () => {
                                 <label htmlFor="">Rencana Pelaksanaan</label>
                                 <input onChange={handleChangeRencana} value={rencana} placeholder={detail.rencana_pelaksana} type="date"/>
                                 <div className='check'>
-                                    <input value="Sosial" type="checkbox" id="sosialCheckbox" onChange={(event) => {
+                                    <input value="Sosial" checked={units === "Sosial"} type="checkbox" id="sosialCheckbox" onChange={(event) => {
                                         handleShow(event);
                                         handleChangeUnits(event);
                                     }} />
-                                    <label htmlFor="sosialCheckbox">Sosial</label>
-                                    <label htmlFor="" style={{display: detail.units === 'Sosial' ? 'flex' : 'none'}}>Anda Sebelumnya Milih Sosial</label>
+                                    <label htmlFor="sosialCheckbox">Sosial</label>                                    
                                 </div>
-                                {show && ( // Conditionally render based on show state
+                                {(show || units === "Sosial") && (
                                     <div className='check-form'>
                                         <label htmlFor="">Kebutuhan Akun 521211</label>
                                         <input onChange={handleChangeAkun211} value={akun211} placeholder={detail.acc_521211} style={{marginTop: '10px'}} type="text" name="" id="" />
@@ -217,14 +232,13 @@ const Update_Withdraw = () => {
                                     </div>
                                 )}
                                 <div className='check'>
-                                    <input value="Medis" type="checkbox" id="sosialCheckbox" onChange={(event)=> {
+                                    <input value="Medis" checked={units === "Medis"} type="checkbox" id="sosialCheckbox" onChange={(event)=> {
                                         handleShow1(event);
                                         handleChangeUnits(event);
                                     }}/>
                                     <label htmlFor="sosialCheckbox">Medis</label>
-                                    <label htmlFor="" style={{display: detail.units === 'Medis' ? 'flex' : 'none'}}>Anda Sebelumnya Milih Medis</label>
                                 </div>
-                                {show1 && ( // Conditionally render based on show state
+                                {(show1 || units === "Medis") && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Kebutuhan Akun 521211</label>
                                         <input onChange={handleChangeAkun211} value={akun211} placeholder={detail.acc_521211} style={{marginTop: '10px'}} type="text" name="" id="" />
@@ -235,13 +249,12 @@ const Update_Withdraw = () => {
                                     </div>
                                 )}
                                 <div className='check'>
-                                    <input type="checkbox" value="Manajemen" id="sosialCheckbox" onChange={(event) =>{
+                                    <input type="checkbox" value="Manajemen" checked={units === "Manajemen"} id="sosialCheckbox" onChange={(event) =>{
                                         handleShow2(event)
                                         handleChangeUnits(event);}} />
                                     <label htmlFor="sosialCheckbox">Manajemen</label>
-                                    <label htmlFor="" style={{display: detail.units === 'Manajemen' ? 'flex' : 'none'}}>Anda Sebelumnya Milih Manajemen</label>
                                 </div>
-                                {show2 && ( // Conditionally render based on show state
+                                {(show2 || units === "Manajemen") && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Total Permintaan Dana</label>
                                         <input onChange={handleChangeDana} value={totaldana} placeholder={detail.total_dana} style={{marginTop: '10px'}} type="text" name="" id="" />

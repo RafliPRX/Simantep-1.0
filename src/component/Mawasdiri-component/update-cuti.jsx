@@ -31,16 +31,17 @@ const Cuti_form_Update = () => {
     }
     const [detail, setDetail] = useState({});
     const param = useParams();
-    const [nama, setNama] = useState("");
-    const [nrk, setNrk]  =useState("");
-    const [hp,setHP] = useState("");
-    const [keterangan, setKeterangan] = useState("");
-    const [jenis, setJenis] = useState("");
-    const [cuti_b, setCuti_b] = useState("");
-    const [cuti_d, setCuti_d] = useState("");
-    const [cuti_df, setCuti_df] = useState("");
-    const [alamat, setAlamat] = useState("");
-    const [jabatan, setJabatan] = useState("");
+    const [nama, setNama] = useState(detail.nama);
+    const [nrk, setNrk]  =useState(detail.nrk_nip);
+    const [hp,setHP] = useState(detail.no_hp);
+    const [keterangan, setKeterangan] = useState(detail.Keterangan);
+    const [jenis, setJenis] = useState(detail.jenis_surat);
+    const [cuti_b, setCuti_b] = useState(detail.cuti);
+    const [cuti_d, setCuti_d] = useState(detail.cuti_date);
+    const [cuti_df, setCuti_df] = useState(detail.cuti_date_fin);
+    const [alamat, setAlamat] = useState(detail.alamat);
+    const [jabatan, setJabatan] = useState(detail.jabatan);
+    
     const navigate = useNavigate();
     const handleChangeNama = (event) => {
       setNama(event.target.value);
@@ -88,7 +89,17 @@ const Cuti_form_Update = () => {
                 headers: {}
             });
             console.log(response.data);
-            setDetail(response.data);            
+            setDetail(response.data);
+            setNama(response.data.nama);
+            setNrk(response.data.nrk_nip);
+            setAlamat(response.data.alamat);
+            setHP(response.data.no_hp);
+            setJabatan(response.data.jabatan);
+            setKeterangan(response.data.Keterangan);
+            setJenis(response.data.jenis_surat);
+            setCuti_b(response.data.cuti);
+            setCuti_d(response.data.cuti_date);
+            setCuti_df(response.data.cuti_date_fin);
         } catch (error) {
             console.log(error.response);
         }
@@ -135,7 +146,7 @@ const Cuti_form_Update = () => {
                     <span style={{position: 'absolute', top : '1500px'}} className="load-cuti"></span>
                 </div>}   
                 <p>Mawasdiri/Pengajuan Cuti</p>
-                <h1>Pengajuan Cuti</h1>
+                <h1>Mengubah Pengajuan Cuti</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="mawasdiri" />
                 <div className='content-col'>
                     <div className='box1'>
@@ -143,61 +154,59 @@ const Cuti_form_Update = () => {
                         <div className='content-f'>
                             <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} placeholder={detail.nama} type="text"/>
+                                <input onChange={handleChangeNama} disabled value={nama} type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} placeholder={detail.nrk} type="text"/>
-                                <label htmlFor="">No.Handphone</label>
-                                <input onChange={handleChnageHp} placeholder={detail.no_hp} type="text"/>
+                                <input onChange={handleChangeNRK} disabled value={nrk} type="text"/>                                
                                 <label htmlFor="">Jabatan</label>
-                                <input onChange={handleChangeJabatan} placeholder={detail.jabatan} type="text"/>
+                                <input onChange={handleChangeJabatan} disabled value={jabatan} type="text"/>
+                                <label htmlFor="">No.Handphone</label>
+                                <input onChange={handleChnageHp} value={hp} type="text"/>
                         </div>
                         <div className='content-tx'>
                             <h1>Alasan Cuti/Sakit/Izin</h1>
-                            <textarea onChange={handleChangeKeterangan} placeholder={detail.keterangan} name="" id=""></textarea>
+                            <textarea onChange={handleChangeKeterangan} value={keterangan} name="" id=""></textarea>
                         </div>
                         <div className='content-tx'>
                             <h1>Alamat Selama Cuti/Sakit/Izin</h1>
-                            <textarea onChange={handleChangeAlamat} placeholder={detail.alamat} name="" id=""></textarea>
+                            <textarea onChange={handleChangeAlamat} value={alamat} name="" id=""></textarea>
                         </div>
                         <div className='content-f'>
                             <h1>Jenis Surat</h1>
                             <div className='check'>
-                                <input type="checkbox" name="" id="" value="Cuti" onChange={(event) => {
+                                <input type="checkbox" name="" id="" value="Cuti" checked={jenis==="Cuti"} onChange={(event) => {
                                     Cuti(event);
                                     handleChangeJenis(event)
-                                }}/>
-                                <label htmlFor="">Cuti Kontrak</label>
-                                <label style={{display: detail.jenis_surat === "Cuti" ? "flex" : "none", width: 'auto'}} htmlFor="">anda sebelumnya memilih cuti kontrak</label>
+                                }}/>                               
+                                <label htmlFor="">Cuti Kontrak</label>                                
                             </div>
                             {cuti && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Cuti Kontrak</label>
-                                        <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeCuti} value={cuti_b} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Dimulai Dari Tanggal</label>
                                         <div className='inp-date'>
-                                          <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDate} value={cuti_d} style={{marginTop: '10px'}} type="date" name="" id="" />
                                           <label className='text' htmlFor="">s.d</label>
-                                          <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDateFin} value={cuti_df} style={{marginTop: '10px'}} type="date" name="" id="" />
                                         </div>
                                     </div>
                                 )}
                             <div className='check'>
-                                <input type="checkbox" value="Cuti Alasan Penting" name="" id="" onClick={(event) => {
+                                <input type="checkbox" value="Cuti Alasan Penting" checked={jenis==="Cuti Alasan Penting"} name="" id="" onClick={(event) => {
                                     Cuti_alasan_penting(event);
                                     handleChangeJenis(event);
                                     }}/>
-                                <label htmlFor="">Cuti Alasan Penting</label>
-                                <label style={{display: detail.jenis_surat === "Cuti Alasan Penting" ? "flex" : "none", width: 'auto', marginLeft: '85px'}} htmlFor="">Anda Sebelumnya Memilih Cuti Alasan Penting</label>
+                                <label htmlFor="">Cuti Alasan Penting</label>                                
                             </div>
-                            {show_imp && ( // Conditionally render based on show state
+                            {(show_imp || jenis=== "Cuti Alasan Penting") && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Cuti Alasan Penting</label>
-                                        <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeCuti} value={cuti_b} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Dimulai Dari Tanggal</label>
                                         <div className='inp-date'>
-                                          <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDate} value={cuti_d} style={{marginTop: '10px'}} type="date" name="" id="" />
                                           <label className='text' htmlFor="">s.d</label>
-                                          <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDateFin} value={cuti_df} style={{marginTop: '10px'}} type="date" name="" id="" />
                                         </div>
                                     </div>
                                 )}
@@ -206,18 +215,17 @@ const Cuti_form_Update = () => {
                                     Hamil(event);
                                     handleChangeJenis(event);
                                     }}/>
-                                <label htmlFor="">Cuti Hamil</label>
-                                <label style={{display: detail.jenis_surat === "Cuti Hamil" ? "flex" : "none", width: 'auto'}} htmlFor="">Anda Sebelumnya Memilih Cuti Hamil</label>
+                                <label htmlFor="">Cuti Hamil</label>                                
                             </div>
                             {hamil && ( // Conditionally render based on show state
                                     <div className='check-form'>
                                         <label htmlFor="">Hamil</label>
-                                        <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        <input onChange={handleChangeCuti} value={cuti_b} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Dimulai Dari Tanggal</label>
                                         <div className='inp-date'>
-                                          <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDate} value={cuti_d} style={{marginTop: '10px'}} type="date" name="" id="" />
                                           <label className='text' htmlFor="">s.d</label>
-                                          <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                          <input onChange={handleChangeCutiDateFin} value={cuti_df} style={{marginTop: '10px'}} type="date" name="" id="" />
                                         </div>
                                     </div>
                                 )}
@@ -226,18 +234,17 @@ const Cuti_form_Update = () => {
                                     Sakit(event);
                                     handleChangeJenis(event);
                                 }}/>
-                                <label htmlFor="">Cuti Sakit</label>
-                                <label style={{display: detail.jenis_surat === "Sakit" ? "flex" : "none", width: 'auto'}} htmlFor="">Anda Sebelumnya Memilih Sakit</label>
+                                <label htmlFor="">Cuti Sakit</label>                               
                             </div>
                             {sakit && ( // Conditionally render based on show state
                                   <div className='check-form'>
                                       <label htmlFor="">Sakit</label>
-                                      <input onChange={handleChangeCuti} placeholder={detail.cuti} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                      <input onChange={handleChangeCuti} value={cuti_b} style={{marginTop: '10px'}} type="text" name="" id="" />
                                       <label htmlFor="">Dimulai Dari Tanggal</label>
                                       <div className='inp-date'>
-                                        <input onChange={handleChangeCutiDate} placeholder={detail.cuti_date} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                        <input onChange={handleChangeCutiDate} value={cuti_d} style={{marginTop: '10px'}} type="date" name="" id="" />
                                         <label className='text' htmlFor="">s.d</label>
-                                        <input onChange={handleChangeCutiDateFin} placeholder={detail.cuti_date_fin} style={{marginTop: '10px'}} type="date" name="" id="" />
+                                        <input onChange={handleChangeCutiDateFin} value={cuti_df} style={{marginTop: '10px'}} type="date" name="" id="" />
                                       </div>
                                       <label htmlFor="">Bukti Surat Sakit</label>
                                       <input placeholder={detail.gambar} style={{marginTop: '10px', paddingTop: '10px'}} type="File" name="" id="" />

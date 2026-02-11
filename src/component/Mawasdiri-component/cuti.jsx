@@ -196,7 +196,7 @@ const Cuti_form = () => {
                 </div>
                 {cuti && (
                   <div className='check-form'>
-                    <label htmlFor="">Cuti Kontrak</label>
+                    <label htmlFor="">Cuti Kontrak (Hari)</label>
                     <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
                     <div className='inp-date'>
                       <label htmlFor="">Dimulai Dari Tanggal</label>
@@ -217,7 +217,7 @@ const Cuti_form = () => {
                 </div>
                 {cuti_imp && (
                   <div className='check-form'>
-                    <label htmlFor="">Cuti Alasan Penting</label>
+                    <label htmlFor="">Cuti Alasan Penting (Hari)</label>
                     <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
                     <div className='inp-date'>
                       <label htmlFor="">Dimulai Dari Tanggal</label>
@@ -234,11 +234,11 @@ const Cuti_form = () => {
                 )}
                 <div className='check'>
                   <input type="checkbox" value='Cuti Hamil' onChange={(event) => { Hamil(event); handleChangeJenis(event); }} />
-                  <label htmlFor="">Cuti Hamil</label>
+                  <label htmlFor="">Cuti Hamil </label>
                 </div>
                 {hamil && (
                   <div className='check-form'>
-                    <label htmlFor="">Cuti Hamil</label>
+                    <label htmlFor="">Cuti Hamil (Hari)</label>
                     <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
                     <div className='inp-date'>
                       <label htmlFor="">Dimulai Dari Tanggal</label>
@@ -259,7 +259,7 @@ const Cuti_form = () => {
                 </div>
                 {sakit && (
                   <div className='check-form'>
-                    <label htmlFor="">Sakit</label>
+                    <label htmlFor="">Sakit(Hari)</label>
                     <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
                     <div className='inp-date'>
                       <label htmlFor="">Dimulai Dari Tanggal</label>

@@ -19,8 +19,22 @@ const Request = () => {
     console.log(storedID);
     const [isLoading, setIsLoading] = useState(false);
     const storeidNumber = localStorage.getItem('id_number');
-    const [unit, setUnit] = useState('')
-    const [barang, setBarang] = useState('')
+    const [unit, setUnit] = useState('');
+    const [barang, setBarang] = useState('');
+    const [barang2, setBarang2] = useState('');
+    const [barang3, setBarang3] = useState('');
+    const [barang4, setBarang4] = useState('');
+    const [barang5, setBarang5] = useState('');
+    const [jumlah_barang, setJumlahBarang] = useState('');
+    const [jumlah_barang2, setJumlahBarang2] = useState('');
+    const [jumlah_barang3, setJumlahBarang3] = useState('');
+    const [jumlah_barang4, setJumlahBarang4] = useState('');
+    const [jumlah_barang5, setJumlahBarang5] = useState('');
+    const [satuan_barang, setSatuanBarang] = useState('');
+    const [satuan_barang2, setSatuanBarang2] = useState('');
+    const [satuan_barang3, setSatuanBarang3] = useState('');
+    const [satuan_barang4, setSatuanBarang4] = useState('');
+    const [satuan_barang5, setSatuanBarang5] = useState('');
     const navigate = useNavigate();
     const [identity_pjSarpras, setIdentity_PJSarpras] = useState([]);
     const [nama_pjSarpras, setNama_PJSarpras] = useState(identity_pjSarpras.nama);
@@ -69,6 +83,62 @@ const Request = () => {
       console.log(event.target.value);
       setBarang(event.target.value);
     }
+    const handleChangeJumlahBarang = (event) => {
+      console.log(event.target.value);
+      setJumlahBarang(event.target.value);
+    }
+    const handleChangeSatuanBarang = (event) => {
+      console.log(event.target.value);
+      setSatuanBarang(event.target.value);
+    }
+    const handleChangeBarang2 = (event) => {
+      console.log(event.target.value);
+      setBarang2(event.target.value);
+    }
+    const handleChangeJumlahBarang2 = (event) => {
+      console.log(event.target.value);
+      setJumlahBarang2(event.target.value);
+    }
+    const handleChangeSatuanBarang2 = (event) => {
+      console.log(event.target.value);
+      setSatuanBarang2(event.target.value);
+    }
+    const handleChangeBarang3 = (event) => {
+      console.log(event.target.value);
+      setBarang3(event.target.value);
+    }
+    const handleChangeJumlahBarang3 = (event) => {
+      console.log(event.target.value);
+      setJumlahBarang3(event.target.value);
+    }
+    const handleChangeSatuanBarang3 = (event) => {
+      console.log(event.target.value);
+      setSatuanBarang3(event.target.value);
+    }
+    const handleChangeBarang4 = (event) => {
+      console.log(event.target.value);
+      setBarang4(event.target.value);
+    }
+    const handleChangeJumlahBarang4 = (event) => {
+      console.log(event.target.value);
+      setJumlahBarang4(event.target.value);
+    }
+    const handleChangeSatuanBarang4 = (event) => {
+      console.log(event.target.value);
+      setSatuanBarang4(event.target.value);
+    }
+    const handleChangeBarang5 = (event) => {
+      console.log(event.target.value);
+      setBarang5(event.target.value);
+    }
+    const handleChangeJumlahBarang5 = (event) => {
+      console.log(event.target.value);
+      setJumlahBarang5(event.target.value);
+    }
+    const handleChangeSatuanBarang5 = (event) => {
+      console.log(event.target.value);
+      setSatuanBarang5(event.target.value);
+    }
     const hadleRequest = async (event) => {
       event.preventDefault();
       setIsLoading(true);
@@ -76,9 +146,21 @@ const Request = () => {
         id_number: storeidNumber,
         unit: unit,
         barang: barang,
-        f_profile: storedFProfile,
+        jumlah_barang: jumlah_barang,
+        satuan: satuan_barang,
+        barang2: barang2,
+        jumlah_barang2: jumlah_barang2,
+        satuan2: satuan_barang2,
+        barang3: barang3,
+        jumlah_barang3: jumlah_barang3,
+        satuan3: satuan_barang3,
+        barang4: barang4,
+        jumlah_barang4: jumlah_barang4,
+        satuan4: satuan_barang4,
+        barang5: barang5,
+        jumlah_barang5: jumlah_barang5,
+        satuan5: satuan_barang5,
         sent_to: nama_pjSarpras,
-        
       };
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_request.php`, payload, {
@@ -104,8 +186,8 @@ const Request = () => {
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>} 
-                <p>Silaras/Form Permohonan BHP & ATK</p>
-                <h1>Form Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
+                <p>Silaras/Formulir Permohonan BHP & ATK</p>
+                <h1>Formulir Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
                 <div className='content-col'>
                     <div className='box3' id='box_request'>
@@ -121,7 +203,47 @@ const Request = () => {
                             <label htmlFor="">Unit Kerja</label>
                             <input onChange={handleChangeUnit} placeholder='Unit Kerja' type="text"/>
                             <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>
-                            <textarea onChange={handleChangeBarang} placeholder='Isi Disini' name="" id=""></textarea>
+                            <table>
+                              <tbody>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>No</th>
+                                  <th className='barang-jenis'>Nama Barang</th>
+                                  <th className='barang-jumlah'>Jumlah</th>
+                                  <th className='barang-satuan'>Satuan</th>
+                                </tr>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>1</th>
+                                  <th className='barang-jenis'><input onChange={handleChangeBarang} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang} type="text" /></th>
+                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang} type="text" /></th>
+                                </tr>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>2</th>
+                                  <th className='barang-jenis'><input onChange={handleChangeBarang2} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang2} type="text" /></th>
+                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang2} type="text" /></th>
+
+                                </tr>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>3</th>
+                                  <th className='barang-jenis'><input onChange={handleChangeBarang3} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang3} type="text" /></th>
+                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang3} type="text" /></th>
+                                </tr>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>4</th>
+                                  <th className='barang-jenis'><input onChange={handleChangeBarang4} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang4} type="text" /></th>
+                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang4} type="text" /></th>
+                                </tr>
+                                <tr className='barang-bar'>
+                                  <th className='barang-no'>5</th>
+                                  <th className='barang-jenis'><input onChange={handleChangeBarang5} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang5} type="text" /></th>
+                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang5} type="text" /></th>
+                                </tr>
+                              </tbody>
+                            </table>
                         </div>
                         <button onClick={hadleRequest} className='submit' type="submit">Submit</button>
                         </form>

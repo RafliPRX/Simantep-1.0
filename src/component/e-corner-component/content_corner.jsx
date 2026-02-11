@@ -9,6 +9,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 // import * as xlsx from 'xlsx';
 import DatePicker from 'react-datepicker';
 import { format } from 'date-fns';
+import left from '../../assets/left.svg';
+import right from '../../assets/right.svg';
 
 const Content_Corner = () => {
     const [isLoading, setIsLoading] = useState(false);
@@ -219,8 +221,8 @@ const Content_Corner = () => {
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
         </div>} 
-        <p>Mawasdiri/Dashboard</p>
-            <h1>Main Dashboard</h1>
+        <p>Mawasdiri/Database Klien E-Corner</p>
+            <h1>E-Corner</h1>
             <Profile nama={nama} feature="mawasdiri" />
             <div className='content-col'>
                 <div className='box-m'>
@@ -228,9 +230,10 @@ const Content_Corner = () => {
                         {role_sp ==='S-06' && 
                             <>
                                 <h1>Database Klien E-Corner</h1>                        
-                                <div>
-                                    <button onClick={handlePrev_Corner}>Previous</button>
-                                    <button onClick={handleNext_Corner}>Next</button>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Corner}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_e_corner.currentPage} />
+                                    <button className='right' onClick={handleNext_Corner}><img src={right} alt="" /></button>
                                 </div>
                                 {e_corner.length > 0 ? (
                                     <table>

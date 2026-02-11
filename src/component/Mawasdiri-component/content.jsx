@@ -2,6 +2,8 @@ import './content.css';
 import green from '../../assets/green.svg';
 import red from '../../assets/decline.svg';
 import white from '../../assets/unread.svg';
+import left from '../../assets/left.svg';
+import right from '../../assets/right.svg';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
@@ -250,8 +252,8 @@ const Content = () => {
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
         </div>} 
-        <p>Mawasdiri/Dashboard</p>
-            <h1>Main Dashboard</h1>
+        <p>Mawasdiri/Database Pegawai</p>
+            <h1>Manajemen Pegawai Berbasis Kinerja Mandiri</h1>
             <Profile nama={nama} feature="mawasdiri" />
             <div className='content-col'>
                 <div className='box-m'>
@@ -261,9 +263,10 @@ const Content = () => {
                                 {role_sp === '0' ? (
                                     <>
                                         <h1>Progress Pengajuan Surat</h1>
-                                        <div>
-                                            <button onClick={handlePrev_Surat}>Previous</button>
-                                            <button onClick={handleNext_Surat}>Next</button>
+                                        <div className='pagination'>
+                                            <button className='left' onClick={handlePrev_Surat}><img src={left} alt="" /></button>
+                                            <input className='page-number' type="text" value={pagination_surat.currentPage} />
+                                            <button className='right' onClick={handleNext_Surat}><img src={right} alt="" /></button>
                                         </div>
                                         {surat.length > 0 ? (
                                             <table>
@@ -307,9 +310,10 @@ const Content = () => {
                                 ) : role_sp === 'S-02' ? (
                                     <>
                                         <h1>Progress Pengajuan Surat</h1>
-                                        <div>
-                                            <button onClick={handlePrev_Surat_sp}>Previous</button>
-                                            <button onClick={handleNext_Surat_sp}>Next</button>
+                                        <div className='pagination'>
+                                            <button className='left' onClick={handlePrev_Surat_sp}><img src={left} alt="" /></button>
+                                            <input className='page-number' type="text" value={pagination_surat_role_sp.currentPage} />
+                                            <button className='right' onClick={handleNext_Surat_sp}><img src={right} alt="" /></button>
                                         </div>
                                         {surat_role_sp.length > 0 ? (
                                             <table>
@@ -360,10 +364,11 @@ const Content = () => {
                         )}
                         {level ==='level-2' && 
                             <>
-                                <h1>Progress Pengajuan Surat</h1>                        
-                                <div>
-                                    <button onClick={handlePrev_Surat_c}>Previous</button>
-                                    <button onClick={handleNext_Surat_c}>Next</button>
+                                <h1>Progress Pengajuan Surat</h1>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Surat_c}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_surat_role_c.currentPage} />
+                                    <button className='right' onClick={handleNext_Surat_c}><img src={right} alt="" /></button>
                                 </div>
                                 {surat_role_c.length > 0 ? (
                                     <table>
@@ -407,10 +412,11 @@ const Content = () => {
                         }
                         {level ==='level-3' && 
                             <>
-                                <h1>Progress Pengajuan Surat</h1>                        
-                                <div>
-                                    <button onClick={handlePrev_Surat_b}>Previous</button>
-                                    <button onClick={handleNext_Surat_b}>Next</button>
+                                <h1>Progress Pengajuan Surat</h1>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Surat_b}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_surat_role_b.currentPage} />
+                                    <button className='right' onClick={handleNext_Surat_b}><img src={right} alt="" /></button>
                                 </div>
                                 {surat_role_b.length > 0 ? (
                                     <table>
@@ -454,10 +460,11 @@ const Content = () => {
                         }
                         {level ==='level-4' && 
                             <>
-                                <h1>Progress Pengajuan Surat</h1>                        
-                                <div>
-                                    <button onClick={handlePrev_Surat_a}>Previous</button>
-                                    <button onClick={handleNext_Surat_a}>Next</button>
+                                <h1>Progress Pengajuan Surat</h1>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Surat_a}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
+                                    <button className='right' onClick={handleNext_Surat_a}><img src={right} alt="" /></button>
                                 </div>
                                 {surat_role_a.length > 0 ? (
                                     <table>

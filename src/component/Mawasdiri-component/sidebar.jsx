@@ -10,15 +10,15 @@ const Sidebar = () => {
     const { level } = useParams();
     const { role } = useParams();
     const { role_sp } = useParams();
-    const [isSubMenuPagi, setIsSupMenuPagi] = useState(false);
-    function SubMenuPagi() {
-      setIsSupMenuPagi(!isSubMenuPagi);
-    }
+    // const [isSubMenuPagi, setIsSupMenuPagi] = useState(false);
+    // function SubMenuPagi() {
+    //   setIsSupMenuPagi(!isSubMenuPagi);
+    // }
 
-    const [isSubMenuMalam, setIsSupMenuMalam] = useState(false);
-    function SubMenuMalam() {
-      setIsSupMenuMalam(!isSubMenuMalam);
-    }
+    // const [isSubMenuMalam, setIsSupMenuMalam] = useState(false);
+    // function SubMenuMalam() {
+    //   setIsSupMenuMalam(!isSubMenuMalam);
+    // }
     const handleDivClick = (href) => {
         window.location.href = href;
     };
@@ -186,9 +186,8 @@ const Sidebar = () => {
                                 </clipPath>
                               </defs>
                             </svg>
-                            <p>Sign Out</p>
+                            <p>Log Out</p>
                         </div>
-
                         </div>
                     </div>
                 </div>
@@ -198,7 +197,7 @@ const Sidebar = () => {
                     {isSidebarVisible && (
                         <div className='sidebar'>
                             <div className='sidebar-col'>
-                                <div className='logo-col' onClick={() => window.location.href = "/Home"}>
+                                <div className='logo-col' onClick={() => window.location.href = `/Home/${level}`}>
                                     <div className='logo'></div>
                                     <h2 >SIMANTEP</h2>
                                 </div>
@@ -206,7 +205,7 @@ const Sidebar = () => {
                                 <div className='selected'>
                             <div id='databasePegawai'
                              className='list'
-                             onClick={() => handleDivClick('/Dashboard')}>
+                             onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}`)}>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <g clipPath="url(#clip0_5_1280)">
                                       <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
@@ -221,7 +220,7 @@ const Sidebar = () => {
                               </div>
                               <div id='Pengajuan-Cuti' 
                                    className='list'
-                                   onClick={() => handleDivClick('/Cuti-form')}>
+                                   onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Cuti-form`)}>
                                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                                     <g clipPath="url(#clip0_5_1280)">
                                       <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
@@ -234,7 +233,7 @@ const Sidebar = () => {
                                   </svg>
                                   <p href="Cuti-form">Pengajuan Cuti</p>
                               </div>
-                              <div>
+                          {/* <div>
                           <div className='list' onClick={SubMenuPagi}>
                           <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-sun">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
@@ -249,7 +248,7 @@ const Sidebar = () => {
                           </svg>                          
                           <p>Absensi Pagi</p>
                           </div>                        
-                        </div>
+                        </div> */}
                         {/* {isSubMenuPagi && (
                           <div style={{marginLeft: '30px'}}>
                             <div className='list' onClick={() => handleDivClick('/Absensi-Page')}>
@@ -271,7 +270,7 @@ const Sidebar = () => {
                             </div>
                           </div>
                           )} */}
-                          <div>
+                          {/* <div>
                             <div className='list' onClick={SubMenuMalam}>
                             <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-moon">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -279,7 +278,7 @@ const Sidebar = () => {
                             </svg>                            
                             <p>Absensi Malam</p>
                             </div>                        
-                          </div>
+                          </div> */}
                           {/* {isSubMenuMalam && (
                             <div style={{marginLeft: '30px'}}>
                               <div className='list' onClick={() => handleDivClick('/Absensi-Page-Malam')}>
@@ -312,7 +311,7 @@ const Sidebar = () => {
                                       </clipPath>
                                     </defs>
                                   </svg>
-                                  <p>Sign Out</p>
+                                  <p>Log Out</p>
                               </div>
                                 </div>
                             </div>

@@ -6,6 +6,8 @@ import { Link, useParams } from 'react-router-dom';
 import green from '../../assets/green.svg'
 import white from '../../assets/unread.svg'
 import red from '../../assets/decline.svg'
+import left from '../../assets/left.svg'
+import right from '../../assets/right.svg'
 import Profile from '../profile';
 const Content_laras = () => {
     const storedUsername = localStorage.getItem('nama');
@@ -188,6 +190,18 @@ const Content_laras = () => {
             current_page: pagination_fix?.current_page - 1
         })
     }
+    const handleNext_Fix_Sarpras = () => {
+        setPagination_Fix_Sarpras({
+            ...pagination_fix_sarpras,
+            current_page: pagination_fix_sarpras?.current_page + 1
+        })
+    }
+    const handlePrev_Fix_Sarpras = () => {
+      setPagination_Fix_Sarpras({
+            ...pagination_fix_sarpras,
+            current_page: pagination_fix_sarpras?.current_page - 1
+        })
+    }
     const handleNext_Vehicle = () => {
       setPagination_Vehicle({
           ...pagination_vehicle,
@@ -200,6 +214,18 @@ const Content_laras = () => {
             current_page: pagination_vehicle?.current_page - 1
         })
     }
+    const handleNext_Vehicle_Sarpras = () => {
+      setPagination_Vehicle_Sarpras({
+          ...pagination_vehicle_sarpras,
+          current_page: pagination_vehicle_sarpras?.current_page + 1
+      })
+    }
+    const handlePrev_Vehicle_Sarpras = () => {
+      setPagination_Vehicle_Sarpras({
+            ...pagination_vehicle_sarpras,
+            current_page: pagination_vehicle_sarpras?.current_page - 1
+        })
+    }
     const handleNext_Request = () => {
       setPagination_Request({
           ...pagination_request,
@@ -210,6 +236,19 @@ const Content_laras = () => {
       setPagination_Request({
             ...pagination_request,
             current_page: pagination_request?.current_page - 1
+        })
+    }
+
+    const handleNext_Request_Sarpras = () => {
+      setPagination_Request_Sapras({
+          ...pagination_request_sapras,
+          current_page: pagination_request_sapras?.current_page + 1
+      })
+    }
+    const handlePrev_Request_Sarpras = () => {
+      setPagination_Request_Sapras({
+            ...pagination_request_sapras,
+            current_page: pagination_request_sapras?.current_page - 1
         })
     }
     const handleDeleteFix = async (id) => {
@@ -269,17 +308,18 @@ const Content_laras = () => {
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>}
-                <p>Silaras/Dashboard</p>
-                <h1>Main Dashboard</h1>
+                <p>Silaras/Database Sarpras</p>
+                <h1>Sistem Layanan sarana dan Prasarana</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />
                 <div className='content-col'>
                     <div className='box'>
                       { (role_sp === "0" && role !== "C-03" ) &&
                         <div className='content'>
                             <h1>Daftar Form Perbaikan</h1>
-                            <div>
-                                <button onClick={handlePrev_Fix}>Previous</button>
-                                <button onClick={handleNext_Fix}>Next</button>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Fix}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_fix?.current_page} />
+                                <button className='right' onClick={handleNext_Fix}><img src={right} alt="" /></button>
                             </div>
                             {fix.length > 0 ? (
                             <table>
@@ -319,9 +359,10 @@ const Content_laras = () => {
                       {role === "C-03" && (
                         <div className='content'>
                             <h1>Daftar Form Perbaikan</h1>
-                            <div>
-                                <button onClick={handlePrev_Fix}>Previous</button>
-                                <button onClick={handleNext_Fix}>Next</button>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
+                                <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
                             </div>
                             {fix_sarpras.length > 0 ? (
                             <table>
@@ -361,9 +402,10 @@ const Content_laras = () => {
                       {role_sp === "S-03" && (
                         <div className='content'>
                             <h1>Daftar Form Perbaikan</h1>
-                            <div>
-                                <button onClick={handlePrev_Fix}>Previous</button>
-                                <button onClick={handleNext_Fix}>Next</button>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
+                                <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
                             </div>
                             {fix_sarpras.length > 0 ? (
                             <table>
@@ -403,9 +445,10 @@ const Content_laras = () => {
                       { (role_sp === "0" && role !== "C-03" ) &&(
                           <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
-                            <div>
-                                <button onClick={handlePrev_Vehicle}>Previous</button>
-                                <button onClick={handleNext_Vehicle}>Next</button>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Vehicle}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
+                                <button className='right' onClick={handleNext_Vehicle}><img src={right} alt="" /></button>
                             </div>
                             {vehicle.length > 0 ? (
                             <table>
@@ -452,9 +495,10 @@ const Content_laras = () => {
                       { role === "C-03" && (
                         <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
-                            <div>
-                                <button onClick={handlePrev_Vehicle}>Previous</button>
-                                <button onClick={handleNext_Vehicle}>Next</button>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
+                                <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
                             </div>
                             {vehicle_sarpras.length > 0 ? (
                             <table>
@@ -501,9 +545,10 @@ const Content_laras = () => {
                       { role === "S-03" && (
                         <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
-                            <div>
-                                <button onClick={handlePrev_Vehicle}>Previous</button>
-                                <button onClick={handleNext_Vehicle}>Next</button>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
+                                <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
                             </div>
                             {vehicle_sarpras.length > 0 ? (
                             <table>
@@ -550,9 +595,10 @@ const Content_laras = () => {
                       {(role_sp === "0" && role !== "C-03" ) && (
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
-                            <div>
-                                <button onClick={handlePrev_Request}>Previous</button>
-                                <button onClick={handleNext_Request}>Next</button>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Request}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_request?.current_page} />
+                                <button className='right' onClick={handleNext_Request}><img src={right} alt="" /></button>
                             </div>
                             {request.length > 0 ? (
                             <table>
@@ -591,9 +637,52 @@ const Content_laras = () => {
                       { role === "C-03" && (
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
-                            <div>
-                                <button onClick={handlePrev_Request}>Previous</button>
-                                <button onClick={handleNext_Request}>Next</button>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />
+                                <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
+                            </div>
+                            {request_sapras.length > 0 ? (
+                            <table>
+                                <tr>
+                                   <th style={{textAlign:'center'}}>Nomor</th>
+                                   <th style={{textAlign:'center'}}>id Form</th>
+                                   <th style={{textAlign:'center'}}>Nama</th>
+                                   <th style={{textAlign:'center'}}>NIP/NRK</th>
+                                   <th style={{textAlign:'center'}}>Unit Kerja</th>
+                                   <th style={{textAlign:'center'}}>Permohonan Barang</th>
+                                   <th style={{textAlign:'center'}}>Approval Status</th>
+                                   <th style={{textAlign:'center'}}>Detail</th>
+                                </tr>
+                              {request_sapras.map((item, index) => (
+                                <tr key={item.id}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.id_bhp}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama}</td>
+                                    <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
+                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    <td style={{textAlign:'center'}}>{item.barang}</td>
+                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
+                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${item.id_bhp}`}>Lihat Disini|</Link>
+                                    <br /><div><button onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
+                                </td>
+                            </tr>
+                          ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
+                        </div>
+                      )}
+                      { role_sp === "S-03" && (
+                        <div className='content'>
+                            <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />
+                                <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
                             </div>
                             {request_sapras.length > 0 ? (
                             <table>

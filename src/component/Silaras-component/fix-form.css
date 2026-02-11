@@ -151,8 +151,14 @@
     width: 390px;
 }
 .main-dashboard .content-col .box3 .content-f table{
-    width: 1059px;
-    display: flex;
+    width: 100%;    
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: -0.24px;
     flex-direction: column;
     align-items: flex-start;
     padding-left: 35px;
@@ -174,7 +180,7 @@
     margin-left: 38px;
     width: 390px;
 }
-.main-dashboard .content-col .box3 .content-f table tr .input{
+.main-dashboard .content-col .box3 .content-f table tr input{
     width: 1059px;
     height: 48px;
     flex-shrink: 0;
@@ -189,6 +195,98 @@
     line-height: 20px; /* 166.667% */
     letter-spacing: -0.24px;
     padding-left: 35px;
+}
+.main-dashboard .content-col .box3 .content-f table tr td {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.main-dashboard .content-col .box3 .content-f table .barang-bar{
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+.main-dashboard .content-col .box3 .content-f table .barang-bar .barang-no{
+    width: 20%;
+    height: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+.main-dashboard .content-col .box3 .content-f table .barang-bar .barang-jenis{
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+}
+.main-dashboard .content-col .box3 .content-f table .barang-bar .barang-jenis input{    
+    margin-top: 5%;
+    width: 70%;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #001274;
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: -0.24px;
+    padding-left: 35px;
+    margin-left: 35px;
+    align-items: center;
+}
+.main-dashboard .content-col .box3 .content-f table .barang-bar .barang-jumlah input{    
+    margin-top: 15%;
+    width: 15%;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #001274;
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: -0.24px;
+    padding-left: 35px;
+    margin-left: 35px;
+    align-items: center;
+    margin-right: 35px;
+}
+.main-dashboard .content-col .box3 .content-f table .barang-bar .barang-jumlah{
+    display: flex;
+    width: 15%;
+    align-items: center;
+    justify-content: center;
+}
+.main-dashboard .content-col .box3 .content-f table .barang-bar .barang-satuan{
+    display: flex;
+    width: 50%;
+    align-items: center;
+    justify-content: center;
+}
+.main-dashboard .content-col .box3 .content-f table .barang-bar .barang-satuan input{    
+    margin-top: 5%;
+    width: 70%;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #001274;
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 15px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: -0.24px;
+    padding-left: 35px;
+    margin-left: 35px;
+    align-items: center;
 }
 .main-dashboard .content-col .box3 .content-f input{
     width: 1059px;

@@ -81,6 +81,53 @@
     margin-left: 20px;
     padding-bottom: 45px;
 }
+.main-dashboard .content-col .box-s .content .pagination{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    margin-left: 75px;
+    margin-bottom: 15px;
+}
+.main-dashboard .content-col .box-s .content .pagination .left,
+.main-dashboard .content-col .box-s .content .pagination .right{
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #001274;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+.main-dashboard .content-col .box-s .content .pagination .page-number{
+    width: 60px;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 16px;
+    background: #001274;
+    border: none;
+    color: #FFF;
+    font-family: "poppins";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px; /* 150% */
+    text-align: center;
+}
+.main-dashboard .content-col .box-s .content .pagination .left:hover{
+    scale: 1.1;
+    background: #002185;
+    transition: all 0.3s ease-in-out;
+}
+.main-dashboard .content-col .box-s .content .pagination .right:hover{
+    background: #002185;
+    scale: 1.1;
+    transition: all 0.3s ease-in-out;
+}
 .main-dashboard .content-col .box-s .content h1{
     color: #FFF;
     font-family: "poppins";

@@ -133,8 +133,8 @@ const Vehicle = () => {
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>} 
-                <p>Silaras/Form Peminjaman Kendaraan Dinas</p>
-                <h1>Form Peminjaman <br className='break' /> Kendaraan Dinas</h1>
+                <p>Silaras/Formulir Peminjaman Kendaraan Dinas</p>
+                <h1>Formulir Peminjaman <br className='break' /> Kendaraan Dinas</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
                 <div className='content-col'>
                     <div className='box3' id='box_vehicle'>
@@ -170,7 +170,7 @@ const Vehicle = () => {
                             <input onChange={handleChangeTanggal} placeholder='Tanggal Peminjaman' type="date"/>
                             <label htmlFor="">Jam Peminjaman</label>
                             <input onChange={handleChangeJam} placeholder='Jam Peminjaman' type="time"/>
-                            <label htmlFor="">Durasi Peminjaman</label>
+                            <label htmlFor="">Durasi Peminjaman (Jam)</label>
                             <input onChange={handleChangeDurasi} placeholder='Durasi Peminjaman' type="text"/>
                         </div>
                         <button onClick={handleRequest} className='submit' type="submit">Submit</button>

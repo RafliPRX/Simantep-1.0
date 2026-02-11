@@ -3,6 +3,8 @@ import './content-simak.css'
 import green from '../../assets/green.svg'
 import white from '../../assets/unread.svg'
 import red from '../../assets/decline.svg'
+import left from '../../assets/left.svg'
+import right from '../../assets/right.svg'
 import { useEffect, useState } from 'react'
 import axios from 'axios';
 import { Link, useParams } from 'react-router-dom';
@@ -232,12 +234,26 @@ const Content_simak = () => {
         })
         console.log(pagination_dana?.current_page);
     }
+    const handleNext_Dana_MoneyMaker = () => {
+        setPagination_Dana_moneymaker({
+            ...pagination_dana_moneymaker,
+            current_page: pagination_dana_moneymaker?.current_page + 1
+        })
+        console.log(pagination_dana_moneymaker?.current_page);
+    }
     const handlePrev_Dana = () => {
         setPagination_Dana({
             ...pagination_dana,
             current_page: pagination_dana?.current_page - 1
         })
         console.log(pagination_dana?.current_page);
+    }
+    const handlePrev_Dana_MoneyMaker = () => {
+        setPagination_Dana_moneymaker({
+            ...pagination_dana_moneymaker,
+            current_page: pagination_dana_moneymaker?.current_page - 1
+        })
+        console.log(pagination_dana_moneymaker?.current_page);
     }
     const handleDeleteRPD = async (id) => {
         setIsLoading(true);
@@ -281,17 +297,18 @@ const Content_simak = () => {
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>}
-                <p>Simak/Dashboard</p>
-                <h1>Main Dashboard</h1>
+                <p>Simak/Database Keuangan</p>
+                <h1>Sistem Manajemen Keuangan</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />
                 <div className='content-col'>
                     <div className='box-s'>
                         {(role !== "C-04" || role_sp === "S-02") && (
                         <div className='content'>
-                            <h1>Cek Progress Pengajuan RPD</h1>
-                            <div>
-                                <button onClick={handlePrev_Dana}>Previous</button>
-                                <button onClick={handleNext_Dana}>Next</button>
+                            <h1>Progress Pengajuan RPD</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Dana}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_dana?.current_page} />
+                                <button className='right' onClick={handleNext_Dana}><img src={right} alt="" /></button>
                             </div>
                             {dana.length > 0 ? (
                             <table>
@@ -322,10 +339,11 @@ const Content_simak = () => {
                         )}
                         {role === "C-04" && (
                             <div className='content'>
-                            <h1>Cek Progress Pengajuan RPD</h1>
-                            <div>
-                                <button onClick={handlePrev_Dana}>Previous</button>
-                                <button onClick={handleNext_Dana}>Next</button>
+                            <h1>Progress Pengajuan RPD</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Dana_MoneyMaker}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_dana_moneymaker?.current_page} />
+                                <button className='right' onClick={handleNext_Dana_MoneyMaker}><img src={right} alt="" /></button>
                             </div>
                             {dana_moneymaker.length > 0 ? (
                             <table>
@@ -356,10 +374,11 @@ const Content_simak = () => {
                         )}
                         {(role_sp === "0" || role !== "C-04") && (
                           <div className='content'>
-                            <h1>Cek Progress Pengajuan Proposal dan LPJ</h1>
-                            <div>
-                                <button onClick={handlePrev_Lpj}>Previous</button>
-                                <button onClick={handleNext_Lpj}>Next</button>
+                            <h1>Progress Pengajuan Proposal dan LPJ</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Lpj}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_lpj?.current_page} />
+                                <button className='right' onClick={handleNext_Lpj}><img src={right} alt="" /></button>
                             </div>
                             {lpj.length > 0 ? (
                             <table>
@@ -411,10 +430,11 @@ const Content_simak = () => {
                         )}
                         {role_sp === "S-02" && (
                           <div className='content'>
-                            <h1>Cek Progress Pengajuan Proposal dan LPJ</h1>
-                            <div>
-                                <button onClick={handlePrev_Lpj}>Previous</button>
-                                <button onClick={handleNext_Lpj}>Next</button>
+                            <h1>Progress Pengajuan Proposal dan LPJ</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Lpj_keuangan}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_lpj?.current_page} />
+                                <button className='right' onClick={handleNext_Lpj_keuangan}><img src={right} alt="" /></button>
                             </div>
                             {lpj_keuangan.length > 0 ? (
                             <table>
@@ -466,10 +486,11 @@ const Content_simak = () => {
                         )}
                         {role === "C-04" && (
                           <div className='content'>
-                            <h1>Cek Progress Pengajuan Proposal dan LPJ Keuangan</h1>
-                            <div>
-                                <button onClick={handlePrev_Lpj_keuangan}>Previous</button>
-                                <button onClick={handleNext_Lpj_keuangan}>Next</button>
+                            <h1>Progress Pengajuan Proposal dan LPJ Keuangan</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Lpj_keuangan}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_lpj_keuangan?.current_page} />
+                                <button className='right' onClick={handleNext_Lpj_keuangan}><img src={right} alt="" /></button>
                             </div>
 
                             {lpj_keuangan.length > 0 ? (
@@ -522,12 +543,12 @@ const Content_simak = () => {
                         )}
                         { role === "A-02" && (
                           <div className='content'>
-                            <h1>Cek Progress Pengajuan Proposal dan LPJ Kasubag</h1>
-                            <div>
-                                <button onClick={handlePrev_Lpj_lv1}>Previous</button>
-                                <button onClick={handleNext_Lpj_lv1}>Next</button>
-                            </div>
-                            
+                            <h1>Progress Pengajuan Proposal dan LPJ Kasubag</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Lpj_lv1}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_lpj_lv1?.current_page} />
+                                <button className='right' onClick={handleNext_Lpj_lv1}><img src={right} alt="" /></button>
+                            </div>                            
                             {lpj_lv1.length > 0 ? (
                             <table>
                                 <tr>
@@ -578,10 +599,11 @@ const Content_simak = () => {
                         )}
                         { role === "A-01" && (
                           <div className='content'>
-                            <h1>Cek Progress Pengajuan Proposal dan LPJ Kepala Balai</h1>
-                            <div>
-                                <button onClick={handlePrev_Lpj_lv2}>Previous</button>
-                                <button onClick={handleNext_Lpj_lv2}>Next</button>
+                            <h1>Progress Pengajuan Proposal dan LPJ Kepala Balai</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Lpj_lv2}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_lpj_lv2?.current_page} />
+                                <button className='right' onClick={handleNext_Lpj_lv2}><img src={right} alt="" /></button>
                             </div>                            
                             {lpj_lv2.length > 0 ? (
                             <table>

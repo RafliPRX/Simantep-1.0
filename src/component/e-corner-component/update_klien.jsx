@@ -150,8 +150,8 @@ const Update_Klien_form = () => {
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '1500px'}} className="load-cuti"></span>
         </div>} 
-        <p>E-Corner/Menambah Klien E-Corner</p>
-        <h1>Menambah Klien E-Corner</h1>
+        <p>E-Corner/Mengubah Klien E-Corner</p>
+        <h1>Mengubah Klien E-Corner</h1>
         <Profile nama={nama} feature="mawasdiri" />
         <div className='content-col'>
           <div className='box1'>

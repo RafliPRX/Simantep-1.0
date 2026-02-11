@@ -103,8 +103,8 @@ const Fix_form = () => {
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>} 
-                <p>Silaras/Form Perbaikan</p>
-                <h1>Form Perbaikan</h1>
+                <p>Silaras/Formulir Perbaikan</p>
+                <h1>Formulir Perbaikan</h1>
                 <Profile nama={nama} f_profile={storedFProfile} feature="silaras" />                 
                 <div className='content-col'>
                     <div className='box3'>
@@ -117,7 +117,7 @@ const Fix_form = () => {
                             <input  value={nrk_nip} placeholder='NRK' type="text"/>
                             <label htmlFor="">Jabatan</label>
                             <input  value={jabatan} placeholder='Jabatan' type="text"/>
-                            <label htmlFor="">Units</label>
+                            <label htmlFor="">Unit Kerja</label>
                             <input onChange={handleChangeUnits} value={unit} placeholder='Units' type="text"/>
                             <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
                             <textarea onChange={handleChangeFixing} value={fixing} placeholder='Permintaan Perbaikan' name="" id=""></textarea>

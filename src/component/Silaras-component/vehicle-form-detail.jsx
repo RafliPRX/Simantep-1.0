@@ -34,9 +34,23 @@ const Vehicle_Detail = () => {
         console.log(error.response);
       }
     };
-
+    const [notif_detail, setNotifDetail] = useState({});
+    console.log("id notif yang diambil: "+notif_detail?.id_notif);
+    
+    const getNotifDetail = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_vehicle_byReceive.php?id=${param.id}`, {
+                headers: {}
+            });
+            setNotifDetail(response.data[0]);
+            console.log(response.data[0]);
+        } catch (error) {
+            console.error(error);
+        }
+  }
     useEffect(() => {
       getDetail();
+      getNotifDetail();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     const [jawab, setJawaban] = useState('');
@@ -50,9 +64,20 @@ const Vehicle_Detail = () => {
       console.log(event.target.value);
     }
     const navigate = useNavigate();
-    const handleJawab = async (event) => {
-      event.preventDefault();
-      setIsLoading(true);
+    const mark_Vehicle = async (idNotif) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_vehicle.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const handleJawabVehicle = async () => {
       const payload = {
         jawab: jawab,
         Approval: status,
@@ -67,15 +92,25 @@ const Vehicle_Detail = () => {
       })
       console.log(response.data);
       setTimeout(() => {
-        setIsLoading(false);
         navigate(`/dashboard-laras/${level}/${role}/${role_sp}`);
         alert(response.data.message);
       }, 1000);
       } catch (error) {
-        setIsLoading(false);
         console.log(error.response);
         alert(error.response);  
       }
+    }
+    const handleJawab = async (notifId ,event) => {
+      event.preventDefault();
+      try {
+        setIsLoading(true);
+        await mark_Vehicle(notifId);
+        await handleJawabVehicle();
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);
+      }      
     }
     return(
         <>
@@ -93,6 +128,7 @@ const Vehicle_Detail = () => {
                             <h1>Data Diri Peminjam</h1>
                             <label htmlFor="">Nama</label>
                             <input name='nama' value={detail.nama} disabled type="text"/>
+                            <input value={notif_detail.id_notif} type="hidden"/>
                             <label htmlFor="">NRK/NIP</label>
                             <input name='nrk' value={detail.nrk_nip} disabled type="text"/>
                             <label htmlFor="">Jabatan</label>
@@ -156,7 +192,7 @@ const Vehicle_Detail = () => {
                             </div>
                             <textarea onChange={handleChangeJawaban} name="" id=""></textarea>
                           </div>
-                          <button onClick={handleJawab} className='submit'>Kirim</button>
+                          <button onClick={(e)=>handleJawab(notif_detail.id_notif,e)} className='submit'>Kirim</button>
                         </form>
                       </div>
                     )}                  

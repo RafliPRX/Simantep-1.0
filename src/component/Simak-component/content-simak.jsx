@@ -372,8 +372,8 @@ const Content_simak = () => {
                             )}                        
                         </div>
                         )}
-                        {(role_sp === "0" || role !== "C-04") && (
-                          <div className='content'>
+                        {(role_sp !== "S-04" && role !== "C-04") && (
+                          <div style={{display: role === 'A-02' || role === "A-01" ? "none" : ""}} className='content'>
                             <h1>Progress Pengajuan Proposal dan LPJ</h1>
                             <div className='pagination'>
                                 <button className='left' onClick={handlePrev_Lpj}><img src={left} alt="" /></button>
@@ -484,7 +484,7 @@ const Content_simak = () => {
                             )}
                           </div>
                         )}
-                        {role === "C-04" && (
+                        {(role === "C-04" || role_sp === "S-04") && (
                           <div className='content'>
                             <h1>Progress Pengajuan Proposal dan LPJ Keuangan</h1>
                             <div className='pagination'>

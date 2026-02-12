@@ -8,9 +8,10 @@ const Login = () => {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');    
     const navigate = useNavigate();
-
+    const [isLoading, setIsLoading] = useState(false);
     const handleLogin_ppnpn = async (event) => {
         event.preventDefault();
+        setIsLoading(true);
         const payload = {
             username: username,
             pass: password 
@@ -28,13 +29,15 @@ const Login = () => {
             const akses = String(response.data.data.akses_level ?? '');
             const route = `/Home/level-${akses}`;
             setTimeout(() => {
-                alert("Welcome " + response.data.data.nama);
+                alert("Welcome " + response.data.data.nama);                
                 navigate(route, { replace: true });
                 window.location.reload();
+                setIsLoading(false);
             }, 1000);
         } catch (error) {
             console.log(error.response);
             alert("Login failed. Please check your credentials.");
+            setIsLoading(false);
         }
     }
     const handleChangeUsername = (event) => {
@@ -64,6 +67,9 @@ const Login = () => {
     return(
         <>
         <div className='login'>
+        {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+            <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
+        </div>}
             <div className='col'>
                 <div className='form-col'>
                     <form>

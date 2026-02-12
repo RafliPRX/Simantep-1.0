@@ -226,6 +226,7 @@ const Homepage = () => {
     const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
     const [akses_level, setAkses_level] = useState(identity.akses_level);
     const [role_sp, setRole_sp] = useState(identity.role_sp);
+    const [isLoading, setIsLoading] = useState(false);
     const getIdentity = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
@@ -417,6 +418,7 @@ const Homepage = () => {
     }, [notif_lpj, notif_surat, notif_dana, notif_fix, notif_vehicle, notif_bhp]);
     const navigate = useNavigate();
     const handleLogout = async () => {
+      setIsLoading(true);
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
           headers: {}
@@ -433,6 +435,7 @@ const Homepage = () => {
           localStorage.removeItem('Id_user');
           alert(response.data.message);
           navigate('/');
+          setIsLoading(false);
         }, 1000);
       } catch (error) {
         console.log(error.response);
@@ -492,6 +495,9 @@ const Homepage = () => {
     return (
         <>
             <div className='home'>
+              {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+                <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
+              </div>}
                 <Banner Logout={handleLogout} />
                 <div className='asset'></div>
                 {level === 'level-1' && 

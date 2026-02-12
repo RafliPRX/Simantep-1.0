@@ -41,7 +41,7 @@ const Cuti_Detail_Form = () => {
     const [id_Notif, setId_notif] = useState(null);
     const getNotif_new = async () => {
       try {
-            const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/notifikasi_surat_by_Receive.php?nama=${storedUsername}`, {
+            const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/notifikasi_surat_by_Receive.php?id=${param.id}`, {
                 headers: {}
             });
             console.log(response.data);
@@ -172,7 +172,7 @@ const Cuti_Detail_Form = () => {
         }
     }
     const [pdf, setPdf] = useState("");
-    const handleChangePDF = (event) => {
+    const handleChangePDF = (event) => {+
       setPdf(event.target.files[0]);
       console.log(event.target.files[0]);
     }
@@ -207,8 +207,8 @@ const Cuti_Detail_Form = () => {
     const handlePj = async (idNotif, event) => {
       event.preventDefault();
       try {
-        setIsLoading(true);
-        await mark(idNotif, event);
+        setIsLoading(true);        
+        await mark(idNotif, event); 
         await handlePjJawab(event);
       } catch (error) {
         console.log(error);        
@@ -220,7 +220,7 @@ const Cuti_Detail_Form = () => {
       event.preventDefault();
       try {
         setIsLoading(true);
-        await mark(idNotif, event);
+        await mark(idNotif, event); 
         await handleKepegJawab(event);
       } catch (error) {
         console.log(error);        
@@ -395,8 +395,7 @@ const Cuti_Detail_Form = () => {
                               </div>
                               <label htmlFor="">Alasan (Jika Menunda)</label>
                               <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
-                              <button onClick={(e) => handlePj(id_Notif, e)} className='submit' disabled={!id_Notif}>Kirim</button>
-                              {!id_Notif && <p style={{color: 'red', marginTop: '8px'}}>No Data</p>}
+                              <button onClick={(e) => handlePj(id_Notif, e)} className='submit'>Kirim</button>
                           </form>
                         </div>
                         }
@@ -414,11 +413,10 @@ const Cuti_Detail_Form = () => {
                               </div>
                               <label htmlFor="">Alasan (Jika Menunda)</label>
                               <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
-                              <button onClick={(e) => handleKepeg(id_Notif, e)} className='submit' disabled={!id_Notif}>Kirim</button>
-                              {!id_Notif && <p style={{color: 'red', marginTop: '8px'}}>No Data</p>}
+                              <button onClick={(e) => handleKepeg(id_Notif, e)} className='submit'>Kirim</button>
                           </form>
                         </div>
-                        }                        
+                        }
                         {level === "level-4" &&
                         <div className='content-f'>
                           <h1>Jawab Kasubag</h1>
@@ -433,8 +431,7 @@ const Cuti_Detail_Form = () => {
                               </div>
                               <label htmlFor="">Alasan (Jika Menunda)</label>
                               <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
-                              <button onClick={(e) => handleKasubag(id_Notif, e)} className='submit' disabled={!id_Notif}>Kirim</button>
-                              {!id_Notif && <p style={{color: 'red', marginTop: '8px'}}>No Data</p>}
+                              <button onClick={(e) => handleKasubag(id_Notif, e)} className='submit'>Kirim</button>
                               <input type="hidden" value={id_Notif || ''} name="" id="" />
                           </form>
                         </div>
@@ -445,8 +442,7 @@ const Cuti_Detail_Form = () => {
                               <form action="">
                                 <label htmlFor="">Upload File</label>
                                 <input type="file" onChange={handleChangePDF} name="" id="" />
-                                <button onClick={(e) => handleSp(id_Notif, e)} className='submit' disabled={!id_Notif}>Kirim</button>
-                                {!id_Notif && <p style={{color: 'red', marginTop: '8px'}}>No Data</p>}
+                                <button onClick={(e) => handleSp(id_Notif, e)} className='submit'>Kirim</button>
                             </form>
                           </div>
                         }                        

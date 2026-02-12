@@ -251,7 +251,7 @@ const Content = () => {
         <div className='main-dashboard'>
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
-        </div>} 
+        </div>}
         <p>Mawasdiri/Database Pegawai</p>
             <h1>Manajemen Pegawai Berbasis Kinerja Mandiri</h1>
             <Profile nama={nama} feature="mawasdiri" />

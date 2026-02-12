@@ -142,7 +142,8 @@ const Fix_form_Detail = () => {
                       </div>
                     </form>
                   </div>
-                  <div className='box3'>
+                  {detail.Approval === "3" && (
+                    <div className='box3'>
                       <form action="">
                       <div className='content-f'>
                           <h1>Jawaban Perbaikan</h1>
@@ -152,7 +153,8 @@ const Fix_form_Detail = () => {
                             <img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.bukti}`} alt="" />
                       </div>
                       </form>
-                  </div>
+                    </div>
+                  )}                  
                   {role === 'C-03' && (
                   <div className='box3'>
                     <form action="">

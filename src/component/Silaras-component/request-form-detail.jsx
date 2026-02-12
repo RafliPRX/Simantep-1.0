@@ -35,8 +35,23 @@ const Request_Form_Detail = () => {
             console.log(error.response);
         }
     };
+    const [notif_detail, setNotifDetail] = useState({});    
+    console.log("id notif yang diambil: "+notif_detail?.id_notif);
+    
+    const getNotifDetail = async () => {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_bhp_byReceive.php?id=${param.id}`, {
+                headers: {}
+            });
+            setNotifDetail(response.data[0]);
+            console.log(response.data[0]);
+        } catch (error) {
+          console.error(error);
+        }
+    }
     useEffect(() => {
         getRequest();
+        getNotifDetail();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
@@ -51,8 +66,20 @@ const Request_Form_Detail = () => {
       console.log(event.target.value);
     }
     const navigate = useNavigate();
-    const handleJawab = async (event) => {
-      event.preventDefault();
+    const mark_Bhp = async (idNotif) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_bhp.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const handleJawab_sarpras = async () => {
       setIsLoading(true);
       const payload = {
         jawab: jawab,
@@ -78,6 +105,18 @@ const Request_Form_Detail = () => {
         setIsLoading(false);
       }
     }
+    const handleJawab = async (notifId ,event) => {      
+      event.preventDefault();
+      setIsLoading(true);
+      try {
+        await mark_Bhp(notifId);
+        await handleJawab_sarpras();
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }      
+    }
     return(
         <>
             <div className='main-dashboard'>
@@ -94,6 +133,7 @@ const Request_Form_Detail = () => {
                             <h1>Data Diri Peminjam</h1>
                             <label htmlFor="">Nama</label>
                             <input value={request.nama} disabled placeholder='Nama' type="text"/>
+                            <input type="text" value={notif_detail.id_notif} name="" id="" />
                             <label htmlFor="">NIP/NRK</label>
                             <input value={request.nrk_nip} disabled placeholder='NRK' type="text"/>
                             <label htmlFor="">Jabatan</label>
@@ -168,13 +208,14 @@ const Request_Form_Detail = () => {
                             <h1>Jawab</h1>
                             <label htmlFor="">Approval</label>
                             <select name="approval" id="approval" onChange={handleChangeApproval}>
+                              <option value="">Pilih</option>
                               <option value="3">Setuju</option>
                               <option value="2">Tolak</option>
                             </select>
                             <label htmlFor="">Jawaban</label>
                             <textarea onChange={handleChangeJawaban} name="jawaban" id="jawaban"></textarea>
                           </div>
-                          <button onClick={handleJawab} className='submit'>Kirim</button>
+                          <button onClick={(e)=>handleJawab(notif_detail?.id_notif, e)} className='submit'>Kirim</button>
                         </form>
                       </div>
                     )}                                 

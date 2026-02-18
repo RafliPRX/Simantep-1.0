@@ -202,7 +202,7 @@ const Request = () => {
                             <input value={jabatan} placeholder='NRK' type="text"/>
                             <label htmlFor="">Unit Kerja</label>
                             <input onChange={handleChangeUnit} placeholder='Unit Kerja' type="text"/>
-                            <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>
+                            <label htmlFor="">Permohonan Barang</label>
                             <table>
                               <tbody>
                                 <tr className='barang-bar'>
@@ -244,6 +244,7 @@ const Request = () => {
                                 </tr>
                               </tbody>
                             </table>
+                            <label htmlFor="">Note: Jika Permohonan Barang lebih dari 5 Item Maka Tambah Formulir</label>
                         </div>
                         <button onClick={hadleRequest} className='submit' type="submit">Submit</button>
                         </form>

@@ -112,15 +112,18 @@ const Content_Corner = () => {
     }    
     const [minggu, setMinggu] = useState('');
     const [bulan, setBulan] = useState('');
+    const [nama_klien, setNama_Klien] = useState('');
     const handleChangeMinggu = (event) => {
         setMinggu(event.target.value);
-        console.log(event.target.value);
-        
+        console.log(event.target.value);        
     }
     const handleChangeBulan = (event) => {
         setBulan(event.target.value);
-        console.log(event.target.value);
-        
+        console.log(event.target.value);        
+    }
+    const handleChangeNamaKlien = (event) => {
+        setNama_Klien(event.target.value);
+        console.log(event.target.value);        
     }
     const [klien_search, setKlien_Search] = useState([]);
     const [pagination_search, setPagination_Search] = useState({
@@ -136,7 +139,7 @@ const Content_Corner = () => {
     }
     const handleGetKlienSearch = async () => {
         setIsLoading(true)
-        const baseUrl = `https://simantepbareta.cloud/API/E-corner/get_client_ecorner_for_admin_search.php?page=${pagination_search.currentPage}&id_bulan=${bulan}&id_minggu=${minggu}`;
+        const baseUrl = `https://simantepbareta.cloud/API/E-corner/get_client_ecorner_for_admin_search.php?page=${pagination_search.currentPage}&id_bulan=${bulan}&id_minggu=${minggu}&nama_klien=${nama_klien}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -293,8 +296,10 @@ const Content_Corner = () => {
                                         <option value="3">Minggu ke 3</option>
                                         <option value="4">Minggu ke 4</option>
                                     </select>
+                                    <br />
                                     <label htmlFor="date">Tanggal</label>
                                     <DatePicker
+                                        className='date'
                                         selectsRange={true}
                                         startDate={startDate}
                                         endDate={endDate}
@@ -302,6 +307,8 @@ const Content_Corner = () => {
                                         dateFormat="yyyy/MM/dd"
                                         placeholderText="Select date range"
                                     />
+                                    <label htmlFor="">Nama Klien: </label>
+                                    <input type="text" onChange={handleChangeNamaKlien} />
                                     <button className='cari' onClick={() => handleGetKlienSearch()} type="button">Cari</button>
                                     <button className='active' onClick={(event) => handleActiveWeek(event)} type="button">Aktifkan</button>
                                 </form>

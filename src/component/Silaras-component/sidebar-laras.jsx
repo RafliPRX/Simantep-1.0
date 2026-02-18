@@ -62,71 +62,58 @@ const Sidebar_laras = () => {
                         <div id='databasePegawai'
                              className='list'
                              onClick={() => handleDivClick(`/dashboard-laras/${level}/${role}/${role_sp}`)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clipPath="url(#clip0_5_1280)">
-                                <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_5_1280">
-                                  <rect width="24" height="24" fill="white"/>
-                                </clipPath>
-                              </defs>
-                            </svg>
+                              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" className="icon icon-tabler icons-tabler-filled icon-tabler-layout-dashboard">
+                                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                  <path d="M9 3a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2zm10 -4a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 -8a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2z" />
+                              </svg>
                             <p>Database Sarpras</p>
                         </div>
                         <div id='Pengajuan-Cuti' 
                              className='list'
                              onClick={() => handleDivClick(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan`)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clipPath="url(#clip0_5_1280)">
-                                <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_5_1280">
-                                  <rect width="24" height="24" fill="white"/>
-                                </clipPath>
-                              </defs>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="White" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-tool">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M7 10h3v-3l-3.5 -3.5a6 6 0 0 1 8 8l6 6a2 2 0 0 1 -3 3l-6 -6a6 6 0 0 1 -8 -8l3.5 3.5" />
                             </svg>
                             <p>Pengajuan Form Layanan Perbaikan</p>
                         </div>
                         <div className='list' onClick={() => handleDivClick(`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas`)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clipPath="url(#clip0_5_1280)">
-                                <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_5_1280">
-                                  <rect width="24" height="24" fill="white"/>
-                                </clipPath>
-                              </defs>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="White" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-car">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M5 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M15 17a2 2 0 1 0 4 0a2 2 0 1 0 -4 0" />
+                                <path d="M5 17h-2v-6l2 -5h9l4 5h1a2 2 0 0 1 2 2v4h-2m-4 0h-6m-6 -6h15m-6 0v-5" />
                             </svg>
                             <p>Pengajuan Form Peminjaman Kendaraan Dinas</p>
                         </div>
                         <div className='list' onClick={() => handleDivClick(`/dashboard-laras/${level}/${role}/${role_sp}/form-permohonan-BHP-ATK`)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clipPath="url(#clip0_5_1280)">
-                                <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_5_1280">
-                                  <rect width="24" height="24" fill="white"/>
-                                </clipPath>
-                              </defs>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="White" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-tools">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M3 21h4l13 -13a1.5 1.5 0 0 0 -4 -4l-13 13v4" />
+                                <path d="M14.5 5.5l4 4" />
+                                <path d="M12 8l-5 -5l-4 4l5 5" />
+                                <path d="M7 8l-1.5 1.5" />
+                                <path d="M16 12l5 5l-4 4l-5 -5" />
+                                <path d="M16 17l-1.5 1.5" />
                             </svg>
                             <p>Pengajuan Form Permohonan BHP & ATK</p>
                         </div>
-                        <div className='list' onClick={handleLogout}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clipPath="url(#clip0_5_1280)">
-                                <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_5_1280">
-                                  <rect width="24" height="24" fill="white"/>
-                                </clipPath>
-                              </defs>
+                        <div className='list' onClick={() => window.location.href = `/Home/${level}`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M9 14l-4 -4l4 -4" />
+                                <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
                             </svg>
-                                <p>Log Out</p>
+                            <p>Kembali ke Halaman Utama</p>
+                        </div>
+                        <div className='list' onClick={handleLogout}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                                <path d="M15 12h-12l3 -3" />
+                                <path d="M6 15l-3 -3" />
+                            </svg>
+                                <p>Keluar</p>
                             </div>
                         </div>
                     </div>
@@ -156,7 +143,7 @@ const Sidebar_laras = () => {
                                         <p>Pengajuan Form Permohonan BHP & ATK</p>
                                     </div>
                                     <div className='list' onClick={handleLogout}>
-                                        <p>Log Out</p>
+                                        <p>Keluar</p>
                                     </div>
                                 </div>
                             </div>

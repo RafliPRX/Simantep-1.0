@@ -1,6 +1,7 @@
 .sidebar{
     display: flex;
     height: 1152px;
+    width: auto;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
@@ -52,10 +53,9 @@
     background: rgba(255, 255, 255, 0.10);
 }
 .sidebar .sidebar-col .selected{
-    margin-left: 21px;
     display: flex;
     flex-direction: column;
-    width: 259px;
+    width: auto;
     height: 260px;
     flex-shrink: 0;
     margin-top: 20px;
@@ -85,7 +85,7 @@
     line-height: 30px; /* 187.5% */
     letter-spacing: -0.32px;
     text-decoration: none;
-    width: 199px;
+    width: auto;
     transition: all 0.5s ease-in-out;
 }
 .sidebar .sidebar-col .selected .list svg {

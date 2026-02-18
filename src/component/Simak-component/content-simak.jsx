@@ -7,7 +7,7 @@ import left from '../../assets/left.svg'
 import right from '../../assets/right.svg'
 import { useEffect, useState } from 'react'
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile'
 const Content_simak = () => {
     const storedUsername = localStorage.getItem('nama');
@@ -30,6 +30,7 @@ const Content_simak = () => {
     const [pagination_dana, setPagination_Dana] = useState({
         current_page: 1,
     });
+    const navigate = useNavigate();
     const getDana = async() => {
         const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_by_name.php?id_number=${storeidNumber}&page=${pagination_dana.current_page}`;
         let url = baseUrl;
@@ -255,6 +256,12 @@ const Content_simak = () => {
         })
         console.log(pagination_dana_moneymaker?.current_page);
     }
+    const handleOpenRPD = (id) => {
+        navigate(`/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${id}`);
+    }
+    const handleOpenLPJ = (id) => {
+        navigate(`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${id}`);
+    }
     const handleDeleteRPD = async (id) => {
         setIsLoading(true);
         try {
@@ -326,8 +333,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_keuangan}</td>
                                     <td style={{textAlign:'center'}}>
-                                        <Link to={`/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${item.id_dana}`}>Buka</Link>| <br />
-                                        <div><button onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
+                                        <button onClick={() => handleOpenRPD(item.id_dana)} className='B-update'>Ubah</button> <br />
+                                        <div><button className='B-deleted' onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
                                     </td>
                                 </tr>
                                 ))}
@@ -361,8 +368,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_keuangan}</td>
                                     <td style={{textAlign:'center'}}>
-                                        <Link to={`/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${item.id_dana}`}>Buka</Link>| <br />
-                                        <div><button onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
+                                        <button onClick={() => handleOpenRPD(item.id_dana)} className='B-update'>Ubah</button> <br />
+                                        <div><button className='B-deleted' onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
                                     </td>
                                 </tr>
                                 ))}
@@ -418,8 +425,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
-                                    <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
+                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
                             </table>
@@ -474,8 +481,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
-                                    <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
+                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button> | 
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
                             </table>
@@ -531,8 +538,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
-                                    <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
+                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button> | 
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
                             </table>
@@ -587,8 +594,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
-                                    <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
+                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button> 
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
                             </table>
@@ -643,8 +650,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <Link to={`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${item.id_lpj}`}>Buka</Link>| 
-                                    <br /><div><button onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
+                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button> | 
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
                             </table>

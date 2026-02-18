@@ -74,8 +74,8 @@ const Login = () => {
                 <div className='form-col'>
                     <form>
                         <div className='header'>
-                            <h1>Login</h1>
-                            <h3>Enter Your Username and Password to Sign In</h3>
+                            <h1>Masuk</h1>
+                            <h3>Masukan Username dan Password untuk Masuk</h3>
                         </div>                        
                         <div className='input-col'>
                             <label>Username</label>
@@ -88,7 +88,7 @@ const Login = () => {
                                 />
                                 <button 
                                     type="button" 
-                                    className="toggle-password" 
+                                    className="toggle-password"
                                     onClick={() => togglePasswordVisibility('ppnpn')}
                                 >
                                     {showPassword.ppnpn ? <FaEyeSlash /> : <FaEye />}
@@ -97,14 +97,14 @@ const Login = () => {
                             <div className='forget'>
                                 <div className='checkbox'>
                                     <input type="checkbox" name="checkbox" id="" />
-                                    <label htmlFor="">Keep me logged in</label>
+                                    <label htmlFor="">Tetap Masuk</label>
                                 </div>
                                 <a href="">Forget Password ?</a>    
                             </div>
-                            <button type='submit' onClick={handleLogin_ppnpn} >Log in</button>
+                            <button type='submit' onClick={handleLogin_ppnpn} >Masuk</button>
                             <div className='register'>
-                                <p>Not registered yet?</p>
-                                <a href="/signup">Create an Account</a>
+                                <p>Belum Ada Akun ?</p>
+                                <a href="/signup">Buat Akun Disini</a>
                             </div>
                         </div>                                             
                     </form>

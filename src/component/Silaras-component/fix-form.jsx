@@ -121,7 +121,7 @@ const Fix_form = () => {
                             <input onChange={handleChangeUnits} value={unit} placeholder='Units' type="text"/>
                             <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
                             <textarea onChange={handleChangeFixing} value={fixing} placeholder='Permintaan Perbaikan' name="" id=""></textarea>
-                            <label htmlFor="">Bukti Gambar</label>
+                            <label htmlFor="">Bukti Gambar (Maksimal 2 Mb)</label>
                             <input onChange={handleChangeImage} type="file" name="" id="" />
                         </div>
                         <button onClick={handleRequest} className='submit' type="submit">Submit</button>

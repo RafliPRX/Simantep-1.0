@@ -2,7 +2,7 @@
 import { useEffect, useState } from 'react';
 import './content-laras.css'
 import axios from 'axios';
-import { Link, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import green from '../../assets/green.svg'
 import white from '../../assets/unread.svg'
 import red from '../../assets/decline.svg'
@@ -23,6 +23,7 @@ const Content_laras = () => {
     console.log(storeNrk);
     console.log(pj);
     console.log(status);
+    const navigate = useNavigate();
     const { level } = useParams();
     const { role } = useParams();
     const { role_sp } = useParams();
@@ -302,6 +303,15 @@ const Content_laras = () => {
           console.log(error.response);
         }
       }
+      const handleOpenFix = (id) => {
+        navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${id}`);
+      }
+      const handleOpenVehicle = (id) => {
+        navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${id}`);
+      }
+      const handleOpenBHP = (id) => {
+        navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${id}`);
+      }
       return(
         <>
             <div className='main-dashboard'>
@@ -345,8 +355,8 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
                                   <td style={{textAlign:'center'}}>
-                                    <Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${item.id_fix}`}>Lihat Disini |</Link>
-                                    <br /><div><button className='putih' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
+                                    <button className='B-update' onClick={() => handleOpenFix(item.id_fix)}>Lihat disini</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
                                   </td>
                                 </tr>
                               ))}
@@ -388,8 +398,8 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
                                   <td style={{textAlign:'center'}}>
-                                    <Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${item.id_fix}`}>Lihat Disini |</Link>
-                                    <br /><div><button className='putih' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
+                                    <button className='B-update' onClick={() => handleOpenFix(item.id_fix)}>Lihat disini</button> <br />
+                                    <div><button className='B-deleted' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
                                   </td>
                                 </tr>
                               ))}
@@ -431,8 +441,8 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
                                   <td style={{textAlign:'center'}}>
-                                    <Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${item.id_fix}`}>Lihat Disini |</Link>
-                                    <br /><div><button className='putih' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
+                                    <button className='B-update' onClick={() => handleOpenFix(item.id_fix)}>Lihat disini</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
                                   </td>
                                 </tr>
                               ))}
@@ -481,8 +491,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${item.id_vehicle}`}>Lihat Disini|</Link>
-                                    <br /><div><button onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenVehicle(item.id_vehicle)}>Lihat Disini</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
                                     </td>
                                 </tr>
                           ))}
@@ -531,8 +541,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${item.id_vehicle}`}>Lihat Disini|</Link>
-                                    <br /><div><button onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenVehicle(item.id_vehicle)}>Lihat Disini</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
                                     </td>
                                 </tr>
                           ))}
@@ -581,8 +591,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${item.id_vehicle}`}>Lihat Disini|</Link>
-                                    <br /><div><button onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenVehicle(item.id_vehicle)}>Lihat Disini</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
                                     </td>
                                 </tr>
                           ))}
@@ -623,8 +633,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${item.id_bhp}`}>Lihat Disini|</Link>
-                                    <br /><div><button onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
+                                    <td style={{textAlign:'center'}}> <button className='B-update' onClick={() => handleOpenBHP(item.id_bhp)}>Lihat Disini</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
                                 </td>
                             </tr>
                           ))}
@@ -665,8 +675,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${item.id_bhp}`}>Lihat Disini|</Link>
-                                    <br /><div><button onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenBHP(item.id_bhp)}>Lihat Disini</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
                                 </td>
                             </tr>
                           ))}
@@ -707,8 +717,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><Link to={`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${item.id_bhp}`}>Lihat Disini|</Link>
-                                    <br /><div><button onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenBHP(item.id_bhp)}>Lihat Disini</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
                                 </td>
                             </tr>
                           ))}

@@ -7,7 +7,7 @@
     flex-shrink: 0;
 }
 .sidebar-3 .sidebar-col{
-    width: 338px;
+    width: auto;
     height: 1152px;
     flex-shrink: 0;
     background: #000B48;

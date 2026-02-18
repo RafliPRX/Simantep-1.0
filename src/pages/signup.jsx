@@ -141,8 +141,8 @@ const Signup = () => {
                 <div className='form-col' style={{padding: "144px 57px"}}>
                     <form action="/Home" style={{marginTop: "-228px"}}>
                         <div className='header'>
-                            <h1>Sign Up</h1>
-                            <h3>Create Your Username and Password</h3>
+                            <h1>Membuat Akun</h1>
+                            <h3>Buat Username dan Password Anda</h3>
                         </div>  
                         <div className='input-col'>                            
                             <label>Nama</label>
@@ -171,7 +171,7 @@ const Signup = () => {
                                     {showPassword.Password ? <FaEyeSlash /> : <FaEye />}
                                 </button>
                             </div>
-                            <label>Re-Password</label>
+                            <label>Masukan Ulang Password</label>
                             <div className="password-input-container">
                                 <input 
                                     onChange={handleChangeRePassword} 
@@ -194,9 +194,9 @@ const Signup = () => {
                             <input value={nama_role} placeholder='jabatan' type="Jabatan" />
                             {/* <label>Nomor ID</label>
                             <input value={id_number} placeholder='jabatan' type="Jabatan" /> */}
-                            <button onClick={handleLogin_ppnpn} >Sign In</button>
+                            <button onClick={handleLogin_ppnpn} >Buat Akun</button>
                             <div className='register'>
-                                <a href='/'>Already registered ?</a>
+                                <a href='/'>Sudah Punya Akun ?</a>
                             </div>
                         </div>
                     </form>

@@ -290,16 +290,16 @@ const Content = () => {
                                                         <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
                                                         <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
                                                         <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                        <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Deleted</button> </td>  
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button> </td>  
                                                     </tr>
                                                 ))} 
                                             </table>
@@ -337,16 +337,16 @@ const Content = () => {
                                                         <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
                                                         <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
                                                         <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                        <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Deleted</button> </td>  
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button> </td>  
                                                     </tr>
                                                 ))} 
                                             </table>
@@ -392,16 +392,16 @@ const Content = () => {
                                                 <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Update</button> | <button className='B-deleted'>Deleted</button> </td>  
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
                                                 </tr>
                                             ))} 
                                         </table>
@@ -440,16 +440,16 @@ const Content = () => {
                                                 <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Update</button> | <button className='B-deleted'>Deleted</button> </td>  
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
                                                 </tr>
                                             ))} 
                                         </table>
@@ -488,16 +488,16 @@ const Content = () => {
                                                 <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
                                                 <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Unread</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Delay</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Approved</td>
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Update</button> | <button className='B-deleted'>Deleted</button> </td>  
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
                                                 </tr>
                                             ))} 
                                         </table>

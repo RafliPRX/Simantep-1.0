@@ -2,13 +2,14 @@
     display: flex;
     flex-direction: row;
     width: 1920px;
-    height: 2500px;
+    height: auto;
     background: #000E60;
     overflow-y: hidden;
 }
 .dashboard .content{
     display: flex;
     flex-direction: column;
+    height: auto;
 }
 .dashboard .content .switch{
     position: absolute;

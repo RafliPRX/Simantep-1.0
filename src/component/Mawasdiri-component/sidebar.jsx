@@ -81,32 +81,31 @@ const Sidebar = () => {
                         <div id='databasePegawai'
                              className='list'
                              onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}`)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clipPath="url(#clip0_5_1280)">
-                                <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_5_1280">
-                                  <rect width="24" height="24" fill="white"/>
-                                </clipPath>
-                              </defs>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" className="icon icon-tabler icons-tabler-filled icon-tabler-layout-dashboard">
+                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                              <path d="M9 3a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2zm10 -4a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 -8a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2z" />
                             </svg>
-                            <p>Database Pegawai</p>
+                            <p>Status Pengajuan Cuti</p>
                         </div>
                         <div id='Pengajuan-Cuti' 
                              className='list'
                              onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Cuti-form`)}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clipPath="url(#clip0_5_1280)">
-                                <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_5_1280">
-                                  <rect width="24" height="24" fill="white"/>
-                                </clipPath>
-                              </defs>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" className="icon icon-tabler icons-tabler-filled icon-tabler-file-description">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005zm3 14h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2m0 -4h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2" />
+                                <path d="M19 7h-4l-.001 -4.001z" />
                             </svg>
-                            <p href="Cuti-form">Pengajuan Cuti</p>
+                            <p href="Cuti-form">Formulir Pengajuan Cuti</p>
+                        </div>
+                        <div id='Pengajuan-Cuti' 
+                             className='list'
+                             onClick={() => window.location.href = `/Home/${level}`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M9 14l-4 -4l4 -4" />
+                                <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+                            </svg>
+                            <p href="Cuti-form">Kembali Ke Halaman Utama</p>
                         </div>
                         {/* <div>
                           <div className='list' onClick={SubMenuPagi}>
@@ -176,17 +175,13 @@ const Sidebar = () => {
                           </div>
                         )} */}
                         <div className='list' onClick={handleLogout}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                              <g clipPath="url(#clip0_5_1280)">
-                                <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                              </g>
-                              <defs>
-                                <clipPath id="clip0_5_1280">
-                                  <rect width="24" height="24" fill="white"/>
-                                </clipPath>
-                              </defs>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                                <path d="M15 12h-12l3 -3" />
+                                <path d="M6 15l-3 -3" />
                             </svg>
-                            <p>Log Out</p>
+                            <p>Keluar</p>
                         </div>
                         </div>
                     </div>
@@ -216,22 +211,27 @@ const Sidebar = () => {
                                       </clipPath>
                                     </defs>
                                   </svg>
-                                  <p>Database Pegawai</p>
+                                  <p>Status Pengajuan Cuti</p>
                               </div>
                               <div id='Pengajuan-Cuti' 
                                    className='list'
                                    onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Cuti-form`)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <g clipPath="url(#clip0_5_1280)">
-                                      <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                                    </g>
-                                    <defs>
-                                      <clipPath id="clip0_5_1280">
-                                        <rect width="24" height="24" fill="white"/>
-                                      </clipPath>
-                                    </defs>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" className="icon icon-tabler icons-tabler-filled icon-tabler-file-description">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005zm3 14h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2m0 -4h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2" />
+                                      <path d="M19 7h-4l-.001 -4.001z" />
                                   </svg>
-                                  <p href="Cuti-form">Pengajuan Cuti</p>
+                                  <p href="Cuti-form">Formulir Pengajuan Cuti</p>
+                              </div>
+                              <div id='Pengajuan-Cuti' 
+                                   className='list'
+                                   onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Cuti-form`)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <path d="M9 14l-4 -4l4 -4" />
+                                      <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+                                  </svg>
+                                  <p href="Cuti-form">Kembali ke Halaman Utama</p>
                               </div>
                           {/* <div>
                           <div className='list' onClick={SubMenuPagi}>
@@ -301,17 +301,13 @@ const Sidebar = () => {
                             </div>
                           )} */}
                             <div className='list' onClick={handleLogout}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <g clipPath="url(#clip0_5_1280)">
-                                      <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                                    </g>
-                                    <defs>
-                                      <clipPath id="clip0_5_1280">
-                                        <rect width="24" height="24" fill="white"/>
-                                      </clipPath>
-                                    </defs>
-                                  </svg>
-                                  <p>Log Out</p>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                    <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                                    <path d="M15 12h-12l3 -3" />
+                                    <path d="M6 15l-3 -3" />
+                                </svg>
+                                  <p>Keluar</p>
                               </div>
                                 </div>
                             </div>

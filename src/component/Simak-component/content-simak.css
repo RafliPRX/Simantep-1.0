@@ -179,6 +179,44 @@
     text-decoration: none;
     color: #FFF;
 }
+.main-dashboard .content-col .box-s .content table tr td .B-deleted{
+    color: #ffffff;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-align: center;
+    font-family: "poppins";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 171.429% */
+    letter-spacing: -0.28px;
+    transition: all 0.4s ease-in-out;
+}
+.main-dashboard .content-col .box-s .content table tr td .B-deleted:hover{
+    color: #d60924;
+    transition: all 0.4s ease-in-out;
+    transform: scale(1.1);
+}
+.main-dashboard .content-col .box-s .content table tr td .B-update{
+    color: #ffffff;
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-align: center;
+    font-family: "poppins";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 24px; /* 171.429% */
+    letter-spacing: -0.28px;
+    transition: all 0.4s ease-in-out;
+}
+.main-dashboard .content-col .box-s .content table tr td .B-update:hover{
+    color: #D30ED8;
+    transition: all 0.4s ease-in-out;
+    transform: scale(1.1);
+}
 .main-dashboard .content-col .box-s .content-f{
     display: flex;
     width: 1212px;

@@ -525,7 +525,7 @@ const Homepage = () => {
                           <label htmlFor="nama_role">Unit Kerja</label>
                           <input disabled value={nama_role} type="text" />
                         </div>
-                        <div className='field'>
+                        <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Kode Unit Kerja</label>
                           <input disabled value={kode_role} type="text" />
                         </div>
@@ -571,7 +571,7 @@ const Homepage = () => {
                           <label htmlFor="nama_role">Unit Kerja</label>
                           <input disabled value={nama_role_c} type="text" />
                         </div>
-                        <div className='field'>
+                        <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Kode Unit Kerja</label>
                           <input disabled value={kode_role_c} type="text" />
                         </div>
@@ -613,7 +613,7 @@ const Homepage = () => {
                           <label htmlFor="nama_role">Unit Kerja</label>
                           <input disabled value={nama_role_b} type="text" />
                         </div>
-                        <div className='field'>
+                        <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Kode Unit Kerja</label>
                           <input disabled value={kode_role_b} type="text" />
                         </div>
@@ -655,7 +655,7 @@ const Homepage = () => {
                           <label htmlFor="nama_role">Unit Kerja</label>
                           <input disabled value={nama_role_a} type="text" />
                         </div>
-                        <div className='field'>
+                        <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Kode Unit Kerja</label>
                           <input disabled value={kode_role_a} type="text" />
                         </div>

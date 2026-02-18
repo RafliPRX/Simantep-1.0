@@ -291,7 +291,7 @@ const Menu = ({
                                     <h3>Nama: {notifItem.nama}</h3>
                                     <h3>Subjek: {notifItem.subjek}</h3>
                                     <div className='button'>
-                                        <button onClick={(event) => mark(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
+                                        <button onClick={(event) => mark(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
                                         <button onClick={(event) => buka_surat(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
                                     </div>
                                   </div>
@@ -341,7 +341,7 @@ const Menu = ({
                                         <h3>Nama: {notifItem.sender}</h3>
                                         <h3>Subjek: {notifItem.subjek}</h3>
                                         <div className='button'>
-                                            <button onClick={(event) => mark_lpj(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
+                                            <button onClick={(event) => mark_lpj(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
                                             <button onClick={(event) => buka_lpj(notifItem.id_notif, notifItem.id_lpj, event)} className='buka'>Buka</button>
                                         </div>
                                       </div>
@@ -371,7 +371,7 @@ const Menu = ({
                                         <h3>Nama: {notifItem.sender}</h3>
                                         <h3>Subjek: {notifItem.subjek}</h3>
                                         <div className='button'>
-                                            <button onClick={(event) => mark_Dana(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
+                                            <button onClick={(event) => mark_Dana(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
                                             <button onClick={(event) => buka_Dana(notifItem.id_notif, notifItem.id_dana, event)} className='buka'>Buka</button>
                                         </div>
                                       </div>
@@ -424,7 +424,7 @@ const Menu = ({
                                                     <h3>Nama: {notifItem.nama}</h3>
                                                     <h3>Subjek: {notifItem.subjek}</h3>
                                                     <div className='button'>
-                                                        <button onClick={(event) => mark_Fix(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
+                                                        <button onClick={(event) => mark_Fix(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
                                                         <button onClick={(event) => buka_fix(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
                                                     </div>
                                                   </div>
@@ -454,7 +454,7 @@ const Menu = ({
                                                     <h3>Nama: {notifItem.nama}</h3>
                                                     <h3>Subjek: {notifItem.subjek}</h3>
                                                     <div className='button'>
-                                                        <button onClick={(event) => mark_Vehicle(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
+                                                        <button onClick={(event) => mark_Vehicle(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
                                                         <button onClick={(event) => buka_surat(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
                                                     </div>
                                                   </div>
@@ -484,7 +484,7 @@ const Menu = ({
                                                     <h3>Nama: {notifItem.nama}</h3>
                                                     <h3>Subjek: {notifItem.subjek}</h3>
                                                     <div className='button'>
-                                                        <button onClick={(event) => mark_Bhp(notifItem.id_notif, event)} className='mark-read'>Mark as Read</button>
+                                                        <button onClick={(event) => mark_Bhp(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
                                                         <button onClick={(event) => buka_surat(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
                                                     </div>
                                                   </div>

@@ -84,6 +84,23 @@ const New_Klien_form = () => {
     setMonth(event.target.value);
     console.log(event.target.value);
   }
+  const [klien_rooms, setKlien_Rooms] = useState([]);
+
+  const handleGetKlienRooms = async () => {
+    setIsLoading(true)
+    const baseUrl = `https://simantepbareta.cloud/API/E-corner/rooms_search.php?id_bulan=${month}&id_minggu=${week}&days=${day}&time=${jam}`;
+    let url = baseUrl;
+    axios.get(url).then((res1) => {
+        console.log(res1.data.Data);
+        const response = res1.data.Data;
+        setIsLoading(false);
+        setKlien_Rooms(response);
+        console.log(response);
+    })
+    .catch((error) => {
+        console.log(error);
+    });
+  }
   const navigate = useNavigate();
   const handlePostClient = async (event) => {
     setIsLoading(true);
@@ -144,47 +161,6 @@ const New_Klien_form = () => {
                 <input onChange={handleChangeNamaKlien} placeholder='Nama Klien' type="text" />                
                 <label htmlFor="">Nama Klien (Inisial)</label>
                 <input onChange={handleChangeNamaInit} placeholder='Nama Inisial' type="text" />
-                <label htmlFor="">Room no :</label>
-                <select onChange={handleChangeRoom} name="Room" id="Room">
-                  <option value="">Room no :</option>
-                  <option value="Room 1">Room 1</option>
-                  <option value="Room 2">Room 2</option>
-                  <option value="Room 3">Room 3</option>
-                  <option value="Room 4">Room 4</option>
-                </select>                
-                <label htmlFor="Jam">Sesi Jam :</label>
-                <select onChange={handleChangeJam} name="Jam" id="Jam">
-                  <option value="">Sesi Jam :</option>
-                  <option value="08.00-08.30">08.00-08.30</option>
-                  <option value="08.35-09.05">08.35-09.05</option>
-                  <option value="09.10-09.40">09.10-09.40</option>
-                  <option value="09.45-10.15">09.45-10.15</option>
-                  <option value="10.20-10.50">10.20-10.50</option>
-                  <option value="10.55-11.25">10.55-11.25</option>
-                  <option value="11.30-12.05">11.30-12.05</option>
-                  <option value="13.00-13.30">13.00-13.30</option>
-                  <option value="13.35-14.05">13.35-14.05</option>
-                  <option value="14.10-14.40">14.10-14.40</option>
-                  <option value="14.45-15.15">14.45-15.15</option>
-                  <option value="15.20-15.50">15.20-15.50</option>
-                </select>
-                <label htmlFor="days">Hari :</label>
-                <select onChange={handleChangeDay} name="days" id="days">
-                  <option value="">Hari :</option>
-                  <option value="Senin">Senin</option>
-                  <option value="Selasa">Selasa</option>
-                  <option value="Rabu">Rabu</option>
-                  <option value="Kamis">Kamis</option>
-                  <option value="Jumat">Jumat</option>
-                </select>
-                <label htmlFor="minggu">Minggu ke :</label>
-                <select onChange={handleChangeWeek} name="minggu" id="minggu">
-                  <option value="">Minggu ke :</option>
-                  <option value="1">Minggu ke 1</option>
-                  <option value="2">Minggu ke 2</option>
-                  <option value="3">Minggu ke 3</option>
-                  <option value="4">Minggu ke 4</option>
-                </select>
                 <label htmlFor="bulan">Bulan :</label>
                 <select onChange={handleChangeMonth} name="bulan" id="bulan">
                   <option value="">bulan :</option>
@@ -201,8 +177,70 @@ const New_Klien_form = () => {
                   <option value="11">November</option>
                   <option value="12">Desember</option>
                 </select>
+                <label htmlFor="minggu">Minggu ke :</label>
+                <select onChange={handleChangeWeek} name="minggu" id="minggu">
+                  <option value="">Minggu ke :</option>
+                  <option value="1">Minggu ke 1</option>
+                  <option value="2">Minggu ke 2</option>
+                  <option value="3">Minggu ke 3</option>
+                  <option value="4">Minggu ke 4</option>
+                </select>
+                <label htmlFor="days">Hari :</label>
+                <select onChange={handleChangeDay} name="days" id="days">
+                  <option value="">Hari :</option>
+                  <option value="Senin">Senin</option>
+                  <option value="Selasa">Selasa</option>
+                  <option value="Rabu">Rabu</option>
+                  <option value="Kamis">Kamis</option>
+                  <option value="Jumat">Jumat</option>
+                </select>
+                <label htmlFor="Jam">Sesi Jam :</label>
+                <select onChange={handleChangeJam} name="Jam" id="Jam">
+                  <option value="">Sesi Jam :</option>
+                  <option value="08.00-08.30">08.00-08.30</option>
+                  <option value="08.35-09.05">08.35-09.05</option>
+                  <option value="09.10-09.40">09.10-09.40</option>
+                  <option value="09.45-10.15">09.45-10.15</option>
+                  <option value="10.20-10.50">10.20-10.50</option>
+                  <option value="10.55-11.25">10.55-11.25</option>
+                  <option value="11.30-12.05">11.30-12.05</option>
+                  <option value="13.00-13.30">13.00-13.30</option>
+                  <option value="13.35-14.05">13.35-14.05</option>
+                  <option value="14.10-14.40">14.10-14.40</option>
+                  <option value="14.45-15.15">14.45-15.15</option>
+                  <option value="15.20-15.50">15.20-15.50</option>
+                </select>
+                <button className='submit' type="button" onClick={() => handleGetKlienRooms()}>Cari Ruangan</button>
+                {klien_rooms.length > 0 && (
+                  <div>
+                    <label htmlFor="">Room no :</label>
+                    <select onChange={handleChangeRoom} name="Room" id="Room">
+                      <option value="">Room no :</option>
+                      {klien_rooms[0]?.rooms === "Room 1" ? (
+                        <option value="Room 1" disabled>Room 1 tidak Tersedia</option>
+                      ) : (
+                        <option value="Room 1">Room 1</option>
+                      )}
+                      {klien_rooms[1]?.rooms === "Room 2" ? (
+                        <option value="Room 2" disabled>Room 2 tidak Tersedia</option>
+                      ) : (
+                        <option value="Room 2">Room 2</option>
+                      )}
+                      {klien_rooms[2]?.rooms === "Room 3" ? (
+                        <option value="Room 3" disabled>Room 3 tidak Tersedia</option>
+                      ) : (
+                        <option value="Room 3">Room 3</option>
+                      )}
+                      {klien_rooms[3]?.rooms === "Room 4" ? (
+                        <option value="Room 4" disabled>Room 4 tidak Tersedia</option>
+                      ) : (
+                        <option value="Room 4">Room 4</option>
+                      )}
+                    </select>
+                    <button className='submit' type="submit">Submit Klien</button>
+                  </div>
+                )}                
               </div>              
-              <button className='submit' type="submit">Submit</button>
             </form>
           </div>
         </div>

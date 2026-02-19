@@ -224,7 +224,7 @@ const Content_Corner = () => {
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
         </div>} 
-        <p>Mawasdiri/Database Klien E-Corner</p>
+        <p>E-Corner/Database Klien E-Corner</p>
             <h1>E-Corner</h1>
             <Profile nama={nama} feature="mawasdiri" />
             <div className='content-col'>

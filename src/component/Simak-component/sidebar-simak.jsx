@@ -82,7 +82,7 @@ const Sidebar_simak = () => {
                                 <path d="M22 19l-3 -3l-3 3" />
                                 <path d="M3 7l9 6l9 -6" />
                             </svg>
-                                <p>Penganjuan Proposal dan LPJ</p>
+                                <p>Pengajuan Proposal dan LPJ</p>
                             </div>
                             <div className='list' onClick={() => window.location.href = `/Home/${level}`}>
                                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
@@ -144,7 +144,7 @@ const Sidebar_simak = () => {
                                           <path d="M22 19l-3 -3l-3 3" />
                                           <path d="M3 7l9 6l9 -6" />
                                         </svg>
-                                        <p>Penganjuan Proposal dan LPJ</p>
+                                        <p>Pengajuan Proposal dan LPJ</p>
                                     </div>
                                     <div className='list' onClick={() => window.location.href = `/Home/${level}`}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">

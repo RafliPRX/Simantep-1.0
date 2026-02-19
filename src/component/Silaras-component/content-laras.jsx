@@ -323,7 +323,7 @@ const Content_laras = () => {
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />
                 <div className='content-col'>
                     <div className='box'>
-                      { (role_sp === "0" && role !== "C-03" ) &&
+                      { (role !== "C-03" ) &&
                         <div className='content'>
                             <h1>Daftar Form Perbaikan</h1>
                             <div className='pagination'>
@@ -368,7 +368,7 @@ const Content_laras = () => {
                       }
                       {role === "C-03" && (
                         <div className='content'>
-                            <h1>Daftar Form Perbaikan</h1>
+                            <h1>Daftar Form Perbaikan Sarpras</h1>
                             <div className='pagination'>
                                 <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
                                 <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
@@ -411,7 +411,7 @@ const Content_laras = () => {
                       )}
                       {role_sp === "S-03" && (
                         <div className='content'>
-                            <h1>Daftar Form Perbaikan</h1>
+                            <h1>Daftar Form Perbaikan Sarpras</h1>
                             <div className='pagination'>
                                 <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
                                 <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
@@ -452,7 +452,7 @@ const Content_laras = () => {
                             )}                        
                         </div>
                       )}
-                      { (role_sp === "0" && role !== "C-03" ) &&(
+                      { (role !== "C-03" ) &&(
                           <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
                             <div className='pagination'>
@@ -504,7 +504,7 @@ const Content_laras = () => {
                       )}
                       { role === "C-03" && (
                         <div className='content'>
-                            <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
+                            <h1>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
                             <div className='pagination'>
                                 <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
                                 <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
@@ -554,7 +554,7 @@ const Content_laras = () => {
                       )}
                       { role === "S-03" && (
                         <div className='content'>
-                            <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
+                            <h1>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
                             <div className='pagination'>
                                 <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
                                 <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
@@ -602,9 +602,9 @@ const Content_laras = () => {
                             )}                        
                         </div>
                       )}
-                      {(role_sp === "0" && role !== "C-03" ) && (
+                      {(role !== "C-03" ) && (
                         <div className='content'>
-                            <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
+                            <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
                             <div className='pagination'>
                                 <button className='left' onClick={handlePrev_Request}><img src={left} alt="" /></button>
                                 <input className='page-number' type="text" value={pagination_request?.current_page} />
@@ -646,7 +646,7 @@ const Content_laras = () => {
                       )}
                       { role === "C-03" && (
                         <div className='content'>
-                            <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
+                            <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
                             <div className='pagination'>
                                 <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
                                 <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />

@@ -211,7 +211,7 @@ const New_Klien_form = () => {
                   <option value="15.20-15.50">15.20-15.50</option>
                 </select>
                 <button className='submit' type="button" onClick={() => handleGetKlienRooms()}>Cari Ruangan</button>
-                {klien_rooms.length > 0 && (
+                {klien_rooms.length > 0 ? (
                   <div>
                     <label htmlFor="">Room no :</label>
                     <select onChange={handleChangeRoom} name="Room" id="Room">
@@ -236,6 +236,18 @@ const New_Klien_form = () => {
                       ) : (
                         <option value="Room 4">Room 4</option>
                       )}
+                    </select>
+                    <button className='submit' type="submit">Submit Klien</button>
+                  </div>
+                ) : (
+                  <div>
+                    <label htmlFor="">Room no :</label>
+                    <select onChange={handleChangeRoom} name="Room" id="Room">
+                      <option value="">Room no :</option>                      
+                        <option value="Room 1">Room 1</option>                      
+                        <option value="Room 2">Room 2</option>
+                        <option value="Room 3">Room 3</option>
+                        <option value="Room 4">Room 4</option>
                     </select>
                     <button className='submit' type="submit">Submit Klien</button>
                   </div>

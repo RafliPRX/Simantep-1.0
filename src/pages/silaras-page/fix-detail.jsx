@@ -2,7 +2,7 @@ import { useState } from 'react';
 import Fix_form_Detail from '../../component/Silaras-component/fix-form-detail';
 import Fix_form_Update from '../../component/Silaras-component/fix-form-update';
 import Sidebar_laras from '../../component/Silaras-component/sidebar-laras';
-import './fix-form.css';
+import '../../component/css/dashboard.css';
 
 const Fix_Detail = () => {
     const [showDetail, setShowDetail] = useState(true);

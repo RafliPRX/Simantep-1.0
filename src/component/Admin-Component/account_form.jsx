@@ -1,5 +1,5 @@
 
-import '../Mawasdiri-component/cuti.css';
+import '../css/form.css';
 import Profile from '../profile';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
@@ -253,15 +253,19 @@ const Account_Form = () => {
                                 <label htmlFor="">Username</label>
                                 <input onChange={handleChangeUsername} placeholder='Username' type="text" />
                                 <label htmlFor="">Password</label>
-                                <input onChange={handleChangePassword} placeholder='Password' type={showPassword.level1 ? "text" : "password"} />
-                                <button type="button" className="toggle-password" onClick={() => togglePasswordVisibility('level1')}>
-                                  {showPassword.level1 ? <FaEyeSlash /> : <FaEye />}
-                                </button>
+                                <div className='password-bar'>
+                                  <input className='password-input' onChange={handleChangePassword} placeholder='Password' type={showPassword.level1 ? "text" : "password"} />
+                                  <button type="button" className="toggle-password" onClick={() => togglePasswordVisibility('level1')}>
+                                    {showPassword.level1 ? <FaEyeSlash /> : <FaEye />}
+                                  </button>
+                                </div>                                
                                 <label htmlFor="">Re-Password</label>
-                                <input onChange={handleChangeRe_Password} placeholder='re_Password' type={showRePassword.level1 ? "text" : "password"} />
-                                <button type="button" className="toggle-password-2" onClick={() => toggleRePasswordVisibility('level1')}>
-                                  {showRePassword.level1 ? <FaEyeSlash /> : <FaEye />}
-                                </button>
+                                <div className='password-bar'>
+                                  <input className='password-input' onChange={handleChangeRe_Password} placeholder='re_Password' type={showRePassword.level1 ? "text" : "password"} />
+                                  <button type="button" className="toggle-password-2" onClick={() => toggleRePasswordVisibility('level1')}>
+                                    {showRePassword.level1 ? <FaEyeSlash /> : <FaEye />}
+                                  </button>
+                                </div>                                
                                 <label htmlFor="">NIP / NRK</label>
                                 <input onChange={handleChangeNIP_NRK} placeholder='NIP / NRK' type="text" />
                                 <label htmlFor="">Jabatan</label>

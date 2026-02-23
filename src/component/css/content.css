@@ -1,12 +1,13 @@
 .main-dashboard{
     width: 1610px;
-    height: 2500px;
+    height: auto;
     flex-shrink: 0;
-    overflow-y: hidden;
+    overflow-y: auto;
+    background: #3accb6;
 }
 .main-dashboard p{
     color: #FFF;
-    font-family: "poppins";
+    font-family: "segoe ui";
     font-size: 20px;
     font-style: normal;
     font-weight: 500;
@@ -45,12 +46,12 @@
 }
 .main-dashboard .content-col{
     display: flex;
-    height: 1743px;
+    height: auto;
     flex-direction: column;
     align-items: flex-start;
     gap: 20px;
     flex-shrink: 0;
-    overflow-y: hidden;
+    overflow-y: auto;
 }
 .main-dashboard .content-col .box-m .tab-container{
     width: 100%;
@@ -61,7 +62,7 @@
     list-style: none;
     padding: 0;
     margin: 0 ;
-    border-bottom: 2px solid #A3AED0;
+    border-bottom: 2px solid #127C70;
 }
 .main-dashboard .content-col .box-m .tab-container .tab-list .tab-item{
     padding: 10px 20px;
@@ -72,22 +73,14 @@
     transition: all 0.3s ease;
 }
 .main-dashboard .content-col .box-m .tab-container .tab-list .tab-item:hover{
-    color: #D30ED8;
+    color: #F9BA0D;
 }
 .main-dashboard .content-col .box-m .tab-container .tab-list .tab-item.active{
-    border-bottom: 3px solid #D30ED8;
-    color: #D30ED8;
+    border-bottom: 3px solid #F9BA0D;
+    color: #F9BA0D;
     font-weight: 700;
 }
-.main-dashboard .content-col .box-m .content{
-    display: flex;
-    width: 1610px;
-    height: 345px;
-    padding: 0px 20px;
-    align-items: center;
-    gap: 19px;
-    flex-shrink: 0;
-}
+
 .main-dashboard .content-col .box-m .content{
     display: flex;
     width: 1183px;
@@ -98,9 +91,11 @@
     align-items: flex-start;
     flex-shrink: 0;
     border-radius: 20px;
-    background: #000B48;
+    background: #127C70;
     margin-top: 20px;
     margin-left: 20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 .main-dashboard .content-col .box-m .content .pagination{
     display: flex;
@@ -115,7 +110,7 @@
     width: 80px;
     height: 30px;
     border-radius: 8px;
-    background: #001274;
+    background: #2fc4b1;
     color: #fff;
     font-family: poppins;
     font-size: 14px;
@@ -139,7 +134,7 @@
     width: 40px;
     height: 30px;
     border-radius: 8px;
-    background: #001274;
+    background: #2fc4b1;
     color: #fff;
     font-family: poppins;
     font-size: 14px;
@@ -155,9 +150,9 @@
     height: 40px;
     flex-shrink: 0;
     border-radius: 16px;
-    background: #001274;
+    background: #fff;
     margin-bottom: 20px;
-    color: #fff;
+    color: #2FC4B1;
     font-family: poppins;
     font-size: 19px;
     font-style: normal;
@@ -168,7 +163,7 @@
     margin-left: 35px;
 }
 .main-dashboard .content-col .box-m .content form label {
-    color: #a3aed0;
+    color: #F9BA0D;
     font-family: poppins;
     font-size: 19px;
     font-style: normal;
@@ -184,9 +179,9 @@
     height: 40px;
     flex-shrink: 0;
     border-radius: 16px;
-    background: #001274;
+    background: #fff;
     margin-bottom: 20px;
-    color: #fff;
+    color: #2FC4B1;
     font-family: poppins;
     font-size: 19px;
     font-style: normal;
@@ -201,9 +196,9 @@
     height: 40px;
     flex-shrink: 0;
     border-radius: 16px;
-    background: #001274;
+    background: #fff;
     margin-bottom: 20px;
-    color: #fff;
+    color: #2FC4B1;
     font-family: poppins;
     font-size: 19px;
     font-style: normal;
@@ -252,7 +247,7 @@
     justify-content: center;
     align-items: center;
     border-radius: 16px;
-    background: #FF2800;
+    background: #BF1A45;
     width: auto;
     height: 50px;
     color: #fff;
@@ -269,14 +264,14 @@
     max-width: 100%;
     flex-shrink: 0;    
     flex-direction: row;
-    background: #000B48;
+    background: #2FC4B1;
 }
 .main-dashboard .content-col .box-m .content .tab-identity .identity-list{
     display: flex;
     list-style: none;
     padding: 0;
     margin: 0 ;
-    border-bottom: 2px solid #A3AED0;
+    border-bottom: 2px solid #2FC4B1;
     gap: 65px;
 }
 .main-dashboard .content-col .box-m .content .tab-identity .identity-list .identity-item{
@@ -288,11 +283,11 @@
     transition: all 0.3s ease;
 }
 .main-dashboard .content-col .box-m .content .tab-identity .identity-list .identity-item:hover{
-    color: #D30ED8;
+    color: #F9BA0D;
 }
 .main-dashboard .content-col .box-m .content .tab-identity .identity-list .identity-item.active{
-    border-bottom: 3px solid #D30ED8;
-    color: #D30ED8;
+    border-bottom: 3px solid #F9BA0D;
+    color: #F9BA0D;
     font-weight: 700;
 }
 .main-dashboard .content-col .box-m .content h1{
@@ -316,7 +311,7 @@
     text-align: center;
 }
 .main-dashboard .content-col .box-m .content table tr th{
-    color: #A3AED0;
+    color: #f9ba0d;
     font-family: "poppins";
     font-size: 14px;
     font-style: normal;
@@ -631,60 +626,6 @@
     letter-spacing: -0.32px;
     margin-top: 26px;
     margin-left: 521px;
-}
-.main-dashboard .profile{
-    display: flex;
-    position: fixed;
-    flex-direction: row;
-    width: auto;
-    height: 61px;
-    flex-shrink: 0;
-    border-radius: 30px;
-    background: #000B48;
-    margin-left: 864px;
-    margin-top: -75px;
-    gap: 20px;
-    z-index: 10;
-}
-.main-dashboard .profile input{
-    width: 122px;
-    height: 41px;
-    flex-shrink: 0;
-    background: #000E60;
-    margin-left: 13px;
-    margin-top: 11px;
-    border-radius: 50px;
-    border: none;
-    color: #ffffff;
-    font-family: "poppins";
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 20px; /* 142.857% */
-    letter-spacing: -0.28px;
-    padding-left: 10px;
-}
-.main-dashboard .profile svg{
-    margin-top: 20px;
-    transition: all 0.4s ease-in-out;
-}
-.main-dashboard .profile .pic{
-    width: 33.686px;
-    height: 33.686px;
-    flex-shrink: 0;
-    background: url(../../assets/profile.jpg) lightgray 50% / cover no-repeat;
-    border-radius: 50px;
-    margin-top: 15px;
-    cursor: pointer;
-    transition: all 0.4s ease-in-out;
-}
-.main-dashboard .profile .pic:hover{
-    transform: scale3d(1.1, 1.1, 1.1);
-    transition: all 0.4s ease-in-out;
-}
-.main-dashboard .profile svg:hover{
-    transform: scale(1.1);
-    transition: all 0.4s ease-in-out;
 }
 @media only screen and (max-width: 480px) {
     .main-dashboard .profile{

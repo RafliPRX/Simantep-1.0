@@ -1,6 +1,6 @@
 /* eslint-disable no-unused-vars */
 import axios from 'axios';
-import './cuti.css';
+import '../css/form.css';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile';

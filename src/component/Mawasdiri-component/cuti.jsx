@@ -1,5 +1,5 @@
 import axios from 'axios';
-import './cuti.css';
+import '../css/form.css';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import DatePicker from 'react-datepicker'; // Importing the date picker

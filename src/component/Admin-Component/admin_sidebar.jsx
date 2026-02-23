@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../Silaras-component/sidebar-laras.css';
+import '../css/sidebar.css';
 import axios from 'axios';
 import menu from '../../assets/menu.svg'
 const Admin_Sidebar = () => {
@@ -48,7 +48,7 @@ const Admin_Sidebar = () => {
     return (
         <>
             {windowWidth > 480 ? (
-                <div className='sidebar-2'>
+                <div className='sidebar'>
                     <div className='sidebar-col'>
                         <div className='logo-col' onClick={() => window.location.href = "/Home-Admin"}>
                             <div className='logo'></div>

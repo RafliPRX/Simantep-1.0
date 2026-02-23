@@ -1,6 +1,6 @@
 import Content_laras from '../../component/Silaras-component/content-laras';
 import Sidebar_laras from '../../component/Silaras-component/sidebar-laras';
-import './dashboard-laras.css';
+import '../../component/css/dashboard.css';
 
 const Dashboard_laras = () => {
     return (

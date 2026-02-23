@@ -1,6 +1,6 @@
 import Absent_Malam from '../../component/Mawasdiri-component/absent_malam'
 import Sidebar from '../../component/Mawasdiri-component/sidebar'
-import './cuti-form.css'
+import '../../component/css/dashboard.css';
 
 const Absent_Page_Malam = () => {
     return(

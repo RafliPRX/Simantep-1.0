@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import './fix-form'
+import '../css/form.css';
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import Profile from '../profile'
@@ -190,7 +190,7 @@ const Request = () => {
                 <h1>Formulir Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
                 <div className='content-col'>
-                    <div className='box3' id='box_request'>
+                    <div className='box1' id='box_request'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
@@ -214,32 +214,32 @@ const Request = () => {
                                 <tr className='barang-bar'>
                                   <th className='barang-no'>1</th>
                                   <th className='barang-jenis'><input onChange={handleChangeBarang} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang} type="number" /></th>
                                   <th className='barang-satuan'><input onChange={handleChangeSatuanBarang} type="text" /></th>
                                 </tr>
                                 <tr className='barang-bar'>
                                   <th className='barang-no'>2</th>
                                   <th className='barang-jenis'><input onChange={handleChangeBarang2} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang2} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang2} type="number" /></th>
                                   <th className='barang-satuan'><input onChange={handleChangeSatuanBarang2} type="text" /></th>
 
                                 </tr>
                                 <tr className='barang-bar'>
                                   <th className='barang-no'>3</th>
                                   <th className='barang-jenis'><input onChange={handleChangeBarang3} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang3} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang3} type="number" /></th>
                                   <th className='barang-satuan'><input onChange={handleChangeSatuanBarang3} type="text" /></th>
                                 </tr>
                                 <tr className='barang-bar'>
                                   <th className='barang-no'>4</th>
                                   <th className='barang-jenis'><input onChange={handleChangeBarang4} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang4} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang4} type="number" /></th>
                                   <th className='barang-satuan'><input onChange={handleChangeSatuanBarang4} type="text" /></th>
                                 </tr>
                                 <tr className='barang-bar'>
                                   <th className='barang-no'>5</th>
                                   <th className='barang-jenis'><input onChange={handleChangeBarang5} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang5} type="text" /></th>
+                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang5} type="number" /></th>
                                   <th className='barang-satuan'><input onChange={handleChangeSatuanBarang5} type="text" /></th>
                                 </tr>
                               </tbody>

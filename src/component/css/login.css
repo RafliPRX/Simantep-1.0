@@ -5,7 +5,7 @@
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
-    background: #000E60;
+    background: #127c70;
 }
 .login .col{
     display: flex;
@@ -86,7 +86,7 @@
     letter-spacing: -0.72px;
 }
 .login .col .form-col form .header h3{
-    color: #A3AED0;
+    color: #ffffff;
     font-family: "poppins";
     font-size: 16px;
     font-style: normal;
@@ -118,7 +118,8 @@
 .login .col .form-col form .input-col select{
     display: flex;
     width: 416px;
-    height: 50px;    padding: 17px 24px;
+    height: 50px;    
+    padding: 14px 24px;
     flex-direction: column;
     align-items: flex-start;
     gap: 30px;
@@ -126,9 +127,9 @@
     flex-shrink: 0;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.10);
-    background: #000E60;
+    background: #fff;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    color: #FFF;
+    color: #127C70;
 }
 .login .col .form-col form .input-col label{
     width: 410px;
@@ -158,9 +159,9 @@
     flex-shrink: 0;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.10);
-    background: #000E60;
+    background: #ffffff;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    color: #FFF;
+    color: #127C70;
 }
 
 .login .col .form-col form .input-col .password-input-container input {
@@ -174,9 +175,9 @@
     flex-shrink: 0;
     border-radius: 16px;
     border: 1px solid rgba(255, 255, 255, 0.10);
-    background: #000E60;
+    background: #ffffff;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-    color: #FFF;
+    color: #127C70;
 }
 
 .login .col .form-col form .input-col .toggle-password {
@@ -260,7 +261,7 @@
     gap: 10px;
     flex-shrink: 0;
     border-radius: 16px;
-    background: #D30ED8;
+    background: #f9ba0d;
     color: #FFF;
     text-align: center;
     font-family: "poppins";
@@ -327,7 +328,7 @@
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    background: url(../assets/Login.png) lightgray -96.58px 0px / 113.517% 100% no-repeat;
+    background: url(../../assets/Login.png) lightgray -96.58px 0px / 113.517% 100% no-repeat;
 }
 .login .col .logo .logo-col .logo-bg{
     position: absolute;
@@ -344,7 +345,7 @@
     height: 200px;
     margin-left: 54px;
     margin-top: -19px;
-    background: url(../assets/simanteb-logo.png) rgb(255, 255, 255, 0) 50% / cover no-repeat;
+    background: url(../../assets/simanteb-logo.png) rgb(255, 255, 255, 0) 50% / cover no-repeat;
 }
 
 @media only screen and (max-width: 480px) {

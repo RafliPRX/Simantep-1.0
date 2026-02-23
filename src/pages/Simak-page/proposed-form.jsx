@@ -1,6 +1,6 @@
 import Proposed from '../../component/Simak-component/proposed'
 import Sidebar_simak from '../../component/Simak-component/sidebar-simak'
-import './dashboard-simak.css'
+import '../../component/css/dashboard.css';
 
 const Proposed_Form = () => {
     return(

@@ -1,6 +1,6 @@
 import Admin_Sidebar from "../../component/Admin-Component/admin_sidebar";
 import Role_Form from "../../component/Admin-Component/Role_form";
-import "../mawasdiri-page/cuti-form.css";
+import '../../component/css/dashboard.css';
 const RoleCreateForm = () => {
     return(
         <>

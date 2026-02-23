@@ -1,6 +1,6 @@
 import Fix_form from '../../component/Silaras-component/fix-form'
 import Sidebar_laras from '../../component/Silaras-component/sidebar-laras'
-import './fix-form.css'
+import '../../component/css/dashboard.css';
 const Fix = () =>  {
     return(
         <> 

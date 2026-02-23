@@ -1,4 +1,4 @@
-import './content.css';
+import '../css/content.css';
 import green from '../../assets/green.svg';
 import red from '../../assets/decline.svg';
 import white from '../../assets/unread.svg';

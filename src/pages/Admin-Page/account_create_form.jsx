@@ -1,6 +1,6 @@
 import Account_Form from '../../component/Admin-Component/account_form';
 import Admin_Sidebar from '../../component/Admin-Component/admin_sidebar';
-import '../mawasdiri-page/cuti-form.css';
+import '../../component/css/dashboard.css';
 
 const Account_Create_Form = () =>  {
     return(

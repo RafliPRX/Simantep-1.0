@@ -2,7 +2,7 @@ import axios from 'axios';
 import Banner from '../component/Homepage-component/banner';
 import Footer from '../component/Homepage-component/footer';
 import Menu from '../component/Homepage-component/menu';
-import './homepage.css';
+import '../component/css/homepage.css';
 import { useState, useEffect } from 'react';
 import icon from '../assets/icon.png';
 import { useNavigate, useParams } from 'react-router-dom';

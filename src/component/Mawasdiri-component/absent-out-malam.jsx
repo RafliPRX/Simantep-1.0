@@ -1,4 +1,4 @@
-import './cuti.css';
+import '../css/form.css';
 import 'ol/ol.css';
 import { useEffect, useRef, useState } from 'react';
 import Map from 'ol/Map';

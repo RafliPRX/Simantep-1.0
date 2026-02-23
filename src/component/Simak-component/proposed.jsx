@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './form.css'
+import '../css/form.css';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile';
@@ -133,7 +133,7 @@ const Proposed = () => {
                 <h1>Formulir Pengajuan Proposal <br /> & LPJ</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                
                 <div className='content-col'>
-                    <div className='box2'>
+                    <div className='box1'>
                         <form action="">
                             <div className='content-f'>
                                 <h1>Data Diri</h1>

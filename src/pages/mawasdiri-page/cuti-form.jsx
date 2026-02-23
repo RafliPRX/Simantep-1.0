@@ -1,6 +1,6 @@
 import Sidebar from '../../component/Mawasdiri-component/sidebar'
 import Cuti_form from '../../component/Mawasdiri-component/cuti'
-import './cuti-form.css'
+import '../../component/css/dashboard.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 const Cuti = () =>  {

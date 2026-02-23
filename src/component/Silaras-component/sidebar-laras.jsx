@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './sidebar-laras.css';
+import '../css/sidebar.css';
 import axios from 'axios';
 import menu from '../../assets/menu.svg'
 const Sidebar_laras = () => {
@@ -51,7 +51,7 @@ const Sidebar_laras = () => {
     return (
         <>
             {windowWidth > 480 ? (
-                <div className='sidebar-2'>
+                <div className='sidebar'>
                     <div className='sidebar-col'>
                         <div className='logo-col' onClick={() => window.location.href = `/Home/${ level }`}>
                             <div className='logo'></div>

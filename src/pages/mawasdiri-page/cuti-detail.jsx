@@ -1,5 +1,5 @@
 import Sidebar from '../../component/Mawasdiri-component/sidebar'
-import './cuti-form.css'
+import '../../component/css/dashboard.css';
 import Cuti_Detail_Form from '../../component/Mawasdiri-component/detail-cuti'
 import { useState } from 'react';
 import Cuti_form_Update from '../../component/Mawasdiri-component/update-cuti';

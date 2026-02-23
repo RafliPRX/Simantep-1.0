@@ -1,7 +1,7 @@
 import axios from 'axios';
 import Banner from '../../component/Homepage-component/banner';
 import Footer from '../../component/Homepage-component/footer';
-import './home_admin.css';
+import '../../component/css/dashboard.css';
 import { useState, useEffect } from 'react';
 import icon from '../../assets/icon.png';
 import { useNavigate } from 'react-router-dom';

@@ -1,7 +1,8 @@
-import './menu.css'
-import absen from '../../assets/absen.png'
-import simak from '../../assets/simak.png'
-import silaras from '../../assets/silaras.png'
+import '../css/menu.css'
+import absen from '../../assets/absen.jpg'
+import simak from '../../assets/keuangan.jpg'
+import silaras from '../../assets/sarpras.jpg'
+import e_corner from '../../assets/ECORNER.jpg'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
@@ -508,7 +509,7 @@ const Menu = ({
                 {kode_role_sp === 'S-06' &&(
                 <div className='menu-disp'>
                     <div className='card'>
-                        <div className='pic' style={{backgroundImage: `url(${absen})`, backgroundColor: "lightgray", backgroundSize: "cover" }}></div>
+                        <div className='pic' style={{backgroundImage: `url(${e_corner})`, backgroundColor: "lightgray", backgroundSize: "cover" }}></div>
                         <div className='text'>
                             <h3>E-Corner</h3>
                             <h5>Khusus Admin E-Corner</h5>

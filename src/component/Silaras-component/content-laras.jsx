@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from 'react';
-import './content-laras.css'
+import '../css/content.css'
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import green from '../../assets/green.svg'
@@ -322,7 +322,7 @@ const Content_laras = () => {
                 <h1>Sistem Layanan sarana dan Prasarana</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />
                 <div className='content-col'>
-                    <div className='box'>
+                    <div className='box-m'>
                       { (role !== "C-03" ) &&
                         <div className='content'>
                             <h1>Daftar Form Perbaikan</h1>

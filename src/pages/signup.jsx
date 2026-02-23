@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa';
-import './login.css'
+import '../component/css/login.css'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 const Signup = () => {

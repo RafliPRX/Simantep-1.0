@@ -1,6 +1,6 @@
 import Absent from '../../component/Mawasdiri-component/absent'
 import Sidebar from '../../component/Mawasdiri-component/sidebar'
-import './cuti-form.css'
+import '../../component/css/dashboard.css';
 
 const Absent_Page = () => {
     return(

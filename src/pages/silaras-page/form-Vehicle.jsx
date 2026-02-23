@@ -1,6 +1,6 @@
 import Sidebar_laras from "../../component/Silaras-component/sidebar-laras"
 import Vehicle from "../../component/Silaras-component/vehicle"
-import './form-vehicle.css'
+import '../../component/css/dashboard.css';
 const Form_vehicle = () =>{
     return(
         <>

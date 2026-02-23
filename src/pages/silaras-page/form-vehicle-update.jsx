@@ -1,6 +1,6 @@
 import { useState } from "react";
 import Sidebar_laras from "../../component/Silaras-component/sidebar-laras"
-import './form-vehicle.css'
+import '../../component/css/dashboard.css';
 import Vehicle_Update from "../../component/Silaras-component/vehicle_form_update";
 import Vehicle_Detail from "../../component/Silaras-component/vehicle-form-detail";
 const Form_vehicle_Detail = () =>{ 
@@ -15,7 +15,7 @@ return(
         <div className="dashboard">
             <Sidebar_laras/>
             <div className="content">
-                <button className='switch1' onClick={toggleForm}>
+                <button className='switch' onClick={toggleForm}>
                     {showDetail ? 'Switch to Update Form' : 'Switch to Detail Form'}
                 </button>
                 {showDetail ?<Vehicle_Detail/> : <Vehicle_Update/>}

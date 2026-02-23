@@ -1,5 +1,5 @@
 
-import '../Mawasdiri-component/cuti.css';
+import '../css/form.css';
 import Profile from '../profile';
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';

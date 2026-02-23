@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import './sidebar.css'
+import '../css/sidebar.css';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import menu from '../../assets/menu.svg'

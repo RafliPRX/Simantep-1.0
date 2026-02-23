@@ -1,4 +1,4 @@
-import './profile.css';
+import './css/profile.css';
 import PropTypes from "prop-types";
 import { useState } from 'react';
 import default_pic from '../assets/profile.jpg';

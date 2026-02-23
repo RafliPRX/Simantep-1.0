@@ -1,5 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import './cuti.css';
+import '../css/form.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Profile from '../profile';

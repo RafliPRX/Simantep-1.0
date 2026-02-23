@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
-import './sidebar-simak.css';
+import '../css/sidebar.css';
 import axios from 'axios';
 import menu from '../../assets/menu.svg'
 const Sidebar_simak = () => {
@@ -50,7 +50,7 @@ const Sidebar_simak = () => {
     return (
         <>
             {windowWidth > 480 ? (
-                <div className='sidebar-3'>
+                <div className='sidebar'>
                     <div className='sidebar-col'>
                         <div className='logo-col' onClick={() => window.location.href = `/Home/${level}`}>
                             <div className='logo'></div>

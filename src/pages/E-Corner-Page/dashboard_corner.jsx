@@ -1,6 +1,6 @@
 import Content_Corner from '../../component/e-corner-component/content_corner'
 import Sidebar_Corner from '../../component/e-corner-component/sidebar_corner'
-import '../mawasdiri-page/dashboard.css';
+import '../../component/css/dashboard.css';
 const Dashboard_Corner = () => {    
     return(
         <>

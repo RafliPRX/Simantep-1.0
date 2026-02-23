@@ -1,5 +1,5 @@
 import Sidebar_simak from '../../component/Simak-component/sidebar-simak'
-import './dashboard-simak.css'
+import '../../component/css/dashboard.css';
 import Update_Withdraw from '../../component/Simak-component/update-withdraw'
 import Detail_Withdraw from '../../component/Simak-component/detail-withdrawl';
 import { useState } from 'react';
@@ -15,7 +15,7 @@ const Detail_Form_withdrawl = () => {
             <div className='dashboard'>
                 <Sidebar_simak/>
                 <div className='content'>
-                    <button className='switch2' onClick={toggleForm}>
+                    <button className='switch' onClick={toggleForm}>
                         {showDetail ? 'Switch to Update Form' : 'Switch to Detail Form'}
                     </button>
                     {showDetail ? <Detail_Withdraw/> : <Update_Withdraw/>}

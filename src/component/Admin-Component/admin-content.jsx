@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import Profile from '../profile';
-import '../Mawasdiri-component/content.css';
+import '../css/content.css';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 // import { useEffect, useState } from 'react'
@@ -781,7 +781,7 @@ const Admin_Content = () => {
                                                 <td>{index + 1}</td>
                                                 <td>{item.nama_role}</td>
                                                 <td>{item.kode_role}</td>
-                                                <td><button onClick={() => handleOpenRoleLv1(item.id_role)} className='B-update'>Update</button></td>
+                                                <td><button onClick={() => handleOpenRoleLv1(item.kode_role)} className='B-update'>Update</button></td>
                                             </tr>
                                         ))}
                                     </table>  
@@ -806,7 +806,7 @@ const Admin_Content = () => {
                                                 <td>{index + 1}</td>
                                                 <td>{item.nama_role_c}</td>
                                                 <td>{item.kode_role_c}</td>
-                                                <td><button onClick={() => handleOpenRoleLv2(item.id_role_c)} className='B-update'>Update</button></td>
+                                                <td><button onClick={() => handleOpenRoleLv2(item.kode_role_c)} className='B-update'>Update</button></td>
                                             </tr>
                                         ))}
                                     </table>  
@@ -831,7 +831,7 @@ const Admin_Content = () => {
                                                 <td>{index + 1}</td>
                                                 <td>{item.nama_role_b}</td>
                                                 <td>{item.kode_role_b}</td>
-                                                <td><button onClick={() => handleOpenRoleLv3(item.id_role_b)} className='B-update'>Update</button></td>
+                                                <td><button onClick={() => handleOpenRoleLv3(item.kode_role_b)} className='B-update'>Update</button></td>
                                             </tr>
                                         ))}
                                     </table>  
@@ -856,7 +856,7 @@ const Admin_Content = () => {
                                                 <td>{index + 1}</td>
                                                 <td>{item.nama_role_a}</td>
                                                 <td>{item.kode_role_a}</td>
-                                                <td><button onClick={() => handleOpenRoleLv4(item.id_role_a)} className='B-update'>Update</button></td>
+                                                <td><button onClick={() => handleOpenRoleLv4(item.kode_role_a)} className='B-update'>Update</button></td>
                                             </tr>
                                         ))}
                                     </table>  
@@ -881,7 +881,7 @@ const Admin_Content = () => {
                                                 <td>{index + 1}</td>
                                                 <td>{item.nama_role_sp}</td>
                                                 <td>{item.kode_role_sp}</td>
-                                                <td><button onClick={() => handleOpenRoleLv4(item.id_role_sp)} className='B-update'>Update</button></td>
+                                                <td><button onClick={() => handleOpenRoleLv4(item.kode_role_sp)} className='B-update'>Update</button></td>
                                             </tr>
                                         ))}
                                     </table>  

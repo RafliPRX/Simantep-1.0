@@ -1,4 +1,4 @@
-import '../mawasdiri-page/cuti-form.css'
+import '../../component/css/dashboard.css';
 import Admin_Sidebar from '../../component/Admin-Component/admin_sidebar';
 import Detail_Role_Form_Lv1 from '../../component/Admin-Component/detail_role_form_lv1';
 import { useParams } from 'react-router-dom';

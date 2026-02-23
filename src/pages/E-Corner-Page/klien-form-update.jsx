@@ -1,4 +1,4 @@
-import '../mawasdiri-page/cuti-form.css'
+import '../../component/css/dashboard.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar_Corner from '../../component/e-corner-component/sidebar_corner';

@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import './content-simak.css'
+import '../css/content.css'
 import green from '../../assets/green.svg'
 import white from '../../assets/unread.svg'
 import red from '../../assets/decline.svg'
@@ -308,7 +308,7 @@ const Content_simak = () => {
                 <h1>Sistem Manajemen Keuangan</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />
                 <div className='content-col'>
-                    <div className='box-s'>
+                    <div className='box-m'>
                         {(role !== "C-04" || role_sp === "S-02") && (
                         <div className='content'>
                             <h1>Progress Pengajuan RPD</h1>

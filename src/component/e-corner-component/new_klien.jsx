@@ -1,5 +1,5 @@
 import axios from 'axios';
-import '../Mawasdiri-component/cuti.css';
+import '../css/form.css';
 import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import "react-datepicker/dist/react-datepicker.css"; // Importing the CSS for the date picker
@@ -211,47 +211,47 @@ const New_Klien_form = () => {
                   <option value="15.20-15.50">15.20-15.50</option>
                 </select>
                 <button className='submit' type="button" onClick={() => handleGetKlienRooms()}>Cari Ruangan</button>
-                {klien_rooms.length > 0 ? (
-                  <div>
-                    <label htmlFor="">Room no :</label>
-                    <select onChange={handleChangeRoom} name="Room" id="Room">
-                      <option value="">Room no :</option>
-                      {klien_rooms[0]?.rooms === "Room 1" ? (
-                        <option value="Room 1" disabled>Room 1 tidak Tersedia</option>
-                      ) : (
-                        <option value="Room 1">Room 1</option>
-                      )}
-                      {klien_rooms[1]?.rooms === "Room 2" ? (
-                        <option value="Room 2" disabled>Room 2 tidak Tersedia</option>
-                      ) : (
-                        <option value="Room 2">Room 2</option>
-                      )}
-                      {klien_rooms[2]?.rooms === "Room 3" ? (
-                        <option value="Room 3" disabled>Room 3 tidak Tersedia</option>
-                      ) : (
-                        <option value="Room 3">Room 3</option>
-                      )}
-                      {klien_rooms[3]?.rooms === "Room 4" ? (
-                        <option value="Room 4" disabled>Room 4 tidak Tersedia</option>
-                      ) : (
-                        <option value="Room 4">Room 4</option>
-                      )}
-                    </select>
-                    <button className='submit' type="submit">Submit Klien</button>
-                  </div>
-                ) : (
-                  <div>
-                    <label htmlFor="">Room no :</label>
-                    <select onChange={handleChangeRoom} name="Room" id="Room">
-                      <option value="">Room no :</option>                      
-                        <option value="Room 1">Room 1</option>                      
-                        <option value="Room 2">Room 2</option>
-                        <option value="Room 3">Room 3</option>
-                        <option value="Room 4">Room 4</option>
-                    </select>
-                    <button className='submit' type="submit">Submit Klien</button>
-                  </div>
-                )}                
+                  {klien_rooms.length > 0 ? (
+                    <div>
+                      <label htmlFor="">Room no :</label>
+                      <select onChange={handleChangeRoom} name="Room" id="Room">
+                        <option value="">Room no :</option>
+                        {klien_rooms[0]?.rooms === "Room 1" ? (
+                          <option value="Room 1" disabled>Room 1 tidak Tersedia</option>
+                        ) : (
+                          <option value="Room 1">Room 1</option>
+                        )}
+                        {klien_rooms[1]?.rooms === "Room 2" ? (
+                          <option value="Room 2" disabled>Room 2 tidak Tersedia</option>
+                        ) : (
+                          <option value="Room 2">Room 2</option>
+                        )}
+                        {klien_rooms[2]?.rooms === "Room 3" ? (
+                          <option value="Room 3" disabled>Room 3 tidak Tersedia</option>
+                        ) : (
+                          <option value="Room 3">Room 3</option>
+                        )}
+                        {klien_rooms[3]?.rooms === "Room 4" ? (
+                          <option value="Room 4" disabled>Room 4 tidak Tersedia</option>
+                        ) : (
+                          <option value="Room 4">Room 4</option>
+                        )}
+                      </select>
+                      <button className='submit' type="submit">Submit Klien</button>
+                    </div>
+                  ) : (
+                    <div>
+                      <label htmlFor="">Room no :</label>
+                      <select onChange={handleChangeRoom} name="Room" id="Room">
+                        <option value="">Room no :</option>                      
+                          <option value="Room 1">Room 1</option>                      
+                          <option value="Room 2">Room 2</option>
+                          <option value="Room 3">Room 3</option>
+                          <option value="Room 4">Room 4</option>
+                      </select>
+                      <button className='submit' type="submit">Submit Klien</button>
+                    </div>
+                  )}                  
               </div>              
             </form>
           </div>

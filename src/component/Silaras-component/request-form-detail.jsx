@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import './fix-form'
+import '../css/form.css';
 import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import Profile from '../profile'
@@ -127,13 +127,13 @@ const Request_Form_Detail = () => {
                 <h1>Formulir Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" /> 
                 <div className='content-col'>
-                    <div className='box3' id='box_request'>
+                    <div className='box1' id='box_request'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
                             <label htmlFor="">Nama</label>
                             <input value={request.nama} disabled placeholder='Nama' type="text"/>
-                            <input type="text" value={notif_detail.id_notif} name="" id="" />
+                            <input type="hidden" value={notif_detail.id_notif} name="" id="" />
                             <label htmlFor="">NIP/NRK</label>
                             <input value={request.nrk_nip} disabled placeholder='NRK' type="text"/>
                             <label htmlFor="">Jabatan</label>

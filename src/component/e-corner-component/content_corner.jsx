@@ -1,4 +1,4 @@
-import'../Mawasdiri-component/content.css';
+import'../css/content.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 // import { Link } from 'react-router-dom';
@@ -102,6 +102,7 @@ const Content_Corner = () => {
             }, 500);
         } catch (error) {
           console.log(error.response);
+          setIsLoading(false);
           alert("error code 104");
         }
     }

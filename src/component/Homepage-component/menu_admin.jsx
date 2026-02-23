@@ -1,4 +1,4 @@
-import './menu.css'
+import '../css/menu.css'
 import absen from '../../assets/absen.png'
  
 const Menu_Admin = () => {    

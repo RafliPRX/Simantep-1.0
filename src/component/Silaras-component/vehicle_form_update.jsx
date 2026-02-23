@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import './fix-form.css'
+import '../css/form.css'
 import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import Profile from '../profile';
@@ -112,7 +112,7 @@ const Vehicle_Update = () => {
                 <h1>Mengubah Formulir Peminjaman <br /> Kendaraan Dinas</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
                 <div className='content-col'>
-                    <div className='box3'>
+                    <div className='box1'>
                         <form action="">
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>

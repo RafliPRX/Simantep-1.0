@@ -6,7 +6,7 @@
     height: 750px;
     gap: 50px;
     flex-shrink: 0;
-    background: #000E60;
+    background: #3ACCB6;
     margin-top: 163px;
     padding-left: 110px;
     padding-right: 20px;
@@ -24,7 +24,7 @@
     height: auto;
     flex-shrink: 0;
     border-radius: 40px;
-    background: #000B48;
+    background: #127C70;
     padding-bottom: 50px;
     padding-right: 60px;
     transform: translateY(110px);
@@ -51,7 +51,7 @@
     height: auto;
     flex-shrink: 0;
     border-radius: 40px;
-    background: #000B48;
+    background: #127C70;
     padding-bottom: 50px;
     padding-right: 60px;
     transform: translateY(-123px);
@@ -83,8 +83,7 @@
     width: auto;
     height: auto;
     flex-shrink: 0;
-    color: #ccc;
-    font-family: "poppins";
+    color: #fff;
     font-size: 21px;
     font-style: normal;
     font-weight: 400;
@@ -110,7 +109,6 @@
     height: auto;
     flex-shrink: 0;
     color: #ccc;
-    font-family: "poppins";
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -131,10 +129,9 @@
     width: auto;
     height: 19px;    
     flex-shrink: 0;
-    background: #7551FF;
+    background: #F9BA0D;
     color: #FFF;
     text-align: center;
-    font-family: "poppins";
     font-size: 16px;
     font-style: normal;
     font-weight: 500;
@@ -186,7 +183,6 @@
     background: #7551FF;
     color: #FFF;
     text-align: center;
-    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -208,7 +204,6 @@
     background: #7551FF;
     color: #FFF;
     text-align: center;
-    font-family: "poppins";
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -227,8 +222,7 @@
     width: auto;
     height: auto;
     flex-shrink: 0;
-    color: #ccc;
-    font-family: "poppins";
+    color: #FFF;
     font-size: 17px;
     font-style: normal;
     font-weight: 400;
@@ -252,10 +246,9 @@
 .menu .menu-disp .card .text h3{
     overflow-y: hidden;
     width: 386px;
-    height: 49px;
+    height: auto;
     flex-shrink: 0;
     color: #FFF;
-    font-family: "poppins";
     font-size: 62px;
     font-style: normal;
     font-weight: 700;
@@ -268,8 +261,7 @@
     width: 398px;
     height: 46.5px;
     flex-shrink: 0;
-    color: #A3AED0;
-    font-family: "poppins";
+    color: #fff;
     font-size: 22px;
     font-style: normal;
     font-weight: 400;
@@ -281,10 +273,9 @@
     width: 152px;
     height: 38px;
     flex-shrink: 0;
-    background: #7551FF;
+    background: #F9BA0D;
     color: #FFF;
     text-align: center;
-    font-family: "poppins";
     font-size: 25px;
     font-style: normal;
     font-weight: 500;

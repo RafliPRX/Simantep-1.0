@@ -1,8 +1,0 @@
-.dashboard{
-    display: flex;
-    flex-direction: row;
-    width: 100%;
-    height: 100vh;
-    background: #000E60;
-    overflow-y: hidden;
-}

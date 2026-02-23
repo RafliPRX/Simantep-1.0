@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import './banner.css'
+import '../css/banner.css'
 const Banner = ({Logout}) => {
     return(
         <>

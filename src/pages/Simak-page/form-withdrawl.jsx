@@ -1,6 +1,6 @@
 import Sidebar_simak from '../../component/Simak-component/sidebar-simak'
 import Withdraw from '../../component/Simak-component/withdraw'
-import './dashboard-simak.css'
+import '../../component/css/dashboard.css';
 
 const Form_withdrawl = () => {
     return(

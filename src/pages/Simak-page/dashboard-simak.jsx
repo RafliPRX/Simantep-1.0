@@ -1,6 +1,6 @@
 import Content_simak from '../../component/Simak-component/content-simak'
 import Sidebar_simak from '../../component/Simak-component/sidebar-simak'
-import './dashboard-simak.css'
+import '../../component/css/dashboard.css';
 
 const Dashboard_simak = () => {
     return(

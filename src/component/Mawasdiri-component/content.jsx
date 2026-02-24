@@ -91,82 +91,12 @@ const Content = () => {
             deletedSurat(id);
         }
     }
-    const [surat_role_c, setSurat_role_c] = useState([]);
-    const [pagination_surat_role_c, setPagination_surat_role_c] = useState({
-        currentPage: 1,
-    });        
-    const getSurat_role_c = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_c.php?kode_role=${role}&page=${pagination_surat_role_c.currentPage}`;
-        let url = baseUrl;
-        axios.get(url).then((res1) => {
-            console.log(res1.data.Data);
-            const response = res1.data.Data;
-            const pagination_surat_c = {
-                total: res1.data.total_records,
-                currentPage: res1.data.current_page,
-                nextPage: res1.data.nextPage,
-            }
-            setSurat_role_c(response);
-            setPagination_surat_role_c(pagination_surat_c);
-            console.log(response);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    }
-    const handleNext_Surat_c = () => {
-        setPagination_surat_role_c({
-            ...pagination_surat_role_c,
-            currentPage: pagination_surat_role_c.currentPage + 1,
-        })
-    }
-    const handlePrev_Surat_c = () => {
-        setPagination_surat_role_c({
-            ...pagination_surat_role_c,
-            currentPage: pagination_surat_role_c.currentPage - 1,
-        })
-    }  
-    const [surat_role_b, setSurat_role_b] = useState([]);
-    const [pagination_surat_role_b, setPagination_surat_role_b] = useState({
-        currentPage: 1,
-    });        
-    const getSurat_role_b = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_b.php?kode_role=${role}&page=${pagination_surat_role_b.currentPage}`;
-        let url = baseUrl;
-        axios.get(url).then((res1) => {
-            console.log(res1.data.Data);
-            const response = res1.data.Data;
-            const pagination_surat = {
-                total: res1.data.total_records,
-                currentPage: res1.data.current_page,
-                nextPage: res1.data.nextPage,
-            }
-            setSurat_role_b(response);
-            setPagination_surat_role_b(pagination_surat);
-            console.log(response);
-        })
-        .catch((error) => {
-            console.log(error);
-        });
-    }
-    const handleNext_Surat_b = () => {
-        setPagination_surat_role_b({
-            ...pagination_surat_role_b,
-            currentPage: pagination_surat_role_b.currentPage + 1,
-        })
-    }
-    const handlePrev_Surat_b = () => {
-        setPagination_surat_role_b({
-            ...pagination_surat_role_b,
-            currentPage: pagination_surat_role_b.currentPage - 1,
-        })
-    }  
     const [surat_role_a, setSurat_role_a] = useState([]);
     const [pagination_surat_role_a, setPagination_surat_role_a] = useState({
         currentPage: 1,
     });        
-    const getSurat_role_a = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a.php?kode_role=${role}&page=${pagination_surat_role_a.currentPage}`;
+    const getSurat_role_a_kasubbag = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kasubbag.php?kode_role=${role}&page=${pagination_surat_role_a.currentPage}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -184,13 +114,48 @@ const Content = () => {
             console.log(error);
         });
     }
-    const handleNext_Surat_a = () => {
+    const [surat_role_a_kabalai, setSurat_role_a_kabalai] = useState([]);
+    const [pagination_surat_role_a_kabalai, setPagination_surat_role_a_kabalai] = useState({
+        currentPage: 1,
+    });        
+    const getSurat_role_a_kabalai = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kabalai.php?kode_role=${role}&page=${pagination_surat_role_a_kabalai.currentPage}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_surat = {
+                total: res1.data.total_records,
+                currentPage: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setSurat_role_a_kabalai(response);
+            setPagination_surat_role_a_kabalai(pagination_surat);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    const handleNext_Surat_a_kabalai = () => {
+        setPagination_surat_role_a_kabalai({
+            ...pagination_surat_role_a_kabalai,
+            currentPage: pagination_surat_role_a_kabalai.currentPage + 1,
+        })
+    }
+    const handlePrev_Surat_a_kabalai = () => {
+        setPagination_surat_role_a_kabalai({
+            ...pagination_surat_role_a_kabalai,
+            currentPage: pagination_surat_role_a_kabalai.currentPage - 1,
+        })
+    }
+    const handleNext_Surat_a_kasubbag = () => {
         setPagination_surat_role_a({
             ...pagination_surat_role_a,
             currentPage: pagination_surat_role_a.currentPage + 1,
         })
     }
-    const handlePrev_Surat_a = () => {
+    const handlePrev_Surat_a_kasubbag = () => {
         setPagination_surat_role_a({
             ...pagination_surat_role_a,
             currentPage: pagination_surat_role_a.currentPage - 1,
@@ -237,12 +202,11 @@ const Content = () => {
     useEffect(() => {
     getIdentity();
     getSurat();
-    getSurat_role_c();
-    getSurat_role_b();
-    getSurat_role_a();
+    getSurat_role_a_kasubbag();
+    getSurat_role_a_kabalai();
     getSurat_role_sp();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pagination_surat?.currentPage, pagination_surat_role_c?.currentPage, pagination_surat_role_b?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_sp?.currentPage]);
+    }, [pagination_surat?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_a_kabalai?.currentPage, pagination_surat_role_sp?.currentPage]);
 
     
 
@@ -258,254 +222,190 @@ const Content = () => {
             <div className='content-col'>
                 <div className='box-m'>
                     <div className='content'>
-                        {level === 'level-1' && (
-                            <>
-                                {role_sp === '0' ? (
-                                    <>
-                                        <h1>Progress Pengajuan Surat</h1>
-                                        <div className='pagination'>
-                                            <button className='left' onClick={handlePrev_Surat}><img src={left} alt="" /></button>
-                                            <input className='page-number' type="text" value={pagination_surat.currentPage} />
-                                            <button className='right' onClick={handleNext_Surat}><img src={right} alt="" /></button>
-                                        </div>
-                                        {surat.length > 0 ? (
-                                            <table>
-                                                <tr>
-                                                    <th style={{ textAlign: 'center' }}>Nomor</th>
-                                                    <th style={{ textAlign: 'center' }}>id Surat</th>
-                                                    <th style={{ textAlign: 'center' }}>Nama</th>
-                                                    <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                                    <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                                    <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                                    <th style={{ textAlign: 'center' }}>PJ/PM/Koordinator</th>
-                                                    <th style={{ textAlign: 'center' }}>Kepegawaian</th>
-                                                    <th style={{ textAlign: 'center' }}>Kasubag Tata Usaha</th>
-                                                    <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                    {level === 'level-1' && (
+                        <>
+                        {role_sp === '0' ? (
+                                <>
+                                    <h1>Progress Pengajuan Surat</h1>
+                                    <div className='pagination'>
+                                        <button className='left' onClick={handlePrev_Surat}><img src={left} alt="" /></button>
+                                        <input className='page-number' type="text" value={pagination_surat.currentPage} />
+                                        <button className='right' onClick={handleNext_Surat}><img src={right} alt="" /></button>
+                                    </div>
+                                    {surat.length > 0 ? (
+                                        <table>
+                                            <tr>
+                                                <th style={{ textAlign: 'center' }}>Nomor</th>
+                                                <th style={{ textAlign: 'center' }}>id Surat</th>
+                                                <th style={{ textAlign: 'center' }}>Nama</th>
+                                                <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                                <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                                <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                                <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                                <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                                <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                                            </tr>
+                                            {surat.map((item, index) => (
+                                                <tr key={item.id_surat}>
+                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                    <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
                                                 </tr>
-                                                {surat.map((item, index) => (
-                                                    <tr key={item.id_surat}>
-                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                        <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button> </td>  
-                                                    </tr>
-                                                ))} 
-                                            </table>
-                                        ) : (
-                                            <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
-                                        )}
-                                    </>
-                                ) : role_sp === 'S-02' ? (
-                                    <>
-                                        <h1>Progress Pengajuan Surat</h1>
-                                        <div className='pagination'>
-                                            <button className='left' onClick={handlePrev_Surat_sp}><img src={left} alt="" /></button>
-                                            <input className='page-number' type="text" value={pagination_surat_role_sp.currentPage} />
-                                            <button className='right' onClick={handleNext_Surat_sp}><img src={right} alt="" /></button>
-                                        </div>
-                                        {surat_role_sp.length > 0 ? (
-                                            <table>
-                                                <tr>
-                                                    <th style={{ textAlign: 'center' }}>Nomor</th>
-                                                    <th style={{ textAlign: 'center' }}>id Surat</th>
-                                                    <th style={{ textAlign: 'center' }}>Nama</th>
-                                                    <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                                    <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                                    <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                                    <th style={{ textAlign: 'center' }}>PJ/PM/Koordinator</th>
-                                                    <th style={{ textAlign: 'center' }}>Kepegawaian</th>
-                                                    <th style={{ textAlign: 'center' }}>Kasubag Tata Usaha</th>
-                                                    <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                                            ))} 
+                                        </table>
+                                    ) : (
+                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                                    )}
+                                </>
+                            ) : role_sp === 'S-02' ? (
+                                <>
+                                    <h1>Progress Pengajuan Surat</h1>
+                                    <div className='pagination'>
+                                        <button className='left' onClick={handlePrev_Surat_sp}><img src={left} alt="" /></button>
+                                        <input className='page-number' type="text" value={pagination_surat_role_sp.currentPage} />
+                                        <button className='right' onClick={handleNext_Surat_sp}><img src={right} alt="" /></button>
+                                    </div>
+                                    {surat_role_sp.length > 0 ? (
+                                        <table>
+                                            <tr>
+                                                <th style={{ textAlign: 'center' }}>Nomor</th>
+                                                <th style={{ textAlign: 'center' }}>id Surat</th>
+                                                <th style={{ textAlign: 'center' }}>Nama</th>
+                                                <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                                <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                                <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                                <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                                <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                                <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                                            </tr>
+                                            {surat_role_sp.map((item, index) => (
+                                                <tr key={item.id_surat}>
+                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                    <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Detail</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button> </td>  
                                                 </tr>
-                                                {surat_role_sp.map((item, index) => (
-                                                    <tr key={item.id_surat}>
-                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                        <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button> </td>  
-                                                    </tr>
-                                                ))} 
-                                            </table>
-                                        ) : (
-                                            <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
-                                        )}
-                                    </>
+                                            ))} 
+                                        </table>
+                                    ) : (
+                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                                    )}
+                                </>
+                            ) : (
+                                <>
+                                    <h1>Progress Pengajuan Surat</h1>
+                                    <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>Peran tidak dikenali</p>
+                                </>
+                            )}                   
+                        </>
+                    )}                           
+                    {(role ==='A-02' && level === 'level-4') && 
+                        <>
+                            <h1>Progress Pengajuan Surat</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Surat_a_kasubbag}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
+                                <button className='right' onClick={handleNext_Surat_a_kasubbag}><img src={right} alt="" /></button>
+                            </div>
+                            {surat_role_a.length > 0 ? (
+                                <table>
+                                    <tr>
+                                        <th style={{ textAlign: 'center' }}>Nomor</th>
+                                        <th style={{ textAlign: 'center' }}>id Surat</th>
+                                        <th style={{ textAlign: 'center' }}>Nama</th>
+                                        <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                        <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                        <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                        <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                        <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                                    </tr>
+                                    {surat_role_a.map((item, index) => (
+                                        <tr key={item.id_surat}>
+                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                            <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
+                                            </tr>
+                                        ))} 
+                                    </table>
                                 ) : (
-                                    <>
-                                        <h1>Progress Pengajuan Surat</h1>
-                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>Peran tidak dikenali</p>
-                                    </>
-                                )}
-                            </>
-                        )}
-                        {level ==='level-2' && 
-                            <>
-                                <h1>Progress Pengajuan Surat</h1>
-                                <div className='pagination'>
-                                    <button className='left' onClick={handlePrev_Surat_c}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_surat_role_c.currentPage} />
-                                    <button className='right' onClick={handleNext_Surat_c}><img src={right} alt="" /></button>
-                                </div>
-                                {surat_role_c.length > 0 ? (
-                                    <table>
-                                        <tr>
-                                            <th style={{ textAlign: 'center' }}>Nomor</th>
-                                            <th style={{ textAlign: 'center' }}>id Surat</th>
-                                            <th style={{ textAlign: 'center' }}>Nama</th>
-                                            <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                            <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                            <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                            <th style={{ textAlign: 'center' }}>PJ/PM/Koordinator</th>
-                                            <th style={{ textAlign: 'center' }}>Kepegawaian</th>
-                                            <th style={{ textAlign: 'center' }}>Kasubag Tata Usaha</th>
-                                            <th style={{ textAlign: 'center' }}>Opsi Lain</th>
-                                        </tr>
-                                        {surat_role_c.map((item, index) => (
-                                            <tr key={item.id_surat}>
-                                                <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
-                                                </tr>
-                                            ))} 
-                                        </table>
-                                    ) : (
-                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
-                                )}
-                            </>
-                        }
-                        {level ==='level-3' && 
-                            <>
-                                <h1>Progress Pengajuan Surat</h1>
-                                <div className='pagination'>
-                                    <button className='left' onClick={handlePrev_Surat_b}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_surat_role_b.currentPage} />
-                                    <button className='right' onClick={handleNext_Surat_b}><img src={right} alt="" /></button>
-                                </div>
-                                {surat_role_b.length > 0 ? (
-                                    <table>
-                                        <tr>
-                                            <th style={{ textAlign: 'center' }}>Nomor</th>
-                                            <th style={{ textAlign: 'center' }}>id Surat</th>
-                                            <th style={{ textAlign: 'center' }}>Nama</th>
-                                            <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                            <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                            <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                            <th style={{ textAlign: 'center' }}>PJ/PM/Koordinator</th>
-                                            <th style={{ textAlign: 'center' }}>Kepegawaian</th>
-                                            <th style={{ textAlign: 'center' }}>Kasubag Tata Usaha</th>
-                                            <th style={{ textAlign: 'center' }}>Opsi Lain</th>
-                                        </tr>
-                                        {surat_role_b.map((item, index) => (
-                                            <tr key={item.id_surat}>
-                                                <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
-                                                </tr>
-                                            ))} 
-                                        </table>
-                                    ) : (
-                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
-                                )}
-                            </>
-                        }
-                        {level ==='level-4' && 
-                            <>
-                                <h1>Progress Pengajuan Surat</h1>
-                                <div className='pagination'>
-                                    <button className='left' onClick={handlePrev_Surat_a}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
-                                    <button className='right' onClick={handleNext_Surat_a}><img src={right} alt="" /></button>
-                                </div>
-                                {surat_role_a.length > 0 ? (
-                                    <table>
-                                        <tr>
-                                            <th style={{ textAlign: 'center' }}>Nomor</th>
-                                            <th style={{ textAlign: 'center' }}>id Surat</th>
-                                            <th style={{ textAlign: 'center' }}>Nama</th>
-                                            <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                            <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                            <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                            <th style={{ textAlign: 'center' }}>PJ/PM/Koordinator</th>
-                                            <th style={{ textAlign: 'center' }}>Kepegawaian</th>
-                                            <th style={{ textAlign: 'center' }}>Kasubag Tata Usaha</th>
-                                            <th style={{ textAlign: 'center' }}>Opsi Lain</th>
-                                        </tr>
-                                        {surat_role_a.map((item, index) => (
-                                            <tr key={item.id_surat}>
-                                                <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                <td style={{ textAlign: 'center', display: item.veri_3 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
-                                                </tr>
-                                            ))} 
-                                        </table>
-                                    ) : (
-                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
-                                )}
-                            </>
-                        }                        
+                                    <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                            )}
+                        </>
+                    }
+                    {(role ==='A-01' && level === 'level-4') && 
+                        <>
+                            <h1>Progress Pengajuan Surat</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Surat_a_kabalai}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_surat_role_a_kabalai.currentPage} />
+                                <button className='right' onClick={handleNext_Surat_a_kabalai}><img src={right} alt="" /></button>
+                            </div>
+                            {surat_role_a_kabalai.length > 0 ? (
+                                <table>
+                                    <tr>
+                                        <th style={{ textAlign: 'center' }}>Nomor</th>
+                                        <th style={{ textAlign: 'center' }}>id Surat</th>
+                                        <th style={{ textAlign: 'center' }}>Nama</th>
+                                        <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                        <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                        <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                        <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                        <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                                    </tr>
+                                    {surat_role_a_kabalai.map((item, index) => (
+                                        <tr key={item.id_surat}>
+                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                            <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
+                                            </tr>
+                                        ))} 
+                                    </table>
+                                ) : (
+                                    <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                            )}
+                        </>
+                    }
                     </div>     
                 </div>
             </div>

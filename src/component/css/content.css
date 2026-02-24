@@ -52,6 +52,7 @@
     gap: 20px;
     flex-shrink: 0;
     overflow-y: auto;
+    padding-bottom: 20px;
 }
 .main-dashboard .content-col .box-m .tab-container{
     width: 100%;

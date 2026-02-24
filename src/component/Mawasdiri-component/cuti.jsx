@@ -39,22 +39,23 @@ const Cuti_form = () => {
         console.log(error);
       }
     }
-  const [identityPJ, setIdentityPJ] = useState([]);
-  const [nama_pj, setNama_pj] = useState(identityPJ.nama);
-  console.log("nama PJ: " + nama_pj);
-  const role_c = kode_role_c;
-  const getIdentityPJ = async (role_c) => {
+  const [identityAtasan, setIdentityAtasan] = useState([]);
+  const [nama_atasan, setNama_pj] = useState(identityAtasan.nama);
+  const [kode_atasan, setKode_atasan] = useState(identityAtasan.kode_role_a);
+  console.log("nama Atasan: " + nama_atasan);
+  const getIdentityKasubbag = async () => {
       try {
-        const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/getIdentity_PJ.php?kode_role_c=${role_c}` , {
+        const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/getIdentity_Atasan.php?kode_role_a=A-02` , {
           headers: {"Content-Type": "application/json"},
         });
         console.log(response.data);
-        setIdentityPJ(response.data);
+        setIdentityAtasan(response.data);
         setNama_pj(response.data.nama);
+        setKode_atasan(response.data.kode_role_a);
       } catch (error) {
         console.log(error);
       }
-    }  
+  }  
   function Cuti(event) {
     setShow(event.target.checked); // Set show based on checkbox state
   }
@@ -117,8 +118,8 @@ const Cuti_form = () => {
     setIsLoading(true);
     const payload = {
       id_number: storeidNumber,
-      kode_role_c: kode_role_c,
-      nama_c: nama_pj,
+      kode_role_a1: kode_atasan,
+      nama_a1: nama_atasan,
       alamat: alamat,
       no_hp: hp,
       keterangan: keterangan,
@@ -148,9 +149,7 @@ const Cuti_form = () => {
   }
   useEffect(() => {
     getIdentity();
-    if (kode_role_c) {
-      getIdentityPJ(role_c);
-    }   
+    getIdentityKasubbag();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [kode_role_c]);
   return (
@@ -177,8 +176,8 @@ const Cuti_form = () => {
                 <input value={jabatan} placeholder='No. HP' type="text" />
                 {/* <label htmlFor="">ID Number</label>
                 <input value={storeidNumber} placeholder='No. HP' type="text" /> */}
-                <label htmlFor="">Nama PJ</label>
-                <input value={nama_pj} placeholder='Nama PJ' type="text" />
+                {/* <label htmlFor="">Nama Atasan</label> */}
+                <input value={nama_atasan} placeholder='Nama Atasan' type="hidden" />
               </div>
               <div className='content-tx'>
                 <h1>Alasan Cuti/Sakit/Izin</h1>

@@ -37,8 +37,43 @@ const Cuti_Detail_Form = () => {
             console.log(error.response);
         }
     }
+
+    const [identityAtasan, setIdentityAtasan] = useState([]);
+    const [nama_atasan, setNama_atasan] = useState(identityAtasan.nama);
+    const [kode_role_atasan, setKode_role_atasan] = useState(identityAtasan.kode_role);
+    console.log("nama Atasan: " + nama_atasan);
+    console.log("kode Atasan: " + kode_role_atasan);
+    const getIdentityKasubbag = async () => {
+        try {
+          const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/getIdentity_Atasan.php?kode_role_a=A-01` , {
+            headers: {"Content-Type": "application/json"},
+          });
+          console.log(response.data);
+          setIdentityAtasan(response.data);
+          setNama_atasan(response.data.nama);
+          setKode_role_atasan(response.data.kode_role_a);         
+        } catch (error) {
+          console.log(error);
+        }
+    }
+    const [adminIdentity, setAdminIdentity] = useState([]);
+    const [nama_admin, setNama_Admin] = useState(adminIdentity.nama);
+    console.log("nama Admin: " + nama_admin);
+    const getIdentityAdmin = async () => {
+        try {
+          const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/getAdminIdentity.php?kode_role_sp=S-02` , {
+            headers: {"Content-Type": "application/json"},
+          });
+          console.log(response.data);
+          setAdminIdentity(response.data);
+          setNama_Admin(response.data.nama);     
+        } catch (error) {
+          console.log(error);
+        }
+    }
     const [notif_new, setNotif_new] = useState([]);
     const [id_Notif, setId_notif] = useState(null);
+
     const getNotif_new = async () => {
       try {
             const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/notifikasi_surat_by_Receive.php?id=${param.id}`, {
@@ -61,23 +96,20 @@ const Cuti_Detail_Form = () => {
     useEffect(() => {
         getDetail();
         getNotif_new();
+        getIdentityKasubbag();
+        getIdentityAdmin();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     console.log("id_notif yg diambil: "+ id_Notif);
-    const [pjJawab, setPjJawab] = useState("");
     const [alasan, setAlasan] = useState("");
-    const [kepegJawab, setKepegJawab] = useState("");
     const [kasubagJawab, setKasubagJawab] = useState("");
-    const handlePjJawabChange = (event) => {
-      setPjJawab(event.target.value);
-      console.log(event.target.value);
-    }
-    const handleKepegJawabChange = (event) => {
-      setKepegJawab(event.target.value);
-      console.log(event.target.value);
-    }
+    const [kabalaiJawab, setKabalaiJawab] = useState("");
     const handleKasubagJawabChange = (event) => {
       setKasubagJawab(event.target.value);
+      console.log(event.target.value);
+    }
+    const handleKabalaiJawabChange = (event) => {
+      setKabalaiJawab(event.target.value);
       console.log(event.target.value);
     }
     const handleAlasanChange = (event) => {
@@ -85,42 +117,16 @@ const Cuti_Detail_Form = () => {
       console.log(event.target.value);
     }
     const navigate = useNavigate();
-    const handlePjJawab = async () =>{
-      const nama_b_value = Number(pjJawab) === 3 ? "Chandra Hutama Yahrinanda" : detail.nama;
-      const kode_role_b_value = Number(pjJawab) === 3 ? "B-01" : "";
+    const handleKasubagJawab = async () =>{
+      const nama_a2_value = Number(kasubagJawab) === 3 ? nama_atasan : detail.nama;
       const payload = {
-        veri_1: pjJawab,
+        veri_1: kasubagJawab,
         alasan: alasan,
-        kode_role_b: kode_role_b_value,
-        nama_b: nama_b_value,
+        nama_a2: nama_a2_value,
+        kode_role_a2: kode_role_atasan,
       }
       try {
-        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/pj_answer.php?id=${param.id}`, payload, {
-          headers: {
-            "Content-Type" : "multipart/form-data"
-          }
-        });
-        console.log(response.data.message);
-        setTimeout(() => {
-          setIsLoading(false);
-          navigate(`/Dashboard/${level}/${role}/${role_sp}`);
-          alert(response.data.message);
-        }, 1000);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    const handleKepegJawab = async () =>{
-      const nama_a_value = Number(kepegJawab) === 3 ? "Kanif Anshori" : detail.nama;
-      const kode_role_a_value = Number(kepegJawab) === 3 ? "A-02" : "";
-      const payload = {
-        veri_2: kepegJawab,
-        alasan: alasan,
-        kode_role_a: kode_role_a_value,
-        nama_a: nama_a_value,
-      }
-      try {
-        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/kepeg_answer.php?id=${param.id}`, payload, {
+        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/kasubag_answer.php?id=${param.id}`, payload, {
           headers: {
             "Content-Type" : "multipart/form-data"
           }
@@ -135,15 +141,15 @@ const Cuti_Detail_Form = () => {
         console.error(error);
       }
     }
-    const handleKasubagJawab = async () =>{
-      const nama_sp_value = Number(kasubagJawab) === 3 ? "Raeza Noorinda Oktaviani" : detail.nama;
+    const handleKabalaiJawab = async () =>{      
+      const nama_sp_value = Number(kabalaiJawab) === 3 ? nama_admin : detail.nama;
       const payload = {
-        veri_3: kasubagJawab,
+        veri_2: kabalaiJawab,
         alasan: alasan,
         nama_sp: nama_sp_value,
       }
       try {
-        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/kasubag_answer.php?id=${param.id}`, payload, {
+        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/kabalai_answer.php?id=${param.id}`, payload, {
           headers: {
             "Content-Type" : "multipart/form-data"
           }
@@ -204,36 +210,24 @@ const Cuti_Detail_Form = () => {
       link.download = detail.pdf;
       link.click();
     }
-    const handlePj = async (idNotif, event) => {
-      event.preventDefault();
-      try {
-        setIsLoading(true);        
-        await mark(idNotif, event); 
-        await handlePjJawab(event);
-      } catch (error) {
-        console.log(error);        
-      } finally {
-        setIsLoading(false);
-      }      
-    }
-    const handleKepeg = async (idNotif, event) => {
-      event.preventDefault();
-      try {
-        setIsLoading(true);
-        await mark(idNotif, event); 
-        await handleKepegJawab(event);
-      } catch (error) {
-        console.log(error);        
-      } finally {
-        setIsLoading(false);
-      }      
-    }
     const handleKasubag = async (idNotif, event) => {
       event.preventDefault();
       try {
         setIsLoading(true);
         await mark(idNotif, event);
         await handleKasubagJawab(event);
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);
+      }      
+    }
+    const handleKabalai = async (idNotif, event) => {
+      event.preventDefault();
+      try {
+        setIsLoading(true);
+        await mark(idNotif, event);
+        await handleKabalaiJawab(event);
       } catch (error) {
         console.log(error);        
       } finally {
@@ -380,44 +374,8 @@ const Cuti_Detail_Form = () => {
                         <div style={{display: detail.pdf ? 'flex' : 'none'}} className='content-f'>
                           <h1>Download Surat</h1>
                           <button className='submit' onClick={DownloadFile}>Download</button>
-                        </div>
-                        {level === "level-2" &&
-                        <div className='content-f'>
-                          <h1>Jawab PJ</h1>
-                            <form action="">
-                              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                                <input onChange={handlePjJawabChange} style={{width: '20px', height: '20px'}} type="checkbox" value='3' name="" id="" />
-                                <label htmlFor="">Menerima</label>
-                              </div>
-                              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                                <input onChange={handlePjJawabChange} style={{width: '20px', height: '20px'}} type="checkbox" value='2' name="" id="" />
-                                <label htmlFor="">Menunda</label>
-                              </div>
-                              <label htmlFor="">Alasan (Jika Menunda)</label>
-                              <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
-                              <button onClick={(e) => handlePj(id_Notif, e)} className='submit'>Kirim</button>
-                          </form>
-                        </div>
-                        }
-                        {level === "level-3" &&
-                        <div className='content-f'>
-                          <h1>Jawab Kepegawaian</h1>
-                            <form action="">
-                              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                                <input onChange={handleKepegJawabChange} style={{width: '20px', height: '20px'}} type="checkbox" value='3' name="" id="" />
-                                <label htmlFor="">Menerima</label>
-                              </div>
-                              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                                <input onChange={handleKepegJawabChange} style={{width: '20px', height: '20px'}} type="checkbox" value='2' name="" id="" />
-                                <label htmlFor="">Menunda</label>
-                              </div>
-                              <label htmlFor="">Alasan (Jika Menunda)</label>
-                              <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
-                              <button onClick={(e) => handleKepeg(id_Notif, e)} className='submit'>Kirim</button>
-                          </form>
-                        </div>
-                        }
-                        {level === "level-4" &&
+                        </div>                        
+                        {(level === "level-4" && role === 'A-02') &&
                         <div className='content-f'>
                           <h1>Jawab Kasubag</h1>
                             <form action="">
@@ -432,6 +390,25 @@ const Cuti_Detail_Form = () => {
                               <label htmlFor="">Alasan (Jika Menunda)</label>
                               <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
                               <button onClick={(e) => handleKasubag(id_Notif, e)} className='submit'>Kirim</button>
+                              <input type="hidden" value={id_Notif || ''} name="" id="" />
+                          </form>
+                        </div>
+                        }
+                        {(level === "level-4" && role === 'A-01') &&
+                        <div className='content-f'>
+                          <h1>Jawab Kepala Balai</h1>
+                            <form action="">
+                              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                <input onChange={handleKabalaiJawabChange} style={{width: '20px', height: '20px'}} type="checkbox" value='3' name="" id="" />
+                                <label htmlFor="">Menerima</label>
+                              </div>
+                              <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
+                                <input onChange={handleKabalaiJawabChange} style={{width: '20px', height: '20px'}} type="checkbox" value='2' name="" id="" />
+                                <label htmlFor="">Menunda</label>
+                              </div>
+                              <label htmlFor="">Alasan (Jika Menunda)</label>
+                              <textarea onChange={handleAlasanChange} style={{marginTop: '10px'}} name="" id=""></textarea>
+                              <button onClick={(e) => handleKabalai(id_Notif, e)} className='submit'>Kirim</button>
                               <input type="hidden" value={id_Notif || ''} name="" id="" />
                           </form>
                         </div>

@@ -258,14 +258,14 @@ const Account_Form = () => {
                                   <button type="button" className="toggle-password" onClick={() => togglePasswordVisibility('level1')}>
                                     {showPassword.level1 ? <FaEyeSlash /> : <FaEye />}
                                   </button>
-                                </div>                                
+                                </div>
                                 <label htmlFor="">Re-Password</label>
                                 <div className='password-bar'>
                                   <input className='password-input' onChange={handleChangeRe_Password} placeholder='re_Password' type={showRePassword.level1 ? "text" : "password"} />
                                   <button type="button" className="toggle-password-2" onClick={() => toggleRePasswordVisibility('level1')}>
                                     {showRePassword.level1 ? <FaEyeSlash /> : <FaEye />}
                                   </button>
-                                </div>                                
+                                </div>
                                 <label htmlFor="">NIP / NRK</label>
                                 <input onChange={handleChangeNIP_NRK} placeholder='NIP / NRK' type="text" />
                                 <label htmlFor="">Jabatan</label>
@@ -298,15 +298,19 @@ const Account_Form = () => {
                                 <label htmlFor="">Username</label>
                                 <input onChange={handleChangeUsername} placeholder='Username' type="text" />
                                 <label htmlFor="">Password</label>
-                                <input onChange={handleChangePassword} placeholder='Password' type={showPassword.level2 ? "text" : "password"} />
-                                <button type="button" className="toggle-password" onClick={() => togglePasswordVisibility('level2')}>
-                                  {showPassword.level2 ? <FaEyeSlash /> : <FaEye />}
-                                </button>
+                                <div className='password-bar'>
+                                  <input onChange={handleChangePassword} placeholder='Password' type={showPassword.level2 ? "text" : "password"} />
+                                  <button type="button" className="toggle-password" onClick={() => togglePasswordVisibility('level2')}>
+                                    {showPassword.level2 ? <FaEyeSlash /> : <FaEye />}
+                                  </button>
+                                </div>
                                 <label htmlFor="">Re-Password</label>
-                                <input onChange={handleChangeRe_Password} placeholder='re_Password' type={showRePassword.level2 ? "text" : "password"} />
-                                <button type="button" className="toggle-password-2" onClick={() => toggleRePasswordVisibility('level2')}>
-                                  {showRePassword.level2 ? <FaEyeSlash /> : <FaEye />}
-                                </button>
+                                <div className='password-bar'>
+                                  <input onChange={handleChangeRe_Password} placeholder='re_Password' type={showRePassword.level2 ? "text" : "password"} />
+                                  <button type="button" className="toggle-password-2" onClick={() => toggleRePasswordVisibility('level2')}>
+                                    {showRePassword.level2 ? <FaEyeSlash /> : <FaEye />}
+                                  </button>
+                                </div>
                                 <label htmlFor="">NIP / NRK</label>
                                 <input onChange={handleChangeNIP_NRK} placeholder='NIP / NRK' type="text" />
                                 <label htmlFor="">Jabatan</label>
@@ -339,15 +343,19 @@ const Account_Form = () => {
                                 <label htmlFor="">Username</label>
                                 <input onChange={handleChangeUsername} placeholder='Username' type="text" />
                                 <label htmlFor="">Password</label>
-                                <input onChange={handleChangePassword} placeholder='Password' type={showPassword.level3 ? "text" : "password"} />
+                                <div className='password-bar'>
+                                  <input onChange={handleChangePassword} placeholder='Password' type={showPassword.level3 ? "text" : "password"} />
                                   <button type="button" className="toggle-password" onClick={() => togglePasswordVisibility('level3')}>
                                     {showPassword.level3 ? <FaEyeSlash /> : <FaEye />}
                                   </button>
+                                </div>                                
                                 <label htmlFor="">Re-Password</label>
-                                <input onChange={handleChangeRe_Password} placeholder='re_Password' type={showRePassword.level3 ? "text" : "password"} />
-                                <button type="button" className="toggle-password-2" onClick={() => toggleRePasswordVisibility('level3')}>
-                                  {showRePassword.level3 ? <FaEyeSlash /> : <FaEye />}
-                                </button>
+                                <div className='password-bar'>
+                                  <input onChange={handleChangeRe_Password} placeholder='re_Password' type={showRePassword.level3 ? "text" : "password"} />
+                                  <button type="button" className="toggle-password-2" onClick={() => toggleRePasswordVisibility('level3')}>
+                                    {showRePassword.level3 ? <FaEyeSlash /> : <FaEye />}
+                                  </button>
+                                </div>                              
                                 <label htmlFor="">NIP / NRK</label>
                                 <input onChange={handleChangeNIP_NRK} placeholder='NIP / NRK' type="text" />
                                 <label htmlFor="">Jabatan</label>
@@ -380,15 +388,19 @@ const Account_Form = () => {
                                 <label htmlFor="">Username</label>
                                 <input onChange={handleChangeUsername} placeholder='Username' type="text" />
                                 <label htmlFor="">Password</label>
-                                <input onChange={handleChangePassword} placeholder='Password' type={showPassword.level4 ? "text" : "password"} />
-                                <button type="button" className="toggle-password" onClick={() => togglePasswordVisibility('level4')}>
-                                  {showPassword.level4 ? <FaEyeSlash /> : <FaEye />}
-                                </button>
+                                <div className='password-bar'>
+                                  <input onChange={handleChangePassword} placeholder='Password' type={showPassword.level4 ? "text" : "password"} />
+                                  <button type="button" className="toggle-password" onClick={() => togglePasswordVisibility('level4')}>
+                                    {showPassword.level4 ? <FaEyeSlash /> : <FaEye />}
+                                  </button>
+                                </div>                                
                                 <label htmlFor="">Re-Password</label>
-                                <input onChange={handleChangeRe_Password} placeholder='re_Password' type={showRePassword.level4 ? "text" : "password"} />
-                                <button type="button" className="toggle-password-2" onClick={() => toggleRePasswordVisibility('level4')}>
-                                  {showRePassword.level4 ? <FaEyeSlash /> : <FaEye />}
-                                </button>
+                                <div className='password-bar'>
+                                  <input onChange={handleChangeRe_Password} placeholder='re_Password' type={showRePassword.level4 ? "text" : "password"} />
+                                  <button type="button" className="toggle-password-2" onClick={() => toggleRePasswordVisibility('level4')}>
+                                    {showRePassword.level4 ? <FaEyeSlash /> : <FaEye />}
+                                  </button>
+                                </div>                                
                                 <label htmlFor="">NIP / NRK</label>
                                 <input onChange={handleChangeNIP_NRK} placeholder='NIP / NRK' type="text" />
                                 <label htmlFor="">Jabatan</label>

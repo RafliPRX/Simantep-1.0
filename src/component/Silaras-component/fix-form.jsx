@@ -11,6 +11,8 @@ const Fix_form = () => {
   const [nama, setNama] = useState(identity.nama);
   const [jabatan, setJabatan] = useState(identity.jabatan);    
   const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
+  const [nama_role, setNama_role] = useState(identity.nama_role);
+  const [nama_role_c, setNama_role_c] = useState(identity.nama_role_c);
   const [isLoading, setIsLoading] = useState(false);
   const { level } = useParams();
   const { role } = useParams();
@@ -43,7 +45,8 @@ const Fix_form = () => {
       setNama(response.data.nama);
       setJabatan(response.data.jabatan);
       setNrk_nip(response.data.nrk_nip);
-         
+      setNama_role(response.data.nama_role);
+      setNama_role_c(response.data.nama_role_c);
     } catch (error) {
       console.log(error);
     }
@@ -53,14 +56,9 @@ const Fix_form = () => {
     getIdentity_pjSarpras();
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  const [unit, setUnits] = useState("");
   const [fixing, setFixing] = useState("");
   const [image, setImage] = useState("")
   const navigate = useNavigate();
-  const handleChangeUnits = (event) => {
-    console.log(event.target.value);
-    setUnits(event.target.value);
-  }
   const handleChangeFixing = (event) => {
     console.log(event.target.value);
     setFixing(event.target.value);
@@ -75,7 +73,6 @@ const Fix_form = () => {
     setIsLoading(true);
     const payload = {
       id_number: storeidNumber,
-      unit: unit,
       fix: fixing,
       foto: image,
       sent_to: nama_pjSarpras
@@ -112,16 +109,26 @@ const Fix_form = () => {
                         <div className='content-f'>
                             <h1>Data Perbaikan</h1>
                             <label htmlFor="">Nama</label>
-                            <input value={nama} placeholder='Nama' type="text"/>
+                            <input value={nama} disabled placeholder='Nama' type="text"/>
                             <label htmlFor="">NIP/NRK</label>
-                            <input  value={nrk_nip} placeholder='NRK' type="text"/>
+                            <input  value={nrk_nip} disabled placeholder='NRK' type="text"/>
                             <label htmlFor="">Jabatan</label>
-                            <input  value={jabatan} placeholder='Jabatan' type="text"/>
-                            <label htmlFor="">Unit Kerja</label>
-                            <input onChange={handleChangeUnits} value={unit} placeholder='Units' type="text"/>
+                            <input  value={jabatan} disabled placeholder='Jabatan' type="text"/>
+                            {level === 'level-1' && (
+                              <>
+                                <label htmlFor="">Unit Kerja</label>
+                                <input value={nama_role} disabled placeholder='Units' type="text"/>
+                              </>
+                            )}
+                            {level === 'level-2' && (
+                              <>
+                                <label htmlFor="">Unit Kerja</label>
+                                <input value={nama_role_c} disabled placeholder='Units' type="text"/>
+                              </>
+                            )}
                             <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
                             <textarea onChange={handleChangeFixing} value={fixing} placeholder='Permintaan Perbaikan' name="" id=""></textarea>
-                            <label htmlFor="">Bukti Gambar (Maksimal 2 Mb)</label>
+                            <label htmlFor="">Bukti Foto Rusak (Maks.2 MB)</label>
                             <input onChange={handleChangeImage} type="file" name="" id="" />
                         </div>
                         <button onClick={handleRequest} className='submit' type="submit">Submit</button>

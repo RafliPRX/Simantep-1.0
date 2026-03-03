@@ -155,8 +155,8 @@ const New_Klien_form = () => {
             <form onSubmit={handlePostClient}>
               <div className='content-f'>
                 <h1>Data Diri</h1>
-                <label htmlFor="">id_pengguna</label>
-                <input onChange={handleChangeId} placeholder='Example: U-01' type="text" />
+                <label htmlFor="">id pengguna</label>
+                <input onChange={handleChangeId} placeholder='Nomor' type="number" />
                 <label htmlFor="">Nama Klien</label>
                 <input onChange={handleChangeNamaKlien} placeholder='Nama Klien' type="text" />                
                 <label htmlFor="">Nama Klien (Inisial)</label>

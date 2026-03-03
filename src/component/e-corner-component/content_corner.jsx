@@ -342,15 +342,15 @@ const Content_Corner = () => {
                                             <th style={{ textAlign: 'center' }}>Hari</th>
                                             <th style={{ textAlign: 'center' }}>Status</th>
                                         </tr>
-                                        {klien_search.map((item, index) => (
-                                            <tr key={item.id_surat}>
+                                        {klien_search.map((item_s, index) => (
+                                            <tr key={item_s.id_corner}>
                                                 <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.nama_klien}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.nama_init}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.rooms}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.time}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.days}</td>                                                
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item.id_corner)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item.id_corner)} className='B-deleted'>Deleted</button> </td>  
+                                                <td style={{ textAlign: 'center' }}>{item_s.nama_klien}</td>
+                                                <td style={{ textAlign: 'center' }}>{item_s.nama_init}</td>
+                                                <td style={{ textAlign: 'center' }}>{item_s.rooms}</td>
+                                                <td style={{ textAlign: 'center' }}>{item_s.time}</td>
+                                                <td style={{ textAlign: 'center' }}>{item_s.days}</td>                                                
+                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item_s.id_corner)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item_s.id_corner)} className='B-deleted'>Deleted</button> </td>  
                                                 </tr>
                                             ))} 
                                         </table>

@@ -177,11 +177,11 @@ const Cuti_form_Update = () => {
                                     Cuti(event);
                                     handleChangeJenis(event)
                                 }}/>                               
-                                <label htmlFor="">Cuti Kontrak</label>                                
+                                <label htmlFor="">Cuti Tahunan</label>                                
                             </div>
                             {cuti && ( // Conditionally render based on show state
                                     <div className='check-form'>
-                                        <label htmlFor="">Cuti Kontrak</label>
+                                        <label htmlFor="">Cuti Tahunan</label>
                                         <input onChange={handleChangeCuti} value={cuti_b} style={{marginTop: '10px'}} type="text" name="" id="" />
                                         <label htmlFor="">Dimulai Dari Tanggal</label>
                                         <div className='inp-date'>

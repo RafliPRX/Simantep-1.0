@@ -23,6 +23,8 @@ const Withdraw = () => {
     const [identity, setIdentity] = useState([]);
     const [nrk_nip, setNrk_Nip] = useState(identity.nrk_nip);
     const [jabatan, setJabatan] = useState(identity.jabatan);
+    const [nama_role_c, setNamaRole_C] = useState(identity.nama_role_c);
+    const [nama_role, setNamaRole] = useState(identity.nama_role);
     const [nama, setNama] = useState(identity.nama);
     const getIdentity = async () => {
         try {
@@ -35,6 +37,8 @@ const Withdraw = () => {
             setJabatan(response.data.jabatan);
             setNrk_Nip(response.data.nrk_nip);
             setJabatan(response.data.jabatan);
+            setNamaRole_C(response.data.nama_role_c);
+            setNamaRole(response.data.nama_role);
         } catch (error) {
             console.log(error);
         }
@@ -201,6 +205,18 @@ const Withdraw = () => {
                                 <input value={nrk_nip} placeholder='NIP/NRK' type="text"/>
                                 <label htmlFor="">Jabatan</label>
                                 <input value={jabatan} placeholder='Jabatan' type="text"/>
+                                {level === 'level-1' && (
+                                <>
+                                    <label htmlFor="">Unit Kerja</label>
+                                    <input value={nama_role} placeholder='Sisa Cuti' disabled type="text" />
+                                </>
+                                )}
+                                {level === 'level-2' && (
+                                <>
+                                    <label htmlFor="">Unit Kerja</label>
+                                    <input value={nama_role_c} placeholder='Sisa Cuti' disabled type="text" />
+                                </>
+                                )}
                             </div>
 
                             <div className='content-f'>

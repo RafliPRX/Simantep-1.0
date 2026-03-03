@@ -195,7 +195,7 @@ const Identity_Form = () => {
       setIsLoading(true);
       const payload = {
         nama: nama,
-        sisa_cuti: 0,
+        sisa_cuti: sisa_cuti,
         nama_role: 0,
         kode_role: 0,
         nama_role_c: nama_role_c,
@@ -231,7 +231,7 @@ const Identity_Form = () => {
       setIsLoading(true);
       const payload = {
         nama: nama,
-        sisa_cuti: 0,
+        sisa_cuti: sisa_cuti,
         nama_role: 0,
         kode_role: 0,
         nama_role_c: 0,
@@ -386,6 +386,8 @@ const Identity_Form = () => {
                                 </select>
                                 <label htmlFor="">Kode Role</label>
                                 <input placeholder='Kode Role' type="text" value={kode_role_c} readOnly/>
+                                <label htmlFor="">Jumlah Cuti</label>
+                                <input placeholder='Kode Role' onChange={handleChangeSisa_Cuti} type="text"/>
                               </div>                          
                               <button className='submit' type="submit">Submit</button>
                             </form>
@@ -409,6 +411,8 @@ const Identity_Form = () => {
                                 </select>
                                 <label htmlFor="">Kode Role</label>
                                 <input placeholder='Kode Role' type="text" value={kode_role_b} readOnly/>
+                                <label htmlFor="">Jumlah Cuti</label>
+                                <input placeholder='Kode Role' onChange={handleChangeSisa_Cuti} type="text"/>
                               </div>                          
                               <button className='submit' type="submit">Submit</button>
                             </form>

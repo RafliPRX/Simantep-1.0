@@ -19,7 +19,6 @@ const Request = () => {
     console.log(storedID);
     const [isLoading, setIsLoading] = useState(false);
     const storeidNumber = localStorage.getItem('id_number');
-    const [unit, setUnit] = useState('');
     const [barang, setBarang] = useState('');
     const [barang2, setBarang2] = useState('');
     const [barang3, setBarang3] = useState('');
@@ -42,6 +41,9 @@ const Request = () => {
     const [nama, setNama] = useState("");
     const [jabatan, setJabatan] = useState(identity.jabatan);    
     const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
+    const [nama_role, setNama_role] = useState(identity.nama_role);
+    const [nama_role_c, setNama_role_c] = useState(identity.nama_role_c);
+    console.log("nama pj Sarpras: " + nama_pjSarpras);
     const getIdentity_pjSarpras = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/get_pjSarpras_Identity.php?kode_role_c=C-03` , {
@@ -65,7 +67,8 @@ const Request = () => {
       setNama(response.data.nama);
       setJabatan(response.data.jabatan);
       setNrk_nip(response.data.nrk_nip);
-         
+      setNama_role(response.data.nama_role);
+      setNama_role_c(response.data.nama_role_c);   
       } catch (error) {
         console.log(error);
       }
@@ -75,10 +78,6 @@ const Request = () => {
       getIdentity_pjSarpras();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
-    const handleChangeUnit = (event) => {
-      console.log(event.target.value);
-      setUnit(event.target.value);
-    }
     const handleChangeBarang = (event) => {
       console.log(event.target.value);
       setBarang(event.target.value);
@@ -144,7 +143,6 @@ const Request = () => {
       setIsLoading(true);
       const payload = {
         id_number: storeidNumber,
-        unit: unit,
         barang: barang,
         jumlah_barang: jumlah_barang,
         satuan: satuan_barang,
@@ -195,13 +193,23 @@ const Request = () => {
                         <div className='content-f'>
                             <h1>Data Diri Peminjam</h1>
                             <label htmlFor="">Nama</label>
-                            <input value={nama} placeholder='Nama' type="text"/>
+                            <input value={nama} disabled placeholder='Nama' type="text"/>
                             <label htmlFor="">NIP/NRK</label>
-                            <input value={nrk_nip} placeholder='NRK' type="text"/>
+                            <input value={nrk_nip} disabled placeholder='NRK' type="text"/>
                             <label htmlFor="">Jabatan</label>
-                            <input value={jabatan} placeholder='NRK' type="text"/>
-                            <label htmlFor="">Unit Kerja</label>
-                            <input onChange={handleChangeUnit} placeholder='Unit Kerja' type="text"/>
+                            <input value={jabatan} disabled placeholder='Jabatan' type="text"/>
+                            {level === 'level-1' && (
+                              <>
+                                <label htmlFor="">Unit Kerja</label>
+                                <input value={nama_role} disabled placeholder='Units' type="text"/>
+                              </>
+                            )}
+                            {level === 'level-2' && (
+                              <>
+                                <label htmlFor="">Unit Kerja</label>
+                                <input value={nama_role_c} disabled placeholder='Units' type="text"/>
+                              </>
+                            )}
                             <label htmlFor="">Permohonan Barang</label>
                             <table>
                               <tbody>

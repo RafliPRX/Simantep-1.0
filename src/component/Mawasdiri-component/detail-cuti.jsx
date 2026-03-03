@@ -25,6 +25,7 @@ const Cuti_Detail_Form = () => {
     console.log(status);
         
     const [detail, setDetail] = useState({});
+    const [detail_cuti, setDetail_cuti] = useState(detail.sisa_k);
     const param = useParams();
     const getDetail = async () => {
         try {
@@ -32,12 +33,17 @@ const Cuti_Detail_Form = () => {
                 headers: {}
             });
             console.log(response.data);
-            setDetail(response.data);            
+            setDetail(response.data);
+            setDetail_cuti(response.data.sisa_k);
         } catch (error) {
             console.log(error.response);
         }
     }
 
+    const handleChangeSisaCuti = (event) => {
+      setDetail_cuti(event.target.value);
+      console.log(event.target.value);
+    }
     const [identityAtasan, setIdentityAtasan] = useState([]);
     const [nama_atasan, setNama_atasan] = useState(identityAtasan.nama);
     const [kode_role_atasan, setKode_role_atasan] = useState(identityAtasan.kode_role);
@@ -212,15 +218,28 @@ const Cuti_Detail_Form = () => {
     }
     const handleKasubag = async (idNotif, event) => {
       event.preventDefault();
-      try {
-        setIsLoading(true);
-        await mark(idNotif, event);
-        await handleKasubagJawab(event);
-      } catch (error) {
-        console.log(error);        
-      } finally {
-        setIsLoading(false);
-      }      
+      if (kasubagJawab === 2) {
+        try {
+          setIsLoading(true);
+          await mark(idNotif, event);
+          await handleKasubagJawab(event);
+        } catch (error) {
+          console.log(error);        
+        } finally {
+          setIsLoading(false);
+        }    
+      }
+      else if (kasubagJawab === 3) {
+        try {
+          setIsLoading(true);
+          await mark(idNotif, event);
+          await handleKasubagJawab(event);
+        } catch (error) {
+          console.log(error);        
+        } finally {
+          setIsLoading(false);
+        }
+      } 
     }
     const handleKabalai = async (idNotif, event) => {
       event.preventDefault();
@@ -304,7 +323,7 @@ const Cuti_Detail_Form = () => {
                                 </tr>
                                 <div style={{display: detail.jenis_surat === 'Cuti' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
                                     <tr>
-                                      <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Cuti Kontrak</td>
+                                      <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Cuti Tahunan</td>
                                     </tr>
                                     <tr>
                                       <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '35px'}}>{detail.cuti}</td>
@@ -371,10 +390,16 @@ const Cuti_Detail_Form = () => {
                                 </div>
                             </table>
                         </div>
+                        {level === "level-3" && (
+                          <div className='content-f'>
+                            <h1>Sisa Jumlah Cuti</h1>
+                            <input onChange={handleChangeSisaCuti} type="text" value={detail_cuti} />
+                          </div>
+                        )}                        
                         <div style={{display: detail.pdf ? 'flex' : 'none'}} className='content-f'>
                           <h1>Download Surat</h1>
                           <button className='submit' onClick={DownloadFile}>Download</button>
-                        </div>                        
+                        </div>
                         {(level === "level-4" && role === 'A-02') &&
                         <div className='content-f'>
                           <h1>Jawab Kasubag</h1>

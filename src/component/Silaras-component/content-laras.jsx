@@ -319,7 +319,7 @@ const Content_laras = () => {
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>}
                 <p>Silaras/Database Sarpras</p>
-                <h1>Sistem Layanan sarana dan Prasarana</h1>
+                <h1>Sistem Layanan Sarana dan Prasarana</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />
                 <div className='content-col'>
                     <div className='box-m'>

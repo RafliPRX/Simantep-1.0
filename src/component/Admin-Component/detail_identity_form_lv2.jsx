@@ -67,7 +67,7 @@ const Detail_Identity_Form_lv2 = () => {
     // }
     const [identityData, setIdentityData] = useState([]);
     const [nama, setNama] = useState(identityData.nama);
-    // const [sisa_cuti, setSisaCuti] = useState(identityData.sisa_cuti);
+    const [sisa_cuti, setSisaCuti] = useState(identityData.sisa_cuti);
     // const [nama_role, setNamaRole] = useState(identityData.nama_role);
     // const [kode_role, setKodeRole] = useState(identityData.kode_role);
     const [nama_role_c, setNamaRole_c] = useState(identityData.nama_role_c);
@@ -80,7 +80,7 @@ const Detail_Identity_Form_lv2 = () => {
             setIdentityData(response.data);
             console.log(response.data);
             setNama(response.data.nama);
-            // setSisaCuti(response.data.sisa_cuti);
+            setSisaCuti(response.data.sisa_cuti);
             // setNamaRole(response.data.nama_role);
             // setKodeRole(response.data.kode_role);
             setNamaRole_c(response.data.nama_role_c);
@@ -88,6 +88,10 @@ const Detail_Identity_Form_lv2 = () => {
         } catch (error) {
             console.error(error);
         }
+    }
+    const handleChangeSisaCuti = (event) => {
+        setSisaCuti(event.target.value);
+        console.log(event.target.value);
     }
     // const getRole = async() => {
     //     const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getAllRole.php`;
@@ -154,7 +158,7 @@ const Detail_Identity_Form_lv2 = () => {
       setIsLoading(true);
       const payload = {
         nama: nama,
-        sisa_cuti: 0,
+        sisa_cuti: sisa_cuti,
         nama_role: 0,
         kode_role: 0,
         nama_role_c: nama_role_c,
@@ -314,6 +318,8 @@ const Detail_Identity_Form_lv2 = () => {
                                 </select>
                                 <label htmlFor="">Kode Role</label>
                                 <input placeholder='Kode Role' type="text" value={kode_role_c} readOnly/>
+                                <label htmlFor="">Jumlah Cuti Sekarang</label>
+                                <input placeholder='Kode Role' onChange={handleChangeSisaCuti} type="text" value={sisa_cuti}/>
                               </div>                          
                               <button className='submit' type="submit">Submit</button>
                             </form>

@@ -18,8 +18,12 @@ const Cuti_form = () => {
   const storeidNumber = localStorage.getItem('id_number');
   const [identity, setIdentity] = useState([]);
   const [nama, setNama] = useState(identity.nama);
+  const [sisa_cuti, setSisa_cuti] = useState(identity.sisa_cuti);
+  console.log("sisa cuti = " + sisa_cuti);
   const [jabatan, setJabatan] = useState(identity.nama);
-  const [nrk_nip, setNrk_Nip] = useState(identity.nrk_nip);  
+  const [nrk_nip, setNrk_Nip] = useState(identity.nrk_nip);
+  const [nama_role_c, setNamaRole_C] = useState(identity.nama_role_c);
+  const [nama_role, setNamaRole] = useState(identity.nama_role);
   const [kode_role_c, setKode_role_c] = useState(identity.kode_role_c);
   const { level } = useParams();
   const { role } = useParams();
@@ -35,6 +39,9 @@ const Cuti_form = () => {
         setJabatan(response.data.jabatan);
         setNrk_Nip(response.data.nrk_nip);
         setKode_role_c(response.data.kode_role_c);
+        setSisa_cuti(response.data.sisa_cuti);
+        setNamaRole_C(response.data.nama_role_c);
+        setNamaRole(response.data.nama_role);
       } catch (error) {
         console.log(error);
       }
@@ -112,10 +119,7 @@ const Cuti_form = () => {
     console.log(date[1]);
   };
   
-  const handlePostSurat = async (event) => {
-    setIsLoading(true);
-    event.preventDefault();
-    setIsLoading(true);
+  const handlePostSurat = async () => {
     const payload = {
       id_number: storeidNumber,
       kode_role_a1: kode_atasan,
@@ -128,7 +132,7 @@ const Cuti_form = () => {
       cuti_date: format(selectedStartDates, 'yyyy/MM/dd'), // Send formatted start date
       cuti_date_fin: format(selectedEndDates, 'yyyy/MM/dd'), // Send formatted end date
       gambar: image,
-    };
+    };    
     try {
       const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/new_surat.php`, payload, {
         headers: {
@@ -136,16 +140,49 @@ const Cuti_form = () => {
         }
       });      
       console.log(response.data);
-      setTimeout(() => {
-        setIsLoading(false);
-        navigate(`/Dashboard/${level}/${role}/${role_sp}`);
-        alert(response.data.message);
-      }, 1000);
+      
     } catch (error) {
-      setIsLoading(false);
       console.log(error.response);
       alert("error code 103");
     }
+  }
+  const handleUpdateSisaCuti = async (jumlah_cuti_now) => {
+    const payload = {
+      sisa_cuti: jumlah_cuti_now
+    };
+    try {
+      const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/update_sisa_cuti.php?id=${storeidNumber}`, payload, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      });
+      console.log(response.data);
+      setTimeout(() => {
+        navigate(`/Dashboard/${level}/${role}/${role_sp}`);
+        alert(response.data.message);
+      }, 2000);
+    } catch (error) {
+      console.log(error.response);
+    }
+  }
+  const handlePostNewSurat = async (event, jumlah_cuti) => {
+    event.preventDefault();
+    setIsLoading(true);
+    if (cuti_b > jumlah_cuti) {
+      alert("Jumlah cuti melebihi sisa cuti yang tersedia.");
+      setIsLoading(false);
+      return;
+    }
+    const jumlah_cuti_now = jumlah_cuti - cuti_b;    
+    console.log("Detail - jumlah_cuti:", jumlah_cuti, "cuti_b:", cuti_b, "hasil:", jumlah_cuti_now);
+    try {            
+      await handlePostSurat();
+      await handleUpdateSisaCuti(jumlah_cuti_now);
+    } catch (error) {
+      console.log(error);        
+    } finally {
+      setIsLoading(false);
+    }      
   }
   useEffect(() => {
     getIdentity();
@@ -163,21 +200,35 @@ const Cuti_form = () => {
         <Profile nama={nama} feature="mawasdiri" />
         <div className='content-col'>
           <div className='box1'>
-            <form onSubmit={handlePostSurat}>
+            <form onSubmit={(e) => handlePostNewSurat(e, sisa_cuti)}>
               <div className='content-f'>
                 <h1>Data Diri</h1>
                 <label htmlFor="">Nama</label>
-                <input onChange={handleChangeNama} value={nama} placeholder='Nama' type="text" />
+                <input onChange={handleChangeNama} value={nama} disabled placeholder='Nama' type="text" />
                 <label htmlFor="">NRK</label>
-                <input value={nrk_nip} placeholder='No. HP' type="text" />                
+                <input value={nrk_nip} placeholder='No. HP' disabled type="text" />                
                 <label htmlFor="">No.Handphone</label>
                 <input onChange={handleChangeHp} placeholder='No. HP' type="text" />
                 <label htmlFor="">Jabatan</label>
-                <input value={jabatan} placeholder='No. HP' type="text" />
+                <input value={jabatan} placeholder='No. HP' disabled type="text" />
                 {/* <label htmlFor="">ID Number</label>
                 <input value={storeidNumber} placeholder='No. HP' type="text" /> */}
                 {/* <label htmlFor="">Nama Atasan</label> */}
                 <input value={nama_atasan} placeholder='Nama Atasan' type="hidden" />
+                {level === 'level-1' && (
+                  <>
+                    <label htmlFor="">Unit Kerja</label>
+                    <input value={nama_role} placeholder='Sisa Cuti' disabled type="text" />
+                  </>
+                )}
+                {level === 'level-2' && (
+                  <>
+                    <label htmlFor="">Unit Kerja</label>
+                    <input value={nama_role_c} placeholder='Sisa Cuti' disabled type="text" />
+                  </>
+                )}
+                <label htmlFor="">Sisa Cuti</label>
+                <input value={sisa_cuti} placeholder='Sisa Cuti' disabled type="text" />
               </div>
               <div className='content-tx'>
                 <h1>Alasan Cuti/Sakit/Izin</h1>
@@ -195,7 +246,7 @@ const Cuti_form = () => {
                 </div>
                 {cuti && (
                   <div className='check-form'>
-                    <label htmlFor="">Cuti Kontrak (Hari)</label>
+                    <label htmlFor="">Cuti Tahunan (Hari)</label>
                     <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
                     <div className='inp-date'>
                       <label htmlFor="">Dimulai Dari Tanggal</label>
@@ -271,7 +322,7 @@ const Cuti_form = () => {
                         placeholderText="Select date range"
                       />
                     </div>
-                    <label htmlFor="">Upload Bukti Gambar</label>
+                    <label htmlFor="">Upload Surat Sakit Dokter (Maks.2mb)</label>
                     <input type="file" onChange={handleChangeImage} name="" id="" />
                   </div>
                 )}

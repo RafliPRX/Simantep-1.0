@@ -38,7 +38,7 @@ const Content = () => {
     const [surat, setSurat] = useState([]);
     const [pagination_surat, setPagination_surat] = useState({
         currentPage: 1,
-    });
+    });    
     const getSurat = async() => {
         const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_name.php?id=${storeidNumber}&page=${pagination_surat.currentPage}`;
         let url = baseUrl;
@@ -51,12 +51,49 @@ const Content = () => {
                 nextPage: res1.data.nextPage,
             }
             setSurat(response);
-            setPagination_surat(pagination_surat);
+            setPagination_surat(pagination_surat);            
             console.log(response);
         })
         .catch((error) => {
             console.log(error);
         });
+    }    
+    const [account, setAccount] = useState([]);
+    const [pagination_account, setPagination_Account] = useState({
+        currentPage: 1,
+    });
+    // account list already contains a `sisa_cuti` field on each item, so we don't
+    // need a separate state variable for it.  Instead we update the correct element
+    // inside the `account` array when the user types.
+    const getAccount = async() => {
+        const baseUrl = `http://simantepbareta.cloud/API/Admin_API/getAllIdentity.php?page=${pagination_account.currentPage}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_account = {
+                total: res1.data.total_records,
+                currentPage: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setAccount(response);
+            setPagination_Account(pagination_account);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+
+    // update the sisa_cuti value for the specific account row
+    const handleChangeSisaCuti = (event, id_number) => {
+        const value = event.target.value;
+        setAccount(prev =>
+            prev.map(acc =>
+                acc.id_number === id_number ? { ...acc, sisa_cuti: value } : acc
+            )
+        );
+        console.log('sisa cuti changed for', id_number, value);
     }
     const handleNext_Surat = () => {
         setPagination_surat({
@@ -69,7 +106,7 @@ const Content = () => {
             ...pagination_surat,
             currentPage: pagination_surat.currentPage - 1,
         })
-    }  
+    }
     const deletedSurat = async (id) => {
         try {
           const response = await axios.delete(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/delete_surat.php?id=${id}`, {
@@ -90,6 +127,29 @@ const Content = () => {
         if (window.confirm("Apakah Anda yakin Surat ini di Hapuskan ?")) {
             deletedSurat(id);
         }
+    }
+    const [surat_role_b, setSurat_role_b] = useState([]);
+    const [pagination_surat_role_b, setPagination_surat_role_b] = useState({
+        currentPage: 1,
+    });        
+    const getSurat_role_b = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_b.php?page=${pagination_surat_role_b.currentPage}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_surat = {
+                total: res1.data.total_records,
+                currentPage: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setSurat_role_b(response);
+            setPagination_surat_role_b(pagination_surat);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
     }
     const [surat_role_a, setSurat_role_a] = useState([]);
     const [pagination_surat_role_a, setPagination_surat_role_a] = useState({
@@ -160,7 +220,19 @@ const Content = () => {
             ...pagination_surat_role_a,
             currentPage: pagination_surat_role_a.currentPage - 1,
         })
-    }  
+    }
+    const handleNext_Account = () => {
+        setPagination_Account({
+            ...pagination_account,
+            currentPage: pagination_account.currentPage + 1,
+        })
+    }
+    const handlePrev_Account = () => {
+        setPagination_Account({
+            ...pagination_account,
+            currentPage: pagination_account.currentPage - 1,
+        })
+    }
     const [surat_role_sp, setSurat_role_sp] = useState([]);
     const [pagination_surat_role_sp, setPagination_surat_role_sp] = useState({
         currentPage: 1,
@@ -205,11 +277,34 @@ const Content = () => {
     getSurat_role_a_kasubbag();
     getSurat_role_a_kabalai();
     getSurat_role_sp();
+    getSurat_role_b();
+    getAccount();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pagination_surat?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_a_kabalai?.currentPage, pagination_surat_role_sp?.currentPage]);
+    }, [pagination_surat?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_a_kabalai?.currentPage, pagination_surat_role_sp?.currentPage, pagination_account?.currentPage]);
 
-    
-
+    const handleUpdateSisaCuti = async (event, sisa_cuti, id_number) => {
+      event.preventDefault();
+      setIsLoading(true);
+      const payload = {
+        sisa_cuti: sisa_cuti
+      };
+      try {
+        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/update_sisa_cuti.php?id=${id_number}`, payload, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+        console.log(response.data);
+        setTimeout(() => {
+          setIsLoading(false);          
+          alert(response.data.message);
+        }, 1000);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error.response);
+        alert("error code 103");
+      }
+    }
     return (
         <>
         <div className='main-dashboard'>
@@ -222,7 +317,7 @@ const Content = () => {
             <div className='content-col'>
                 <div className='box-m'>
                     <div className='content'>
-                    {level === 'level-1' && (
+                    {(level === 'level-1' || level === 'level-2') && (
                         <>
                         {role_sp === '0' ? (
                                 <>
@@ -380,7 +475,7 @@ const Content = () => {
                                         <th style={{ textAlign: 'center' }}>Jabatan</th>
                                         <th style={{ textAlign: 'center' }}>Jenis Surat</th>
                                         <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
-                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>                                        
                                         <th style={{ textAlign: 'center' }}>Opsi Lain</th>
                                     </tr>
                                     {surat_role_a_kabalai.map((item, index) => (
@@ -406,7 +501,92 @@ const Content = () => {
                             )}
                         </>
                     }
-                    </div>     
+                    {level === 'level-3' && 
+                        <>
+                            <h1>Progress Pengajuan Surat</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Surat_a_kabalai}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_surat_role_a_kabalai.currentPage} />
+                                <button className='right' onClick={handleNext_Surat_a_kabalai}><img src={right} alt="" /></button>
+                            </div>
+                            {surat_role_b.length > 0 ? (
+                                <table>
+                                    <tr>
+                                        <th style={{ textAlign: 'center' }}>Nomor</th>
+                                        <th style={{ textAlign: 'center' }}>id Surat</th>
+                                        <th style={{ textAlign: 'center' }}>Nama</th>
+                                        <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                        <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                        <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                        <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                        <th style={{ textAlign: 'center' }}>Jumlah Cuti</th>
+                                        <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                                    </tr>
+                                    {surat_role_b.map((item, index) => (
+                                        <tr key={item.id_surat}>
+                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                            <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                            <td style={{ textAlign: 'center'}}>{item.sisa_k}</td>
+                                            <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
+                                            </tr>
+                                        ))} 
+                                    </table>
+                                ) : (
+                                    <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                            )}
+                        </>
+                    }
+                    </div>
+                    {level === 'level-3' &&
+                    <div className='content'>                     
+                        <>
+                            <h1>Progress Pengajuan Surat</h1>
+                            <div className='pagination'>
+                                <button className='left' onClick={handlePrev_Account}><img src={left} alt="" /></button>
+                                <input className='page-number' type="text" value={pagination_account.currentPage} />
+                                <button className='right' onClick={handleNext_Account}><img src={right} alt="" /></button>
+                            </div>
+                            {account.length > 0 ? (
+                                <table>
+                                    <tr>
+                                        <th style={{ textAlign: 'center' }}>Nomor ID</th>
+                                        <th style={{ textAlign: 'center' }}>Nama</th>
+                                        <th style={{ textAlign: 'center' }}>Jumlah Cuti</th>
+                                        <th style={{ textAlign: 'center' }}>Ubah</th>
+                                    </tr>
+                                    {account.map((item) => (
+                                        <tr key={item.id_number}>
+                                            <td style={{ textAlign: 'center' }}>{item.id_number}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                            <td style={{ textAlign: 'center' }}>
+                                                <input
+                                                    type="number"
+                                                    value={item.sisa_cuti}
+                                                    onChange={e => handleChangeSisaCuti(e, item.id_number)}
+                                                    style={{ textAlign: 'center' }}
+                                                />
+                                            </td>
+                                            <td style={{ textAlign: 'center' }}><button onClick={(e) => handleUpdateSisaCuti(e, item.sisa_cuti, item.id_number)} className='B-update'>Ubah</button> </td>  
+                                            </tr>
+                                        ))} 
+                                    </table>
+                                ) : (
+                                    <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                            )}
+                        </>                    
+                    </div>  
+                    }                  
                 </div>
             </div>
         </div>

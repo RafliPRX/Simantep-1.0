@@ -43,10 +43,16 @@ const Request_Form_Detail = () => {
             const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_bhp_byReceive.php?id=${param.id}`, {
                 headers: {}
             });
-            setNotifDetail(response.data[0]);
-            console.log(response.data[0]);
+            if (response.data && response.data.length > 0) {
+                setNotifDetail(response.data[0]);
+                console.log(response.data[0]);
+            } else {
+                console.warn("No notification details found for the given ID.");
+                setNotifDetail({}); // Set to empty object to prevent errors
+            }
         } catch (error) {
           console.error(error);
+          setNotifDetail({}); // Set to empty object on error
         }
     }
     useEffect(() => {
@@ -139,7 +145,18 @@ const Request_Form_Detail = () => {
                             <label htmlFor="">Jabatan</label>
                             <input value={request.jabatan} disabled placeholder='NRK' type="text"/>
                             <label htmlFor="">Unit Kerja</label>
-                            <input value={request.unit} disabled placeholder='Unit Kerja' type="text"/>
+                            {level === 'level-1' && (
+                              <input value={request.nama_role} disabled placeholder='Unit Kerja' type="text"/>
+                            )}
+                            {level === 'level-2' && (
+                              <input value={request.nama_role_c} disabled placeholder='Unit Kerja' type="text"/>
+                            )}
+                            {level === 'level-3' && (
+                              <input value={request.nama_role_b} disabled placeholder='Unit Kerja' type="text"/>
+                            )}
+                            {level === 'level-4' && (
+                              <input value={request.nama_role_a} disabled placeholder='Unit Kerja' type="text"/>
+                            )}
                             <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>
                             <table>
                               <tbody>
@@ -186,7 +203,7 @@ const Request_Form_Detail = () => {
                         </form>
                     </div>
                     {request.Approval !== "1" && (
-                      <div className='box3'>
+                      <div className='box1'>
                         <form action="">
                           <div className='content-f'>
                             <h1>Jawab</h1>
@@ -202,7 +219,7 @@ const Request_Form_Detail = () => {
                       </div>
                     )}                    
                     {role === "C-03" && (
-                      <div className='box3'>
+                      <div className='box1'>
                         <form action="">
                           <div className='content-f'>
                             <h1>Jawab</h1>
@@ -219,7 +236,7 @@ const Request_Form_Detail = () => {
                         </form>
                       </div>
                     )}                                 
-                </div>                                
+                </div>
             </div>        
         </>
     )

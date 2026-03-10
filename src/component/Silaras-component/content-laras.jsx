@@ -349,7 +349,18 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center'}}>{item.id_fix}</td>
                                   <td style={{textAlign:'center'}}>{item.nama}</td>
                                   <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
-                                  <td style={{textAlign:'center'}}>{item.unit}</td>
+                                  {level === "level-1" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                  )}
+                                  {level === "level-2" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                  )}
+                                  {level === "level-3" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                  )}
+                                  {level === "level-4" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                  )}
                                   <td style={{textAlign:'center'}}>{item.fix}</td>
                                   <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
@@ -392,7 +403,18 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center'}}>{item.id_fix}</td>
                                   <td style={{textAlign:'center'}}>{item.nama}</td>
                                   <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
-                                  <td style={{textAlign:'center'}}>{item.unit}</td>
+                                  {level === "level-1" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                  )}
+                                  {level === "level-2" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                  )}
+                                  {level === "level-3" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                  )}
+                                  {level === "level-4" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                  )}
                                   <td style={{textAlign:'center'}}>{item.fix}</td>
                                   <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
@@ -435,7 +457,18 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center'}}>{item.id_fix}</td>
                                   <td style={{textAlign:'center'}}>{item.nama}</td>
                                   <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
-                                  <td style={{textAlign:'center'}}>{item.unit}</td>
+                                  {level === "level-1" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                  )}
+                                  {level === "level-2" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                  )}
+                                  {level === "level-3" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                  )}
+                                  {level === "level-4" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                  )}
                                   <td style={{textAlign:'center'}}>{item.fix}</td>
                                   <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
@@ -481,7 +514,18 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.id_vehicle}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
-                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    {level === "level-1" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                    )}
+                                    {level === "level-2" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                    )}
+                                    {level === "level-3" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                    )}
+                                    {level === "level-4" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                    )}
                                     <td style={{textAlign:'center'}}>{item.jenis}</td>
                                     <td style={{textAlign:'center'}}>{item.tujuan}</td>
                                     <td style={{textAlign:'center'}}>{item.keperluan}</td>
@@ -531,7 +575,18 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.id_vehicle}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
-                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    {level === "level-1" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                    )}
+                                    {level === "level-2" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                    )}
+                                    {level === "level-3" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                    )}
+                                    {level === "level-4" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                    )}
                                     <td style={{textAlign:'center'}}>{item.jenis}</td>
                                     <td style={{textAlign:'center'}}>{item.tujuan}</td>
                                     <td style={{textAlign:'center'}}>{item.keperluan}</td>
@@ -581,7 +636,18 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.id_vehicle}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
-                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    {level === "level-1" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                    )}
+                                    {level === "level-2" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                    )}
+                                    {level === "level-3" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                    )}
+                                    {level === "level-4" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                    )}
                                     <td style={{textAlign:'center'}}>{item.jenis}</td>
                                     <td style={{textAlign:'center'}}>{item.tujuan}</td>
                                     <td style={{textAlign:'center'}}>{item.keperluan}</td>
@@ -628,7 +694,18 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{item.id_bhp}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
-                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    {level === "level-1" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                    )}
+                                    {level === "level-2" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                    )}
+                                    {level === "level-3" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                    )}
+                                    {level === "level-4" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                    )}
                                     <td style={{textAlign:'center'}}>{item.barang}</td>
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
@@ -670,7 +747,18 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{item.id_bhp}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
-                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    {level === "level-1" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                    )}
+                                    {level === "level-2" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                    )}
+                                    {level === "level-3" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                    )}
+                                    {level === "level-4" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                    )}
                                     <td style={{textAlign:'center'}}>{item.barang}</td>
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
@@ -712,7 +800,18 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{item.id_bhp}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
-                                    <td style={{textAlign:'center'}}>{item.unit}</td>
+                                    {level === "level-1" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                    )}
+                                    {level === "level-2" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                    )}
+                                    {level === "level-3" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                    )}
+                                    {level === "level-4" && (
+                                      <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                    )}
                                     <td style={{textAlign:'center'}}>{item.barang}</td>
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>

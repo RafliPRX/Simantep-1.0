@@ -7,7 +7,9 @@ import Profile from '../profile';
 const Proposed_Update = () => {
         const [isLoading, setIsLoading] = useState(false);
         const storedUsername = localStorage.getItem('nama');
-
+        const { level } = useParams();
+        const { role } = useParams();
+        const { role_sp } = useParams();
         const [show, setShow] = useState(false); // Changed to boolean for clarity
     
         function handleShow(event) {
@@ -98,8 +100,8 @@ const Proposed_Update = () => {
             });
             console.log(response.data);
             setTimeout(() => {
-                setIsLoading(false);
-                navigate("/dashboard-simak");
+                navigate(`/dashboard-simak/${level}/${role}/${role_sp}`)
+                alert(response.data.message);
             }, 1000);
                 console.log(response.data);
             } catch (error) {

@@ -16,8 +16,9 @@ const Vehicle_Update = () => {
     const [nama, setNama] = useState(detail.nama || "");
     const [nrk, setNRK] = useState(detail.nrk_nip || "");
     const [jabatan, setJabatan] = useState(detail.jabatan || "");
-    const [unit, setUnits] = useState(detail.unit || "");
     const [jenis, setJenis] = useState(detail.jenis || "");
+    const [tujuan, setTujuan] = useState(detail.tujuan || "");
+    const [keperluan, setKeperluan] = useState(detail.keperluan || "");
     const [tanggal, setTanggal] = useState(detail.tanggal_pinjam || "");
     const [jam, setJam] = useState(detail.jam_pinjam || "");
     const [durasi, setDurasi] = useState(detail.durasi_pinjam || "");
@@ -31,8 +32,9 @@ const Vehicle_Update = () => {
         setNama(response.data.nama);
         setNRK(response.data.nrk_nip);
         setJabatan(response.data.jabatan);
-        setUnits(response.data.unit);
         setJenis(response.data.jenis);
+        setTujuan(response.data.tujuan);
+        setKeperluan(response.data.keperluan);
         setTanggal(response.data.tanggal_pinjam);
         setJam(response.data.jam_pinjam);
         setDurasi(response.data.durasi_pinjam);
@@ -46,13 +48,17 @@ const Vehicle_Update = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[])
     const param = useParams();
-    const handleChangeUnits = (event) => {
-      console.log(event.target.value);
-      setUnits(event.target.value);
-    }
     const handleChangeJenis = (event) => {
       console.log(event.target.value);
       setJenis(event.target.value);
+    }
+    const handleChangeKeperluan = (event) => {
+      console.log(event.target.value);
+      setKeperluan(event.target.value);
+    }
+    const handleChangeTujuan = (event) => {
+      console.log(event.target.value);
+      setTujuan(event.target.value);
     }
     const handleChangeTanggal = (event) => {
       console.log(event.target.value);
@@ -71,17 +77,13 @@ const Vehicle_Update = () => {
       event.preventDefault();
       setIsLoading(true);
       const payload = {
-        nama:nama,
-        unit:unit,
         jenis:jenis,
+        tujuan:tujuan,
+        keperluan:keperluan,
         tanggal_pinjam:tanggal,
         jam_pinjam:jam,
         durasi_pinjam:durasi,
       };
-      if (!payload.unit || !payload.jenis || !payload.tanggal_pinjam || !payload.jam_pinjam || !payload.durasi_pinjam) {
-        alert("Mohon isi semua field yang wajib diisi");
-        return;
-      }
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/update_vehicle.php?id=${param.id}`, payload, {
           headers: {
@@ -100,8 +102,6 @@ const Vehicle_Update = () => {
         setIsLoading(false);
       }
     }
-
-
     return(
         <>
             <div className='main-dashboard'>
@@ -123,7 +123,18 @@ const Vehicle_Update = () => {
                             <label htmlFor="">Jabatan</label>
                             <input name='jabatan' value={jabatan} disabled type="text"/>
                             <label htmlFor="">Unit Kerja</label>
-                            <input required onChange={handleChangeUnits} value={unit} type="text"/>
+                            {level === "level-1" && (
+                              <input required value={detail.nama_role_c} disabled type="text"/>
+                            )}
+                            {level === "level-2" && (
+                              <input required value={detail.nama_role_c} disabled type="text"/>
+                            )}
+                            {level === "level-3" && (
+                              <input required value={detail.nama_role_b} disabled type="text"/>
+                            )}
+                            {level === "level-4" && (
+                              <input required value={detail.nama_role_a} disabled type="text"/>
+                            )}
                             <label htmlFor="">Jenis Peminjaman Kendaraan (Pilih Satu)</label>
                             <div className='check'>
                                 <input onChange={handleChangeJenis} checked={jenis === "Roda 2"}  value={"Roda 2"} type="checkbox" name="" id="" />
@@ -137,6 +148,10 @@ const Vehicle_Update = () => {
                                 <input onChange={handleChangeJenis} checked={jenis === "Roda 6"}  value={"Roda 6"} type="checkbox" name="" id="" />
                                 <label htmlFor="">Roda 6</label>
                             </div>
+                            <label htmlFor="">Tujuan Peminjaman</label>
+                            <input type="text" onChange={handleChangeTujuan} value={tujuan} placeholder='Tujuan Peminjaman' />
+                            <label htmlFor="">Keperluan Peminjaman</label>
+                            <input type="text" onChange={handleChangeKeperluan} value={keperluan} placeholder='Keperluan Peminjaman' />
                             <label htmlFor="">Tanggal Peminjaman</label>
                             <input required onChange={handleChangeTanggal} value={tanggal} type="date"/>
                             <label htmlFor="">Jam Peminjaman</label>

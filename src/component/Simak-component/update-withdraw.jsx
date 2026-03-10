@@ -5,6 +5,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile';
 
 const Update_Withdraw = () => {
+    const { level } = useParams();
+    const { role } = useParams();
+    const { role_sp } = useParams();
     const storedUsername = localStorage.getItem('nama');
     const storedFProfile = localStorage.getItem('f_profile');
     const navigate = useNavigate();
@@ -171,7 +174,8 @@ const Update_Withdraw = () => {
             console.log(response.data);
             setTimeout(() => {
                 setIsLoading(false);
-                navigate('/dashboard-simak')
+                navigate(`/dashboard-simak/${level}/${role}/${role_sp}`)
+                alert(response.data.message);
             }, 1000);
         } catch (error) {
             console.log(error.response);

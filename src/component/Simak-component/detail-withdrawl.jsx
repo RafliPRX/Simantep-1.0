@@ -238,7 +238,7 @@ const Detail_Withdraw = () => {
                         </form>
                     </div>
                     {role === "C-04" && (
-                    <div className='box2'>
+                    <div className='box1'>
                       <form action="">
                         <div className='content-f'>
                           <h1>Jawab</h1>
@@ -250,7 +250,7 @@ const Detail_Withdraw = () => {
                     </div>
                     )}
                     {role_sp === "S-04" && (
-                    <div className='box2'>
+                    <div className='box1'>
                       <form action="">
                         <div className='content-f'>
                           <h1>Jawab</h1>

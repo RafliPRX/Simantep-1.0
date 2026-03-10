@@ -16,21 +16,12 @@ const Fix_form_Update = () => {
   const [detail, setDetail] = useState({});
   const [nama, setNama] = useState(detail.nama || "");
   const [nrk, setNrk] = useState(detail.nrk_nip || "");
-  const [unit, setUnits] = useState(detail.unit || "");
+  const [nama_role, setNama_role] = useState(detail.nama_role || "");
+  const [nama_role_c, setNama_role_c] = useState(detail.nama_role_c || "");
+  const [nama_role_b, setNama_role_b] = useState(detail.nama_role_b || "");
+  const [nama_role_a, setNama_role_a] = useState(detail.nama_role_a || "");
   const [fixing, setFixing] = useState(detail.fix || "");
   const [file, setFile] = useState(detail.foto || "");
-  const handleChangeNama = (event) => {
-    console.log(event.target.value);
-    setNama(event.target.value);
-  }
-  const handleChangeNRK = (event) => {
-    console.log(event.target.value);
-    setNrk(event.target.value);
-  }
-  const handleChangeUnits = (event) => {
-    console.log(event.target.value);
-    setUnits(event.target.value);
-  }
   const handleChangeFixing = (event) => {
     console.log(event.target.value);
     setFixing(event.target.value);
@@ -48,7 +39,10 @@ const Fix_form_Update = () => {
         console.log(response.data);
         setNama(response.data.nama);
         setNrk(response.data.nrk_nip);
-        setUnits(response.data.unit);
+        setNama_role(response.data.nama_role);
+        setNama_role_c(response.data.nama_role_c);
+        setNama_role_b(response.data.nama_role_b);
+        setNama_role_a(response.data.nama_role_a);
         setFixing(response.data.fix);
         setFile(response.data.foto);
       } catch (error) {
@@ -63,13 +57,12 @@ const Fix_form_Update = () => {
 
   const handleRequest = async (event) => {
     event.preventDefault();
-    setIsLoading(true);
+    setIsLoading(true);    
     const payload = { 
-      unit: unit,
       fix: fixing,
       foto: file
     };
-    if (!payload.file) {
+    if (!payload.foto) {
       alert("Mohon untuk Upload Gambar Bukti");
       setIsLoading(false);
       return;
@@ -108,11 +101,22 @@ const Fix_form_Update = () => {
                           <h1>Data Perbaikan</h1>
                           <label htmlFor="">Nama</label>
                           {/* <input type="text" value={param.id} /> */}
-                          <input contentEditable onChange={handleChangeNama} onInput={(e) => setNama(e.target.textContent)} value={nama} type="text"/>
+                          <input contentEditable disabled value={nama} type="text"/>
                           <label htmlFor="">NIP/NRK</label>
-                          <input contentEditable onChange={handleChangeNRK} onInput={(e) => setNrk(e.target.textContent)} value={nrk} type="text"/>
+                          <input contentEditable disabled value={nrk} type="text"/>
                           <label htmlFor="">Units</label>
-                          <input contentEditable onChange={handleChangeUnits} onInput={(e) => setUnits(e.target.textContent)} value={unit} type="text"/>
+                          {level === "level-1" && (
+                            <input contentEditable disabled value={nama_role} type="text"/>
+                          )}
+                          {level === "level-2" && (
+                            <input contentEditable disabled value={nama_role_c} type="text"/>
+                          )}
+                          {level === "level-3" && (
+                            <input contentEditable disabled value={nama_role_b} type="text"/>
+                          )}
+                          {level === "level-4" && (
+                            <input contentEditable disabled value={nama_role_a} type="text"/>
+                          )}
                           <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
                           <textarea onChange={handleChangeFixing} onInput={(e) => setFixing(e.target.value)} value={fixing} name="" id=""></textarea>
                           <label htmlFor="">Gambar Bukti</label>

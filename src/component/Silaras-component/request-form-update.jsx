@@ -14,7 +14,6 @@ const Request_Form_Update = () => {
     const [nama, setNama] = useState(request.nama);
     const [nrk_nip, setNrk_nip] = useState(request.nrk_nip);
     const [jabatan, setJabatan] = useState(request.jabatan);
-    const [unit, setUnit] = useState(request.unit);
     const [barang, setBarang] = useState(request.barang);
     const [barang2, setBarang2] = useState(request.barang2);
     const [barang3, setBarang3] = useState(request.barang3);
@@ -33,10 +32,6 @@ const Request_Form_Update = () => {
     const navigate = useNavigate();
 
     const param = useParams();
-    const handleChangeUnit = (event) => {
-      console.log(event.target.value);
-      setUnit(event.target.value);
-    }
     const handleChangeBarang = (event) => {
       console.log(event.target.value);
       setBarang(event.target.value);
@@ -101,7 +96,6 @@ const Request_Form_Update = () => {
       event.preventDefault();
       setIsLoading(true);
       const payload = {
-        unit: unit,
         barang: barang,
         jumlah_barang: jumlah_barang,
         satuan: satuan_barang,
@@ -117,11 +111,7 @@ const Request_Form_Update = () => {
         barang5: barang5,
         jumlah_barang5: jumlah_barang5,
         satuan5: satuan_barang5,
-      };
-      if (!payload.unit || !payload.barang || !payload.jumlah_barang || !payload.satuan) {
-        alert("Mohon isi semua field yang wajib diisi");
-        return;
-      }
+      };      
       try {
         const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/update_request.php?id=${param.id}`, payload, {
           headers: {
@@ -154,7 +144,6 @@ const Request_Form_Update = () => {
             setBarang(response.data.barang);
             setJumlahBarang(response.data.jumlah_barang);
             setSatuanBarang(response.data.satuan);
-            setUnit(response.data.unit);
             setBarang2(response.data.barang2);
             setJumlahBarang2(response.data.jumlah_barang2);
             setSatuanBarang2(response.data.satuan2);
@@ -197,7 +186,18 @@ const Request_Form_Update = () => {
                             <label htmlFor="">Jabatan</label>
                             <input value={jabatan} disabled placeholder='NRK' type="text"/>
                             <label htmlFor="">Unit Kerja</label>
-                            <input onChange={handleChangeUnit} value={unit} placeholder='Unit Kerja' type="text"/>
+                            {level === 'level-1' && (
+                              <input value={request.nama_role} disabled placeholder='Unit Kerja' type="text"/>
+                            )}
+                            {level === 'level-2' && (
+                              <input value={request.nama_role_c} disabled placeholder='Unit Kerja' type="text"/>
+                            )}
+                            {level === 'level-3' && (
+                              <input value={request.nama_role_b} disabled placeholder='Unit Kerja' type="text"/>
+                            )}
+                            {level === 'level-4' && (
+                              <input value={request.nama_role_a} disabled placeholder='Unit Kerja' type="text"/>
+                            )}
                             <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>
                             <table>
                               <tbody>

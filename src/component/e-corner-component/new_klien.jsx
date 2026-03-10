@@ -184,6 +184,7 @@ const New_Klien_form = () => {
                   <option value="2">Minggu ke 2</option>
                   <option value="3">Minggu ke 3</option>
                   <option value="4">Minggu ke 4</option>
+                  <option value="5">Minggu ke 5</option>
                 </select>
                 <label htmlFor="days">Hari :</label>
                 <select onChange={handleChangeDay} name="days" id="days">

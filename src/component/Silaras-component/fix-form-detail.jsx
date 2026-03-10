@@ -24,12 +24,20 @@ const Fix_form_Detail = () => {
   const param = useParams();
   const storeidNumber = localStorage.getItem('id_number');
   const [detail, setDetail] = useState({});
+  const [nama_role, setNama_role] = useState(detail.nama_role || "");
+  const [nama_role_c, setNama_role_c] = useState(detail.nama_role_c || "");
+  const [nama_role_b, setNama_role_b] = useState(detail.nama_role_b || "");
+  const [nama_role_a, setNama_role_a] = useState(detail.nama_role_a || "");
   const getDetail = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/detail_fix.php?id=${param.id}`, {
             headers: {}
         })
         setDetail(response.data);
+        setNama_role(response.data.nama_role);
+        setNama_role_c(response.data.nama_role_c);
+        setNama_role_b(response.data.nama_role_b);
+        setNama_role_a(response.data.nama_role_a);
         console.log(response.data);
       } catch (error) {
         console.log(error.response);
@@ -39,16 +47,22 @@ const Fix_form_Detail = () => {
   console.log("id notif yang diambil: "+notif_detail?.id_notif);
     
   const getNotifDetail = async () => {
-      try {
-          const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_fix_byReceive.php?id=${param.id}`, {
-              headers: {}
-          });
-          setNotifDetail(response.data[0]);
-          console.log(response.data[0]);
-      } catch (error) {
+        try {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_fix_byReceive.php?id=${param.id}`, {
+                headers: {}
+            });
+            if (response.data && response.data.length > 0) {
+                setNotifDetail(response.data[0]);
+                console.log(response.data[0]);
+            } else {
+                console.warn("No notification details found for the given ID.");
+                setNotifDetail({}); // Set to empty object to prevent errors
+            }
+        } catch (error) {
           console.error(error);
-      }
-  }
+          setNotifDetail({}); // Set to empty object on error
+        }
+    }
   useEffect(() => {
     getDetail();
     getNotifDetail();
@@ -134,7 +148,18 @@ const Fix_form_Detail = () => {
                           <label htmlFor="">NIP/NRK</label>
                           <input value={detail.nrk_nip} disabled type="text"/>
                           <label htmlFor="">Units</label>
-                          <input value={detail.unit} disabled type="text"/>
+                          {level === "level-1" && (
+                            <input value={nama_role} disabled type="text"/>
+                          )}
+                          {level === "level-2" && (
+                            <input value={nama_role_c} disabled type="text"/>
+                          )}
+                          {level === "level-3" && (
+                            <input value={nama_role_b} disabled type="text"/>
+                          )}
+                          {level === "level-4" && (
+                            <input value={nama_role_a} disabled type="text"/>
+                          )}
                           <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
                           <textarea value={detail.fix} disabled name="" id=""></textarea>
                           <label htmlFor="">Gambar Bukti</label>
@@ -143,7 +168,7 @@ const Fix_form_Detail = () => {
                     </form>
                   </div>
                   {detail.Approval === "3" && (
-                    <div className='box3'>
+                    <div className='box1'>
                       <form action="">
                       <div className='content-f'>
                           <h1>Jawaban Perbaikan</h1>
@@ -156,7 +181,7 @@ const Fix_form_Detail = () => {
                     </div>
                   )}                  
                   {role === 'C-03' && (
-                  <div className='box3'>
+                  <div className='box1'>
                     <form action="">
                       <div className='content-f'>
                         <h1>Jawab</h1>
@@ -170,7 +195,7 @@ const Fix_form_Detail = () => {
                   </div>
                   )}
                   {role_sp === 'S-03' && (
-                  <div className='box3'>
+                  <div className='box1'>
                     <form action="">
                       <div className='content-f'>
                         <h1>Jawab</h1>

@@ -218,7 +218,7 @@ const Cuti_Detail_Form = () => {
     }
     const handleKasubag = async (idNotif, event) => {
       event.preventDefault();
-      if (kasubagJawab === 2) {
+      if (Number(kasubagJawab) === 2) {
         try {
           setIsLoading(true);
           await mark(idNotif, event);
@@ -229,7 +229,7 @@ const Cuti_Detail_Form = () => {
           setIsLoading(false);
         }    
       }
-      else if (kasubagJawab === 3) {
+      else if (Number(kasubagJawab) === 3) {
         try {
           setIsLoading(true);
           await mark(idNotif, event);

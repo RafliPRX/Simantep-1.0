@@ -42,12 +42,18 @@ const Vehicle_Detail = () => {
             const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/notif_vehicle_byReceive.php?id=${param.id}`, {
                 headers: {}
             });
-            setNotifDetail(response.data[0]);
-            console.log(response.data[0]);
+            if (response.data && response.data.length > 0) {
+                setNotifDetail(response.data[0]);
+                console.log(response.data[0]);
+            } else {
+                console.warn("No notification details found for the given ID.");
+                setNotifDetail({}); // Set to empty object to prevent errors
+            }
         } catch (error) {
-            console.error(error);
+          console.error(error);
+          setNotifDetail({}); // Set to empty object on error
         }
-  }
+    }
     useEffect(() => {
       getDetail();
       getNotifDetail();
@@ -134,7 +140,18 @@ const Vehicle_Detail = () => {
                             <label htmlFor="">Jabatan</label>
                             <input name='jabatan' value={detail.jabatan} disabled type="text"/>
                             <label htmlFor="">Unit Kerja</label>
-                            <input required value={detail.unit} disabled type="text"/>
+                            {level === "level-1" && (
+                              <input name='unit' value={detail.nama_role} disabled type="text"/>
+                            )}
+                            {level === "level-2" && (
+                              <input name='unit' value={detail.nama_role_c} disabled type="text"/>
+                            )}
+                            {level === "level-3" && (
+                              <input name='unit' value={detail.nama_role_b} disabled type="text"/>
+                            )}
+                            {level === "level-4" && (
+                              <input name='unit' value={detail.nama_role_a} disabled type="text"/>
+                            )}
                             <label htmlFor="">Jenis Peminjaman Kendaraan (Pilih Satu)</label>
                             <div className='check'>
                                 <input checked={detail.jenis === "Roda 2"}  value={"Roda 2"} type="checkbox" name="" id="" />
@@ -148,6 +165,10 @@ const Vehicle_Detail = () => {
                                 <input checked={detail.jenis === "Roda 6"}  value={"Roda 6"} type="checkbox" name="" id="" />
                                 <label htmlFor="">Roda 6</label>
                             </div>
+                            <label htmlFor="">Tujuan Peminjaman</label>
+                            <input type="text" value={detail.tujuan} disabled placeholder='Tujuan Peminjaman' />
+                            <label htmlFor="">Keperluan Peminjaman</label>
+                            <input type="text" value={detail.keperluan} disabled placeholder='Keperluan Peminjaman' />
                             <label htmlFor="">Tanggal Peminjaman</label>
                             <input required value={detail.tanggal_pinjam} disabled type="date"/>
                             <label htmlFor="">Jam Peminjaman</label>
@@ -158,7 +179,7 @@ const Vehicle_Detail = () => {
                         </form>
                     </div>
                     {detail.Approval !== "1" && (
-                      <div className='box3'>
+                      <div className='box1'>
                         <form action="">
                           <div className='content-f'>
                             <h1>Jawab</h1>
@@ -177,7 +198,7 @@ const Vehicle_Detail = () => {
                       </div>
                     )}                      
                     {role === "C-03" && (
-                      <div className='box3'>
+                      <div className='box1'>
                         <form action="">
                           <div className='content-f'>
                             <h1>Jawab</h1>

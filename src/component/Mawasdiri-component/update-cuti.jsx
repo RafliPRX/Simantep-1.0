@@ -7,6 +7,9 @@ const Cuti_form_Update = () => {
     const storedUsername = localStorage.getItem('nama');
     const storedFProfile = localStorage.getItem('f_profile');
     const [isLoading, setIsLoading] = useState(false);
+    const { role } = useParams();
+    const { level } =useParams();
+    const { role_sp } = useParams();
     console.log(storedFProfile);
     const [cuti, setShow] = useState(false); // Changed to boolean for clarity
       
@@ -132,7 +135,8 @@ const Cuti_form_Update = () => {
         console.log(response.data);
         setTimeout(() => {
           setIsLoading(false);
-          navigate("/Dashboard");
+          navigate(`/Dashboard/${level}/${role}/${role_sp}`);
+          alert(response.data.message);
         }, 1000);
       } catch (error) {
         setIsLoading(false);

@@ -8,7 +8,7 @@ const Banner = ({Logout}) => {
                     <div className='text-group'>
                         <h1>Selamat Datang</h1>
                         <h2>di Sistem Manajemen Terpadu</h2>
-                        <h3>Balai Rehabilitasi BNN Tanah Merah</h3>
+                        <h3>Balai Rehabilitasi Narkotika Tanah Merah</h3>
                         <button onClick={Logout}>Keluar</button>
                         <a href="https://wa.me/6287777165162 ">Butuh Bantuan ?</a>
                     </div>

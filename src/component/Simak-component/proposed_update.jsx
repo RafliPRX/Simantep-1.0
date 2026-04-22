@@ -42,6 +42,7 @@ const Proposed_Update = () => {
                 setUnits(response.data.units);
                 setKegiatan(response.data.nama_kegiatan);
                 setRencana(response.data.rencana_pelaksana);
+                setDokumen(response.data.dokumen);
             } catch (error) {
                 console.error(error);
             }
@@ -56,6 +57,7 @@ const Proposed_Update = () => {
         const [units, setUnits] = useState(detail.units || "");
         const [kegiatan, setKegiatan] = useState(detail.nama_kegiatan || "");
         const [rencana, setRencana] = useState(detail.rencana_pelaksana || "");
+        const [dokumen, setDokumen] = useState(detail.dokumen || "");
         const navigate = useNavigate();
         const handleChangeNama = (event) => {
             setNama(event.target.value);
@@ -81,6 +83,10 @@ const Proposed_Update = () => {
             setRencana(event.target.value);
             console.log(event.target.value);
         }
+        const handleChangeDokumen = (event) => {
+            setDokumen(event.target.value);
+            console.log(event.target.value);
+        }
         const handleRequest = async (event) => {
             event.preventDefault();
             setIsLoading(true);
@@ -88,6 +94,7 @@ const Proposed_Update = () => {
                 nama: nama,
                 nrk: nrk,
                 jabatan: jabatan,
+                dokumen: dokumen,
                 units: units,
                 nama_kegiatan: kegiatan,
                 rencana_pelaksana: rencana,
@@ -128,6 +135,15 @@ const Proposed_Update = () => {
                                 <input onChange={handleChangeNRK} disabled value={nrk} type="text"/>
                                 <label htmlFor="">Jabatan</label>
                                 <input onChange={handleChangeJabatan} disabled value={jabatan} type="text"/>
+                                <label htmlFor="">Jenis Dokumen</label>
+                                <div className='check'>
+                                    <input type="checkbox" checked={dokumen === "LPJ"} name="jenis_dokumen" id="jenis_dokumen" value="LPJ" onChange={ (event) => {handleChangeDokumen(event)}} />
+                                    <label htmlFor="">LPJ</label>
+                                </div>
+                                <div className='check'>
+                                    <input type="checkbox" checked={dokumen === "Proposal"} name="jenis_dokumen" id="jenis_dokumen" value="Proposal" onChange={ (event) => {handleChangeDokumen(event)}} />
+                                    <label htmlFor="">Proposal</label>
+                                </div>
                             </div>
                             <div className='content-f'>
                                 <h1>Nama Kegiatan & Unit</h1>
@@ -167,7 +183,6 @@ const Proposed_Update = () => {
                                     handleChangeUnits(event);
                                     }} />
                                     <label htmlFor="sosialCheckbox">Manajemen</label>
-                                    <label htmlFor="" style={{display: detail.units === 'Manajemen' ? 'flex' : 'none'}}>Anda Sebelumnya Memilih Manajemen</label>
                                 </div>
                                 {(show2 || units === "Manajemen") && ( // Conditionally render based on show state
                                 <div className='check-form'>

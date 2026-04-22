@@ -1,4 +1,6 @@
-import Homepage from "../pages/homepage";
+/* eslint-disable react-refresh/only-export-components */
+import { lazy, Suspense } from 'react';
+// import Homepage from "../pages/homepage";
 import Login from "../pages/login";
 import Cuti from "../pages/mawasdiri-page/cuti-form";
 import Dashboard from "../pages/mawasdiri-page/dashboard";
@@ -35,6 +37,27 @@ import Dashboard_Corner from "../pages/E-Corner-Page/dashboard_corner";
 import Klien_form from "../pages/E-Corner-Page/klien-form";
 import Klien_form_Update from "../pages/E-Corner-Page/klien-form-update";
 // import Maintanance from "../pages/maintanance-page/maintanance";
+
+// Lazy load Homepage
+const LazyHomepage = lazy(() => import("../pages/homepage"));
+
+// Loading component for Suspense fallback
+const LoadingFallback = () => (
+  <div style={{
+    position: 'fixed',
+    top: 0,
+    left: 0,
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+    zIndex: 9999
+  }}>
+    <span className="load-cuti"></span>
+  </div>
+);
 
 
 export const routeList = [
@@ -122,7 +145,9 @@ export const routeList = [
         path: "/Home/:level",
         element: (
             <RoutedProtected>
-                <Homepage/>
+                <Suspense fallback={<LoadingFallback />}>
+                    <LazyHomepage />
+                </Suspense>
             </RoutedProtected>
         ),
     },
@@ -199,7 +224,7 @@ export const routeList = [
         ),
     },
     {
-        path: '/Absensi-Page',
+        path: '/Dashboard/:level/:role/:role_sp/Absensi-Page',
         element:( 
             <RoutedProtected>
                 <Absent_Page/>
@@ -215,7 +240,7 @@ export const routeList = [
         ),
     },
     {
-        path: '/Absensi-Page-Keluar/:id',
+        path: '/Dashboard/:level/:role/:role_sp/Absensi-Page-Keluar/:id',
         element: (
             <RoutedProtected>
                 <Absent_Page_Out/>

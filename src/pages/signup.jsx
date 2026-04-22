@@ -190,8 +190,8 @@ const Signup = () => {
                             <input onChange={handleChangeNRK} placeholder='NRK atau NIP' type="text" />
                             <label>Jabatan</label>
                             <input onChange={handleChangeJabatan} placeholder='jabatan' type="Jabatan" />
-                            <label>Satuan Kerja</label>
-                            <input value={nama_role} placeholder='jabatan' type="Jabatan" />
+                            <label>Unit</label>
+                            <input value={nama_role} placeholder='Unit' type="Jabatan" />
                             {/* <label>Nomor ID</label>
                             <input value={id_number} placeholder='jabatan' type="Jabatan" /> */}
                             <button onClick={handleLogin_ppnpn} >Buat Akun</button>

@@ -1,8 +1,8 @@
 import '../css/menu.css'
-import absen from '../../assets/absen.jpg'
-import simak from '../../assets/keuangan.jpg'
-import silaras from '../../assets/sarpras.jpg'
-import e_corner from '../../assets/ECORNER.jpg'
+import absen from '../../assets/absen_web.webp'
+import simak from '../../assets/keuangan_WEB.webp'
+import silaras from '../../assets/sarpras_WEB.webp'
+import e_corner from '../../assets/ECORNER_WEB.webp'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import PropTypes from 'prop-types'
@@ -21,6 +21,7 @@ const Menu = ({
     const [notif_fix, setNotif_fix] = useState([]);
     const [notif_vehicle, setNotif_vehicle] = useState([]);
     const [notif_bhp, setNotif_bhp] = useState([]);
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
     const getNotif = async () => {
         try {
             const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/notifikasi_surat_by_Receive.php?nama=${nama}` , {
@@ -71,6 +72,11 @@ const Menu = ({
         getNotif_silaras();
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[nama]);
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 480);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     const mark = async (idNotif, event) => {
         event.preventDefault();
         const payload = {
@@ -269,15 +275,15 @@ const Menu = ({
             <div className='menu'>
                 <div className='menu-disp'>
                     <div className='card'>
-                        <div className='pic' style={{backgroundImage: `url(${absen})`, backgroundColor: "lightgray", backgroundSize: "cover" }}></div>
+                        <div className='pic' style={{backgroundImage: `url(${absen})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}></div>
                         <div className='text'>
                             <h3>MAWASDIRI</h3>
-                            <h5>Manajemen Pegawai Berbasis Kinerja Mandiri</h5>
+                            <h5>Manajemen Pegawai Berbasis{isMobile && <br />} Kinerja Mandiri</h5>
                             <button onClick={() => window.location.href = `/Dashboard/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
                         </div>
                     </div>
                     <div className='notif-col'>
-                        <div style={{background: `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
+                        <div style={{background: `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "top", backgroundAttachment: "fixed" }} className='pic'></div>
                         <h3>{storedUsername}</h3>
                         <div className='notification-list'>
                         <div className='notification-sub'>                            
@@ -313,7 +319,7 @@ const Menu = ({
                 </div>
                 <div className='menu-disp'>       
                     <div className='card'>
-                        <div className='pic' style={{backgroundImage: `url(${simak})`, backgroundColor: "lightgray", backgroundSize: "cover" }}></div>
+                        <div className='pic' style={{backgroundImage: `url(${simak})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}></div>
                         <div className='text'>
                             <h3>SIMAK</h3>
                             <h5>Sistem Manajemen Keuangan</h5>
@@ -395,10 +401,10 @@ const Menu = ({
                 </div>
                 <div className='menu-disp'>
                     <div className='card'>
-                        <div className='pic' style={{backgroundImage: `url(${silaras})`, backgroundColor: "lightgray", backgroundSize: "cover" }}></div>
+                        <div className='pic' style={{backgroundImage: `url(${silaras})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}></div>
                         <div className='text'>
                             <h3>SI LARAS</h3>
-                            <h5>Sistem Layanan sarana dan Prasarana</h5>
+                            <h5>Sistem Layanan sarana dan {isMobile && <br />} Prasarana</h5>
                             <button onClick={() => window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
                         </div>
                     </div>
@@ -509,7 +515,7 @@ const Menu = ({
                 {kode_role_sp === 'S-06' &&(
                 <div className='menu-disp'>
                     <div className='card'>
-                        <div className='pic' style={{backgroundImage: `url(${e_corner})`, backgroundColor: "lightgray", backgroundSize: "cover" }}></div>
+                        <div className='pic' style={{backgroundImage: `url(${e_corner})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}></div>
                         <div className='text'>
                             <h3>E-Corner</h3>
                             <h5>Khusus Admin E-Corner</h5>

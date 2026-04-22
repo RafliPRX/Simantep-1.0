@@ -86,7 +86,12 @@ const Proposed = () => {
         const [units, setUnits] = useState("");
         const [kegiatan, setKegiatan] = useState("");
         const [rencana, setRencana] = useState("");
-        const navigate = useNavigate();        
+        const [jenisDokumen, setJenisDokumen] = useState("");
+        const navigate = useNavigate();  
+        const handleChangeDokumen = (event) => {
+            setJenisDokumen(event.target.value);
+            console.log(event.target.value);
+        }      
         const handleChangeUnits = (event) => {
             setUnits(event.target.value);
             console.log(event.target.value);
@@ -104,6 +109,7 @@ const Proposed = () => {
             event.preventDefault();
             const payload = {
                 id_number: storeidNumber,
+                dokumen: jenisDokumen,
                 units: units,
                 nama_kegiatan: kegiatan,
                 rencana_pelaksana: rencana,
@@ -161,6 +167,15 @@ const Proposed = () => {
                                 )}
                                 {/* <label htmlFor="">Nama APR Lv1</label>
                                 <input value={nama_apr_lv1} placeholder='Nama APR Lv1' type="text"/> */}
+                                <label htmlFor="">Jenis Dokumen</label>
+                                <div className='check'>
+                                    <input type="checkbox" name="jenis_dokumen" id="jenis_dokumen" value="LPJ" onChange={ (event) => {handleChangeDokumen(event)}} />
+                                    <label htmlFor="">LPJ</label>
+                                </div>
+                                <div className='check'>
+                                    <input type="checkbox" name="jenis_dokumen" id="jenis_dokumen" value="Proposal" onChange={ (event) => {handleChangeDokumen(event)}} />
+                                    <label htmlFor="">Proposal</label>
+                                </div>
                             </div>
 
                             <div className='content-f'>
@@ -174,9 +189,9 @@ const Proposed = () => {
                                 </div>
                                 {show && ( // Conditionally render based on show state
                                     <div className='check-form'>
-                                        <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
+                                        <label htmlFor="">Nama Kegiatan</label>
                                         <input onChange={handleChangeKegiatan} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Rencana Pelaksanaan</label>
+                                        <label htmlFor="">Tanggal Pelaksanaan Kegiatan</label>
                                         <input onChange={handleChangeRencana} style={{marginTop: '10px'}} type="date" name="" id="" />
                                     </div>
                                 )}
@@ -189,9 +204,9 @@ const Proposed = () => {
                                 </div>
                                 {show1 && ( // Conditionally render based on show state
                                 <div className='check-form'>
-                                    <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
+                                    <label htmlFor="">Nama Kegiatan</label>
                                     <input onChange={handleChangeKegiatan} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                    <label htmlFor="">Rencana Pelaksanaan</label>
+                                    <label htmlFor="">Tanggal Pelaksanaan Kegiatan</label>
                                     <input onChange={handleChangeRencana} style={{marginTop: '10px'}} type="date" name="" id="" />
                                 </div>
                             )}
@@ -204,9 +219,9 @@ const Proposed = () => {
                                 </div>
                                 {show2 && ( // Conditionally render based on show state
                                 <div className='check-form'>
-                                    <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
+                                    <label htmlFor="">Nama Kegiatan</label>
                                     <input onChange={handleChangeKegiatan} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                    <label htmlFor="">Rencana Pelaksanaan</label>
+                                    <label htmlFor="">Tanggal Pelaksanaan Kegiatan</label>
                                     <input onChange={handleChangeRencana} style={{marginTop: '10px'}} type="date" name="" id="" />
                                 </div>
                             )}

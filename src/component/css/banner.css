@@ -18,7 +18,7 @@
     flex-shrink: 0;
     gap: 100px;
     margin-top: -129px;
-    background: url(../../assets/Asset-5.png) lightgray 50% / cover no-repeat;
+    background: url(../../assets/Asset-5_web.webp) lightgray 50% / cover no-repeat;
 }
 .banner .banner-pic .text-group{
     width: 1452px;
@@ -110,6 +110,6 @@
     .banner{
         margin-top: -200px;
         scale: 0.27;
-        margin-right: 230px;
+        margin-right: 105px;
     }
 }

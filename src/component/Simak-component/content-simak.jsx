@@ -24,7 +24,12 @@ const Content_simak = () => {
     const { role } = useParams();
     const { level } = useParams();
     const { role_sp } = useParams();
-
+    const date = new Date();
+    const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+    const currentYear = date.getFullYear();
+    const [searchMonth, setSearchMonth] = useState(currentMonth);
+    const [lpj_searchmonth, setLpj_SearchMonth] = useState(currentMonth);
+    // console.log("Tahun ini:" +currentYear);
     const storeidNumber = localStorage.getItem('id_number');
     const [dana, setDana] = useState([]);
     const [pagination_dana, setPagination_Dana] = useState({
@@ -32,7 +37,7 @@ const Content_simak = () => {
     });
     const navigate = useNavigate();
     const getDana = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_by_name.php?id_number=${storeidNumber}&page=${pagination_dana.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_by_name.php?id_number=${storeidNumber}&page=${pagination_dana.current_page}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -55,7 +60,7 @@ const Content_simak = () => {
         current_page: 1,
     });
     const getDana_moneymaker = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana.php?page=${pagination_dana_moneymaker.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana.php?page=${pagination_dana_moneymaker.current_page}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -78,7 +83,7 @@ const Content_simak = () => {
         current_page: 1,
     })
     const getLpj = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?id_number=${storeidNumber}&page=${pagination_lpj.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?id_number=${storeidNumber}&page=${pagination_lpj.current_page}&bulan=${lpj_searchmonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -101,7 +106,7 @@ const Content_simak = () => {
         current_page: 1,
     })
     const getLpj_lv1 = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_lv1.php?page=${pagination_lpj_lv1.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_lv1.php?page=${pagination_lpj_lv1.current_page}&bulan=${lpj_searchmonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -124,7 +129,7 @@ const Content_simak = () => {
         current_page: 1,
     })
     const getLpj_lv2 = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_lv2.php?page=${pagination_lpj_lv2.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_lv2.php?page=${pagination_lpj_lv2.current_page}&bulan=${lpj_searchmonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -147,7 +152,7 @@ const Content_simak = () => {
         current_page: 1,
     })
     const getLpj_keuangan = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_keuangan.php?page=${pagination_lpj_keuangan.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_keuangan.php?page=${pagination_lpj_keuangan.current_page}&bulan=${lpj_searchmonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -174,7 +179,7 @@ const Content_simak = () => {
         getLpj_keuangan();
     },[
         pagination_lpj?.current_page, pagination_lpj_lv1?.current_page, pagination_lpj_lv2?.current_page, pagination_lpj_keuangan?.current_page,
-        pagination_dana?.current_page, pagination_dana_moneymaker?.current_page
+        pagination_dana?.current_page, pagination_dana_moneymaker?.current_page, searchMonth, lpj_searchmonth
     ]);
     const handleNext_Lpj = () => {
         setPagination_lpj({
@@ -297,7 +302,14 @@ const Content_simak = () => {
             console.log(error.response);            
         }
     }
-
+    const handleChangeSearchMonth = (event) => {
+        setSearchMonth(event.target.value);
+        console.log(event.target.value);        
+    }
+    const handleChangeLPJSearchMonth = (event) => {
+        setLpj_SearchMonth(event.target.value);
+        console.log(event.target.value);        
+    }
     return(
         <>
             <div className='main-dashboard'>
@@ -312,16 +324,41 @@ const Content_simak = () => {
                         {(role !== "C-04" || role_sp === "S-02") && (
                         <div className='content'>
                             <h1>Progress Pengajuan RPD</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Dana}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_dana?.current_page} />
-                                <button className='right' onClick={handleNext_Dana}><img src={right} alt="" /></button>
-                            </div>
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Dana}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_dana?.current_page} />
+                                    <button className='right' onClick={handleNext_Dana}><img src={right} alt="" /></button>                                
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                    <button type=''>Download Excel</button>
+                                </div>
+                            </div>                  
                             {dana.length > 0 ? (
                             <table>
                             <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
-                                <th style={{textAlign:'center'}}>Nama Kegiatan</th>
+                                <th style={{textAlign:'center'}}>Jenis Dokumen</th>
                                 <th style={{textAlign:'center'}}>Tanggal Pelaksanaan</th>
                                 <th style={{textAlign:'center'}}>Feedback Bagian Keuangan</th>
                                 <th style={{textAlign:'center'}}>Detail</th>
@@ -347,10 +384,34 @@ const Content_simak = () => {
                         {role === "C-04" && (
                             <div className='content'>
                             <h1>Progress Pengajuan RPD</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Dana_MoneyMaker}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_dana_moneymaker?.current_page} />
-                                <button className='right' onClick={handleNext_Dana_MoneyMaker}><img src={right} alt="" /></button>
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Dana_MoneyMaker}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_dana_moneymaker?.current_page} />
+                                    <button className='right' onClick={handleNext_Dana_MoneyMaker}><img src={right} alt="" /></button>                                
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                </div>
                             </div>
                             {dana_moneymaker.length > 0 ? (
                             <table>
@@ -382,16 +443,41 @@ const Content_simak = () => {
                         {(role_sp !== "S-04" && role !== "C-04") && (
                           <div style={{display: role === 'A-02' || role === "A-01" ? "none" : ""}} className='content'>
                             <h1>Progress Pengajuan Proposal dan LPJ</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Lpj}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_lpj?.current_page} />
-                                <button className='right' onClick={handleNext_Lpj}><img src={right} alt="" /></button>
-                            </div>
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Lpj}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_lpj?.current_page} />
+                                    <button className='right' onClick={handleNext_Lpj}><img src={right} alt="" /></button>
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                </div>
+                            </div>    
                             {lpj.length > 0 ? (
                             <table>
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Jenis Dokumen</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
@@ -412,6 +498,7 @@ const Content_simak = () => {
                                 <tr key={item.id_lpj}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.units}</td>
+                                    <td style={{textAlign:'center'}}>{item.dokumen}</td>
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
@@ -447,7 +534,7 @@ const Content_simak = () => {
                             <table>
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
-                                    <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>                                    
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
@@ -494,12 +581,35 @@ const Content_simak = () => {
                         {(role === "C-04" || role_sp === "S-04") && (
                           <div className='content'>
                             <h1>Progress Pengajuan Proposal dan LPJ Keuangan</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Lpj_keuangan}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_lpj_keuangan?.current_page} />
-                                <button className='right' onClick={handleNext_Lpj_keuangan}><img src={right} alt="" /></button>
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Lpj_keuangan}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_lpj_keuangan?.current_page} />
+                                    <button className='right' onClick={handleNext_Lpj_keuangan}><img src={right} alt="" /></button>
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                </div>
                             </div>
-
                             {lpj_keuangan.length > 0 ? (
                             <table>
                                 <tr>
@@ -551,11 +661,35 @@ const Content_simak = () => {
                         { role === "A-02" && (
                           <div className='content'>
                             <h1>Progress Pengajuan Proposal dan LPJ Kasubag</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Lpj_lv1}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_lpj_lv1?.current_page} />
-                                <button className='right' onClick={handleNext_Lpj_lv1}><img src={right} alt="" /></button>
-                            </div>                            
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Lpj_lv1}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_lpj_lv1?.current_page} />
+                                    <button className='right' onClick={handleNext_Lpj_lv1}><img src={right} alt="" /></button>
+                                </div>
+                                 <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                </div>
+                            </div>
                             {lpj_lv1.length > 0 ? (
                             <table>
                                 <tr>
@@ -607,11 +741,35 @@ const Content_simak = () => {
                         { role === "A-01" && (
                           <div className='content'>
                             <h1>Progress Pengajuan Proposal dan LPJ Kepala Balai</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Lpj_lv2}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_lpj_lv2?.current_page} />
-                                <button className='right' onClick={handleNext_Lpj_lv2}><img src={right} alt="" /></button>
-                            </div>                            
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Lpj_lv2}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_lpj_lv2?.current_page} />
+                                    <button className='right' onClick={handleNext_Lpj_lv2}><img src={right} alt="" /></button>
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                </div>
+                            </div>
                             {lpj_lv2.length > 0 ? (
                             <table>
                                 <tr>

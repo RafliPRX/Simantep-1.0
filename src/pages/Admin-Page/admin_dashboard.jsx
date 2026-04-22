@@ -1,6 +1,6 @@
 import Admin_Content from '../../component/Admin-Component/admin-content';
 import Admin_Sidebar from '../../component/Admin-Component/admin_sidebar';
-import '../../component/css/dashboard.css';
+import '../../component/css/homepage.css';
 
 const Admin_Dashboard = () => {
     return(

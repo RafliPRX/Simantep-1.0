@@ -18,8 +18,14 @@ const Content = () => {
     const { level } = useParams();
     const { role } = useParams();
     const { role_sp } = useParams();
+    const date = new Date();
+    const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+    const currentYear = date.getFullYear();
+    const [searchMonth, setSearchMonth] = useState(currentMonth);    
     const navigate = useNavigate();
+    const [searchName, setSearchName] = useState('');
     const storeidNumber = localStorage.getItem('id_number');
+    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
     // const [isLoading, setIsLoading] = useState('false')
     const [identity, setIdentity] = useState([]);
     const [nama, setNama] = useState(identity.nama);
@@ -40,7 +46,7 @@ const Content = () => {
         currentPage: 1,
     });    
     const getSurat = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_name.php?id=${storeidNumber}&page=${pagination_surat.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_name.php?id=${storeidNumber}&page=${pagination_surat.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -66,7 +72,7 @@ const Content = () => {
     // need a separate state variable for it.  Instead we update the correct element
     // inside the `account` array when the user types.
     const getAccount = async() => {
-        const baseUrl = `http://simantepbareta.cloud/API/Admin_API/getAllIdentity.php?page=${pagination_account.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getAllIdentity.php?page=${pagination_account.currentPage}&nama=${searchName}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -156,7 +162,7 @@ const Content = () => {
         currentPage: 1,
     });        
     const getSurat_role_a_kasubbag = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kasubbag.php?kode_role=${role}&page=${pagination_surat_role_a.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kasubbag.php?kode_role=${role}&page=${pagination_surat_role_a.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -179,7 +185,7 @@ const Content = () => {
         currentPage: 1,
     });        
     const getSurat_role_a_kabalai = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kabalai.php?kode_role=${role}&page=${pagination_surat_role_a_kabalai.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kabalai.php?kode_role=${role}&page=${pagination_surat_role_a_kabalai.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -236,7 +242,12 @@ const Content = () => {
     const [surat_role_sp, setSurat_role_sp] = useState([]);
     const [pagination_surat_role_sp, setPagination_surat_role_sp] = useState({
         currentPage: 1,
-    });        
+    });
+    useEffect(() => {
+        const handleResize = () => setIsMobile(window.innerWidth <= 480);
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, []);
     const getSurat_role_sp = async() => {
         const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_sp.php?page=${pagination_surat_role_sp.currentPage}`;
         let url = baseUrl;
@@ -271,6 +282,49 @@ const Content = () => {
     const handleOpenSurat = (id) => {
         navigate(`/Dashboard/${level}/${role}/${role_sp}/Cuti-detail/${id}`);
     }
+    const [absensi, setAbsensi] = useState([]);
+    const [pagination_absensi, setPagination_Absensi] = useState({
+        currentPage: 1,
+    });        
+    const getAbsensi = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Absen/absent.php?id_number=${storeidNumber}&page=${pagination_absensi.currentPage}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_surat = {
+                total: res1.data.total_records,
+                currentPage: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setAbsensi(response);
+            setPagination_Absensi(pagination_surat);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    const handleNext_Absensi = () => {
+        setPagination_Absensi({
+            ...pagination_absensi,
+            currentPage: pagination_absensi.currentPage + 1,
+        })
+    }
+    const handlePrev_Absensi = () => {
+        setPagination_Absensi({
+            ...pagination_absensi,
+            currentPage: pagination_absensi.currentPage - 1,
+        })
+    }
+    const handleChangeSearchMonth = (event) => {
+        setSearchMonth(event.target.value);
+        console.log(event.target.value);        
+    }
+    const handleChangeSearchName = (event) => {
+        setSearchName(event.target.value);
+        console.log(event.target.value);
+    }
     useEffect(() => {
     getIdentity();
     getSurat();
@@ -279,8 +333,9 @@ const Content = () => {
     getSurat_role_sp();
     getSurat_role_b();
     getAccount();
+    getAbsensi();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pagination_surat?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_a_kabalai?.currentPage, pagination_surat_role_sp?.currentPage, pagination_account?.currentPage]);
+    }, [pagination_surat?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_a_kabalai?.currentPage, pagination_surat_role_sp?.currentPage, pagination_account?.currentPage, searchMonth, searchName]);
 
     const handleUpdateSisaCuti = async (event, sisa_cuti, id_number) => {
       event.preventDefault();
@@ -312,7 +367,7 @@ const Content = () => {
             <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
         </div>}
         <p>Mawasdiri/Database Pegawai</p>
-            <h1>Manajemen Pegawai Berbasis Kinerja Mandiri</h1>
+            <h1>Manajemen Pegawai Berbasis {isMobile && <br />} Kinerja Mandiri</h1>
             <Profile nama={nama} feature="mawasdiri" />
             <div className='content-col'>
                 <div className='box-m'>
@@ -322,10 +377,34 @@ const Content = () => {
                         {role_sp === '0' ? (
                                 <>
                                     <h1>Progress Pengajuan Surat</h1>
-                                    <div className='pagination'>
-                                        <button className='left' onClick={handlePrev_Surat}><img src={left} alt="" /></button>
-                                        <input className='page-number' type="text" value={pagination_surat.currentPage} />
-                                        <button className='right' onClick={handleNext_Surat}><img src={right} alt="" /></button>
+                                    <div style={{display: "flex", flexDirection: "row"}}>
+                                        <div className='pagination'>
+                                            <button className='left' onClick={handlePrev_Surat}><img src={left} alt="" /></button>
+                                            <input className='page-number' type="text" value={pagination_surat.currentPage} />
+                                            <button className='right' onClick={handleNext_Surat}><img src={right} alt="" /></button>
+                                        </div>
+                                        <div className='search'>
+                                            <label className='pagination-label' htmlFor="">Bulan:</label>
+                                            <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                                <option value="01">Januari</option>
+                                                <option value="02">Februari</option>
+                                                <option value="03">Maret</option>
+                                                <option value="04">April</option>
+                                                <option value="05">Mei</option>
+                                                <option value="06">Juni</option>
+                                                <option value="07">Juli</option>
+                                                <option value="08">Agustus</option>
+                                                <option value="09">September</option>
+                                                <option value="10">Oktober</option>
+                                                <option value="11">November</option>
+                                                <option value="12">Desember</option>
+                                            </select>
+                                            <label className='pagination-label' htmlFor="">Tahun:</label>
+                                            <select className='pagination-search' value={currentYear} name="" id="">
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     {surat.length > 0 ? (
                                         <table>
@@ -359,16 +438,40 @@ const Content = () => {
                                             ))} 
                                         </table>
                                     ) : (
-                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                                        <p className='table-p'>tidak ada data</p>
                                     )}
                                 </>
                             ) : role_sp === 'S-02' ? (
                                 <>
                                     <h1>Progress Pengajuan Surat</h1>
-                                    <div className='pagination'>
-                                        <button className='left' onClick={handlePrev_Surat_sp}><img src={left} alt="" /></button>
-                                        <input className='page-number' type="text" value={pagination_surat_role_sp.currentPage} />
-                                        <button className='right' onClick={handleNext_Surat_sp}><img src={right} alt="" /></button>
+                                    <div style={{display: "flex", flexDirection: "row"}}>
+                                        <div className='pagination'>
+                                            <button className='left' onClick={handlePrev_Surat_sp}><img src={left} alt="" /></button>
+                                            <input className='page-number' type="text" value={pagination_surat_role_sp.currentPage} />
+                                            <button className='right' onClick={handleNext_Surat_sp}><img src={right} alt="" /></button>
+                                        </div>
+                                        <div className='search'>
+                                            <label className='pagination-label' htmlFor="">Bulan:</label>
+                                            <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                                <option value="01">Januari</option>
+                                                <option value="02">Februari</option>
+                                                <option value="03">Maret</option>
+                                                <option value="04">April</option>
+                                                <option value="05">Mei</option>
+                                                <option value="06">Juni</option>
+                                                <option value="07">Juli</option>
+                                                <option value="08">Agustus</option>
+                                                <option value="09">September</option>
+                                                <option value="10">Oktober</option>
+                                                <option value="11">November</option>
+                                                <option value="12">Desember</option>
+                                            </select>
+                                            <label className='pagination-label' htmlFor="">Tahun:</label>
+                                            <select className='pagination-search' value={currentYear} name="" id="">
+                                                <option value="2025">2025</option>
+                                                <option value="2026">2026</option>
+                                            </select>
+                                        </div>
                                     </div>
                                     {surat_role_sp.length > 0 ? (
                                         <table>
@@ -416,10 +519,34 @@ const Content = () => {
                     {(role ==='A-02' && level === 'level-4') && 
                         <>
                             <h1>Progress Pengajuan Surat</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Surat_a_kasubbag}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
-                                <button className='right' onClick={handleNext_Surat_a_kasubbag}><img src={right} alt="" /></button>
+                            <div style={{display: "flex", flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Surat_a_kasubbag}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
+                                    <button className='right' onClick={handleNext_Surat_a_kasubbag}><img src={right} alt="" /></button>
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' value={currentYear} name="" id="">
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                    </select>
+                                </div>
                             </div>
                             {surat_role_a.length > 0 ? (
                                 <table>
@@ -460,11 +587,35 @@ const Content = () => {
                     {(role ==='A-01' && level === 'level-4') && 
                         <>
                             <h1>Progress Pengajuan Surat</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Surat_a_kabalai}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_surat_role_a_kabalai.currentPage} />
-                                <button className='right' onClick={handleNext_Surat_a_kabalai}><img src={right} alt="" /></button>
-                            </div>
+                            <div style={{display: "flex", flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Surat_a_kabalai}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
+                                    <button className='right' onClick={handleNext_Surat_a_kabalai}><img src={right} alt="" /></button>
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' value={currentYear} name="" id="">
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                    </select>
+                                </div>
+                            </div>                            
                             {surat_role_a_kabalai.length > 0 ? (
                                 <table>
                                     <tr>
@@ -504,10 +655,34 @@ const Content = () => {
                     {level === 'level-3' && 
                         <>
                             <h1>Progress Pengajuan Surat</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Surat_a_kabalai}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_surat_role_a_kabalai.currentPage} />
-                                <button className='right' onClick={handleNext_Surat_a_kabalai}><img src={right} alt="" /></button>
+                            <div style={{display: "flex", flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Surat_a_kabalai}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
+                                    <button className='right' onClick={handleNext_Surat_a_kabalai}><img src={right} alt="" /></button>
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' value={currentYear} name="" id="">
+                                        <option value="2025">2025</option>
+                                        <option value="2026">2026</option>
+                                    </select>
+                                </div>
                             </div>
                             {surat_role_b.length > 0 ? (
                                 <table>
@@ -551,11 +726,17 @@ const Content = () => {
                     {level === 'level-3' &&
                     <div className='content'>                     
                         <>
-                            <h1>Progress Pengajuan Surat</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Account}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_account.currentPage} />
-                                <button className='right' onClick={handleNext_Account}><img src={right} alt="" /></button>
+                            <h1>Daftar Pegawai</h1>
+                            <div style={{display: "flex", flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Account}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_account.currentPage} />
+                                    <button className='right' onClick={handleNext_Account}><img src={right} alt="" /></button>
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Nama: </label>
+                                    <input className='pagination-search' onChange={handleChangeSearchName} type="text" />
+                                </div>
                             </div>
                             {account.length > 0 ? (
                                 <table>
@@ -586,7 +767,43 @@ const Content = () => {
                             )}
                         </>                    
                     </div>  
-                    }                  
+                    }
+                    {role === 'D-19' && 
+                        <div className='content'>
+                            <>
+                                <h1>Absensi</h1>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Absensi}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_account.currentPage} />
+                                    <button className='right' onClick={handleNext_Absensi}><img src={right} alt="" /></button>
+                                </div>
+                                <table>
+                                    <tr>
+                                        <th style={{ textAlign: 'center' }}>Nomor</th>
+                                        <th style={{ textAlign: 'center' }}>Nama</th>
+                                        <th style={{ textAlign: 'center' }}>Hari ini</th>
+                                        <th style={{ textAlign: 'center' }}>Jam Masuk</th>
+                                        <th style={{ textAlign: 'center' }}>Telat</th>
+                                        <th style={{ textAlign: 'center' }}>Jam Keluar</th>
+                                        <th style={{ textAlign: 'center' }}>Cepat</th>
+                                        <th style={{ textAlign: 'center' }}>Total Kerja</th>
+                                    </tr>
+                                    {absensi.map((item, index) => (
+                                        <tr key={item.id_number}>
+                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.today}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.jam_in}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.telat}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.jam_out}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.cepat}</td>
+                                            <td style={{ textAlign: 'center' }}>{item.total}</td>
+                                        </tr>
+                                    ))}
+                                </table>
+                            </>
+                        </div>
+                    }
                 </div>
             </div>
         </div>

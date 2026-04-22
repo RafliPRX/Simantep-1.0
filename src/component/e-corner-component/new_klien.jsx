@@ -43,12 +43,6 @@ const New_Klien_form = () => {
         console.log(error);
       }
   }
-  const [id_corner, setIdcorner] = useState("")
-  const handleChangeId = (event) => {
-    setIdcorner(event.target.value);
-    console.log(event.target.value);
-    
-  }
   const [nama_klien, setNamaKlien] = useState("");
   const handleChangeNamaKlien = (event) => {
     setNamaKlien(event.target.value);
@@ -107,7 +101,6 @@ const New_Klien_form = () => {
     event.preventDefault();
     setIsLoading(true);
     const payload = {
-      id_corner: id_corner,
       nama_klien: nama_klien,
       nama_init: nama_init,
       rooms: room,
@@ -155,8 +148,8 @@ const New_Klien_form = () => {
             <form onSubmit={handlePostClient}>
               <div className='content-f'>
                 <h1>Data Diri</h1>
-                <label htmlFor="">id pengguna</label>
-                <input onChange={handleChangeId} placeholder='Nomor' type="number" />
+                {/* <label htmlFor="">id pengguna</label>
+                <input onChange={handleChangeId} placeholder='Nomor' type="number" /> */}
                 <label htmlFor="">Nama Klien</label>
                 <input onChange={handleChangeNamaKlien} placeholder='Nama Klien' type="text" />                
                 <label htmlFor="">Nama Klien (Inisial)</label>

@@ -13,14 +13,13 @@ import VectorSource from 'ol/source/Vector'; // Importing VectorSource
 import { Icon, Style } from 'ol/style'; // Importing Icon and Style
 import Point from 'ol/geom/Point'; // Importing Point geometry
 import marker from '../../assets/marker.png'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import axios from 'axios';
 import PropTypes from "prop-types";
 import Profile from '../profile';
 
 const Absent = ({title}) => {
-    console.log("Prop: " +title);
-    
+    console.log("Prop: " +title);    
     const storedUsername = localStorage.getItem('nama');
     const mapRef = useRef(null); // Reference for the map
     const videoRef = useRef(null); // Reference for the video element
@@ -31,7 +30,9 @@ const Absent = ({title}) => {
     const [selectedDevice, setSelectedDevice] = useState(null); // State to hold selected device
     const [capturedImage] = useState(null); // State to hold captured image
     const [isLoading, setIsLoading] = useState(false); // Loading state
-
+    const { level } = useParams();
+    const { role } = useParams();
+    const { role_sp } = useParams();
     // Access the camera
     const startCamera = async (deviceId) => {
         try {
@@ -216,11 +217,11 @@ const Absent = ({title}) => {
         canvas.height = video.videoHeight;
         context.drawImage(video, 0, 0);
 
-        const storedUsername = localStorage.getItem('nama');
+        const storeidNumber = localStorage.getItem('id_number');
         const storeNrk = localStorage.getItem('nrk');
         const storedSisaCuti = localStorage.getItem('sisa_cuti');
         const storedFProfile = localStorage.getItem('f_profile');
-        console.log(storedUsername);
+        console.log(storeidNumber);
         console.log(storedSisaCuti );
         console.log(storedFProfile);
         console.log(storeNrk);
@@ -232,7 +233,7 @@ const Absent = ({title}) => {
                 const filename = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}-Masuk-Pagi.png`;
                 const formData = new FormData();
                 formData.append('snap_in', blob, filename);
-                formData.append('nama', storedUsername);
+                formData.append('id_number', storeidNumber);
                 try {
                     const response = await axios.post(
                         `https://simantepbareta.cloud/API/MAWASDIRI/Absen/absent_in.php`, 
@@ -248,7 +249,7 @@ const Absent = ({title}) => {
                         alert("Absent berhasil dicatat!");
                         setTimeout(() => {
                             setIsLoading(false); // Stop loading before navigating
-                            navigate("/Dashboard");
+                            navigate(`/Dashboard/${level}/${role}/${role_sp}`);
                         }, 500);
                     } else {
                         const errorMessage = response.data.message || 'Unknown error occurred';
@@ -256,7 +257,6 @@ const Absent = ({title}) => {
                         console.error('Absent failed:', response.data);
                         setIsLoading(false); // Stop loading
                     }
-
                 } catch (error) {
                     const errorMessage = error.response?.data?.message || 
                                         error.message || 'Unknown error occurred';
@@ -271,7 +271,6 @@ const Absent = ({title}) => {
     }
     return (
         <div className='main-dashboard'>
-
             <p>Mawasdiri/Absensi</p>
             <h1>{title}</h1>
             <Profile nama={storedUsername} f_profile={storedFProfile} feature="mawasdiri" />
@@ -289,7 +288,6 @@ const Absent = ({title}) => {
                             </select>
                             <video ref={videoRef} autoPlay style={{ width: "100%", height: "auto" }}></video>
                             <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-
                             {capturedImage && (
                                 <img src={capturedImage} alt="Captured" style={{ marginTop: '10px', maxWidth: '100%' }} />
                             )}

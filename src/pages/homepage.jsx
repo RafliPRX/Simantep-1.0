@@ -6,6 +6,7 @@ import '../component/css/homepage.css';
 import { useState, useEffect } from 'react';
 import icon from '../assets/icon.png';
 import { useNavigate, useParams } from 'react-router-dom';
+import { useLoading } from '../component/LoadingContext';
 // import { useNavigate } from 'react-router-dom';
 
 const storedidAkun = localStorage.getItem('id_akun');
@@ -208,9 +209,11 @@ const Notification_Bhp = (title, options, idFix, id_Notif) => {
 } 
 
 const Homepage = () => {
-    const { level } = useParams();                
+    const { level } = useParams();
     const [identity, setIdentity] = useState([]);
     const [nama, setNama] = useState(identity.nama);
+    const [bagian_server, setBagian_Server] = useState(identity.bagian);
+    const [bagian_form, setBagian_form] = useState("");
     const [username, setUsername] = useState(identity.username);
     const [nama_role, setNama_role] = useState(identity.nama_role);
     const [kode_role, setKode_role] = useState(identity.kode_role);
@@ -222,11 +225,11 @@ const Homepage = () => {
     const [kode_role_a, setKode_role_a] = useState(identity.kode_role_a);
     const [kode_role_sp, setKode_role_sp] = useState(identity.kode_role_sp);
     const [nama_role_sp, setNama_role_sp] = useState(identity.nama_role_sp);
-    const [jabatan, setJabatan] = useState(identity.jabatan);    
+    const [jabatan, setJabatan] = useState(identity.jabatan);
     const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
     const [akses_level, setAkses_level] = useState(identity.akses_level);
     const [role_sp, setRole_sp] = useState(identity.role_sp);
-    const [isLoading, setIsLoading] = useState(false);
+    const { isLoading, setIsLoading: setGlobalLoading } = useLoading();
     const getIdentity = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
@@ -235,6 +238,7 @@ const Homepage = () => {
         console.log(response.data);
         setIdentity(response.data);
         setNama(response.data.nama);
+        setBagian_Server(response.data.bagian);
         setUsername(response.data.username);
         setNama_role(response.data.nama_role);
         setKode_role(response.data.kode_role);
@@ -250,8 +254,12 @@ const Homepage = () => {
         setAkses_level(response.data.akses_level);
         setKode_role_sp(response.data.kode_role_sp);
         setNama_role_sp(response.data.nama_role_sp);
+        // Set global loading to false after data is loaded
+        setGlobalLoading(false);
       } catch (error) {
         console.log(error);
+        // Also set false on error
+        setGlobalLoading(false);
       }
     }
     
@@ -418,10 +426,11 @@ const Homepage = () => {
     }, [notif_lpj, notif_surat, notif_dana, notif_fix, notif_vehicle, notif_bhp]);
     const navigate = useNavigate();
     const handleLogout = async () => {
-      setIsLoading(true);
       try {
-        const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`, {
-          headers: {}
+        const response = await axios.get(`https://simantepbareta.cloud/API/logout_adm.php`,{
+          headers: {
+            
+          }
         });
         setTimeout(() => {
           localStorage.removeItem('nama');
@@ -435,12 +444,37 @@ const Homepage = () => {
           localStorage.removeItem('Id_user');
           alert(response.data.message);
           navigate('/');
-          setIsLoading(false);
         }, 1000);
       } catch (error) {
         console.log(error.response);
       }
     };
+    const roleMap = {
+      'level-1': kode_role,
+      'level-2': kode_role_c,
+      'level-3': kode_role_b,
+      'level-4': kode_role_a,
+    };
+    const currentKodeRole = roleMap[level] || kode_role;
+    const updateStatus = async (event) => {
+      event.preventDefault();
+      const payload = {
+        bagian: bagian_form
+      }
+      try {
+        const response = await axios.post(`https://simantepbareta.cloud/API/Admin_API/update_status_pegawai.php?id=${storeidNumber}&nama=${nama}`, payload, {
+          headers: {
+            'Content-Type': 'multipart/form-data'
+          }
+        });
+        alert(response.data.message);
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000)        
+      } catch (error) {
+        console.log(error.response);
+      }
+    }
     // const [profile, setProfile] = useState("");
     // const handleChangeProfile = (event) => {
     //     setProfile(event.target.files[0]);
@@ -536,7 +570,31 @@ const Homepage = () => {
                         <div style={{display:"none"}} className='field'>
                           <label htmlFor="kode_role">Spesial Akses</label>
                           <input disabled value={nama_role_sp} type="text" />
-                        </div>  
+                        </div>
+                        {bagian_server === '' && 
+                          <div className='field'>
+                            <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                            <div className='row'>                              
+                              <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                <option value="">Wajib diisi</option>
+                                <option value="1">PNS</option>
+                                <option value="2">PPPK Paruh Waktu</option>
+                                <option value="3">PPPK Penuh Waktu</option>
+                                <option value="4">Alih Daya</option>
+                              </select>
+                              <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                            </div>                            
+                          </div>
+                        }
+                        {bagian_server !== '' &&
+                          <div className='field'>
+                            <label htmlFor="kode_role">Bagian</label>
+                            {bagian_server === '1' && <input disabled value="PNS" type="text" />}
+                            {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
+                            {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
+                            {bagian_server === '4' && <input disabled value="Alih Daya" type="text" />}
+                          </div>
+                        }
                         {/* <label htmlFor="">Upload foto Profile</label>
                         <div className='u-profile'>
                             <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
@@ -578,7 +636,31 @@ const Homepage = () => {
                         <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Akses Level</label>
                           <input disabled value={akses_level} type="text" />
-                        </div>      
+                        </div>
+                        {bagian_server === '' && 
+                          <div className='field'>
+                            <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                            <div className='row'>                              
+                              <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                <option value="">Wajib diisi</option>
+                                <option value="1">PNS</option>
+                                <option value="2">PPPK Paruh Waktu</option>
+                                <option value="3">PPPK Penuh Waktu</option>
+                                <option value="4">Alih Daya</option>
+                              </select>
+                              <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                            </div>                            
+                          </div>
+                        }
+                        {bagian_server !== '' &&
+                          <div className='field'>
+                            <label htmlFor="kode_role">Bagian</label>
+                            {bagian_server === '1' && <input disabled value="PNS" type="text" />}
+                            {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
+                            {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
+                            {bagian_server === '4' && <input disabled value="Alih Daya" type="text" />}
+                          </div>
+                        }
                         {/* <label htmlFor="">Upload foto Profile</label>
                         <div className='u-profile'>
                             <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
@@ -620,7 +702,31 @@ const Homepage = () => {
                         <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Akses Level</label>
                           <input disabled value={akses_level} type="text" />
-                        </div>      
+                        </div>
+                        {bagian_server === '' && 
+                          <div className='field'>
+                            <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                            <div className='row'>                              
+                              <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                <option value="">Wajib diisi</option>
+                                <option value="1">PNS</option>
+                                <option value="2">PPPK Paruh Waktu</option>
+                                <option value="3">PPPK Penuh Waktu</option>
+                                <option value="4">Alih Daya</option>
+                              </select>
+                              <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                            </div>                            
+                          </div>
+                        }
+                        {bagian_server !== '' &&
+                          <div className='field'>
+                            <label htmlFor="kode_role">Bagian</label>
+                            {bagian_server === '1' && <input disabled value="PNS" type="text" />}
+                            {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
+                            {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
+                            {bagian_server === '4' && <input disabled value="Alih Daya" type="text" />}
+                          </div>
+                        }
                         {/* <label htmlFor="">Upload foto Profile</label>
                         <div className='u-profile'>
                             <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
@@ -662,7 +768,31 @@ const Homepage = () => {
                         <div className='field' style={{display:"none"}}>
                           <label htmlFor="kode_role">Akses Level</label>
                           <input disabled value={akses_level} type="text" />
-                        </div>      
+                        </div>
+                        {bagian_server === '' && 
+                          <div className='field'>
+                            <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                            <div className='row'>                              
+                              <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                <option value="">Wajib diisi</option>
+                                <option value="1">PNS</option>
+                                <option value="2">PPPK Paruh Waktu</option>
+                                <option value="3">PPPK Penuh Waktu</option>
+                                <option value="4">Alih Daya</option>
+                              </select>
+                              <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                            </div>                            
+                          </div>
+                        }
+                        {bagian_server !== '' &&
+                          <div className='field'>
+                            <label htmlFor="kode_role">Bagian</label>
+                            {bagian_server === '1' && <input disabled value="PNS" type="text" />}
+                            {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
+                            {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
+                            {bagian_server === '4' && <input disabled value="Alih Daya" type="text" />}
+                          </div>
+                        }
                         {/* <label htmlFor="">Upload foto Profile</label>
                         <div className='u-profile'>
                             <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
@@ -673,10 +803,22 @@ const Homepage = () => {
                   </>
                 }
                 {/* <div style={{background: `url(https://simantepbareta.cloud/API/${storedFProfile})`, backgroundSize: "cover", backgroundPosition: "50% 10%"}} className='profile-pic'></div> */}
-                {level === 'level-1' && <Menu akses_level={akses_level} kode_role={kode_role} nama={nama} kode_role_sp={kode_role_sp} />}
-                {level === 'level-2' && <Menu akses_level={akses_level} kode_role={kode_role_c} nama={nama} kode_role_sp={kode_role_sp} />}
-                {level === 'level-3' && <Menu akses_level={akses_level} kode_role={kode_role_b} nama={nama} kode_role_sp={kode_role_sp} />}
-                {level === 'level-4' && <Menu akses_level={akses_level} kode_role={kode_role_a} nama={nama} kode_role_sp={kode_role_sp} />}
+                {bagian_server === ''  &&
+                  <div className='Menu-Info'>
+                    <div className='title'>
+                      <h1 className='Warning'>PERINGATAN!!!!</h1>
+                      <h2 className='info'>Harap isi Data Diri diatas untuk Membuka akses Menu</h2>
+                    </div>
+                  </div>
+                }
+                {bagian_server !== '' && (
+                  <Menu 
+                    akses_level={akses_level}
+                    kode_role={currentKodeRole}
+                    nama={nama}
+                    kode_role_sp={kode_role_sp}
+                  />
+                )}                    
                 <Footer />
             </div>
         </>

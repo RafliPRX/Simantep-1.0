@@ -108,7 +108,7 @@ const Sidebar_simak = () => {
                 <>
                     <img style={{width: "40px", height: "40px", position: "absolute", top: "10px", right: "10px"}} src={menu} alt="Toggle Sidebar" onClick={toggleSidebar} />
                     {isSidebarVisible && (
-                        <div className='sidebar-3'>
+                        <div className='sidebar'>
                             <div className='sidebar-col'>
                                 <div className='logo-col' onClick={() => window.location.href = `/Home/${level}`}>
                                     <div className='logo'></div>

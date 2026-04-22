@@ -261,6 +261,12 @@ const Proposed_Detail = () => {
                               <td className='input'>{detail.units}</td>
                             </tr>
                             <tr>
+                              <td>Jenis Dokumen</td>
+                            </tr>
+                            <tr>
+                              <td className='input'>{detail.dokumen}</td>
+                            </tr>
+                            <tr>
                               <td>Nama Kegiatan</td>
                             </tr>
                             <tr>

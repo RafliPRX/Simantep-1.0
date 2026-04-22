@@ -10,10 +10,11 @@ const Sidebar = () => {
     const { level } = useParams();
     const { role } = useParams();
     const { role_sp } = useParams();
-    // const [isSubMenuPagi, setIsSupMenuPagi] = useState(false);
-    // function SubMenuPagi() {
-    //   setIsSupMenuPagi(!isSubMenuPagi);
-    // }
+    const [isSubMenuPagi, setIsSupMenuPagi] = useState(false);
+    const storeidNumber = localStorage.getItem('id_number');
+    function SubMenuPagi() {
+      setIsSupMenuPagi(!isSubMenuPagi);
+    }
 
     // const [isSubMenuMalam, setIsSupMenuMalam] = useState(false);
     // function SubMenuMalam() {
@@ -23,8 +24,22 @@ const Sidebar = () => {
         window.location.href = href;
     };
 
-    
-    useEffect(() => {            
+    const [absensi, setAbsensi] = useState({});
+    const getAbsensi = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Absen/detect_absent.php?id_number=${storeidNumber}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            setAbsensi(Array.isArray(response) ? response[0] || {} : response || {});
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    useEffect(() => {
+      getAbsensi();
       const handleResize = () => setWindowWidth(window.innerWidth);
       window.addEventListener('resize', handleResize);
       return () => window.removeEventListener('resize', handleResize);
@@ -97,17 +112,8 @@ const Sidebar = () => {
                             </svg>
                             <p href="Cuti-form">Formulir Pengajuan Cuti</p>
                         </div>
-                        <div id='Pengajuan-Cuti' 
-                             className='list'
-                             onClick={() => window.location.href = `/Home/${level}`}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <path d="M9 14l-4 -4l4 -4" />
-                                <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
-                            </svg>
-                            <p href="Cuti-form">Kembali Ke Halaman Utama</p>
-                        </div>
-                        {/* <div>
+                        {role === 'D-19' &&(
+                        <div>
                           <div className='list' onClick={SubMenuPagi}>
                           <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-sun">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
@@ -120,30 +126,41 @@ const Sidebar = () => {
                             <path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
                             <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
                           </svg>                          
-                          <p>Absensi Pagi</p>
+                          <p>Absensi</p>
                           </div>                        
-                        </div> */}
-                        {/* {isSubMenuPagi && (
+                        </div>
+                        )}                                                
+                        {isSubMenuPagi && (
                           <div style={{marginLeft: '30px'}}>
-                            <div className='list' onClick={() => handleDivClick('/Absensi-Page')}>
+                            <div className='list' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Absensi-Page`)}>
                             <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                               <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
                               <path d="M3 12h13l-3 -3" />
                               <path d="M13 15l3 -3" />
                             </svg>
-                            <p>Absensi Masuk Pagi</p>
+                            <p>Absensi Masuk</p>
                             </div>
-                            <div className='list' onClick={() => handleDivClick(`/Absensi-Page-Keluar/${detected.id_snap}`)}>
+                            <div className='list' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Absensi-Page-Keluar/${absensi.id_snap}`)}>
                             <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
                               <path d="M15 12h-12l3 -3" />\
                               <path d="M6 15l-3 -3" />
                             </svg>                                
-                            <p>Absen Keluar Pagi</p>
+                            <p>Absensi Keluar</p>
                             </div>
                           </div>
-                        )} */}
+                        )}
+                        <div id='Pengajuan-Cuti' 
+                             className='list'
+                             onClick={() => window.location.href = `/Home/${level}`}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
+                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                <path d="M9 14l-4 -4l4 -4" />
+                                <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+                            </svg>
+                            <p href="Cuti-form">Kembali Ke Halaman Utama</p>
+                        </div>
                         {/* <div>
                           <div className='list' onClick={SubMenuMalam}>
                           <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-moon">
@@ -223,17 +240,8 @@ const Sidebar = () => {
                                   </svg>
                                   <p href="Cuti-form">Formulir Pengajuan Cuti</p>
                               </div>
-                              <div id='Pengajuan-Cuti' 
-                                   className='list'
-                                   onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Cuti-form`)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
-                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                      <path d="M9 14l-4 -4l4 -4" />
-                                      <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
-                                  </svg>
-                                  <p href="Cuti-form">Kembali ke Halaman Utama</p>
-                              </div>
-                          {/* <div>
+                        {role === 'D-19' &&(
+                        <div>
                           <div className='list' onClick={SubMenuPagi}>
                           <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-sun">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
@@ -248,28 +256,55 @@ const Sidebar = () => {
                           </svg>                          
                           <p>Absensi Pagi</p>
                           </div>                        
-                        </div> */}
-                        {/* {isSubMenuPagi && (
+                        </div>
+                        )}
+                        <div>
+                          <div className='list' onClick={SubMenuPagi}>
+                          <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-sun">
+                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+                            <path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" />
+                            <path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
+                            <path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+                            <path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+                            <path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" />
+                            <path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
+                            <path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+                            <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+                          </svg>                          
+                          <p>Absensi Pagi</p>
+                          </div>                        
+                        </div>
+                        {isSubMenuPagi && (
                           <div style={{marginLeft: '30px'}}>
-                            <div className='list' onClick={() => handleDivClick('/Absensi-Page')}>
+                            <div className='list' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Absensi-Page`)}>
                             <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
                               <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
                               <path d="M3 12h13l-3 -3" />
                               <path d="M13 15l3 -3" />
                             </svg>
-                            <p>Absensi Masuk Pagi</p>
+                            <p>Absensi Masuk</p>
                             </div>
-                            <div className='list' onClick={() => handleDivClick(`/Absensi-Page-Keluar/${detected.id_snap}`)}>
+                            <div className='list' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Absensi-Page-Keluar/${absensi.id_snap || ''}`)}>
                             <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
                               <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
                               <path d="M15 12h-12l3 -3" />\
                               <path d="M6 15l-3 -3" />
                             </svg>                                
-                            <p>Absen Keluar Pagi</p>
+                            <p>Absensi Keluar</p>
                             </div>
                           </div>
-                          )} */}
+                          )}
+                          <div id='Pengajuan-Cuti' 
+                                   className='list'
+                                   onClick={() => handleDivClick(`/Home/${level}`)}>
+                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
+                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                                      <path d="M9 14l-4 -4l4 -4" />
+                                      <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+                                  </svg>
+                                  <p href="Cuti-form">Kembali ke Halaman Utama</p>
+                          </div>
                           {/* <div>
                             <div className='list' onClick={SubMenuMalam}>
                             <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-moon">

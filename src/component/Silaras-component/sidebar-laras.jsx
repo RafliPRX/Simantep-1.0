@@ -122,7 +122,7 @@ const Sidebar_laras = () => {
                 <>
                     <img style={{width: "40px", height: "40px", position: "absolute", top: "10px", right: "10px"}} src={menu} alt="Toggle Sidebar" onClick={toggleSidebar} />
                     {isSidebarVisible && (
-                        <div className='sidebar-2'>
+                        <div className='sidebar'>
                             <div className='sidebar-col'>
                                 <div className='logo-col' onClick={() => window.location.href = `/Home/${level}`}>
                                     <div className='logo'></div>
@@ -142,6 +142,9 @@ const Sidebar_laras = () => {
                                     <div className='list' onClick={() => handleDivClick(`/dashboard-laras/${level}/${role}/${role_sp}/form-permohonan-BHP-ATK`)}>
                                         <p>Pengajuan Form Permohonan BHP & ATK</p>
                                     </div>
+                                    <div className='list' onClick={() => window.location.href = `/Home/${level}`}>                                        
+                                        <p>Kembali ke Halaman Utama</p>
+                                     </div>
                                     <div className='list' onClick={handleLogout}>
                                         <p>Keluar</p>
                                     </div>

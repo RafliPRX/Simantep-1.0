@@ -17,6 +17,12 @@ const Content_laras = () => {
     const pj = localStorage.getItem('pj');
     const status = localStorage.getItem('Status');
     const storeidNumber = localStorage.getItem('id_number');
+    const date = new Date();
+    const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+    const currentYear = date.getFullYear();
+    const [searchMonth, setSearchMonth] = useState(currentMonth);
+    const [searchMonthVehicle, setSearchMonthVehicle] = useState(currentMonth);
+    const [searchMonthRequest, setSearchMonthRequest] = useState(currentMonth);
     console.log(storedUsername);
     console.log(storedSisaCuti );
     console.log(storedFProfile);
@@ -33,7 +39,7 @@ const Content_laras = () => {
         current_page: 1,
     });
     const getFix = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?id=${storeidNumber}&page=${pagination_fix.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?id=${storeidNumber}&page=${pagination_fix.current_page}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -56,7 +62,7 @@ const Content_laras = () => {
         current_page: 1,
     });
     const getFix_Sarpras = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix.php?page=${pagination_fix_sarpras.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix.php?page=${pagination_fix_sarpras.current_page}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -77,13 +83,13 @@ const Content_laras = () => {
     useEffect(() => {
       getFix();
       getFix_Sarpras();
-    }, [pagination_fix?.current_page, pagination_fix_sarpras?.current_page]);
+    }, [pagination_fix?.current_page, pagination_fix_sarpras?.current_page, searchMonth]);
     const [vehicle, setVehicle] = useState([]);
     const [pagination_vehicle, setPagination_Vehicle] = useState({
       current_page: 1,
     });
     const getVehicle = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?id=${storeidNumber}&page=${pagination_vehicle.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?id=${storeidNumber}&page=${pagination_vehicle.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -106,7 +112,7 @@ const Content_laras = () => {
       current_page: 1,
     });
     const getVehicle_sarpras = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pagination_vehicle_sarpras.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pagination_vehicle_sarpras.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -127,14 +133,14 @@ const Content_laras = () => {
     useEffect(() => {
       getVehicle();
       getVehicle_sarpras();
-    }, [pagination_vehicle?.current_page, pagination_vehicle_sarpras?.current_page]);
+    }, [pagination_vehicle?.current_page, pagination_vehicle_sarpras?.current_page, searchMonthVehicle]);
 
     const [request, setRequest] = useState([]);
     const [pagination_request, setPagination_Request] = useState({
       current_page: 1,
     })
     const getRequest = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request_by_name.php?id=${storeidNumber}&page=${pagination_request.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request_by_name.php?id=${storeidNumber}&page=${pagination_request.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -157,7 +163,7 @@ const Content_laras = () => {
       current_page: 1,
     })
     const getRequest_Sapras = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request.php?page=${pagination_request_sapras.current_page}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request.php?page=${pagination_request_sapras.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -178,7 +184,7 @@ const Content_laras = () => {
     useEffect(() => {
       getRequest();
       getRequest_Sapras();
-    }, [pagination_request?.current_page, status, storedUsername]);
+    }, [pagination_request?.current_page, status, storedUsername, searchMonthRequest]);
     const handleNext_Fix = () => {
         setPagination_Fix({
             ...pagination_fix,
@@ -303,6 +309,18 @@ const Content_laras = () => {
           console.log(error.response);
         }
       }
+      const handleSearchMonth = (e) => {
+        setSearchMonth(e.target.value);
+        console.log(e.target.value);        
+      }
+      const handleSearchMonthVehicle = (e) => {
+        setSearchMonthVehicle(e.target.value);
+        console.log(e.target.value);        
+      }
+      const handleSearchMonthRequest = (e) => {
+        setSearchMonthRequest(e.target.value);
+        console.log(e.target.value);        
+      }
       const handleOpenFix = (id) => {
         navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${id}`);
       }
@@ -326,10 +344,34 @@ const Content_laras = () => {
                       { (role !== "C-03" ) &&
                         <div className='content'>
                             <h1>Daftar Form Perbaikan</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Fix}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_fix?.current_page} />
-                                <button className='right' onClick={handleNext_Fix}><img src={right} alt="" /></button>
+                            <div style={{display: "flex" , flexDirection: "row"}}>
+                              <div className='pagination'>
+                                  <button className='left' onClick={handlePrev_Fix}><img src={left} alt="" /></button>
+                                  <input className='page-number' type="text" value={pagination_fix?.current_page} />
+                                  <button className='right' onClick={handleNext_Fix}><img src={right} alt="" /></button>
+                              </div>
+                              <div className='search'>
+                                <label className='pagination-label' htmlFor="">Bulan:</label>
+                                <select className='pagination-search' onChange={handleSearchMonth} value={searchMonth} name="" id="">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <label className='pagination-label' htmlFor="">Tahun:</label>
+                                <select className='pagination-search' value={currentYear} name="" id="">
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                              </div>
                             </div>
                             {fix.length > 0 ? (
                             <table>
@@ -380,10 +422,34 @@ const Content_laras = () => {
                       {role === "C-03" && (
                         <div className='content'>
                             <h1>Daftar Form Perbaikan Sarpras</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
-                                <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
+                            <div style={{display: "flex" , flexDirection: "row"}}>
+                              <div className='pagination'>
+                                  <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
+                                  <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
+                                  <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
+                              </div>
+                              <div className='search'>
+                                <label className='pagination-label' htmlFor="">Bulan:</label>
+                                <select className='pagination-search' onChange={handleSearchMonth} value={searchMonth} name="" id="">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <label className='pagination-label' htmlFor="">Tahun:</label>
+                                <select className='pagination-search' value={currentYear} name="" id="">
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                              </div>
                             </div>
                             {fix_sarpras.length > 0 ? (
                             <table>
@@ -434,10 +500,34 @@ const Content_laras = () => {
                       {role_sp === "S-03" && (
                         <div className='content'>
                             <h1>Daftar Form Perbaikan Sarpras</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
-                                <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
+                            <div style={{display: "flex" , flexDirection: "row"}}>
+                              <div className='pagination'>
+                                  <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
+                                  <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
+                                  <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
+                              </div>
+                              <div className='search'>
+                                <label className='pagination-label' htmlFor="">Bulan:</label>
+                                <select className='pagination-search' onChange={handleSearchMonth} value={searchMonth} name="" id="">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <label className='pagination-label' htmlFor="">Tahun:</label>
+                                <select className='pagination-search' value={currentYear} name="" id="">
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                              </div>
                             </div>
                             {fix_sarpras.length > 0 ? (
                             <table>
@@ -488,10 +578,34 @@ const Content_laras = () => {
                       { (role !== "C-03" ) &&(
                           <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Vehicle}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
-                                <button className='right' onClick={handleNext_Vehicle}><img src={right} alt="" /></button>
+                            <div style={{display:"flex", flexDirection:"row"}}>                            
+                              <div className='pagination'>
+                                  <button className='left' onClick={handlePrev_Vehicle}><img src={left} alt="" /></button>
+                                  <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
+                                  <button className='right' onClick={handleNext_Vehicle}><img src={right} alt="" /></button>
+                              </div>
+                              <div className='search'>
+                                <label className='pagination-label' htmlFor="">Bulan:</label>
+                                <select className='pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <label className='pagination-label' htmlFor="">Tahun:</label>
+                                <select className='pagination-search' value={currentYear} name="" id="">
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                              </div>
                             </div>
                             {vehicle.length > 0 ? (
                             <table>
@@ -549,10 +663,34 @@ const Content_laras = () => {
                       { role === "C-03" && (
                         <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
-                                <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
+                            <div style={{display:'flex', flexDirection:'row'}}>                          
+                              <div className='pagination'>
+                                  <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
+                                  <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
+                                  <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
+                              </div>
+                              <div className='search'>
+                                <label className='pagination-label' htmlFor="">Bulan:</label>
+                                <select className='pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <label className='pagination-label' htmlFor="">Tahun:</label>
+                                <select className='pagination-search' value={currentYear} name="" id="">
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                              </div>
                             </div>
                             {vehicle_sarpras.length > 0 ? (
                             <table>
@@ -610,10 +748,34 @@ const Content_laras = () => {
                       { role === "S-03" && (
                         <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
-                                <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
+                            <div style={{display:'flex', flexDirection:'row'}}>                          
+                              <div className='pagination'>
+                                  <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
+                                  <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
+                                  <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
+                              </div>
+                              <div className='search'>
+                                <label className='pagination-label' htmlFor="">Bulan:</label>
+                                <select className='pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <label className='pagination-label' htmlFor="">Tahun:</label>
+                                <select className='pagination-search' value={currentYear} name="" id="">
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                              </div>
                             </div>
                             {vehicle_sarpras.length > 0 ? (
                             <table>
@@ -671,10 +833,34 @@ const Content_laras = () => {
                       {(role !== "C-03" ) && (
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Request}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_request?.current_page} />
-                                <button className='right' onClick={handleNext_Request}><img src={right} alt="" /></button>
+                            <div style={{display: 'flex', flexDirection: 'row'}}>                          
+                              <div className='pagination'>
+                                  <button className='left' onClick={handlePrev_Request}><img src={left} alt="" /></button>
+                                  <input className='page-number' type="text" value={pagination_request?.current_page} />
+                                  <button className='right' onClick={handleNext_Request}><img src={right} alt="" /></button>
+                              </div>
+                              <div className='search'>
+                                <label className='pagination-label' htmlFor="">Bulan:</label>
+                                <select className='pagination-search' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <label className='pagination-label' htmlFor="">Tahun:</label>
+                                <select className='pagination-search' value={currentYear} name="" id="">
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                              </div>
                             </div>
                             {request.length > 0 ? (
                             <table>
@@ -724,10 +910,34 @@ const Content_laras = () => {
                       { role === "C-03" && (
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />
-                                <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
+                            <div style={{display:'flex', flexDirection:'row'}}>                            
+                              <div className='pagination'>
+                                  <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
+                                  <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />
+                                  <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
+                              </div>
+                              <div className='search'>
+                                <label className='pagination-label' htmlFor="">Bulan:</label>
+                                <select className='pagination-search' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <label className='pagination-label' htmlFor="">Tahun:</label>
+                                <select className='pagination-search' value={currentYear} name="" id="">
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                              </div>
                             </div>
                             {request_sapras.length > 0 ? (
                             <table>
@@ -777,10 +987,34 @@ const Content_laras = () => {
                       { role_sp === "S-03" && (
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />
-                                <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
+                            <div style={{display:'flex', flexDirection:'row'}}>                            
+                              <div className='pagination'>
+                                  <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
+                                  <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />
+                                  <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
+                              </div>
+                              <div className='search'>
+                                <label className='pagination-label' htmlFor="">Bulan:</label>
+                                <select className='pagination-search' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
+                                    <option value="01">Januari</option>
+                                    <option value="02">Februari</option>
+                                    <option value="03">Maret</option>
+                                    <option value="04">April</option>
+                                    <option value="05">Mei</option>
+                                    <option value="06">Juni</option>
+                                    <option value="07">Juli</option>
+                                    <option value="08">Agustus</option>
+                                    <option value="09">September</option>
+                                    <option value="10">Oktober</option>
+                                    <option value="11">November</option>
+                                    <option value="12">Desember</option>
+                                </select>
+                                <label className='pagination-label' htmlFor="">Tahun:</label>
+                                <select className='pagination-search' value={currentYear} name="" id="">
+                                    <option value="2025">2025</option>
+                                    <option value="2026">2026</option>
+                                </select>
+                              </div>
                             </div>
                             {request_sapras.length > 0 ? (
                             <table>

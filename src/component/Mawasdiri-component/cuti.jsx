@@ -25,6 +25,7 @@ const Cuti_form = () => {
   const [nama_role_c, setNamaRole_C] = useState(identity.nama_role_c);
   const [nama_role, setNamaRole] = useState(identity.nama_role);
   const [kode_role_c, setKode_role_c] = useState(identity.kode_role_c);
+  const [bagian, setBagian] = useState(identity.bagian);
   const { level } = useParams();
   const { role } = useParams();
   const { role_sp } = useParams();
@@ -42,6 +43,7 @@ const Cuti_form = () => {
         setSisa_cuti(response.data.sisa_cuti);
         setNamaRole_C(response.data.nama_role_c);
         setNamaRole(response.data.nama_role);
+        setBagian(response.data.bagian);
       } catch (error) {
         console.log(error);
       }
@@ -242,7 +244,7 @@ const Cuti_form = () => {
                 <h1>Jenis Surat</h1>
                 <div className='check'>
                   <input type="checkbox" value='Cuti' onChange={(event) => { Cuti(event); handleChangeJenis(event); }} />
-                  <label htmlFor="">Cuti Kontrak</label>
+                  <label htmlFor="">Cuti Tahunan</label>
                 </div>
                 {cuti && (
                   <div className='check-form'>
@@ -261,7 +263,7 @@ const Cuti_form = () => {
                     </div>
                   </div>
                 )}
-                <div className='check'>
+                <div style={bagian !== "1" ? {display: 'none'} : {}} className='check'>
                   <input type="checkbox" value='Cuti Alasan Penting' onChange={(event) => { Cuti_Imp(event); handleChangeJenis(event); }} />
                   <label htmlFor="">Cuti Alasan Penting</label>
                 </div>

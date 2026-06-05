@@ -120,6 +120,7 @@
     line-height: 20px;
     letter-spacing: -0.24px;
     gap: 15px;
+    margin-top: 10px;
 }
 .main-dashboard .content-col .box-m .content .search select{
     width: 10rem;
@@ -406,6 +407,7 @@
     padding-left: 35px;
     gap: 15px;
     align-items: center;
+    10px
 }
 .main-dashboard .content-col .box-m .content .search input{
     width: 175px;

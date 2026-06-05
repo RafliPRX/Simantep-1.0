@@ -24,7 +24,7 @@ const Menu = ({
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
     const getNotif = async () => {
         try {
-            const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/notifikasi_surat_by_Receive.php?nama=${nama}` , {
+            const response = await axios.get(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/notifikasi_surat_byName_Actv.php?nama=${nama}` , {
                 headers: {"Content-Type": "multipart/form-data"},
             });
             console.log(response.data);
@@ -247,6 +247,40 @@ const Menu = ({
             console.log(error.response);
         }
     }
+    const buka_vehicle = async (idNotif, idSurat, event) => {
+        event.preventDefault();
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_vehicle.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}/form-kendaraan-dinas/${idSurat}`
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const buka_bhp = async (idNotif, idSurat, event) => {
+        event.preventDefault();
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_bhp.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}/form-permintaan-barang-baru/${idSurat}`
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
     const [switch_s, setSwitchS] = useState(true);
     const simakSwitch = () => {
         setSwitchS(!switch_s);
@@ -318,87 +352,87 @@ const Menu = ({
                     </div>
                 </div>
                 <div className='menu-disp'>       
-                    <div className='card'>
-                        <div className='pic' style={{backgroundImage: `url(${simak})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}></div>
-                        <div className='text'>
-                            <h3>SIMAK</h3>
-                            <h5>Sistem Manajemen Keuangan</h5>
-                            <button onClick={() => window.location.href = `/dashboard-simak/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                        <div className='card'>
+                            <div className='pic' style={{backgroundImage: `url(${simak})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}></div>
+                            <div className='text'>
+                                <h3>SIMAK</h3>
+                                <h5>Sistem Manajemen Keuangan</h5>
+                                <button onClick={() => window.location.href = `/dashboard-simak/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                            </div>
                         </div>
-                    </div>
-                    <div className='notif-col'>
-                        <div style={{background: `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
-                        <h3>{storedUsername}</h3>
-                        <div className='notification-list'>
-                            <div className='notification-sub'>
-                             <div className='switch-button'>
-                                <button className='switch-simak' onClick={simakSwitch}>{switch_s ? 'Rencana Penarikan Dana' : 'Proposal dan LPJ'}</button>
-                             </div>                                 
-                            {switch_s ? (
-                            <>    
-                            <p>Proposal dan LPJ</p>
-                                {notif_lpj.length > 0 ? (
-                                <>                            
-                                    {notif_lpj.map((notifItem) => {
-                                    return (
-                                      <>
-                                      <div style={{ display: notifItem.stat === 'Active' ? 'block' : 'none' , background: `url(https://simantepbareta.cloud/API/${notifItem.f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
-                                      <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='info'>
-                                        <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='bullet'></div>
-                                        <h3>Nama: {notifItem.sender}</h3>
-                                        <h3>Subjek: {notifItem.subjek}</h3>
-                                        <div className='button'>
-                                            <button onClick={(event) => mark_lpj(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
-                                            <button onClick={(event) => buka_lpj(notifItem.id_notif, notifItem.id_lpj, event)} className='buka'>Buka</button>
+                        <div className='notif-col'>
+                            <div style={{background: `url(https://simantepbareta.cloud/API/${f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
+                            <h3>{storedUsername}</h3>
+                            <div className='notification-list'>
+                                <div className='notification-sub'>
+                                <div className='switch-button'>
+                                    <button className='switch-simak' onClick={simakSwitch}>{switch_s ? 'Rencana Penarikan Dana' : 'Proposal dan LPJ'}</button>
+                                </div>                                 
+                                {switch_s ? (
+                                <>    
+                                <p>Proposal dan LPJ</p>
+                                    {notif_lpj.length > 0 ? (
+                                    <>                            
+                                        {notif_lpj.map((notifItem) => {
+                                        return (
+                                        <>
+                                        <div style={{ display: notifItem.stat === 'Active' ? 'block' : 'none' , background: `url(https://simantepbareta.cloud/API/${notifItem.f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
+                                        <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='info'>
+                                            <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='bullet'></div>
+                                            <h3>Nama: {notifItem.sender}</h3>
+                                            <h3>Subjek: {notifItem.subjek}</h3>
+                                            <div className='button'>
+                                                <button onClick={(event) => mark_lpj(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
+                                                <button onClick={(event) => buka_lpj(notifItem.id_notif, notifItem.id_lpj, event)} className='buka'>Buka</button>
+                                            </div>
                                         </div>
-                                      </div>
-                                      </> 
-                                      );  
-                                    })}  
-                                </>                     
-                                ) : (
-                                <>
-                                    <div className='info'>
-                                        <h3>No Notification</h3>
-                                    </div>
-                                </>
-                                )}                                
-                            </>
-                            ) : (
-                                <>
-                                <p>Rencanan Penarikan Dana</p>
-                                {notif_dana.length > 0 ? (
-                                <>                            
-                                    {notif_dana.map((notifItem) => {
-                                    return (
-                                      <>
-                                      <div style={{background: `url(https://simantepbareta.cloud/API/${notifItem.f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
-                                      <div className='info'>
-                                        <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='bullet'></div>
-                                        <h3>Nama: {notifItem.sender}</h3>
-                                        <h3>Subjek: {notifItem.subjek}</h3>
-                                        <div className='button'>
-                                            <button onClick={(event) => mark_Dana(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
-                                            <button onClick={(event) => buka_Dana(notifItem.id_notif, notifItem.id_dana, event)} className='buka'>Buka</button>
+                                        </> 
+                                        );  
+                                        })}  
+                                    </>                     
+                                    ) : (
+                                    <>
+                                        <div className='info'>
+                                            <h3>No Notification</h3>
                                         </div>
-                                      </div>
-                                      </> 
-                                      );  
-                                    })}  
-                                </>                     
+                                    </>
+                                    )}                                
+                                </>
                                 ) : (
-                                <>
-                                    <div className='info'>
-                                        <h3>No Notification</h3>
-                                    </div>
-                                </>
-                                )}                                
-                                </>
-                            )}   
+                                    <>
+                                    <p>Rencanan Penarikan Dana</p>
+                                    {notif_dana.length > 0 ? (
+                                    <>                            
+                                        {notif_dana.map((notifItem) => {
+                                        return (
+                                        <>
+                                        <div style={{background: `url(https://simantepbareta.cloud/API/${notifItem.f_profile})`, backgroundColor: "lightgray", backgroundSize: "cover" }} className='pic'></div>
+                                        <div className='info'>
+                                            <div style={{display: notifItem.stat === 'Active' ? 'block' : 'none'}} className='bullet'></div>
+                                            <h3>Nama: {notifItem.sender}</h3>
+                                            <h3>Subjek: {notifItem.subjek}</h3>
+                                            <div className='button'>
+                                                <button onClick={(event) => mark_Dana(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
+                                                <button onClick={(event) => buka_Dana(notifItem.id_notif, notifItem.id_dana, event)} className='buka'>Buka</button>
+                                            </div>
+                                        </div>
+                                        </> 
+                                        );  
+                                        })}  
+                                    </>                     
+                                    ) : (
+                                    <>
+                                        <div className='info'>
+                                            <h3>No Notification</h3>
+                                        </div>
+                                    </>
+                                    )}                                
+                                    </>
+                                )}   
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
                 <div className='menu-disp'>
                     <div className='card'>
                         <div className='pic' style={{backgroundImage: `url(${silaras})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}></div>
@@ -432,7 +466,7 @@ const Menu = ({
                                                     <h3>Subjek: {notifItem.subjek}</h3>
                                                     <div className='button'>
                                                         <button onClick={(event) => mark_Fix(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
-                                                        <button onClick={(event) => buka_fix(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
+                                                        <button onClick={(event) => buka_fix(notifItem.id_notif, notifItem.id_fix, event)} className='buka'>Buka</button>
                                                     </div>
                                                   </div>
                                                 </> 
@@ -462,7 +496,7 @@ const Menu = ({
                                                     <h3>Subjek: {notifItem.subjek}</h3>
                                                     <div className='button'>
                                                         <button onClick={(event) => mark_Vehicle(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
-                                                        <button onClick={(event) => buka_surat(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
+                                                        <button onClick={(event) => buka_vehicle(notifItem.id_notif, notifItem.id_vehicle, event)} className='buka'>Buka</button>
                                                     </div>
                                                   </div>
                                                 </> 
@@ -492,7 +526,7 @@ const Menu = ({
                                                     <h3>Subjek: {notifItem.subjek}</h3>
                                                     <div className='button'>
                                                         <button onClick={(event) => mark_Bhp(notifItem.id_notif, event)} className='mark-read'>Tandai Telah di Baca</button>
-                                                        <button onClick={(event) => buka_surat(notifItem.id_notif, notifItem.id_surat, event)} className='buka'>Buka</button>
+                                                        <button onClick={(event) => buka_bhp(notifItem.id_notif, notifItem.id_bhp, event)} className='buka'>Buka</button>
                                                     </div>
                                                   </div>
                                                 </> 
@@ -523,7 +557,31 @@ const Menu = ({
                         </div>
                     </div>
                 </div>
-                )}                
+                )}
+                {kode_role === 'A-02' &&(
+                <div className='menu-disp'>
+                    <div className='card'>
+                        <div className='pic' style={{backgroundImage: `url(${e_corner})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}></div>
+                        <div className='text'>
+                            <h3>E-Corner</h3>
+                            <h5>Khusus Admin E-Corner</h5>
+                            <button onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                        </div>
+                    </div>
+                </div>
+                )}
+                {kode_role === 'A-01' &&(
+                <div className='menu-disp'>
+                    <div className='card'>
+                        <div className='pic' style={{backgroundImage: `url(${e_corner})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center", backgroundAttachment: "fixed" }}></div>
+                        <div className='text'>
+                            <h3>E-Corner</h3>
+                            <h5>Khusus Admin E-Corner</h5>
+                            <button onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                        </div>
+                    </div>
+                </div>
+                )}
             </div>
         </>
     )

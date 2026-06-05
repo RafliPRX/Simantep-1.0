@@ -20,23 +20,19 @@ const Proposed = () => {
         const { role_sp } = useParams();
         const [isLoading, setIsLoading] = useState(false);
 
-        const [show, setShow] = useState(false); // Changed to boolean for clarity
-    
+        const [show, setShow] = useState(false); // Changed to boolean for clarity    
         function handleShow(event) {
             setShow(event.target.checked); // Set show based on checkbox state
         }
-        const [show1, setShow1] = useState(false); // Changed to boolean for clarity
-    
+        const [show1, setShow1] = useState(false); // Changed to boolean for clarity    
         function handleShow1(event) {
             setShow1(event.target.checked); // Set show based on checkbox state
         }
     
-        const [show2, setShow2] = useState(false); // Changed to boolean for clarity
-    
+        const [show2, setShow2] = useState(false); // Changed to boolean for clarity    
         function handleShow2(event) {
             setShow2(event.target.checked); // Set show based on checkbox state
-        }
-                
+        }                
         const storeidNumber = localStorage.getItem('id_number');
         console.log("id Number: " + storeidNumber);        
         const [identity, setIdentity] = useState([]);
@@ -63,16 +59,16 @@ const Proposed = () => {
             }
         }
         const [nama_apr, setNama_apr] = useState([]);
-        const [nama_apr_lv1, setNama_apr_lv1] = useState(nama_apr.nama);
-        console.log("nama apr lv1: " + nama_apr_lv1);        
+        const [nama_apr_adm, setNama_apr_adm] = useState(nama_apr.nama);
+        console.log("nama apr adm: " + nama_apr_adm);
         const getApr_lv1 = async () => {
         try {
-            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/lpj_approve_lv1.php?kode_role_a=A-02` , {
+            const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/lpj_approve_adm.php?kode_role_sp=S-07` , {
             headers: {"Content-Type": "application/json"},
             });
             console.log(response.data.Data[0]);
             setNama_apr(response.data.Data[0]);
-            setNama_apr_lv1(response.data.Data[0].nama);            
+            setNama_apr_adm(response.data.Data[0].nama);            
         } catch (error) {
             console.log(error);
             }
@@ -113,7 +109,7 @@ const Proposed = () => {
                 units: units,
                 nama_kegiatan: kegiatan,
                 rencana_pelaksana: rencana,
-                nama_veri_1: nama_apr_lv1,
+                nama_veri_adm: nama_apr_adm,
             };
             try {
                 const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/new_Dana_LPJ.php`, payload, {

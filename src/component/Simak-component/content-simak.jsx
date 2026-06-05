@@ -24,11 +24,16 @@ const Content_simak = () => {
     const { role } = useParams();
     const { level } = useParams();
     const { role_sp } = useParams();
-    const date = new Date();
-    const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
-    const currentYear = date.getFullYear();
+        const date = new Date();
+        const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
+        const currentYear = date.getFullYear();
     const [searchMonth, setSearchMonth] = useState(currentMonth);
     const [lpj_searchmonth, setLpj_SearchMonth] = useState(currentMonth);
+    const [searchYear, setSearchYear] = useState(currentYear);
+    const [lpj_searchyear, setLpj_SearchYear] = useState(currentYear);
+    const [total_rpd_searchmonth, setTotal_Rpd_SearchMonth] = useState(currentMonth);
+    const [total_rpd_searchyear, setTotal_Rpd_SearchYear] = useState(currentYear);
+    const [jenis_dokumen, setJenis_Dokumen] = useState("");
     // console.log("Tahun ini:" +currentYear);
     const storeidNumber = localStorage.getItem('id_number');
     const [dana, setDana] = useState([]);
@@ -37,7 +42,7 @@ const Content_simak = () => {
     });
     const navigate = useNavigate();
     const getDana = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_by_name.php?id_number=${storeidNumber}&page=${pagination_dana.current_page}&bulan=${searchMonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_by_name.php?id_number=${storeidNumber}&page=${pagination_dana.current_page}&nama=${storedUsername}&bulan=${searchMonth}&tahun=${searchYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -60,7 +65,7 @@ const Content_simak = () => {
         current_page: 1,
     });
     const getDana_moneymaker = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana.php?page=${pagination_dana_moneymaker.current_page}&bulan=${searchMonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana.php?page=${pagination_dana_moneymaker.current_page}&nama=${storedUsername}&bulan=${searchMonth}&tahun=${searchYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -78,12 +83,35 @@ const Content_simak = () => {
             console.log(error);
         });
     }
+    const [dana_lv4, setDana_lv4] = useState([]);
+    const [pagination_dana_lv4, setPagination_Dana_lv4] = useState({
+        current_page: 1,
+    });
+    const getDana_lv4 = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_lv4.php?page=${pagination_dana_lv4.current_page}&bulan=${searchMonth}&tahun=${searchYear}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_dana = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setDana_lv4(response);
+            setPagination_Dana_lv4(pagination_dana);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     const [lpj, setLpj] = useState([]);
     const [pagination_lpj, setPagination_lpj] = useState({
         current_page: 1,
     })
     const getLpj = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?id_number=${storeidNumber}&page=${pagination_lpj.current_page}&bulan=${lpj_searchmonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_by_name.php?id_number=${storeidNumber}&page=${pagination_lpj.current_page}&bulan=${lpj_searchmonth}&tahun=${lpj_searchyear}&nama=Riah%20Yuningsih&dokumen=${jenis_dokumen}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -101,12 +129,35 @@ const Content_simak = () => {
             console.log(error);
         });
     }
+    const [lpj_admin, setLpj_admin] = useState([]);
+    const [pagination_lpj_admin, setPagination_lpj_admin] = useState({
+        current_page: 1,
+    })
+    const getLpj_admin = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_adm.php?nama=${storedUsername}&page=${pagination_lpj_admin.current_page}&bulan=${lpj_searchmonth}&tahun=${lpj_searchyear}&dokumen=${jenis_dokumen}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_lpj = {
+                total: res1.data.total_records,
+                current_page: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setLpj_admin(response);
+            setPagination_lpj_admin(pagination_lpj);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     const [lpj_lv1, setLpj_lv1] = useState([]);
     const [pagination_lpj_lv1, setPagination_lpj_lv1] = useState({
         current_page: 1,
     })
     const getLpj_lv1 = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_lv1.php?page=${pagination_lpj_lv1.current_page}&bulan=${lpj_searchmonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_lv1.php?page=${pagination_lpj_lv1.current_page}&bulan=${lpj_searchmonth}&tahun=${lpj_searchyear}&nama=${storedUsername}&dokumen=${jenis_dokumen}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -129,7 +180,7 @@ const Content_simak = () => {
         current_page: 1,
     })
     const getLpj_lv2 = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_lv2.php?page=${pagination_lpj_lv2.current_page}&bulan=${lpj_searchmonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_lv2.php?page=${pagination_lpj_lv2.current_page}&bulan=${lpj_searchmonth}&tahun=${lpj_searchyear}&nama=${storedUsername}&dokumen=${jenis_dokumen}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -152,7 +203,7 @@ const Content_simak = () => {
         current_page: 1,
     })
     const getLpj_keuangan = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_keuangan.php?page=${pagination_lpj_keuangan.current_page}&bulan=${lpj_searchmonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_keuangan.php?page=${pagination_lpj_keuangan.current_page}&bulan=${lpj_searchmonth}&tahun=${lpj_searchyear}&nama=${storedUsername}&dokumen=${jenis_dokumen}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -170,17 +221,36 @@ const Content_simak = () => {
             console.log(error);
         });
     }
+    const [total_rpd, setTotal_rpd] = useState([]);
+    const getTotal_RPD = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/total_dana_rpd.php?bulan=${total_rpd_searchmonth}&tahun=${total_rpd_searchyear}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            setTotal_rpd(response);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
     useEffect(() => {
         getDana();
         getDana_moneymaker();
         getLpj();
+        getLpj_admin();
         getLpj_lv1();
         getLpj_lv2();
         getLpj_keuangan();
+        getTotal_RPD();
+        getDana_lv4();
     },[
         pagination_lpj?.current_page, pagination_lpj_lv1?.current_page, pagination_lpj_lv2?.current_page, pagination_lpj_keuangan?.current_page,
-        pagination_dana?.current_page, pagination_dana_moneymaker?.current_page, searchMonth, lpj_searchmonth
+        pagination_dana?.current_page, pagination_dana_moneymaker?.current_page, searchMonth, lpj_searchmonth, total_rpd_searchmonth, total_rpd_searchyear, lpj_searchyear, searchYear, jenis_dokumen,
+        pagination_lpj_admin?.current_page
     ]);
+    
     const handleNext_Lpj = () => {
         setPagination_lpj({
             ...pagination_lpj,
@@ -192,6 +262,19 @@ const Content_simak = () => {
         setPagination_lpj({
             ...pagination_lpj,
             current_page: pagination_lpj?.current_page - 1
+        })
+    }
+    const handleNext_Lpj_admin = () => {
+        setPagination_lpj_admin({
+            ...pagination_lpj_admin,
+            current_page: pagination_lpj_admin?.current_page + 1
+        })
+        
+    }
+    const handlePrev_Lpj_admin = () => {
+        setPagination_lpj_admin({
+            ...pagination_lpj_admin,
+            current_page: pagination_lpj_admin?.current_page - 1
         })
     }
     const handleNext_Lpj_lv1 = () => {
@@ -247,6 +330,13 @@ const Content_simak = () => {
         })
         console.log(pagination_dana_moneymaker?.current_page);
     }
+    const handleNext_Dana_Lv4 = () => {
+        setPagination_Dana_lv4({
+            ...pagination_dana_lv4,
+            current_page: pagination_dana_lv4?.current_page + 1
+        })
+        console.log(pagination_dana_lv4?.current_page);
+    }
     const handlePrev_Dana = () => {
         setPagination_Dana({
             ...pagination_dana,
@@ -261,11 +351,68 @@ const Content_simak = () => {
         })
         console.log(pagination_dana_moneymaker?.current_page);
     }
-    const handleOpenRPD = (id) => {
-        navigate(`/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${id}`);
+    const handlePrev_Dana_Lv4 = () => {
+        setPagination_Dana_lv4({
+            ...pagination_dana_lv4,
+            current_page: pagination_dana_lv4?.current_page - 1
+        })
+        console.log(pagination_dana_lv4?.current_page);
     }
-    const handleOpenLPJ = (id) => {
-        navigate(`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${id}`);
+    const mark_lpj = async (idNotif, id) => {        
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/mark_lpj.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                navigate(`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${id}`);
+                window.location.reload();
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const mark_Dana = async (idNotif, id) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_RPD/mark_Dana.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                navigate(`/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${id}`);
+                window.location.reload();
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const handleOpenRPD = (id, stat, id_notif, e) => {
+        e.preventDefault();
+        if (stat === 'Active') {
+            mark_Dana(id_notif, id);
+        } else {
+            navigate(`/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${id}`);
+        }        
+    }
+    const handleOpenRPDlv4 = (id) => {
+            navigate(`/dashboard-simak/${level}/${role}/${role_sp}/form-dana-RPD/${id}`);
+    }
+    // const handleOpenLPJ = (id) => {
+    //     navigate(`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${id}`);
+    // }
+    const handleOpenLPJ = (id, stat, id_notif, e) => {
+        e.preventDefault();
+        if (stat === 'Active') {
+            mark_lpj(id_notif, id);
+        } else {
+            navigate(`/dashboard-simak/${ level }/${role}/${role_sp}/form-dana-LPJ/${id}`);
+        }        
     }
     const handleDeleteRPD = async (id) => {
         setIsLoading(true);
@@ -306,9 +453,29 @@ const Content_simak = () => {
         setSearchMonth(event.target.value);
         console.log(event.target.value);        
     }
+    const handleChangeTotalRPDSearchMonth = (event) => {
+        setTotal_Rpd_SearchMonth(event.target.value);
+        console.log(event.target.value);        
+    }
     const handleChangeLPJSearchMonth = (event) => {
         setLpj_SearchMonth(event.target.value);
         console.log(event.target.value);        
+    }
+    const handleChangeSearchYear = (event) => {
+        setSearchYear(event.target.value);
+        console.log(event.target.value);        
+    }
+    const handleChangeTotalRPDSearchYear = (event) => {
+        setTotal_Rpd_SearchYear(event.target.value);
+        console.log(event.target.value);        
+    }
+    const handleChangeLPJSearchYear = (event) => {
+        setLpj_SearchYear(event.target.value);
+        console.log(event.target.value);        
+    }
+    const handleChangeJenisDokumen = (event) => {
+        setJenis_Dokumen(event.target.value);
+        console.log(event.target.value);
     }
     return(
         <>
@@ -322,7 +489,7 @@ const Content_simak = () => {
                 <div className='content-col'>
                     <div className='box-m'>
                         {(role !== "C-04" || role_sp === "S-02") && (
-                        <div className='content'>
+                        <div style={{display: level === "level-4" ? 'none' : ''}} className='content'>
                             <h1>Progress Pengajuan RPD</h1>
                             <div style={{display: 'flex', flexDirection: "row"}}>
                                 <div className='pagination'>
@@ -347,30 +514,33 @@ const Content_simak = () => {
                                         <option value="12">Desember</option>
                                     </select>
                                     <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' name="" id="">
+                                    <select className='pagination-search' onChange={handleChangeSearchYear} value={searchYear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
-                                    <button type=''>Download Excel</button>
                                 </div>
                             </div>                  
                             {dana.length > 0 ? (
                             <table>
                             <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
-                                <th style={{textAlign:'center'}}>Jenis Dokumen</th>
+                                <th style={{textAlign:'center'}}>Unit</th>
+                                <th style={{textAlign:'center'}}>Nama Kegiatan</th>
                                 <th style={{textAlign:'center'}}>Tanggal Pelaksanaan</th>
+                                <th style={{textAlign:'center'}}>Jumlah Dana</th>
                                 <th style={{textAlign:'center'}}>Feedback Bagian Keuangan</th>
                                 <th style={{textAlign:'center'}}>Detail</th>
                             </tr>
                             {dana.map((item, index) => (
                                 <tr key={item.id_dana}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.units}</td>
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
+                                    <td style={{textAlign:'center'}}>{Number(item.grand_total).toLocaleString('id-ID')}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_keuangan}</td>
                                     <td style={{textAlign:'center'}}>
-                                        <button onClick={() => handleOpenRPD(item.id_dana)} className='B-update'>Ubah</button> <br />
+                                        <button onClick={(e) => handleOpenRPD(item.id_dana, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> <br />
                                         <div><button className='B-deleted' onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
                                     </td>
                                 </tr>
@@ -381,7 +551,7 @@ const Content_simak = () => {
                             )}                        
                         </div>
                         )}
-                        {role === "C-04" && (
+                        {(role === "C-04" || role_sp === "S-02") && (
                             <div className='content'>
                             <h1>Progress Pengajuan RPD</h1>
                             <div style={{display: 'flex', flexDirection: "row"}}>
@@ -407,7 +577,7 @@ const Content_simak = () => {
                                         <option value="12">Desember</option>
                                     </select>
                                     <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' name="" id="">
+                                    <select className='pagination-search' onChange={handleChangeSearchYear} value={searchYear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
@@ -417,19 +587,86 @@ const Content_simak = () => {
                             <table>
                             <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
+                                <th style={{textAlign:'center'}}>Unit</th>
                                 <th style={{textAlign:'center'}}>Nama Kegiatan</th>
                                 <th style={{textAlign:'center'}}>Tanggal Pelaksanaan</th>
+                                <th style={{textAlign:'center'}}>Jumlah Dana</th>
                                 <th style={{textAlign:'center'}}>Feedback Bagian Keuangan</th>
                                 <th style={{textAlign:'center'}}>Detail</th>
                             </tr>
                             {dana_moneymaker.map((item, index) => (
                                 <tr key={item.id_dana}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.units}</td>
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
+                                    <td style={{textAlign:'center'}}>{Number(item.grand_total).toLocaleString('id-ID')}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_keuangan}</td>
                                     <td style={{textAlign:'center'}}>
-                                        <button onClick={() => handleOpenRPD(item.id_dana)} className='B-update'>Ubah</button> <br />
+                                        <button onClick={(e) => handleOpenRPD(item.id_dana, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> <br />
+                                        <div><button className='B-deleted' onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
+                                    </td>
+                                </tr>
+                                ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}                        
+                        </div>
+                        )}                        
+                        {level === "level-4" && (
+                            <div className='content'>
+                            <h1>Progress Pengajuan RPD</h1>
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Dana_Lv4}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_dana_moneymaker?.current_page} />
+                                    <button className='right' onClick={handleNext_Dana_Lv4}><img src={right} alt="" /></button>                                
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' onChange={handleChangeSearchYear} value={searchYear} name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {dana_lv4.length > 0 ? (
+                            <table>
+                            <tr>
+                                <th style={{textAlign:'center'}}>Nomor</th>
+                                <th style={{textAlign:'center'}}>Unit</th>
+                                <th style={{textAlign:'center'}}>Nama Kegiatan</th>
+                                <th style={{textAlign:'center'}}>Tanggal Pelaksanaan</th>
+                                <th style={{textAlign:'center'}}>Jumlah Dana</th>
+                                <th style={{textAlign:'center'}}>Feedback Bagian Keuangan</th>
+                                <th style={{textAlign:'center'}}>Detail</th>
+                            </tr>
+                            {dana_lv4.map((item, index) => (
+                                <tr key={item.id_dana}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.units}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
+                                    <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
+                                    <td style={{textAlign:'center'}}>{Number(item.grand_total).toLocaleString('id-ID')}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_keuangan}</td>
+                                    <td style={{textAlign:'center'}}>
+                                        <button onClick={() => handleOpenRPDlv4(item.id_dana)} className='B-update'>Lihat</button> <br />
                                         <div><button className='B-deleted' onClick={() => handleDeleteRPD(item.id_dana)}>Hapus</button></div>
                                     </td>
                                 </tr>
@@ -441,7 +678,7 @@ const Content_simak = () => {
                         </div>
                         )}
                         {(role_sp !== "S-04" && role !== "C-04") && (
-                          <div style={{display: role === 'A-02' || role === "A-01" ? "none" : ""}} className='content'>
+                          <div style={{display: role === 'A-02' || role === "A-01" || role_sp === "S-07" ? "none" : ""}} className='content'>
                             <h1>Progress Pengajuan Proposal dan LPJ</h1>
                             <div style={{display: 'flex', flexDirection: "row"}}>
                                 <div className='pagination'>
@@ -466,12 +703,18 @@ const Content_simak = () => {
                                         <option value="12">Desember</option>
                                     </select>
                                     <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' name="" id="">
+                                    <select className='pagination-search' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
+                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                        <option selected value="">-</option>
+                                        <option value="LPJ">LPJ</option>
+                                        <option value="Proposal">Proposal</option>
+                                    </select>
                                 </div>
-                            </div>    
+                            </div>
                             {lpj.length > 0 ? (
                             <table>
                                 <tr>
@@ -481,12 +724,15 @@ const Content_simak = () => {
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>Admin Pelayanan</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KASUBAG TATA USAHA</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEPALA BALAI</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEUANGAN</th>
                                     <th style={{textAlign:'center'}} rowSpan={2}>Detail</th>
                                 </tr>
                                 <tr>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
                                     <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
@@ -502,6 +748,10 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_adm_date}<br /> {item.veri_1_jam}</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
@@ -512,7 +762,102 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button>
+                                    <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button>
+                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
+                                </tr>                                
+                            ))}
+                            </table>
+                            ) : (
+                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                            )}
+                          </div>
+                        )}
+                        {role_sp === "S-07" && (
+                          <div className='content'>
+                            <h1>Progress Pengajuan Proposal dan LPJ</h1>
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Lpj_admin}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_lpj?.current_page} />
+                                    <button className='right' onClick={handleNext_Lpj_admin}><img src={right} alt="" /></button>
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                        <option selected value="">-</option>
+                                        <option value="LPJ">LPJ</option>
+                                        <option value="Proposal">Proposal</option>
+                                    </select>
+                                </div>
+                            </div>
+                            {lpj_admin.length > 0 ? (
+                            <table>
+                                <tr>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Jenis Dokumen</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>Admin Pelayanan</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>KASUBAG TATA USAHA</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>KEPALA BALAI</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>KEUANGAN</th>
+                                    <th style={{textAlign:'center'}} rowSpan={2}>Detail</th>
+                                </tr>
+                                <tr>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
+                                    <th>Keterangan</th>
+                                    <th>Tanggal & Jam di Terima</th>
+                                </tr>
+                            {lpj_admin.map((item, index) => (
+                                <tr key={item.id_lpj}>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td style={{textAlign:'center'}}>{item.units}</td>
+                                    <td style={{textAlign:'center'}}>{item.dokumen}</td>
+                                    <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
+                                    <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>                                    
+                                    <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_adm_date}<br /> {item.veri_adm_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
+                                    <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> | 
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
@@ -525,25 +870,59 @@ const Content_simak = () => {
                         {role_sp === "S-02" && (
                           <div className='content'>
                             <h1>Progress Pengajuan Proposal dan LPJ</h1>
-                            <div className='pagination'>
-                                <button className='left' onClick={handlePrev_Lpj_keuangan}><img src={left} alt="" /></button>
-                                <input className='page-number' type="text" value={pagination_lpj?.current_page} />
-                                <button className='right' onClick={handleNext_Lpj_keuangan}><img src={right} alt="" /></button>
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Lpj_keuangan}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_lpj?.current_page} />
+                                    <button className='right' onClick={handleNext_Lpj_keuangan}><img src={right} alt="" /></button>
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                        <option selected value="">-</option>
+                                        <option value="LPJ">LPJ</option>
+                                        <option value="Proposal">Proposal</option>
+                                    </select>
+                                </div>
                             </div>
                             {lpj_keuangan.length > 0 ? (
                             <table>
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
-                                    <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>                                    
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Jenis Dokumen</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>Admin Pelayanan</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KASUBAG TATA USAHA</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEPALA BALAI</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEUANGAN</th>
                                     <th style={{textAlign:'center'}} rowSpan={2}>Detail</th>
                                 </tr>
                                 <tr>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
                                     <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
@@ -555,9 +934,18 @@ const Content_simak = () => {
                                 <tr key={item.id_lpj}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.units}</td>
+                                    <td style={{textAlign:'center'}}>{item.dokumen}</td>
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
-                                    <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
+                                    <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>                                    
                                     <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_adm_date}<br /> {item.veri_adm_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
@@ -568,7 +956,7 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button> | 
+                                    <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> | 
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
@@ -608,6 +996,12 @@ const Content_simak = () => {
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
+                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                        <option selected value="">-</option>
+                                        <option value="LPJ">LPJ</option>
+                                        <option value="Proposal">Proposal</option>
+                                    </select>
                                 </div>
                             </div>
                             {lpj_keuangan.length > 0 ? (
@@ -615,15 +1009,19 @@ const Content_simak = () => {
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Jenis Dokumen</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>Admin Pelayanan</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KASUBAG TATA USAHA</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEPALA BALAI</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEUANGAN</th>
                                     <th style={{textAlign:'center'}} rowSpan={2}>Detail</th>
                                 </tr>
                                 <tr>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
                                     <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
@@ -635,9 +1033,18 @@ const Content_simak = () => {
                                 <tr key={item.id_lpj}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.units}</td>
+                                    <td style={{textAlign:'center'}}>{item.dokumen}</td>
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_adm_date}<br /> {item.veri_adm_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
@@ -648,7 +1055,7 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button> | 
+                                    <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> |
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
@@ -688,6 +1095,12 @@ const Content_simak = () => {
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
+                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                        <option selected value="">-</option>
+                                        <option value="LPJ">LPJ</option>
+                                        <option value="Proposal">Proposal</option>
+                                    </select>
                                 </div>
                             </div>
                             {lpj_lv1.length > 0 ? (
@@ -695,15 +1108,19 @@ const Content_simak = () => {
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Jenis Dokumen</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>Admin Pelayanan</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KASUBAG TATA USAHA</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEPALA BALAI</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEUANGAN</th>
                                     <th style={{textAlign:'center'}} rowSpan={2}>Detail</th>
                                 </tr>
                                 <tr>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
                                     <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
@@ -715,9 +1132,18 @@ const Content_simak = () => {
                                 <tr key={item.id_lpj}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.units}</td>
+                                    <td style={{textAlign:'center'}}>{item.dokumen}</td>
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_adm_date}<br /> {item.veri_adm_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
@@ -728,7 +1154,7 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button> 
+                                    <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> 
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
@@ -768,6 +1194,12 @@ const Content_simak = () => {
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
+                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                        <option selected value="">-</option>
+                                        <option value="LPJ">LPJ</option>
+                                        <option value="Proposal">Proposal</option>
+                                    </select>
                                 </div>
                             </div>
                             {lpj_lv2.length > 0 ? (
@@ -775,15 +1207,19 @@ const Content_simak = () => {
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}>Jenis Dokumen</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}>Admin Pelayanan</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KASUBAG TATA USAHA</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEPALA BALAI</th>
                                     <th style={{textAlign:'center'}}colSpan={2}>KEUANGAN</th>
                                     <th style={{textAlign:'center'}} rowSpan={2}>Detail</th>
                                 </tr>
                                 <tr>
+                                    <th>Status</th>
+                                    <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
                                     <th>Tanggal & Jam Selesai diperiksa</th>
                                     <th>Status</th>
@@ -795,9 +1231,18 @@ const Content_simak = () => {
                                 <tr key={item.id_lpj}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
                                     <td style={{textAlign:'center'}}>{item.units}</td>
+                                    <td style={{textAlign:'center'}}>{item.dokumen}</td>
                                     <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
                                     <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
                                     <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_adm === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_adm_date}<br /> {item.veri_adm_jam}</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
                                     <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
@@ -808,7 +1253,7 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <button onClick={() => handleOpenLPJ(item.id_lpj)} className='B-update'>Ubah</button> | 
+                                    <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> | 
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
@@ -818,6 +1263,66 @@ const Content_simak = () => {
                             )}
                           </div>
                         )}
+                        <div className='content'>
+                            <h1>Total Pengajuan RPD</h1>
+                            <div style={{display: 'flex', flexDirection: "row"}}>
+                                <div className='pagination'>
+                                    <button className='left' onClick={handlePrev_Dana_MoneyMaker}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_dana_moneymaker?.current_page} />
+                                    <button className='right' onClick={handleNext_Dana_MoneyMaker}><img src={right} alt="" /></button>                                
+                                </div>
+                                <div className='search'>
+                                    <label className='pagination-label' htmlFor="">Bulan:</label>
+                                    <select className='pagination-search' onChange={handleChangeTotalRPDSearchMonth} value={total_rpd_searchmonth} name="" id="">
+                                        <option value="01">Januari</option>
+                                        <option value="02">Februari</option>
+                                        <option value="03">Maret</option>
+                                        <option value="04">April</option>
+                                        <option value="05">Mei</option>
+                                        <option value="06">Juni</option>
+                                        <option value="07">Juli</option>
+                                        <option value="08">Agustus</option>
+                                        <option value="09">September</option>
+                                        <option value="10">Oktober</option>
+                                        <option value="11">November</option>
+                                        <option value="12">Desember</option>
+                                    </select>
+                                    <label className='pagination-label' htmlFor="">Tahun:</label>
+                                    <select className='pagination-search' onChange={handleChangeTotalRPDSearchYear} value={total_rpd_searchyear} name="" id="">
+                                        <option selected={currentYear === 2025} value="2025">2025</option>
+                                        <option selected={currentYear === 2026} value="2026">2026</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <table>
+                            <tr>
+                                <th style={{textAlign:'center'}}>No</th>
+                                <th style={{textAlign:'center'}}>Units</th>
+                                <th style={{textAlign:'center'}}>Jumlah Dana Per Unit</th>
+                                <th style={{textAlign:'center'}}>Total</th>
+                            </tr>
+                            {total_rpd.map((item, index) => (
+                                <>
+                                    <tr key={index}>
+                                        <th style={{textAlign:'center'}}>1</th>
+                                        <th style={{textAlign:'center'}}>Sosial</th>
+                                        <th style={{textAlign:'center'}}>{Number(item?.total_sosial ?? 0).toLocaleString('id-ID')}</th>
+                                        <th rowSpan={3} style={{textAlign:'center', justifyContent: 'center'}}>{Number(item?.grand_total ?? 0).toLocaleString('id-ID')}</th>
+                                    </tr>
+                                    <tr key={index}>
+                                        <th style={{textAlign:'center'}}>2</th>
+                                        <th style={{textAlign:'center'}}>Medis</th>
+                                        <th style={{textAlign:'center'}}>{Number(item?.total_medis ?? 0).toLocaleString('id-ID')}</th>
+                                    </tr>
+                                    <tr key={index}>
+                                        <th style={{textAlign:'center'}}>3</th>
+                                        <th style={{textAlign:'center'}}>Manajemen</th>
+                                        <th style={{textAlign:'center'}}>{Number(item?.total_manajemen ?? 0).toLocaleString('id-ID')}</th>
+                                    </tr>
+                                </>
+                            ))}                                                        
+                            </table>                                                     
+                        </div>
                     </div>
                 </div>
             </div>

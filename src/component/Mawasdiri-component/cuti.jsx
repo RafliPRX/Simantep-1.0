@@ -142,7 +142,12 @@ const Cuti_form = () => {
         }
       });      
       console.log(response.data);
-      
+      if (jenis === "Sakit") {
+        setTimeout(() => {
+          navigate(`/Dashboard/${level}/${role}/${role_sp}`);
+          alert(response.data.message);
+        }, 2000);
+      }
     } catch (error) {
       console.log(error.response);
       alert("error code 103");
@@ -167,23 +172,33 @@ const Cuti_form = () => {
       console.log(error.response);
     }
   }
-  const handlePostNewSurat = async (event, jumlah_cuti) => {
+  const handlePostNewSurat = async (event, jumlah_cuti, jenis) => {
     event.preventDefault();
     setIsLoading(true);
-    if (cuti_b > jumlah_cuti) {
-      alert("Jumlah cuti melebihi sisa cuti yang tersedia.");
-      setIsLoading(false);
-      return;
-    }
-    const jumlah_cuti_now = jumlah_cuti - cuti_b;    
-    console.log("Detail - jumlah_cuti:", jumlah_cuti, "cuti_b:", cuti_b, "hasil:", jumlah_cuti_now);
-    try {            
-      await handlePostSurat();
-      await handleUpdateSisaCuti(jumlah_cuti_now);
-    } catch (error) {
-      console.log(error);        
-    } finally {
-      setIsLoading(false);
+    if (jenis === "Sakit") {
+      try {            
+        await handlePostSurat();
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);        
+      }      
+    } else {
+      if (cuti_b > jumlah_cuti) {
+        alert("Jumlah cuti melebihi sisa cuti yang tersedia.");
+        setIsLoading(false);
+        return;
+      }
+      const jumlah_cuti_now = jumlah_cuti - cuti_b;    
+      console.log("Detail - jumlah_cuti:", jumlah_cuti, "cuti_b:", cuti_b, "hasil:", jumlah_cuti_now);
+      try {            
+        await handlePostSurat();
+        await handleUpdateSisaCuti(jumlah_cuti_now);
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);
+      }      
     }      
   }
   useEffect(() => {
@@ -202,15 +217,15 @@ const Cuti_form = () => {
         <Profile nama={nama} feature="mawasdiri" />
         <div className='content-col'>
           <div className='box1'>
-            <form onSubmit={(e) => handlePostNewSurat(e, sisa_cuti)}>
+            <form onSubmit={(e) => handlePostNewSurat(e, sisa_cuti, jenis)} className='form'>
               <div className='content-f'>
                 <h1>Data Diri</h1>
                 <label htmlFor="">Nama</label>
                 <input onChange={handleChangeNama} value={nama} disabled placeholder='Nama' type="text" />
-                <label htmlFor="">NRK</label>
+                <label htmlFor="">NIP / NRK</label>
                 <input value={nrk_nip} placeholder='No. HP' disabled type="text" />                
                 <label htmlFor="">No.Handphone</label>
-                <input onChange={handleChangeHp} placeholder='No. HP' type="text" />
+                <input onChange={handleChangeHp} required placeholder='No. HP' type="text" />
                 <label htmlFor="">Jabatan</label>
                 <input value={jabatan} placeholder='No. HP' disabled type="text" />
                 {/* <label htmlFor="">ID Number</label>

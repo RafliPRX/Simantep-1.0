@@ -39,7 +39,7 @@ const Content_laras = () => {
         current_page: 1,
     });
     const getFix = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?id=${storeidNumber}&page=${pagination_fix.current_page}&bulan=${searchMonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?id=${storeidNumber}&page=${pagination_fix.current_page}&bulan=${searchMonth}&tahun=${currentYear}&nama=${storedUsername}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -62,7 +62,7 @@ const Content_laras = () => {
         current_page: 1,
     });
     const getFix_Sarpras = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix.php?page=${pagination_fix_sarpras.current_page}&bulan=${searchMonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix.php?page=${pagination_fix_sarpras.current_page}&bulan=${searchMonth}&tahun=${currentYear}&nama=${storedUsername}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -89,7 +89,7 @@ const Content_laras = () => {
       current_page: 1,
     });
     const getVehicle = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?id=${storeidNumber}&page=${pagination_vehicle.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?id=${storeidNumber}&page=${pagination_vehicle.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}&nama=${storedUsername}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -112,7 +112,7 @@ const Content_laras = () => {
       current_page: 1,
     });
     const getVehicle_sarpras = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pagination_vehicle_sarpras.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pagination_vehicle_sarpras.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}&nama=${storedUsername}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -140,7 +140,7 @@ const Content_laras = () => {
       current_page: 1,
     })
     const getRequest = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request_by_name.php?id=${storeidNumber}&page=${pagination_request.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request_by_name.php?id=${storeidNumber}&page=${pagination_request.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}&nama=${storedUsername}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -163,7 +163,7 @@ const Content_laras = () => {
       current_page: 1,
     })
     const getRequest_Sapras = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request.php?page=${pagination_request_sapras.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request.php?page=${pagination_request_sapras.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}&nama=${storedUsername}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -309,6 +309,57 @@ const Content_laras = () => {
           console.log(error.response);
         }
       }
+      const mark_Fix = async (idNotif, id) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_fix.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${id}`);
+                window.location.reload();
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+      }
+      const mark_Vehicle = async (idNotif, id) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_vehicle.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${id}`);
+                window.location.reload();
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+      }
+      const mark_Bhp = async (idNotif, id) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/SILARAS/mark_bhp.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${id}`);
+                window.location.reload();
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+      }
       const handleSearchMonth = (e) => {
         setSearchMonth(e.target.value);
         console.log(e.target.value);        
@@ -321,15 +372,39 @@ const Content_laras = () => {
         setSearchMonthRequest(e.target.value);
         console.log(e.target.value);        
       }
-      const handleOpenFix = (id) => {
-        navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${id}`);
+      const handleOpenFix = (id, stat, id_notif, e) => {
+        e.preventDefault();
+        if (stat === 'Active') {
+          mark_Fix(id_notif, id);
+        } else {
+          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${id}`);
+        }        
       }
-      const handleOpenVehicle = (id) => {
-        navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${id}`);
+      const handleOpenVehicle = (id, stat, id_notif, e) => {
+        e.preventDefault();
+        if (stat === 'Active') {
+          mark_Vehicle(id_notif, id);
+        } else {
+          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${id}`);
+        }
       }
-      const handleOpenBHP = (id) => {
-        navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${id}`);
+      const handleOpenBHP = (id, stat, id_notif, e) => {
+        e.preventDefault();
+        if (stat === 'Active') {
+          mark_Bhp(id_notif, id);
+        } else {
+          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${id}`);
+        }
       }
+      // const handleOpenFix = (id) => {
+      //   navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${id}`);
+      // }
+      // const handleOpenVehicle = (id) => {
+      //   navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${id}`);
+      // }
+      // const handleOpenBHP = (id) => {
+      //   navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${id}`);
+      // }
       return(
         <>
             <div className='main-dashboard'>
@@ -341,8 +416,8 @@ const Content_laras = () => {
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />
                 <div className='content-col'>
                     <div className='box-m'>
-                      { (role !== "C-03" ) &&
-                        <div className='content'>
+                      {(role !== "C-03" ) &&
+                        <div style={{display: level === "level-4" ? 'none' : ''}} className='content'>
                             <h1>Daftar Form Perbaikan</h1>
                             <div style={{display: "flex" , flexDirection: "row"}}>
                               <div className='pagination'>
@@ -408,7 +483,7 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
                                   <td style={{textAlign:'center'}}>
-                                    <button className='B-update' onClick={() => handleOpenFix(item.id_fix)}>Lihat disini</button>
+                                    <button className='B-update' onClick={(e) => handleOpenFix(item.id_fix, item.stat, item.id_notif, e)}>Lihat disini</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
                                   </td>
                                 </tr>
@@ -419,7 +494,7 @@ const Content_laras = () => {
                             )}                        
                         </div>
                       }
-                      {role === "C-03" && (
+                      {(role === "C-03" || level === "level-4") && (
                         <div className='content'>
                             <h1>Daftar Form Perbaikan Sarpras</h1>
                             <div style={{display: "flex" , flexDirection: "row"}}>
@@ -486,7 +561,7 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
                                   <td style={{textAlign:'center'}}>
-                                    <button className='B-update' onClick={() => handleOpenFix(item.id_fix)}>Lihat disini</button> <br />
+                                    <button className='B-update' onClick={(e) => handleOpenFix(item.id_fix, item.stat, item.id_notif, e)}>Lihat disini</button> <br />
                                     <div><button className='B-deleted' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
                                   </td>
                                 </tr>
@@ -564,7 +639,7 @@ const Content_laras = () => {
                                   <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                   <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
                                   <td style={{textAlign:'center'}}>
-                                    <button className='B-update' onClick={() => handleOpenFix(item.id_fix)}>Lihat disini</button>
+                                    <button className='B-update' onClick={(e) => handleOpenFix(item.id_fix, item.stat, item.id_notif, e)}>Lihat disini</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
                                   </td>
                                 </tr>
@@ -576,7 +651,7 @@ const Content_laras = () => {
                         </div>
                       )}
                       { (role !== "C-03" ) &&(
-                          <div className='content'>
+                          <div style={{display: level === "level-4" ? 'none' : ''}} className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
                             <div style={{display:"flex", flexDirection:"row"}}>                            
                               <div className='pagination'>
@@ -610,8 +685,7 @@ const Content_laras = () => {
                             {vehicle.length > 0 ? (
                             <table>
                                 <tr>
-                                    <th style={{textAlign:'center'}}>Nomor</th>
-                                    <th style={{textAlign:'center'}}>id Form</th>
+                                    <th style={{textAlign:'center'}}>Nomor</th>                                    
                                     <th style={{textAlign:'center'}}>Nama</th>
                                     <th style={{textAlign:'center'}}>Unit Kerja</th>
                                     <th style={{textAlign:'center'}}>Jenis Peminjaman Kendaraan</th>
@@ -621,12 +695,12 @@ const Content_laras = () => {
                                     <th style={{textAlign:'center'}}>Jam Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Durasi Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Approval Status</th>
+                                    <th style={{textAlign:'center'}}>Jawaban</th>
                                     <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
                               {vehicle.map((item, index) => (
                                 <tr key={item.id}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.id_vehicle}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     {level === "level-1" && (
                                     <td style={{textAlign:'center'}}>{item.nama_role}</td>
@@ -649,7 +723,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenVehicle(item.id_vehicle)}>Lihat Disini</button>
+                                    <td style={{textAlign:'center'}}>{item.jawab}</td>
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={(e) => handleOpenVehicle(item.id_vehicle, item.stat, item.id_notif, e)}>Lihat Disini</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
                                     </td>
                                 </tr>
@@ -660,7 +735,7 @@ const Content_laras = () => {
                             )}                        
                         </div>
                       )}
-                      { role === "C-03" && (
+                      { (role === "C-03" || level === "level-4") && (
                         <div className='content'>
                             <h1>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
                             <div style={{display:'flex', flexDirection:'row'}}>                          
@@ -695,8 +770,7 @@ const Content_laras = () => {
                             {vehicle_sarpras.length > 0 ? (
                             <table>
                                 <tr>
-                                    <th style={{textAlign:'center'}}>Nomor</th>
-                                    <th style={{textAlign:'center'}}>id Form</th>
+                                    <th style={{textAlign:'center'}}>Nomor</th>                                    
                                     <th style={{textAlign:'center'}}>Nama</th>
                                     <th style={{textAlign:'center'}}>Unit Kerja</th>
                                     <th style={{textAlign:'center'}}>Jenis Peminjaman Kendaraan</th>
@@ -706,12 +780,12 @@ const Content_laras = () => {
                                     <th style={{textAlign:'center'}}>Jam Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Durasi Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Approval Status</th>
+                                    <th style={{textAlign:'center'}}>Jawaban</th>
                                     <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
                               {vehicle_sarpras.map((item, index) => (
                                 <tr key={item.id}>
-                                    <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.id_vehicle}</td>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>                                    
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     {level === "level-1" && (
                                     <td style={{textAlign:'center'}}>{item.nama_role}</td>
@@ -734,7 +808,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenVehicle(item.id_vehicle)}>Lihat Disini</button>
+                                    <td style={{textAlign:'center'}}>{item.jawab}</td>
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={(e) => handleOpenVehicle(item.id_vehicle, item.stat, item.id_notif, e)}>Lihat Disini</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
                                     </td>
                                 </tr>
@@ -780,8 +855,7 @@ const Content_laras = () => {
                             {vehicle_sarpras.length > 0 ? (
                             <table>
                                 <tr>
-                                    <th style={{textAlign:'center'}}>Nomor</th>
-                                    <th style={{textAlign:'center'}}>id Form</th>
+                                    <th style={{textAlign:'center'}}>Nomor</th>                                    
                                     <th style={{textAlign:'center'}}>Nama</th>
                                     <th style={{textAlign:'center'}}>Unit Kerja</th>
                                     <th style={{textAlign:'center'}}>Jenis Peminjaman Kendaraan</th>
@@ -791,12 +865,12 @@ const Content_laras = () => {
                                     <th style={{textAlign:'center'}}>Jam Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Durasi Peminjaman</th>
                                     <th style={{textAlign:'center'}}>Approval Status</th>
+                                    <th style={{textAlign:'center'}}>Jawaban</th>
                                     <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
                               {vehicle_sarpras.map((item, index) => (
                                 <tr key={item.id}>
-                                    <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.id_vehicle}</td>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>                                    
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     {level === "level-1" && (
                                     <td style={{textAlign:'center'}}>{item.nama_role}</td>
@@ -819,7 +893,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenVehicle(item.id_vehicle)}>Lihat Disini</button>
+                                    <td style={{textAlign:'center'}}>{item.jawab}</td>
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={(e) => handleOpenVehicle(item.id_vehicle, item.stat, item.id_notif, e)}>Lihat Disini</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteVehicle(item.id_vehicle)}>Hapus</button></div> 
                                     </td>
                                 </tr>
@@ -831,7 +906,7 @@ const Content_laras = () => {
                         </div>
                       )}
                       {(role !== "C-03" ) && (
-                        <div className='content'>
+                        <div style={{display: level === "level-4" ? 'none' : ''}} className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
                             <div style={{display: 'flex', flexDirection: 'row'}}>                          
                               <div className='pagination'>
@@ -866,18 +941,17 @@ const Content_laras = () => {
                             <table>
                                 <tr>
                                    <th style={{textAlign:'center'}}>Nomor</th>
-                                   <th style={{textAlign:'center'}}>id Form</th>
                                    <th style={{textAlign:'center'}}>Nama</th>
                                    <th style={{textAlign:'center'}}>NIP/NRK</th>
                                    <th style={{textAlign:'center'}}>Unit Kerja</th>
                                    <th style={{textAlign:'center'}}>Permohonan Barang</th>
                                    <th style={{textAlign:'center'}}>Approval Status</th>
+                                    <th style={{textAlign:'center'}}>Jawaban</th>
                                    <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
                               {request.map((item, index) => (
                                 <tr key={item.id}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.id_bhp}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
                                     {level === "level-1" && (
@@ -896,7 +970,8 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
                                     <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}> <button className='B-update' onClick={() => handleOpenBHP(item.id_bhp)}>Lihat Disini</button>
+                                    <td style={{textAlign:'center'}}>{item.jawab}</td>
+                                    <td style={{textAlign:'center'}}> <button className='B-update' onClick={(e) => handleOpenBHP(item.id_bhp, item.stat, item.id_notif, e)}>Lihat Disini</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
                                 </td>
                             </tr>
@@ -907,7 +982,7 @@ const Content_laras = () => {
                             )}                        
                         </div>
                       )}
-                      { role === "C-03" && (
+                      { (role === "C-03" || level === "level-4") && (
                         <div className='content'>
                             <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
                             <div style={{display:'flex', flexDirection:'row'}}>                            
@@ -942,19 +1017,18 @@ const Content_laras = () => {
                             {request_sapras.length > 0 ? (
                             <table>
                                 <tr>
-                                   <th style={{textAlign:'center'}}>Nomor</th>
-                                   <th style={{textAlign:'center'}}>id Form</th>
+                                   <th style={{textAlign:'center'}}>Nomor</th>                                   
                                    <th style={{textAlign:'center'}}>Nama</th>
                                    <th style={{textAlign:'center'}}>NIP/NRK</th>
                                    <th style={{textAlign:'center'}}>Unit Kerja</th>
                                    <th style={{textAlign:'center'}}>Permohonan Barang</th>
                                    <th style={{textAlign:'center'}}>Approval Status</th>
+                                   <th style={{textAlign:'center'}}>Jawaban</th>
                                    <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
                               {request_sapras.map((item, index) => (
                                 <tr key={item.id}>
-                                    <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.id_bhp}</td>
+                                    <td style={{textAlign:'center'}}>{index + 1}</td>                                    
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
                                     {level === "level-1" && (
@@ -970,10 +1044,11 @@ const Content_laras = () => {
                                       <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
                                     )}
                                     <td style={{textAlign:'center'}}>{item.barang}</td>
-                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
-                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
-                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenBHP(item.id_bhp)}>Lihat Disini</button>
+                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '13px'}}> <img src={white} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '13px'}}> <img src={red} alt="" /> </td>
+                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '13px'}}> <img src={green} alt="" /> </td>
+                                    <td style={{textAlign:'center'}}>{item.jawab}</td>
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={(e) => handleOpenBHP(item.id_bhp, item.stat, item.id_notif, e)}>Lihat Disini</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
                                 </td>
                             </tr>
@@ -1019,19 +1094,18 @@ const Content_laras = () => {
                             {request_sapras.length > 0 ? (
                             <table>
                                 <tr>
-                                   <th style={{textAlign:'center'}}>Nomor</th>
-                                   <th style={{textAlign:'center'}}>id Form</th>
+                                   <th style={{textAlign:'center'}}>Nomor</th>                                   
                                    <th style={{textAlign:'center'}}>Nama</th>
                                    <th style={{textAlign:'center'}}>NIP/NRK</th>
                                    <th style={{textAlign:'center'}}>Unit Kerja</th>
                                    <th style={{textAlign:'center'}}>Permohonan Barang</th>
                                    <th style={{textAlign:'center'}}>Approval Status</th>
+                                   <th style={{textAlign:'center'}}>Jawaban</th>
                                    <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
                               {request_sapras.map((item, index) => (
                                 <tr key={item.id}>
                                     <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.id_bhp}</td>
                                     <td style={{textAlign:'center'}}>{item.nama}</td>
                                     <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
                                     {level === "level-1" && (
@@ -1047,10 +1121,11 @@ const Content_laras = () => {
                                       <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
                                     )}
                                     <td style={{textAlign:'center'}}>{item.barang}</td>
-                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
-                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
-                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={() => handleOpenBHP(item.id_bhp)}>Lihat Disini</button>
+                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /></td>
+                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /></td>
+                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /></td>
+                                    <td style={{textAlign:'center'}}>{item.jawab}</td>
+                                    <td style={{textAlign:'center'}}><button className='B-update' onClick={(e) => handleOpenBHP(item.id_bhp, item.stat, item.id_notif, e)}>Lihat Disini</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
                                 </td>
                             </tr>

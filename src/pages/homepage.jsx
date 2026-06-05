@@ -588,7 +588,7 @@ const Homepage = () => {
                         }
                         {bagian_server !== '' &&
                           <div className='field'>
-                            <label htmlFor="kode_role">Bagian</label>
+                            <label htmlFor="kode_role">Status Pegawai: </label>
                             {bagian_server === '1' && <input disabled value="PNS" type="text" />}
                             {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
                             {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
@@ -654,7 +654,7 @@ const Homepage = () => {
                         }
                         {bagian_server !== '' &&
                           <div className='field'>
-                            <label htmlFor="kode_role">Bagian</label>
+                            <label htmlFor="kode_role">Status Pegawai: </label>
                             {bagian_server === '1' && <input disabled value="PNS" type="text" />}
                             {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
                             {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
@@ -720,7 +720,7 @@ const Homepage = () => {
                         }
                         {bagian_server !== '' &&
                           <div className='field'>
-                            <label htmlFor="kode_role">Bagian</label>
+                            <label htmlFor="kode_role">Status Pegawai: </label>
                             {bagian_server === '1' && <input disabled value="PNS" type="text" />}
                             {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
                             {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
@@ -786,7 +786,7 @@ const Homepage = () => {
                         }
                         {bagian_server !== '' &&
                           <div className='field'>
-                            <label htmlFor="kode_role">Bagian</label>
+                            <label htmlFor="kode_role">Status Pegawai: </label>
                             {bagian_server === '1' && <input disabled value="PNS" type="text" />}
                             {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
                             {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}

@@ -28,7 +28,7 @@ const Content = () => {
     const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
     // const [isLoading, setIsLoading] = useState('false')
     const [identity, setIdentity] = useState([]);
-    const [nama, setNama] = useState(identity.nama);
+    const [nama, setNama] = useState(identity?.nama);
     const getIdentity = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
@@ -46,7 +46,7 @@ const Content = () => {
         currentPage: 1,
     });    
     const getSurat = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_name.php?id=${storeidNumber}&page=${pagination_surat.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_name.php?id=${storeidNumber}&nama=${nama}&page=${pagination_surat.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -160,9 +160,9 @@ const Content = () => {
     const [surat_role_a, setSurat_role_a] = useState([]);
     const [pagination_surat_role_a, setPagination_surat_role_a] = useState({
         currentPage: 1,
-    });        
+    });
     const getSurat_role_a_kasubbag = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kasubbag.php?kode_role=${role}&page=${pagination_surat_role_a.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kasubbag.php?kode_role=${role}&nama=${nama}&page=${pagination_surat_role_a.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -185,7 +185,7 @@ const Content = () => {
         currentPage: 1,
     });        
     const getSurat_role_a_kabalai = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kabalai.php?kode_role=${role}&page=${pagination_surat_role_a_kabalai.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_a_kabalai.php?kode_role=${role}&nama=${nama}&page=${pagination_surat_role_a_kabalai.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -249,7 +249,7 @@ const Content = () => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
     const getSurat_role_sp = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_sp.php?page=${pagination_surat_role_sp.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_sp.php?page=${pagination_surat_role_sp.currentPage}&nama=${nama}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -278,9 +278,31 @@ const Content = () => {
             ...pagination_surat_role_sp,
             currentPage: pagination_surat_role_sp.currentPage - 1,
         })
-    }  
-    const handleOpenSurat = (id) => {
-        navigate(`/Dashboard/${level}/${role}/${role_sp}/Cuti-detail/${id}`);
+    }
+    const mark = async (idNotif, id) => {
+        const payload = {
+            stat: "Disable"
+        }
+        try {
+            const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/mark_as_read.php?id=${idNotif}`, payload, {
+                headers: {"Content-Type": "multipart/form-data"},
+            })
+            console.log(response.data);
+            setTimeout(() => {
+                navigate(`/Dashboard/${level}/${role}/${role_sp}/Cuti-detail/${id}`);
+                window.location.reload();
+            }, 2000);
+        } catch (error) {
+            console.log(error.response);
+        }
+    }
+    const handleOpenSurat = (id, stat, id_notif, e) => {
+        e.preventDefault();
+        if (stat === 'Active') {
+            mark(id_notif, id);
+        } else {
+            navigate(`/Dashboard/${level}/${role}/${role_sp}/Cuti-detail/${id}`);
+        }        
     }
     const [absensi, setAbsensi] = useState([]);
     const [pagination_absensi, setPagination_Absensi] = useState({
@@ -326,7 +348,7 @@ const Content = () => {
         console.log(event.target.value);
     }
     useEffect(() => {
-    getIdentity();
+    getIdentity();    
     getSurat();
     getSurat_role_a_kasubbag();
     getSurat_role_a_kabalai();
@@ -335,7 +357,7 @@ const Content = () => {
     getAccount();
     getAbsensi();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pagination_surat?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_a_kabalai?.currentPage, pagination_surat_role_sp?.currentPage, pagination_account?.currentPage, searchMonth, searchName]);
+    }, [pagination_surat?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_a_kabalai?.currentPage, pagination_surat_role_sp?.currentPage, pagination_account?.currentPage, searchMonth, searchName, nama]);
 
     const handleUpdateSisaCuti = async (event, sisa_cuti, id_number) => {
       event.preventDefault();
@@ -433,7 +455,7 @@ const Content = () => {
                                                     <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
                                                     <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
                                                     <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                    <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Ubah</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
+                                                    <td style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
                                                 </tr>
                                             ))} 
                                         </table>
@@ -500,7 +522,7 @@ const Content = () => {
                                                     <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
                                                     <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
                                                     <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                    <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Detail</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button> </td>  
+                                                    <td style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Detail</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button> </td>  
                                                 </tr>
                                             ))} 
                                         </table>
@@ -575,8 +597,8 @@ const Content = () => {
                                             <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
                                             <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
                                             <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                            <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
-                                            </tr>
+                                            <td style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
+                                        </tr>
                                         ))} 
                                     </table>
                                 ) : (
@@ -643,7 +665,7 @@ const Content = () => {
                                             <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
                                             <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
                                             <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                            <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
+                                            <td style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
                                             </tr>
                                         ))} 
                                     </table>

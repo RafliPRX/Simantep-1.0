@@ -108,6 +108,8 @@ const Signup = () => {
             setNamaRole(selectedIdentityData.nama_role);
             setAksesLevel(selectedIdentityData.akses_level);
             setId_Number(selectedIdentityData.id_number);
+            setNRK(selectedIdentityData.nrk_nip);
+            setJabatan(selectedIdentityData.jabatan);
         }
     }
     const handleChangeJabatan = (event) => {
@@ -187,9 +189,9 @@ const Signup = () => {
                                 </button>
                             </div>
                             <label>NRK/NIP</label>
-                            <input onChange={handleChangeNRK} placeholder='NRK atau NIP' type="text" />
+                            <input onChange={handleChangeNRK} value={nrk} placeholder='NRK atau NIP' type="text" />
                             <label>Jabatan</label>
-                            <input onChange={handleChangeJabatan} placeholder='jabatan' type="Jabatan" />
+                            <input onChange={handleChangeJabatan} value={jabatan} placeholder='jabatan' type="Jabatan" />
                             <label>Unit</label>
                             <input value={nama_role} placeholder='Unit' type="Jabatan" />
                             {/* <label>Nomor ID</label>

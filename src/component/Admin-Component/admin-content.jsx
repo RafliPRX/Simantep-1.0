@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom';
 // import { useEffect, useState } from 'react'
 // import axios from 'axios';
 // import { Link } from 'react-router-dom';
+import left from '../../assets/left.svg'
+import right from '../../assets/right.svg'
 const Admin_Content = () => {
     const storedUsername = localStorage.getItem('nama');
     const storeNrk = localStorage.getItem('nrk');
@@ -20,7 +22,7 @@ const Admin_Content = () => {
     console.log(pj);
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    
+    const [searchName, setSearchName] = useState('');
     const [activeTab, setActiveTab] = useState('identitas');
     const [identitasLevel, setIdentitasLevel] = useState('level 1');
     const [roleLevel, setRoleLevel] = useState('level 1');
@@ -34,8 +36,9 @@ const Admin_Content = () => {
             return "-";}
         else { return RoleSP; }
     }
+    
     const getIdentity = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getIdentity.php?page=${pagination_identity.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getIdentity.php?page=${pagination_identity.currentPage}&nama=${searchName}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -58,7 +61,7 @@ const Admin_Content = () => {
         currentPage: 1,
     });    
     const getIdentity_level2 = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getIdentity-level2.php?page=${pagination_identity_level2.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getIdentity-level2.php?page=${pagination_identity_level2.currentPage}&nama=${searchName}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -242,7 +245,7 @@ const Admin_Content = () => {
         currentPage: 1,
     });
     const getAkun_level1 = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getAccount-lv1.php?page=${pagination_akun_level1.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getAccount-lv1.php?page=${pagination_akun_level1.currentPage}&nama=${searchName}`;
         let url = baseUrl;
         axios.get(url).then((res2) => {
             console.log(res2.data.Data);
@@ -265,7 +268,7 @@ const Admin_Content = () => {
         currentPage: 1,
     });
     const getAkun_level2 = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getAccount-lv2.php?page=${pagination_akun_level2.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getAccount-lv2.php?page=${pagination_akun_level2.currentPage}&nama=${searchName}`;
         let url = baseUrl;
         axios.get(url).then((res2) => {
             console.log(res2.data.Data);
@@ -329,6 +332,10 @@ const Admin_Content = () => {
             console.log(error);
         });
     }
+    const handleChangeSearchName = (e) => {
+        setSearchName(e.target.value);
+        console.log(e.target.value);        
+    }
     useEffect(() => {
         getIdentity();
         getRole();
@@ -350,7 +357,7 @@ const Admin_Content = () => {
         pagination_identity_level3?.currentPage, pagination_identity_level4?.currentPage,
         pagination_akun_level1?.currentPage, pagination_akun_level2?.currentPage,
         pagination_akun_level3?.currentPage, pagination_akun_level4?.currentPage,
-        pagination_role_spesial?.currentPage
+        pagination_role_spesial?.currentPage, searchName
     ]);
 
     const handleNext_Identity = () => {
@@ -635,9 +642,16 @@ const Admin_Content = () => {
                             {identitasLevel === 'level 1' && (                             
                             <>    
                                 <h1>Daftar Identitas Pegawai Level 1</h1>
-                                <div>
-                                    <button onClick={handlePrev_Identity}>Previous</button>
-                                    <button onClick={handleNext_Identity}>Next</button>
+                                <div style={{display: 'flex', flexDirection: "row"}}>
+                                    <div className='pagination'>
+                                        <button className='left' onClick={handlePrev_Identity}><img src={left} alt="" /></button>
+                                        <input className='page-number' type="text" value={pagination_identity?.currentPage} />
+                                        <button className='right' onClick={handleNext_Identity}><img src={right} alt="" /></button>                                
+                                    </div>
+                                    <div className='search'>
+                                        <label className='pagination-label' htmlFor="">Cari: </label>
+                                        <input className='pagination-input' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
+                                    </div>
                                 </div>
                                 <table>
                                     <tr>
@@ -666,9 +680,16 @@ const Admin_Content = () => {
                             {identitasLevel === 'level 2' && (
                             <>    
                                 <h1>Daftar Identitas Pegawai Level 2</h1>
-                                <div>
-                                    <button onClick={handlePrev_Identity_level2}>Previous</button>
-                                    <button onClick={handleNext_Identity_level2}>Next</button>
+                                <div style={{display: 'flex', flexDirection: "row"}}>
+                                    <div className='pagination'>
+                                        <button className='left' onClick={handlePrev_Identity_level2}><img src={left} alt="" /></button>
+                                        <input className='page-number' type="text" value={pagination_identity_level2?.currentPage} />
+                                        <button className='right' onClick={handleNext_Identity_level2}><img src={right} alt="" /></button>                                
+                                    </div>
+                                    <div className='search'>
+                                        <label className='pagination-label' htmlFor="">Cari: </label>
+                                        <input className='pagination-input' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
+                                    </div>
                                 </div>
                                 <table>
                                     <tr>
@@ -906,9 +927,16 @@ const Admin_Content = () => {
                             {akunLevel === 'level 1' && (
                             <>
                                 <h1>Daftar Akun Pegawai Level 1</h1>
-                                <div>
-                                    <button onClick={handlePrev_Akun_level1}>Previous</button>
-                                    <button onClick={handleNext_Akun_Level1}>Next</button>
+                                <div style={{display: 'flex', flexDirection: "row"}}>
+                                    <div className='pagination'>
+                                        <button className='left' onClick={handlePrev_Akun_level1}><img src={left} alt="" /></button>
+                                        <input className='page-number' type="text" value={pagination_akun_level1?.currentPage} />
+                                        <button className='right' onClick={handleNext_Akun_Level1}><img src={right} alt="" /></button>                                
+                                    </div>
+                                    <div className='search'>
+                                        <label className='pagination-label' htmlFor="">Cari: </label>
+                                        <input className='pagination-input' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
+                                    </div>
                                 </div>
                                 <table>
                                     <tr>
@@ -939,9 +967,16 @@ const Admin_Content = () => {
                             {akunLevel === 'level 2' && (
                             <>    
                                 <h1>Daftar Akun Pegawai Level 2</h1>
-                                <div>
-                                    <button onClick={handlePrev_Akun_level2}>Previous</button>
-                                    <button onClick={handleNext_Akun_Level2}>Next</button>
+                                <div style={{display: 'flex', flexDirection: "row"}}>
+                                    <div className='pagination'>
+                                        <button className='left' onClick={handlePrev_Akun_level2}><img src={left} alt="" /></button>
+                                        <input className='page-number' type="text" value={pagination_akun_level2?.currentPage} />
+                                        <button className='right' onClick={handleNext_Akun_Level2}><img src={right} alt="" /></button>                                
+                                    </div>
+                                    <div className='search'>
+                                        <label className='pagination-label' htmlFor="">Cari: </label>
+                                        <input className='pagination-input' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
+                                    </div>
                                 </div>
                                 <table>
                                     <tr>

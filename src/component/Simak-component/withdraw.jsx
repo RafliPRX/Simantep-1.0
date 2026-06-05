@@ -82,6 +82,7 @@ const Withdraw = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     const [isLoading, setIsLoading] = useState(false);
+    const [nama_Pengaju, setNama_pengaju] = useState("");
     const [kegiatan, setKegiatan] = useState("");
     const [rencana, setRencana] = useState("");
     const [units, setUnits] = useState("");
@@ -94,7 +95,12 @@ const Withdraw = () => {
     const [totaldana, setTotalDana] = useState("");
     const [metode, setMetode] =useState("");
     const [tempat, setTempat] = useState("");
-    const [kendaraan, setKendaraan] = useState(""); 
+    const [kendaraan, setKendaraan] = useState("");
+
+    const handleChangeNamaPengaju = (event) => {
+        setNama_pengaju(event.target.value);
+        console.log(event.target.value);
+    }
     const handleChangeKegiatan = (event) => {
         setKegiatan(event.target.value);
         console.log(event.target.value);
@@ -152,6 +158,7 @@ const Withdraw = () => {
         event.preventDefault();
         const payload = {
             id_number: storeidNumber,
+            nama_pengaju: nama_Pengaju,
             nama_kegiatan: kegiatan,
             units: units,
             rencana_pelaksana: rencana,
@@ -200,11 +207,11 @@ const Withdraw = () => {
                             <div className='content-f'>
                                 <h1>Data Diri</h1>
                                 <label htmlFor="">Nama</label>
-                                <input value={nama} placeholder='Nama' type="text"/>
+                                <input value={nama} disabled placeholder='Nama' type="text"/>
                                 <label htmlFor="">NIP/NRK</label>
-                                <input value={nrk_nip} placeholder='NIP/NRK' type="text"/>
+                                <input value={nrk_nip} disabled placeholder='NIP/NRK' type="text"/>
                                 <label htmlFor="">Jabatan</label>
-                                <input value={jabatan} placeholder='Jabatan' type="text"/>
+                                <input value={jabatan} disabled placeholder='Jabatan' type="text"/>
                                 {level === 'level-1' && (
                                 <>
                                     <label htmlFor="">Unit Kerja</label>
@@ -221,6 +228,8 @@ const Withdraw = () => {
 
                             <div className='content-f'>
                                 <h1>Nama Kegiatan & Unit</h1>
+                                <label htmlFor="">Nama Pengaju</label>
+                                <input onChange={handleChangeNamaPengaju} value={nama_Pengaju} placeholder='Nama Pengaju' type="text"/>
                                 <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
                                 <input onChange={handleChangeKegiatan} value={kegiatan} placeholder='Nama Rencana Kegiatan dan Program' type="text"/>
                                 <label htmlFor="">Rencana Pelaksanaan</label>

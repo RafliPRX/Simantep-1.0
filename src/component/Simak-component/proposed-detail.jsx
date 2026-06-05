@@ -35,6 +35,21 @@ const Proposed_Detail = () => {
                 console.error(error);
             }
         }
+        const [nama_apr_ls_lv1, setNama_apr_ls_lv1] = useState([]);
+        const [nama_apr_lv1, setNama_apr_lv1] = useState(nama_apr_ls_lv1.nama);
+        console.log("nama apr lv1: " + nama_apr_lv1);
+        const getApr_lv1 = async () => {
+          try {
+              const response = await axios.get(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/lpj_approve_lv1.php?kode_role_a=A-02` , {
+              headers: {"Content-Type": "application/json"},
+              });
+              console.log(response.data.Data[0]);
+              setNama_apr_ls_lv1(response.data.Data[0]);
+              setNama_apr_lv1(response.data.Data[0].nama);            
+          } catch (error) {
+              console.log(error);
+          }
+        }
         const [nama_apr_ls_lv2, setNama_apr_ls_lv2] = useState([]);
         const [nama_apr_lv2, setNama_apr_lv2] = useState(nama_apr_ls_lv2.nama);
         console.log("nama apr lv2: " + nama_apr_lv2);        
@@ -81,12 +96,18 @@ const Proposed_Detail = () => {
         }
         useEffect(() => {
             getDetail();
+            getApr_lv1();
             getApr_lv2();
             getApr_lv3();
             getNotifDetail();
         // eslint-disable-next-line react-hooks/exhaustive-deps
         },[]);
 
+        const [adm, setAdm] = useState("");
+        const handleChangeAdm = (event) => {
+          setAdm(event.target.value);
+          console.log(event.target.value);
+        }
         const [kasubag, setKasubag] = useState("");
         const navigate = useNavigate();
         const handleChangeKasubag = (event) => {
@@ -124,6 +145,30 @@ const Proposed_Detail = () => {
           } catch (error) {
             console.log(error.response);
           }
+        }
+        const handleAdminRequest = async () =>{
+            const veri_1_value = Number(adm) === 3 ? nama_apr_lv1 : detail.nama;
+            const payload = {
+              veri_adm: adm,
+              nama_veri_1: veri_1_value,
+              veri_adm_id: storeidNumber,
+            };
+            try {
+              const response = await axios.post(`https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/answer_adm.php?id=${param.id}`, payload, {
+                headers: {
+                'Content-Type': 'multipart/form-data',
+                }
+              });
+              console.log(response.data);
+              setTimeout(() => {
+                  setIsLoading(false);
+                  navigate(`/dashboard-simak/${level}/${role}/${role_sp}`);
+                  alert(response.data.message);
+              }, 1000);  
+            } catch (error) {
+              console.log(error.response);
+              
+            }
         }
         const handleKasubagRequest = async () =>{
             const veri_2_value = Number(kasubag) === 3 ? nama_apr_lv2 : detail.nama;
@@ -185,6 +230,18 @@ const Proposed_Detail = () => {
         } catch (error) {
             console.log(error.response);
         }
+      }
+      const handleAdmin = async (idNotif, event) => {
+        event.preventDefault();
+        try {
+          setIsLoading(true);
+          await mark(idNotif);
+          await handleAdminRequest(event);
+        } catch (error) {
+          console.log(error);        
+        } finally {
+          setIsLoading(false);
+        }      
       }
       const handleKasubag = async (idNotif, event) => {
         event.preventDefault();
@@ -280,6 +337,48 @@ const Proposed_Detail = () => {
                             </tr>
                             </table>
                         </div>
+                        { role_sp === "S-07" && (
+                        <div className='content-f'>
+                          <h1>Jawab Admin Pelayanan</h1>
+                          <form action="">
+                          <table>
+                            <tr style={{marginBottom: '15px'}}>
+                              <td>Jawaban</td>
+                            </tr>
+                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeAdm} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="3" id="" /></td>
+                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
+                            </tr>
+                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeAdm} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" /></td>
+                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
+                            </tr>
+                          </table>
+                          <button onClick={(e) => handleAdmin(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
+                          </form>
+                        </div>
+                        )}
+                        { role === "S-02" && (
+                        <div className='content-f'>
+                          <h1>Jawab KASUBAG</h1>
+                          <form action="">
+                          <table>
+                            <tr style={{marginBottom: '15px'}}>
+                              <td>Jawaban</td>
+                            </tr>
+                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="3" id="" /></td>
+                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
+                            </tr>
+                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" /></td>
+                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
+                            </tr>
+                          </table>
+                          <button onClick={(e) => handleKasubag(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
+                          </form>
+                        </div>
+                        )}
                         { role === "A-02" && (
                         <div className='content-f'>
                           <h1>Jawab KASUBAG</h1>
@@ -299,6 +398,27 @@ const Proposed_Detail = () => {
                           </table>
                           <button onClick={(e) => handleKasubag(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
                           </form>
+                        </div>
+                        )}
+                        { role === "S-01" && (
+                        <div className='content-f'>
+                          <h1>Jawab KEPALA BALAI</h1>
+                          <form action="">
+                            <table>
+                              <tr style={{marginBottom: '15px'}}>
+                                <td>Jawaban</td>
+                              </tr>
+                              <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={3} id="" /></td>
+                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
+                              </tr>
+                              <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
+                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input  onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={2} id="" /></td>
+                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
+                              </tr>
+                            </table>
+                          </form>
+                          <button onClick={(e) => handleHead(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
                         </div>
                         )}
                         { role === "A-01" && (

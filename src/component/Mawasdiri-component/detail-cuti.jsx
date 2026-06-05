@@ -385,7 +385,7 @@ const Cuti_Detail_Form = () => {
                                       <td className='input' style={{display: 'flex' ,alignItems: 'center', width: 'auto', paddingRight: '35px'}}>{detail.cuti_date_fin}</td>
                                     </tr>
                                     <tr>
-                                        <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}> <img style={{width: '900px', height: 'auto', borderRadius: '10px'}} src={`http://localhost/Simantep_API/MAWASDIRI/Cuti/${detail.gambar}`} alt="" /> </td>
+                                        <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}> <img style={{width: '500px', height: 'auto', borderRadius: '10px'}} src={`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/${detail.gambar}`} alt="" /> </td>
                                     </tr>
                                 </div>
                             </table>

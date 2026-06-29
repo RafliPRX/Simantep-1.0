@@ -135,86 +135,98 @@ const Signup = () => {
     },[]);
     return(
         <>
-        <div className='login'>
-            {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
-                    <span style={{position: 'absolute', top : '500px'}} className="load-cuti"></span>
-            </div>}
-            <div className='col'>
-                <div className='form-col' style={{padding: "144px 57px"}}>
-                    <form action="/Home" style={{marginTop: "-228px"}}>
-                        <div className='header'>
-                            <h1>Membuat Akun</h1>
-                            <h3>Buat Username dan Password Anda</h3>
-                        </div>  
-                        <div className='input-col'>                            
-                            <label>Nama</label>
-                            <select onChange={handleChangeNama} name="" id="">
-                                  <option value="" selected>Pilih Nama</option>
-                                  {allIdentity_lv1.map((item) => (
-                                      <>                                                                                      
-                                        <option value={item.nama}>{item.nama}</option>                                        
-                                      </>
-                                  ))}
-                                </select>
-                            <label>Username</label>
-                            <input onChange={handleChangeUsername} placeholder='Username' type="text" />    
-                            <label>Password</label>
-                            <div className="password-input-container">
-                                <input 
-                                    onChange={handleChangePassword} 
-                                    placeholder='isi password' 
-                                    type={showPassword.Password ? "text" : "password"} 
-                                />
-                                <button 
-                                    type="button" 
-                                    className="toggle-password" 
-                                    onClick={() => togglePasswordVisibility('Password')}
-                                >
-                                    {showPassword.Password ? <FaEyeSlash /> : <FaEye />}
-                                </button>
-                            </div>
-                            <label>Masukan Ulang Password</label>
-                            <div className="password-input-container">
-                                <input 
-                                    onChange={handleChangeRePassword} 
-                                    placeholder='isi password' 
-                                    type={showRePassword.REPassword ? "text" : "password"} 
-                                />
-                                <button 
-                                    type="button" 
-                                    className="toggle-password" 
-                                    onClick={() => toggleRePasswordVisibility('REPassword')}
-                                >
-                                    {showRePassword.REPassword ? <FaEyeSlash /> : <FaEye />}
-                                </button>
-                            </div>
-                            <label>NRK/NIP</label>
-                            <input onChange={handleChangeNRK} value={nrk} placeholder='NRK atau NIP' type="text" />
-                            <label>Jabatan</label>
-                            <input onChange={handleChangeJabatan} value={jabatan} placeholder='jabatan' type="Jabatan" />
-                            <label>Unit</label>
-                            <input value={nama_role} placeholder='Unit' type="Jabatan" />
-                            {/* <label>Nomor ID</label>
-                            <input value={id_number} placeholder='jabatan' type="Jabatan" /> */}
-                            <button onClick={handleLogin_ppnpn} >Buat Akun</button>
-                            <div className='register'>
-                                <a href='/'>Sudah Punya Akun ?</a>
+            {isLoading && (
+                        <div style={{
+                            position: 'absolute',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+                            width: '100%',
+                            height: '100%',
+                            zIndex: '9999'
+                        }}>
+                            <div style={{width: '4rem', height: '4rem'}} className="spinner-grow text-success" role="status">
+                                <span className="visually-hidden">Loading...</span>
                             </div>
                         </div>
-                    </form>
-                </div>
-                <div className='logo'>
-                    <div className='logo-col'>
-                    <div className='logo-bg'>
-                        <div className='logo'></div>
+            )}
+            <div className='container-fluid login w-100 vh-100 d-flex align-items-center justify-content-center p-0'>                
+                <div className='row justify-content-center align-content-center w-100'>
+                    <div className='col-12 col-lg-6 justify-content-center align-items-center d-flex'>
+                        <div className='form-col justify-content-center align-items-center d-flex border rounded-4 w-70'>
+                            <form className='d-flex flex-column g-5 m-5'>
+                                <div className='header font-set'>
+                                    <h1 className='font-header'>Buat Akun</h1>
+                                    <h3 className='fs-5'>Masukan Username dan Password untuk Membuat Akun</h3>
+                                </div>
+                                <div className='text-white flex-column d-flex mt-4'>
+                                    <label>Nama</label>
+                                        <select onChange={handleChangeNama} name="" id="">
+                                            <option value="" selected>Pilih Nama</option>
+                                            {allIdentity_lv1.map((item) => (
+                                                <>                                                                                      
+                                                    <option value={item.nama}>{item.nama}</option>                                        
+                                                </>
+                                            ))}
+                                        </select>
+                                    <label className='mb-2'>Username</label>
+                                    <input className='w-60 p-2 rounded-2 mt-1' onChange={handleChangeUsername} type="text" />
+                                    <label className='mt-2 mb-1'>Password</label>
+                                    <div className="d-flex align-items-center w-100 mt-1 position-relative">
+                                        <input
+                                            onChange={handleChangePassword}
+                                            type={showPassword.ppnpn ? "text" : "password"}
+                                            className='w-100 p-2 rounded-2'
+                                        />
+                                        <button
+                                            type="button"
+                                            className="position-absolute end-0 me-3 bg-transparent border-0"
+                                            onClick={() => togglePasswordVisibility('ppnpn')}                                            
+                                        >
+                                            {showPassword.ppnpn ? <FaEyeSlash /> : <FaEye />}
+                                        </button>
+                                    </div>
+                                    <label className='mt-2 mb-1'>Konfirmasi Password</label>
+                                    <div className="d-flex align-items-center w-100 mt-1 position-relative">
+                                        <input
+                                            onChange={handleChangeRePassword}
+                                            type={showRePassword.ppnpn ? "text" : "password"}
+                                            className='w-100 p-2 rounded-2'
+                                        />
+                                        <button
+                                            type="button"
+                                            className="position-absolute end-0 me-3 bg-transparent border-0"
+                                            onClick={() => toggleRePasswordVisibility('ppnpn')}                                            
+                                        >
+                                            {showRePassword.ppnpn ? <FaEyeSlash /> : <FaEye />}
+                                        </button>
+                                    </div>
+                                    <label className='mb-2'>NIP</label>
+                                    <input className='w-60 p-2 rounded-2 mt-1' value={nrk} onChange={handleChangeNRK} type="text" />
+                                    <label className='mb-2'>Jabatan</label>
+                                    <input className='w-60 p-2 rounded-2 mt-1' value={jabatan} onChange={handleChangeJabatan} type="text" />
+                                    <label className='mb-2'>Unit</label>
+                                    <input className='w-60 p-2 rounded-2 mt-1' value={nama_role} placeholder='Unit' type="Jabatan" />
+                                    <button className='btn-login p-2 rounded-4 mt-4' type='submit' onClick={handleLogin_ppnpn}>Buat Akun</button>
+                                    <div className='register'>
+                                        <a className='login-href' href="/">Sudah Punya Akun?</a>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                        <div className='mask'>
-                            <div className='pic'></div>
+                    <div className='col-12 col-lg-6 p-0 logo-col'>
+                        <div className='d-flex justify-content-center align-items-center vh-100 bg-login-logo'>
+                            <div className='logo-col'>
+                                <div className='logo-bg'>
+                                    <div className='logo'></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
         </>
     )
 }

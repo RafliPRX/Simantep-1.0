@@ -1,89 +1,47 @@
+.bg-green-old{
+    background: #127C70;
+}
 .footer{
-    width: 1684px;
-    height: 486px;
-    flex-shrink: 0;
-    border-radius: 100px;
-    border: 1px solid #000;
-    background: var(--Secondary-Primary-White, #FFF);
-    margin-left: 100px;
-    margin-top: 315px;
-    overflow-y: hidden;
+    margin-top: 4px;
+}
+.footer-bg{
+    background: url(/src/assets/Asset-4.webp) center center / cover no-repeat;
+    height: 100vh;
+    background-size: contain;
     transition: all 0.4s ease-in-out;
+    position: relative;
 }
-.footer:hover{
-    transform: scale(1.1);
-    transition: all 0.4s ease-in-out;
-}
-.footer .footer-bg{
+.footer-info2 {
+    position: absolute;
+    left: 50%;
+    bottom: 300px; /* sesuaikan jarak dari bawah */
+    transform: translateX(-50%);
     display: flex;
-    flex-direction: column;
-    width: 3796px;
-    height: 685px;
-    flex-shrink: 0;
-    background: url(../../assets/Asset-5.png) lightgray 50% / cover no-repeat;
-}
-.footer .footer-bg .footer-info{
-    width: 1163px;
-    height: 223px;
-    flex-shrink: 0;
-    background: url(../../assets/footer-info.png) rgb(255, 255, 255, 0) 50% / cover no-repeat;
-    margin-top: 72px;
-    margin-left: 250px;
-}
-.footer .footer-bg .footer-info2{
-    display: flex;
-    flex-direction: row;
     justify-content: center;
-    width: 1474.438px;
-    height: 100.697px;
-    flex-shrink: 0;
-    margin-top: 50px;
-    margin-left: 100px;
-    gap: 20px;
-    padding-top: 10px;
+    gap: 20px; /* jarak antar ikon */
 }
-.footer .footer-bg .footer-info2 svg{
-    transition: all 0.4s ease-in-out;
-    cursor: pointer;
-}
-.footer .footer-bg .footer-info2 svg:hover{
-    transition: all 0.4s ease-in-out;
-    transform: scale(1.1);
-}
+
 @media only screen and (max-width: 480px) {
-    .footer{
-        max-width: 459px;
-        margin-top: -11px;
-        margin-right: 101px;
-        height: 211px;
-        border-radius: 42px;
+    .footer-icon {
+        width: 25px; /* ukuran ikon */
+        height: 25px; /* ukuran ikon */
     }
-    .footer .footer-bg {
-        display: flex;
-        flex-direction: column;
-        width: 480px;
-        height: 222px;
-        flex-shrink: 0;
-        background: url(/src/assets/Asset-5.png) lightgray 50% / cover no-repeat;
+    .footer-info2 {
+        bottom: 70px; /* sesuaikan jarak dari bawah */
     }
-    .footer .footer-bg .footer-info {
-        width: 446px;
-        height: 100px;
-        flex-shrink: 0;
-        background: url(/src/assets/footer-info.png) rgb(255, 255, 255, 0) -12% / contain no-repeat;
-        margin-left: 7px;
-        margin-top: 15px;
+    .footer-bg{
+        height: 30vh;
     }
-    .footer .footer-bg .footer-info2 {
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        width: 198px;
-        height: 100px;
-        flex-shrink: 0;
-        margin-top: -7px;
-        margin-left: 132px;
-        gap: 9px;
-        margin-bottom: 0px;
+}
+@media only screen and (max-width: 375px) {
+    .footer-icon {
+        width: 21px; /* ukuran ikon */
+        height: 20px; /* ukuran ikon */
+    }
+    .footer-info2 {
+        bottom: 75px; /* sesuaikan jarak dari bawah */
+    }
+    .footer-bg{
+        height: 30vh;
     }
 }

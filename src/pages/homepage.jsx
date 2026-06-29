@@ -528,277 +528,383 @@ const Homepage = () => {
     // }
     return (
         <>
-            <div className='home'>
+            <div className='container-fluid home bg-teal p-0 m-0 d-flex align-items-center flex-column'>
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>}
-                <Banner Logout={handleLogout} />
-                <div className='asset'></div>
+                <Banner Logout={handleLogout} />                
                 {level === 'level-1' && 
                   <>
-                    <div className='profile-info'>
-                    <h1>Data Identitas</h1>                    
-                    <form>
-                        <div className='field'>
-                          <label htmlFor="nama">Nama</label>
-                          <input disabled value={nama} type="text" />
+                    <div className='container-xl container-id bg-green-old p-5 m-5 rounded-5'>
+                      <div className='d-flex flex-row align-items-center'>
+                        <div className='gap-3 col-md-6 id-card'>
+                            <h1 className='text-white text-center'>Data Identitas</h1>
+                            <form className='container-xl d-flex flex-column gap-3'>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nama">Nama: </label>
+                                <input className='input-form fs-5' value={nama} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nrk_nip">NRK/NIP:</label>
+                                <input className='input-form fs-5' value={nrk_nip} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="username">Username:</label>
+                                <input className='input-form fs-5' disabled value={username} type="text" name="" id="" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="jabatan">Jabatan:</label>
+                                <input className='input-form fs-5' disabled value={jabatan} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nama_role">Unit Kerja:</label>
+                                <input className='input-form fs-5' disabled value={nama_role} type="text" />
+                              </div>
+                              <div className='d-none flex-column fs-5 text-yellow'>
+                                <label htmlFor="kode_role">Kode Unit Kerja:</label>
+                                <input className='input-form fs-5' disabled value={kode_role} type="text" />
+                              </div>
+                              <div className='d-none flex-column fs-5 text-yellow'>
+                                <label htmlFor="kode_role">Akses Level:</label>
+                                <input className='input-form fs-5' disabled value={akses_level} type="text" />
+                              </div>
+                              <div className='d-none flex-column fs-5 text-yellow'>
+                                <label htmlFor="kode_role">Spesial Akses:</label>
+                                <input className='input-form fs-5' disabled value={nama_role_sp} type="text" />
+                              </div>
+                              {bagian_server === '' && 
+                                <div className='d-flex flex-column fs-5 text-yellow'>
+                                  <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                                  <div className='row'>                              
+                                    <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                      <option value="">Wajib diisi</option>
+                                      <option value="1">PNS</option>
+                                      <option value="2">PPPK Paruh Waktu</option>
+                                      <option value="3">PPPK Penuh Waktu</option>
+                                      <option value="4">Alih Daya</option>
+                                    </select>
+                                    <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                                  </div>                            
+                                </div>
+                              }
+                              {bagian_server !== '' &&
+                                <div className='d-flex flex-column fs-5 text-yellow'>
+                                  <label htmlFor="kode_role">Status Pegawai: </label>
+                                  {bagian_server === '1' && <input className='input-form fs-5' disabled value="PNS" type="text" />}
+                                  {bagian_server === '2' && <input className='input-form fs-5' disabled value="PPPK Paruh Waktu" type="text" />}
+                                  {bagian_server === '3' && <input className='input-form fs-5' disabled value="PPPK Penuh Waktu" type="text" />}
+                                  {bagian_server === '4' && <input className='input-form fs-5' disabled value="Alih Daya" type="text" />}
+                                </div>
+                              }
+                              {/* <label htmlFor="">Upload foto Profile</label>
+                              <div className='u-profile'>
+                                  <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
+                                  <button onClick={uploadProfile}>Upload Gambar</button>
+                              </div> */}
+                            </form>
                         </div>
-                        <div className='field'>
-                          <label htmlFor="nrk_nip">NRK/NIP</label>
-                          <input disabled value={nrk_nip} type="text" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="username">Username</label>
-                          <input disabled value={username} type="text" name="" id="" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="jabatan">Jabatan</label>
-                          <input disabled value={jabatan} type="text" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="nama_role">Unit Kerja</label>
-                          <input disabled value={nama_role} type="text" />
-                        </div>
-                        <div className='field' style={{display:"none"}}>
-                          <label htmlFor="kode_role">Kode Unit Kerja</label>
-                          <input disabled value={kode_role} type="text" />
-                        </div>
-                        <div className='field' style={{display:"none"}}>
-                          <label htmlFor="kode_role">Akses Level</label>
-                          <input disabled value={akses_level} type="text" />
-                        </div>
-                        <div style={{display:"none"}} className='field'>
-                          <label htmlFor="kode_role">Spesial Akses</label>
-                          <input disabled value={nama_role_sp} type="text" />
-                        </div>
-                        {bagian_server === '' && 
-                          <div className='field'>
-                            <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
-                            <div className='row'>                              
-                              <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
-                                <option value="">Wajib diisi</option>
-                                <option value="1">PNS</option>
-                                <option value="2">PPPK Paruh Waktu</option>
-                                <option value="3">PPPK Penuh Waktu</option>
-                                <option value="4">Alih Daya</option>
-                              </select>
-                              <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
-                            </div>                            
-                          </div>
-                        }
-                        {bagian_server !== '' &&
-                          <div className='field'>
-                            <label htmlFor="kode_role">Status Pegawai: </label>
-                            {bagian_server === '1' && <input disabled value="PNS" type="text" />}
-                            {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
-                            {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
-                            {bagian_server === '4' && <input disabled value="Alih Daya" type="text" />}
-                          </div>
-                        }
-                        {/* <label htmlFor="">Upload foto Profile</label>
-                        <div className='u-profile'>
-                            <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
-                            <button onClick={uploadProfile}>Upload Gambar</button>
-                        </div> */}
-                      </form>
+                        <div className='d-flex flex-column align-items-center col-md-6 text-white'>
+                          <div className='d-flex flex-column align-items-center gap-4'> 
+                            <h2>Identitas Pegawai</h2>
+                            <div className='profile-picture'></div>
+                            <div className='d-flex flex-column align-items-center text-nowrap'>                                
+                                <div className='d-flex flex-row'>
+                                  <p>Nama: <span className='fw-bold'>{nama}</span></p>
+                                </div>
+                                <div className='d-flex flex-row'>                                  
+                                  <p>NIP/NRK: <span className='fw-bold'>{nrk_nip}</span></p>
+                                </div>
+                                <div className='d-flex flex-row'>
+                                  <p>Jabatan: <span className='fw-bold'>{jabatan}</span></p>
+                                </div>
+                                {bagian_server === '' && 
+                                  <div className='bagian-android fs-5 text-yellow'>
+                                    <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                                    <div className='row'>                              
+                                      <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                        <option value="">Wajib diisi</option>
+                                        <option value="1">PNS</option>
+                                        <option value="2">PPPK Paruh Waktu</option>
+                                        <option value="3">PPPK Penuh Waktu</option>
+                                        <option value="4">Alih Daya</option>
+                                      </select>
+                                      <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                                    </div>                            
+                                  </div>
+                                }
+                                {bagian_server !== '' &&
+                                  <div className='d-flex flex-row'>
+                                    {bagian_server === '1' && <p>Status Pegawai: <span className='fw-bold'>PNS</span></p>}
+                                    {bagian_server === '2' && <p>Status Pegawai: <span className='fw-bold'>PPPK Paruh Waktu</span></p>}
+                                    {bagian_server === '3' && <p>Status Pegawai: <span className='fw-bold'>PPPK Penuh Waktu</span></p>}
+                                    {bagian_server === '4' && <p>Status Pegawai: <span className='fw-bold'>Alih Daya</span></p>}
+                                  </div>
+                              }
+                            </div>
+                          </div>  
+                        </div>                        
+                      </div>                      
                     </div>
                   </>
                 }
                 {level === 'level-2' && 
                   <>
-                    <div className='profile-info'>
-                    <h1>Data Identitas</h1>                    
-                    <form>
-                        <div className='field'>
-                          <label htmlFor="nama">Nama</label>
-                          <input disabled value={nama} type="text" />
+                    <div className='container-xxl bg-green-old p-5 d-flex flex-column m-5 rounded-5'>
+                      <div className='d-flex flex-row align-items-center'>
+                        <div className='d-flex flex-column gap-3 col-md-6'>
+                            <h1 className='text-white text-center'>Data Identitas</h1>
+                            <form className='container-xxl d-flex flex-column gap-3'>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nama">Nama: </label>
+                                <input className='input-form fs-5' value={nama} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nrk_nip">NRK/NIP:</label>
+                                <input className='input-form fs-5' value={nrk_nip} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="username">Username:</label>
+                                <input className='input-form fs-5' disabled value={username} type="text" name="" id="" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="jabatan">Jabatan:</label>
+                                <input className='input-form fs-5' disabled value={jabatan} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nama_role">Unit Kerja:</label>
+                                <input className='input-form fs-5' disabled value={nama_role_c} type="text" />
+                              </div>
+                              <div className='d-none flex-column fs-5 text-yellow'>
+                                <label htmlFor="kode_role">Kode Unit Kerja:</label>
+                                <input className='input-form fs-5' disabled value={kode_role_c} type="text" />
+                              </div>
+                              <div className='d-none flex-column fs-5 text-yellow'>
+                                <label htmlFor="kode_role">Akses Level:</label>
+                                <input className='input-form fs-5' disabled value={akses_level} type="text" />
+                              </div>
+                              {bagian_server === '' && 
+                                <div className='d-flex flex-column fs-5 text-yellow'>
+                                  <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                                  <div className='row'>                              
+                                    <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                      <option value="">Wajib diisi</option>
+                                      <option value="1">PNS</option>
+                                      <option value="2">PPPK Paruh Waktu</option>
+                                      <option value="3">PPPK Penuh Waktu</option>
+                                      <option value="4">Alih Daya</option>
+                                    </select>
+                                    <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                                  </div>                            
+                                </div>
+                              }
+                              {bagian_server !== '' &&
+                                <div className='d-flex flex-column fs-5 text-yellow'>
+                                  <label htmlFor="kode_role">Status Pegawai: </label>
+                                  {bagian_server === '1' && <input className='input-form fs-5' disabled value="PNS" type="text" />}
+                                  {bagian_server === '2' && <input className='input-form fs-5' disabled value="PPPK Paruh Waktu" type="text" />}
+                                  {bagian_server === '3' && <input className='input-form fs-5' disabled value="PPPK Penuh Waktu" type="text" />}
+                                  {bagian_server === '4' && <input className='input-form fs-5' disabled value="Alih Daya" type="text" />}
+                                </div>
+                              }
+                              {/* <label htmlFor="">Upload foto Profile</label>
+                              <div className='u-profile'>
+                                  <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
+                                  <button onClick={uploadProfile}>Upload Gambar</button>
+                              </div> */}
+                            </form>
                         </div>
-                        <div className='field'>
-                          <label htmlFor="nrk_nip">NRK/NIP</label>
-                          <input disabled value={nrk_nip} type="text" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="username">Username</label>
-                          <input disabled value={username} type="text" name="" id="" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="jabatan">Jabatan</label>
-                          <input disabled value={jabatan} type="text" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="nama_role">Unit Kerja</label>
-                          <input disabled value={nama_role_c} type="text" />
-                        </div>
-                        <div className='field' style={{display:"none"}}>
-                          <label htmlFor="kode_role">Kode Unit Kerja</label>
-                          <input disabled value={kode_role_c} type="text" />
-                        </div>
-                        <div className='field' style={{display:"none"}}>
-                          <label htmlFor="kode_role">Akses Level</label>
-                          <input disabled value={akses_level} type="text" />
-                        </div>
-                        {bagian_server === '' && 
-                          <div className='field'>
-                            <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
-                            <div className='row'>                              
-                              <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
-                                <option value="">Wajib diisi</option>
-                                <option value="1">PNS</option>
-                                <option value="2">PPPK Paruh Waktu</option>
-                                <option value="3">PPPK Penuh Waktu</option>
-                                <option value="4">Alih Daya</option>
-                              </select>
-                              <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
-                            </div>                            
-                          </div>
-                        }
-                        {bagian_server !== '' &&
-                          <div className='field'>
-                            <label htmlFor="kode_role">Status Pegawai: </label>
-                            {bagian_server === '1' && <input disabled value="PNS" type="text" />}
-                            {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
-                            {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
-                            {bagian_server === '4' && <input disabled value="Alih Daya" type="text" />}
-                          </div>
-                        }
-                        {/* <label htmlFor="">Upload foto Profile</label>
-                        <div className='u-profile'>
-                            <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
-                            <button onClick={uploadProfile}>Upload Gambar</button>
-                        </div> */}
-                      </form>
+                        <div className='col-md-6 text-white id-card'>
+                          <div className='d-flex flex-column align-items-center gap-4'>  
+                            <h2>Identitas Pegawai</h2>
+                            <div className='profile-picture'></div>
+                            <div className='d-flex flex-column align-items-center'>                                
+                                <div className='d-flex flex-row'>
+                                  <p>Nama: <span className='fw-bold'>{nama}</span></p>
+                                </div>
+                                <div className='d-flex flex-row'>                                  
+                                  <p>NIP/NRK: <span className='fw-bold'>{nrk_nip}</span></p>
+                                </div>
+                                <div className='d-flex flex-row'>                                  
+                                  <p>Jabatan: <span className='fw-bold'>{jabatan}</span></p>
+                                </div>
+                            </div>
+                          </div>  
+                        </div>                        
+                      </div>                      
                     </div>
                   </>
                 }
                 {level === 'level-3' && 
                   <>
-                    <div className='profile-info'>
-                    <h1>Data Identitas</h1>                    
-                    <form>
-                        <div className='field'>
-                          <label htmlFor="nama">Nama</label>
-                          <input disabled value={nama} type="text" />
+                    <div className='container-xxl bg-green-old p-5 d-flex flex-column m-5 rounded-5'>
+                      <div className='d-flex flex-row align-items-center'>
+                        <div className='d-flex flex-column gap-3 col-md-6'>
+                            <h1 className='text-white text-center'>Data Identitas</h1>
+                            <form className='container-xxl d-flex flex-column gap-3'>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nama">Nama: </label>
+                                <input className='input-form fs-5' value={nama} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nrk_nip">NRK/NIP:</label>
+                                <input className='input-form fs-5' value={nrk_nip} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="username">Username:</label>
+                                <input className='input-form fs-5' disabled value={username} type="text" name="" id="" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="jabatan">Jabatan:</label>
+                                <input className='input-form fs-5' disabled value={jabatan} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nama_role">Unit Kerja:</label>
+                                <input className='input-form fs-5' disabled value={nama_role_b} type="text" />
+                              </div>
+                              <div className='d-none flex-column fs-5 text-yellow'>
+                                <label htmlFor="kode_role">Kode Unit Kerja:</label>
+                                <input className='input-form fs-5' disabled value={kode_role_b} type="text" />
+                              </div>
+                              <div className='d-none flex-column fs-5 text-yellow'>
+                                <label htmlFor="kode_role">Akses Level:</label>
+                                <input className='input-form fs-5' disabled value={akses_level} type="text" />
+                              </div>
+                              {bagian_server === '' && 
+                                <div className='d-flex flex-column fs-5 text-yellow'>
+                                  <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                                  <div className='row'>                              
+                                    <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                      <option value="">Wajib diisi</option>
+                                      <option value="1">PNS</option>
+                                      <option value="2">PPPK Paruh Waktu</option>
+                                      <option value="3">PPPK Penuh Waktu</option>
+                                      <option value="4">Alih Daya</option>
+                                    </select>
+                                    <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                                  </div>                            
+                                </div>
+                              }
+                              {bagian_server !== '' &&
+                                <div className='d-flex flex-column fs-5 text-yellow'>
+                                  <label htmlFor="kode_role">Status Pegawai: </label>
+                                  {bagian_server === '1' && <input className='input-form fs-5' disabled value="PNS" type="text" />}
+                                  {bagian_server === '2' && <input className='input-form fs-5' disabled value="PPPK Paruh Waktu" type="text" />}
+                                  {bagian_server === '3' && <input className='input-form fs-5' disabled value="PPPK Penuh Waktu" type="text" />}
+                                  {bagian_server === '4' && <input className='input-form fs-5' disabled value="Alih Daya" type="text" />}
+                                </div>
+                              }
+                              {/* <label htmlFor="">Upload foto Profile</label>
+                              <div className='u-profile'>
+                                  <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
+                                  <button onClick={uploadProfile}>Upload Gambar</button>
+                              </div> */}
+                            </form>
                         </div>
-                        <div className='field'>
-                          <label htmlFor="nrk_nip">NRK/NIP</label>
-                          <input disabled value={nrk_nip} type="text" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="username">Username</label>
-                          <input disabled value={username} type="text" name="" id="" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="jabatan">Jabatan</label>
-                          <input disabled value={jabatan} type="text" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="nama_role">Unit Kerja</label>
-                          <input disabled value={nama_role_b} type="text" />
-                        </div>
-                        <div className='field' style={{display:"none"}}>
-                          <label htmlFor="kode_role">Kode Unit Kerja</label>
-                          <input disabled value={kode_role_b} type="text" />
-                        </div>
-                        <div className='field' style={{display:"none"}}>
-                          <label htmlFor="kode_role">Akses Level</label>
-                          <input disabled value={akses_level} type="text" />
-                        </div>
-                        {bagian_server === '' && 
-                          <div className='field'>
-                            <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
-                            <div className='row'>                              
-                              <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
-                                <option value="">Wajib diisi</option>
-                                <option value="1">PNS</option>
-                                <option value="2">PPPK Paruh Waktu</option>
-                                <option value="3">PPPK Penuh Waktu</option>
-                                <option value="4">Alih Daya</option>
-                              </select>
-                              <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
-                            </div>                            
-                          </div>
-                        }
-                        {bagian_server !== '' &&
-                          <div className='field'>
-                            <label htmlFor="kode_role">Status Pegawai: </label>
-                            {bagian_server === '1' && <input disabled value="PNS" type="text" />}
-                            {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
-                            {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
-                            {bagian_server === '4' && <input disabled value="Alih Daya" type="text" />}
-                          </div>
-                        }
-                        {/* <label htmlFor="">Upload foto Profile</label>
-                        <div className='u-profile'>
-                            <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
-                            <button onClick={uploadProfile}>Upload Gambar</button>
-                        </div> */}
-                      </form>
+                        <div className='col-md-6 text-white id-card'>
+                          <div className='d-flex flex-column align-items-center gap-4'>  
+                            <h2>Identitas Pegawai</h2>
+                            <div className='profile-picture'></div>
+                            <div className='d-flex flex-column align-items-center'>                                
+                                <div className='d-flex flex-row'>
+                                  <p>Nama: <span className='fw-bold'>{nama}</span></p>
+                                </div>
+                                <div className='d-flex flex-row'>                                  
+                                  <p>NIP/NRK: <span className='fw-bold'>{nrk_nip}</span></p>
+                                </div>
+                                <div className='d-flex flex-row'>                                  
+                                  <p>Jabatan: <span className='fw-bold'>{jabatan}</span></p>
+                                </div>
+                            </div>
+                          </div>  
+                        </div>                        
+                      </div>                      
                     </div>
                   </>
                 }
                 {level === 'level-4' && 
                   <>
-                    <div className='profile-info'>
-                    <h1>Data Identitas</h1>                    
-                    <form>
-                        <div className='field'>
-                          <label htmlFor="nama">Nama</label>
-                          <input disabled value={nama} type="text" />
+                    <div className='container-xxl bg-green-old p-5 d-flex flex-column m-5 rounded-5'>
+                      <div className='d-flex flex-row align-items-center'>
+                        <div className='d-flex flex-column gap-3 col-md-6'>
+                            <h1 className='text-white text-center'>Data Identitas</h1>
+                            <form className='container-xxl d-flex flex-column gap-3'>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nama">Nama: </label>
+                                <input className='input-form fs-5' value={nama} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nrk_nip">NRK/NIP:</label>
+                                <input className='input-form fs-5' value={nrk_nip} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="username">Username:</label>
+                                <input className='input-form fs-5' disabled value={username} type="text" name="" id="" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="jabatan">Jabatan:</label>
+                                <input className='input-form fs-5' disabled value={jabatan} type="text" />
+                              </div>
+                              <div className='d-flex flex-column fs-5 text-yellow'>
+                                <label htmlFor="nama_role">Unit Kerja:</label>
+                                <input className='input-form fs-5' disabled value={nama_role_a} type="text" />
+                              </div>
+                              <div className='d-none flex-column fs-5 text-yellow'>
+                                <label htmlFor="kode_role">Kode Unit Kerja:</label>
+                                <input className='input-form fs-5' disabled value={kode_role_a} type="text" />
+                              </div>
+                              <div className='d-none flex-column fs-5 text-yellow'>
+                                <label htmlFor="kode_role">Akses Level:</label>
+                                <input className='input-form fs-5' disabled value={akses_level} type="text" />
+                              </div>
+                              {bagian_server === '' && 
+                                <div className='d-flex flex-column fs-5 text-yellow'>
+                                  <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                                  <div className='row'>                              
+                                    <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                      <option value="">Wajib diisi</option>
+                                      <option value="1">PNS</option>
+                                      <option value="2">PPPK Paruh Waktu</option>
+                                      <option value="3">PPPK Penuh Waktu</option>
+                                      <option value="4">Alih Daya</option>
+                                    </select>
+                                    <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                                  </div>                            
+                                </div>
+                              }
+                              {bagian_server !== '' &&
+                                <div className='d-flex flex-column fs-5 text-yellow'>
+                                  <label htmlFor="kode_role">Status Pegawai: </label>
+                                  {bagian_server === '1' && <input className='input-form fs-5' disabled value="PNS" type="text" />}
+                                  {bagian_server === '2' && <input className='input-form fs-5' disabled value="PPPK Paruh Waktu" type="text" />}
+                                  {bagian_server === '3' && <input className='input-form fs-5' disabled value="PPPK Penuh Waktu" type="text" />}
+                                  {bagian_server === '4' && <input className='input-form fs-5' disabled value="Alih Daya" type="text" />}
+                                </div>
+                              }
+                              {/* <label htmlFor="">Upload foto Profile</label>
+                              <div className='u-profile'>
+                                  <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
+                                  <button onClick={uploadProfile}>Upload Gambar</button>
+                              </div> */}
+                            </form>
                         </div>
-                        <div className='field'>
-                          <label htmlFor="nrk_nip">NRK/NIP</label>
-                          <input disabled value={nrk_nip} type="text" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="username">Username</label>
-                          <input disabled value={username} type="text" name="" id="" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="jabatan">Jabatan</label>
-                          <input disabled value={jabatan} type="text" />
-                        </div>
-                        <div className='field'>
-                          <label htmlFor="nama_role">Unit Kerja</label>
-                          <input disabled value={nama_role_a} type="text" />
-                        </div>
-                        <div className='field' style={{display:"none"}}>
-                          <label htmlFor="kode_role">Kode Unit Kerja</label>
-                          <input disabled value={kode_role_a} type="text" />
-                        </div>
-                        <div className='field' style={{display:"none"}}>
-                          <label htmlFor="kode_role">Akses Level</label>
-                          <input disabled value={akses_level} type="text" />
-                        </div>
-                        {bagian_server === '' && 
-                          <div className='field'>
-                            <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
-                            <div className='row'>                              
-                              <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
-                                <option value="">Wajib diisi</option>
-                                <option value="1">PNS</option>
-                                <option value="2">PPPK Paruh Waktu</option>
-                                <option value="3">PPPK Penuh Waktu</option>
-                                <option value="4">Alih Daya</option>
-                              </select>
-                              <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
-                            </div>                            
-                          </div>
-                        }
-                        {bagian_server !== '' &&
-                          <div className='field'>
-                            <label htmlFor="kode_role">Status Pegawai: </label>
-                            {bagian_server === '1' && <input disabled value="PNS" type="text" />}
-                            {bagian_server === '2' && <input disabled value="PPPK Paruh Waktu" type="text" />}
-                            {bagian_server === '3' && <input disabled value="PPPK Penuh Waktu" type="text" />}
-                            {bagian_server === '4' && <input disabled value="Alih Daya" type="text" />}
-                          </div>
-                        }
-                        {/* <label htmlFor="">Upload foto Profile</label>
-                        <div className='u-profile'>
-                            <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
-                            <button onClick={uploadProfile}>Upload Gambar</button>
-                        </div> */}
-                      </form>
+                        <div className='col-md-6 text-white id-card'>
+                          <div className='d-flex flex-column align-items-center gap-4'>  
+                            <h2>Identitas Pegawai</h2>
+                            <div className='profile-picture'></div>
+                            <div className='d-flex flex-column align-items-center'>                                
+                                <div className='d-flex flex-row'>
+                                  <p>Nama: <span className='fw-bold'>{nama}</span></p>
+                                </div>
+                                <div className='d-flex flex-row'>                                  
+                                  <p>NIP/NRK: <span className='fw-bold'>{nrk_nip}</span></p>
+                                </div>
+                                <div className='d-flex flex-row'>                                  
+                                  <p>Jabatan: <span className='fw-bold'>{jabatan}</span></p>
+                                </div>
+                            </div>
+                          </div>  
+                        </div>                        
+                      </div>                      
                     </div>
                   </>
                 }

@@ -477,29 +477,48 @@ const Content_simak = () => {
         setJenis_Dokumen(event.target.value);
         console.log(event.target.value);
     }
+    const handleDownloadExcelRpd = () => {
+        const bulan = searchMonth;
+        const tahun = currentYear;
+
+        window.location.href = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/dana_moneymaker_excel_download.php?bulan=${bulan}&tahun=${tahun}`;
+    };
+    const handleDownloadExcelLpj = () => {
+        const bulan = lpj_searchmonth;
+        const tahun = currentYear;
+        const dokumen = jenis_dokumen;
+
+        window.location.href = `https://simantepbareta.cloud/API/SIMAK/Dana_LPJ/dana_lpj_keuangan_excel_download.php?bulan=${bulan}&tahun=${tahun}&dokumen=${dokumen}`;
+    };
+    const handleDownloadExcelTotalRpd = () => {
+        const bulan = total_rpd_searchmonth;
+        const tahun = total_rpd_searchyear;
+
+        window.location.href = `https://simantepbareta.cloud/API/SIMAK/Dana_RPD/total_dana_rpd_excel_download.php?bulan=${bulan}&tahun=${tahun}`;
+    };
     return(
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 justify-content-left'>
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>}
-                <p>Simak/Database Keuangan</p>
-                <h1>Sistem Manajemen Keuangan</h1>
+                <p className='text-white fs-5'>Simak/Database Keuangan</p>
+                <h1 className='text-white fs-1 mt-0'>Sistem Manajemen Keuangan</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />
-                <div className='content-col'>
-                    <div className='box-m'>
+                <div className='container-xxl d-flex flex-column bg-green-old align-items-start p-5 m-2 gap-5' style={{borderRadius: '20px'}}>
+                    <div className='container-xxl d-flex flex-column'>
                         {(role !== "C-04" || role_sp === "S-02") && (
-                        <div style={{display: level === "level-4" ? 'none' : ''}} className='content'>
-                            <h1>Progress Pengajuan RPD</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
+                        <div style={{display: level === "level-4" ? 'none' : ''}} className='d-flex flex-column' >
+                            <h1 className='text-white fw-bold fs-3'>Progress Pengajuan RPD</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Dana}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_dana?.current_page} />
                                     <button className='right' onClick={handleNext_Dana}><img src={right} alt="" /></button>                                
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                <div className='d-flex flex-row align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -513,15 +532,15 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' onChange={handleChangeSearchYear} value={searchYear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 h-100 rounded-3' onChange={handleChangeSearchYear} value={searchYear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
                                 </div>
                             </div>                  
                             {dana.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white table-bordered mt-4' border="1">
                             <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
                                 <th style={{textAlign:'center'}}>Unit</th>
@@ -547,22 +566,22 @@ const Content_simak = () => {
                                 ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                         )}
                         {(role === "C-04" || role_sp === "S-02") && (
-                            <div className='content'>
-                            <h1>Progress Pengajuan RPD</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
+                            <div className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Progress Pengajuan RPD</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Dana_MoneyMaker}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_dana_moneymaker?.current_page} />
                                     <button className='right' onClick={handleNext_Dana_MoneyMaker}><img src={right} alt="" /></button>                                
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                               <div className='d-flex flex-row align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -576,15 +595,16 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' onChange={handleChangeSearchYear} value={searchYear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 h-100 rounded-3' onChange={handleChangeSearchYear} value={searchYear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
+                                    <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelRpd}>Download Excel</button>
                                 </div>
                             </div>
                             {dana_moneymaker.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white table-bordered mt-4'>
                             <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
                                 <th style={{textAlign:'center'}}>Unit</th>
@@ -610,22 +630,22 @@ const Content_simak = () => {
                                 ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                         )}                        
                         {level === "level-4" && (
-                            <div className='content'>
-                            <h1>Progress Pengajuan RPD</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
+                            <div className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Progress Pengajuan RPD</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Dana_Lv4}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_dana_moneymaker?.current_page} />
                                     <button className='right' onClick={handleNext_Dana_Lv4}><img src={right} alt="" /></button>                                
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                <div className='d-flex flex-row align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -639,15 +659,16 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' onChange={handleChangeSearchYear} value={searchYear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 h-100 rounded-3' onChange={handleChangeSearchYear} value={searchYear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
+                                    <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelRpd}>Download Excel</button>
                                 </div>
                             </div>
                             {dana_lv4.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white table-bordered mt-4'>
                             <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
                                 <th style={{textAlign:'center'}}>Unit</th>
@@ -673,22 +694,22 @@ const Content_simak = () => {
                                 ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                         )}
                         {(role_sp !== "S-04" && role !== "C-04") && (
-                          <div style={{display: role === 'A-02' || role === "A-01" || role_sp === "S-07" ? "none" : ""}} className='content'>
-                            <h1>Progress Pengajuan Proposal dan LPJ</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
+                          <div style={{display: role === 'A-02' || role === "A-01" || role_sp === "S-07" ? "none" : ""}} className='d-flex flex-column'>
+                            <h1 className='text-white fs-3 fw-bold mt-3'>Progress Pengajuan Proposal dan LPJ</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Lpj}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_lpj?.current_page} />
                                     <button className='right' onClick={handleNext_Lpj}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                <div className='d-flex align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -702,13 +723,13 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
-                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeJenisDokumen} name="" id="">
                                         <option selected value="">-</option>
                                         <option value="LPJ">LPJ</option>
                                         <option value="Proposal">Proposal</option>
@@ -716,74 +737,74 @@ const Content_simak = () => {
                                 </div>
                             </div>
                             {lpj.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white mt-3 table-bordered' border="1">
                                 <tr>
-                                    <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
-                                    <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
-                                    <th style={{textAlign:'center'}}rowSpan={2}>Jenis Dokumen</th>
-                                    <th style={{textAlign:'center'}}rowSpan={2}>Nama Kegiatan</th>
-                                    <th style={{textAlign:'center'}}rowSpan={2}>Tanggal Pelaksanaan</th>
-                                    <th style={{textAlign:'center'}}rowSpan={2}>Tanggal & Jam Pengajuan Proposal</th>
-                                    <th style={{textAlign:'center'}}colSpan={2}>Admin Pelayanan</th>
-                                    <th style={{textAlign:'center'}}colSpan={2}>KASUBAG TATA USAHA</th>
-                                    <th style={{textAlign:'center'}}colSpan={2}>KEPALA BALAI</th>
-                                    <th style={{textAlign:'center'}}colSpan={2}>KEUANGAN</th>
-                                    <th style={{textAlign:'center'}} rowSpan={2}>Detail</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}  border="1">Nomor</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}  border="1">Unit</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}  border="1">Jenis Dokumen</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}  border="1">Nama Kegiatan</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}  border="1">Tanggal Pelaksanaan</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}  border="1">Tanggal & Jam Pengajuan Proposal</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}  border="1">Admin Pelayanan</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}  border="1">KASUBAG TATA USAHA</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}  border="1">KEPALA BALAI</th>
+                                    <th style={{textAlign:'center'}}colSpan={2}  border="1">KEUANGAN</th>
+                                    <th style={{textAlign:'center'}}rowSpan={2}  border="1">Detail</th>
                                 </tr>
                                 <tr>
-                                    <th>Status</th>
-                                    <th>Tanggal & Jam Selesai diperiksa</th>
-                                    <th>Status</th>
-                                    <th>Tanggal & Jam Selesai diperiksa</th>
-                                    <th>Status</th>
-                                    <th>Tanggal & Jam Selesai diperiksa</th>
-                                    <th>Keterangan</th>
-                                    <th>Tanggal & Jam di Terima</th>
+                                    <th  border="1">Status</th>
+                                    <th  border="1">Tanggal & Jam Selesai diperiksa</th>
+                                    <th  border="1">Status</th>
+                                    <th  border="1">Tanggal & Jam Selesai diperiksa</th>
+                                    <th  border="1">Status</th>
+                                    <th  border="1">Tanggal & Jam Selesai diperiksa</th>
+                                    <th  border="1">Keterangan</th>
+                                    <th  border="1">Tanggal & Jam di Terima</th>
                                 </tr>
                             {lpj.map((item, index) => (
                                 <tr key={item.id_lpj}>
-                                    <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.units}</td>
-                                    <td style={{textAlign:'center'}}>{item.dokumen}</td>
-                                    <td style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
-                                    <td style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
-                                    <td style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
-                                    <td style={{textAlign:'center', display: item.veri_adm === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
-                                    <td style={{textAlign:'center', display: item.veri_adm === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
-                                    <td style={{textAlign:'center', display: item.veri_adm === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
-                                    <td style={{textAlign:'center'}}>{item.veri_adm_date}<br /> {item.veri_1_jam}</td>
-                                    <td style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
-                                    <td style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
-                                    <td style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
-                                    <td style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
-                                    <td style={{textAlign:'center', display: item.veri_2 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
-                                    <td style={{textAlign:'center', display: item.veri_2 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
-                                    <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
-                                    <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
-                                    <td style={{textAlign:'center'}}>{item.keterangan}</td>
-                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button>
+                                    <td  border="1" style={{textAlign:'center'}}>{index + 1}</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.units}</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.dokumen}</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.nama_kegiatan}</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.rencana_pelaksana}</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.today} <br /> {item.today_jam}</td>
+                                    <td  border="1" style={{textAlign:'center', display: item.veri_adm === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td  border="1" style={{textAlign:'center', display: item.veri_adm === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td  border="1" style={{textAlign:'center', display: item.veri_adm === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.veri_adm_date}<br /> {item.veri_1_jam}</td>
+                                    <td  border="1" style={{textAlign:'center', display: item.veri_1 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td  border="1" style={{textAlign:'center', display: item.veri_1 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td  border="1" style={{textAlign:'center', display: item.veri_1 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.veri_1_date}<br /> {item.veri_1_jam}</td>
+                                    <td  border="1" style={{textAlign:'center', display: item.veri_2 === '1' ? 'block ': 'none'}}><img src={white} alt="" />Belum di Baca</td>
+                                    <td  border="1" style={{textAlign:'center', display: item.veri_2 === '2' ? 'block ': 'none'}}><img src={red} alt="" />Ditolak</td>
+                                    <td  border="1" style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.keterangan}</td>
+                                    <td  border="1" style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
+                                    <td  border="1" style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}
                           </div>
                         )}
                         {role_sp === "S-07" && (
-                          <div className='content'>
-                            <h1>Progress Pengajuan Proposal dan LPJ</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
+                          <div className='d-flex flex-column'>
+                            <h1 className='text-white fs-3 fw-bold mt-3'>Progress Pengajuan Proposal dan LPJ</h1>                            
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Lpj_admin}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_lpj?.current_page} />
                                     <button className='right' onClick={handleNext_Lpj_admin}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                <div className='d-flex align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -797,13 +818,13 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
-                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeJenisDokumen} name="" id="">
                                         <option selected value="">-</option>
                                         <option value="LPJ">LPJ</option>
                                         <option value="Proposal">Proposal</option>
@@ -811,7 +832,7 @@ const Content_simak = () => {
                                 </div>
                             </div>
                             {lpj_admin.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white mt-3 table-bordered' border="1">
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
@@ -868,17 +889,17 @@ const Content_simak = () => {
                           </div>
                         )}
                         {role_sp === "S-02" && (
-                          <div className='content'>
-                            <h1>Progress Pengajuan Proposal dan LPJ</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
+                          <div className='d-flex flex-column'>
+                            <h1 className='text-white fs-3 fw-bold mt-3'>Progress Pengajuan Proposal dan LPJ</h1>                            
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Lpj_keuangan}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_lpj?.current_page} />
                                     <button className='right' onClick={handleNext_Lpj_keuangan}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                <div className='d-flex align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -892,13 +913,13 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
-                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeJenisDokumen} name="" id="">
                                         <option selected value="">-</option>
                                         <option value="LPJ">LPJ</option>
                                         <option value="Proposal">Proposal</option>
@@ -906,7 +927,7 @@ const Content_simak = () => {
                                 </div>
                             </div>
                             {lpj_keuangan.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white mt-3 table-bordered' border="1">
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
@@ -967,17 +988,17 @@ const Content_simak = () => {
                           </div>
                         )}
                         {(role === "C-04" || role_sp === "S-04") && (
-                          <div className='content'>
-                            <h1>Progress Pengajuan Proposal dan LPJ Keuangan</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
+                          <div className='d-flex flex-column'>
+                            <h1 className='text-white fs-3 fw-bold mt-3'>Progress Pengajuan Proposal dan LPJ</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Lpj_keuangan}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_lpj_keuangan?.current_page} />
+                                    <input className='page-number' type="text" value={pagination_lpj?.current_page} />
                                     <button className='right' onClick={handleNext_Lpj_keuangan}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                <div className='d-flex align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -991,21 +1012,22 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
-                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeJenisDokumen} name="" id="">
                                         <option selected value="">-</option>
                                         <option value="LPJ">LPJ</option>
                                         <option value="Proposal">Proposal</option>
                                     </select>
+                                    <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelLpj}>Download Excel</button>
                                 </div>
                             </div>
                             {lpj_keuangan.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white mt-3 table-bordered' border="1">
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
@@ -1054,8 +1076,8 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
-                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
-                                    <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> |
+                                    <td style={{textAlign:'center'}}>{item.keterangan_jam}</td>                                    
+                                    <td style={{textAlign:'center'}}><button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> |
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
                             ))}
@@ -1066,17 +1088,17 @@ const Content_simak = () => {
                           </div>
                         )}
                         { role === "A-02" && (
-                          <div className='content'>
-                            <h1>Progress Pengajuan Proposal dan LPJ Kasubag</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
+                          <div className='d-flex flex-column'>
+                            <h1 className='text-white fs-3 fw-bold mt-3'>Progress Pengajuan Proposal dan LPJ</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Lpj_lv1}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_lpj_lv1?.current_page} />
+                                    <input className='page-number' type="text" value={pagination_lpj?.current_page} />
                                     <button className='right' onClick={handleNext_Lpj_lv1}><img src={right} alt="" /></button>
                                 </div>
-                                 <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                <div className='d-flex align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -1090,21 +1112,22 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
-                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeJenisDokumen} name="" id="">
                                         <option selected value="">-</option>
                                         <option value="LPJ">LPJ</option>
                                         <option value="Proposal">Proposal</option>
                                     </select>
+                                    <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelLpj}>Download Excel</button>
                                 </div>
                             </div>
                             {lpj_lv1.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white mt-3 table-bordered' border="1">
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
@@ -1153,7 +1176,7 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
-                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_jam}</td>
                                     <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> 
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
@@ -1165,17 +1188,17 @@ const Content_simak = () => {
                           </div>
                         )}
                         { role === "A-01" && (
-                          <div className='content'>
-                            <h1>Progress Pengajuan Proposal dan LPJ Kepala Balai</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
+                          <div className='d-flex flex-column'>
+                            <h1 className='text-white fs-3 fw-bold mt-3'>Progress Pengajuan Proposal dan LPJ</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Lpj_lv2}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_lpj_lv2?.current_page} />
+                                    <input className='page-number' type="text" value={pagination_lpj?.current_page} />
                                     <button className='right' onClick={handleNext_Lpj_lv2}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
+                                <div className='d-flex align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchMonth} value={lpj_searchmonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -1189,21 +1212,22 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeLPJSearchYear} value={lpj_searchyear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Jenis Dokumen:</label>
-                                    <select className='pagination-search' onChange={handleChangeJenisDokumen} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Jenis Dokumen:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeJenisDokumen} name="" id="">
                                         <option selected value="">-</option>
                                         <option value="LPJ">LPJ</option>
                                         <option value="Proposal">Proposal</option>
                                     </select>
+                                    <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelLpj}>Download Excel</button>
                                 </div>
                             </div>
                             {lpj_lv2.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white mt-3 table-bordered' border="1">
                                 <tr>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Nomor</th>
                                     <th style={{textAlign:'center'}}rowSpan={2}>Unit</th>
@@ -1252,7 +1276,7 @@ const Content_simak = () => {
                                     <td style={{textAlign:'center', display: item.veri_2 === '3' ? 'block ': 'none'}}><img src={green} alt="" />Diterima</td>
                                     <td style={{textAlign:'center'}}>{item.veri_2_date}<br /> {item.veri_2_jam}</td>
                                     <td style={{textAlign:'center'}}>{item.keterangan}</td>
-                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>
+                                    <td style={{textAlign:'center'}}>{item.keterangan_date} <br /> {item.keterangan_jam}</td>                                    
                                     <td style={{textAlign:'center'}}> <button onClick={(e) => handleOpenLPJ(item.id_lpj, item.stat, item.id_notif, e)} className='B-update'>Ubah</button> | 
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteLPJ(item.id_lpj)} >Hapus</button></div></td>
                                 </tr>                                
@@ -1263,17 +1287,12 @@ const Content_simak = () => {
                             )}
                           </div>
                         )}
-                        <div className='content'>
-                            <h1>Total Pengajuan RPD</h1>
-                            <div style={{display: 'flex', flexDirection: "row"}}>
-                                <div className='pagination'>
-                                    <button className='left' onClick={handlePrev_Dana_MoneyMaker}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_dana_moneymaker?.current_page} />
-                                    <button className='right' onClick={handleNext_Dana_MoneyMaker}><img src={right} alt="" /></button>                                
-                                </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeTotalRPDSearchMonth} value={total_rpd_searchmonth} name="" id="">
+                        <div className='d-flex flex-column'>
+                            <h1 className='text-white fs-3 fw-bold mt-3'>Total Pengajuan RPD</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "10px"}}>                                
+                                <div className='d-flex flex-row align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeTotalRPDSearchMonth} value={total_rpd_searchmonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -1287,14 +1306,15 @@ const Content_simak = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' onChange={handleChangeTotalRPDSearchYear} value={total_rpd_searchyear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 rounded-3 fs-6' onChange={handleChangeTotalRPDSearchYear} value={total_rpd_searchyear} name="" id="">
                                         <option selected={currentYear === 2025} value="2025">2025</option>
                                         <option selected={currentYear === 2026} value="2026">2026</option>
                                     </select>
+                                    <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelTotalRpd}>Download Excel</button>
                                 </div>
                             </div>
-                            <table>
+                            <table className='text-white table-bordered mt-4' border="1">
                             <tr>
                                 <th style={{textAlign:'center'}}>No</th>
                                 <th style={{textAlign:'center'}}>Units</th>

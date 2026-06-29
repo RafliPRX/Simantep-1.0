@@ -10,6 +10,9 @@ const Detail_Identity_Form_lv1 = () => {
     const [isLoading, setIsLoading] = useState(false);
     const [allrole, setAllRole] = useState([]);
     const [allrole_c, setAllRole_c] = useState([]);
+    const [allrole_sp, setAllRole_sp] = useState([]);
+    const [nama_role_sp, setNamaRole_sp] = useState('');
+    const [kode_role_sp, setKodeRole_sp] = useState('');
     // const [allrole_b, setAllRole_b] = useState([]);
     // const [allrole_a, setAllRole_a] = useState([]);    
     // const [nama_role_b, setNamaRole_b] = useState('');
@@ -115,6 +118,28 @@ const Detail_Identity_Form_lv1 = () => {
             console.log(error);
         });
     }
+    const getRole_sp = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/Admin_API/getAllrole-spesial.php`;
+        let url = baseUrl;
+        axios.get(url).then((res2) => {
+            console.log(res2.data.Data);
+            const response = res2.data.Data;
+            setAllRole_sp(response);
+            console.log(response);
+        })        
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    const handleChangeNamaRole_spesial = (event) => {
+        setNamaRole_sp(event.target.value);
+        console.log(event.target.value);
+        
+        const selectedRoleData = allrole_sp.find((role) => role.nama_role_sp === event.target.value);
+        if (selectedRoleData) {
+            setKodeRole_sp(selectedRoleData.kode_role_sp);
+        }
+    }
     // const getRole_b = async() => {
     //     const baseUrl = `https://simantepbareta.cloud/API/Admin_API/get-allRole-level3.php`;
     //     let url = baseUrl;
@@ -145,6 +170,7 @@ const Detail_Identity_Form_lv1 = () => {
         getIdentityData();
         getRole();
         getRole_c();
+        getRole_sp();
         // getRole_b();
         // getRole_a();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -163,6 +189,8 @@ const Detail_Identity_Form_lv1 = () => {
         kode_role_b: "B-01",
         nama_role_a: "Kepala Sub Bagian Tata Usaha",
         kode_role_a: "A-02",
+        nama_role_sp: nama_role_sp,
+        kode_role_sp: kode_role_sp,
         akses_level: 1,
       };
       try {
@@ -327,6 +355,19 @@ const Detail_Identity_Form_lv1 = () => {
                              </select>
                             <label htmlFor="">Kode Role level 2</label>
                             <input placeholder='Kode Role' type="text" value={kode_role_c} readOnly/>
+                            <label htmlFor="">Kode Role Spesial</label>
+                                <input placeholder='Kode Role' type="text" value={kode_role_c} readOnly/>
+                                <label htmlFor="">Nama Role Level Spesial</label>
+                                <select onChange={handleChangeNamaRole_spesial} name="" id="">
+                                  <option value="" selected>Pilih Role Spesial (jika tidak ada maka pilih (0))</option>
+                                {allrole_sp.map((item) => (
+                                    <>                                                                                    
+                                      <option value={item.nama_role_sp}>{item.nama_role_sp}</option>                                        
+                                    </>
+                                ))}
+                                </select>
+                                <label htmlFor="">Kode Role Spesial</label>
+                                <input placeholder='Kode Role' type="text" value={kode_role_sp} readOnly/>
                           </div>                          
                           <button className='submit' type="submit">Submit</button>
                         </form>

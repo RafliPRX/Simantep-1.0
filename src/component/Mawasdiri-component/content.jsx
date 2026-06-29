@@ -46,7 +46,7 @@ const Content = () => {
         currentPage: 1,
     });    
     const getSurat = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_name.php?id=${storeidNumber}&nama=${nama}&page=${pagination_surat.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_name.php?id=${storeidNumber}&nama=Kanif Anshori&page=${pagination_surat.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -139,7 +139,7 @@ const Content = () => {
         currentPage: 1,
     });        
     const getSurat_role_b = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_b.php?page=${pagination_surat_role_b.currentPage}`;
+        const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_b.php?page=${pagination_surat_role_b.currentPage}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -156,6 +156,18 @@ const Content = () => {
         .catch((error) => {
             console.log(error);
         });
+    }
+    const handleNext_Surat_b = () => {
+        setPagination_surat_role_b({
+            ...pagination_surat_role_b,
+            currentPage: pagination_surat_role_b.currentPage + 1,
+        })
+    }
+    const handlePrev_Surat_b = () => {
+        setPagination_surat_role_b({
+            ...pagination_surat_role_b,
+            currentPage: pagination_surat_role_b.currentPage - 1,
+        })
     }
     const [surat_role_a, setSurat_role_a] = useState([]);
     const [pagination_surat_role_a, setPagination_surat_role_a] = useState({
@@ -179,7 +191,7 @@ const Content = () => {
         .catch((error) => {
             console.log(error);
         });
-    }
+    }    
     const [surat_role_a_kabalai, setSurat_role_a_kabalai] = useState([]);
     const [pagination_surat_role_a_kabalai, setPagination_surat_role_a_kabalai] = useState({
         currentPage: 1,
@@ -357,7 +369,7 @@ const Content = () => {
     getAccount();
     getAbsensi();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pagination_surat?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_a_kabalai?.currentPage, pagination_surat_role_sp?.currentPage, pagination_account?.currentPage, searchMonth, searchName, nama]);
+    }, [pagination_surat?.currentPage, pagination_surat_role_a?.currentPage, pagination_surat_role_a_kabalai?.currentPage, pagination_surat_role_sp?.currentPage, pagination_account?.currentPage, searchMonth, searchName, nama, pagination_surat_role_b?.currentPage]);
 
     const handleUpdateSisaCuti = async (event, sisa_cuti, id_number) => {
       event.preventDefault();
@@ -382,32 +394,38 @@ const Content = () => {
         alert("error code 103");
       }
     }
+    const handleDownloadExcelSurat = () => {
+        const bulan = searchMonth;
+        const tahun = currentYear;
+
+        window.location.href = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_excel_download.php?bulan=${bulan}&tahun=${tahun}`;
+      };
     return (
         <>
-        <div className='main-dashboard'>
+        <div className='container-fluid d-flex flex-column p-5 m-2 justify-content-left'>
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
         </div>}
-        <p>Mawasdiri/Database Pegawai</p>
-            <h1>Manajemen Pegawai Berbasis {isMobile && <br />} Kinerja Mandiri</h1>
+        <p className='text-white fs-5'>Mawasdiri/Database Pegawai</p>
+            <h1 className='text-white fs-1 mt-0'>Manajemen Pegawai Berbasis {isMobile && <br />} Kinerja Mandiri</h1>
             <Profile nama={nama} feature="mawasdiri" />
-            <div className='content-col'>
-                <div className='box-m'>
-                    <div className='content'>
+            <div className='container-xxl d-flex flex-column bg-green-old align-items-start p-5 m-2' style={{borderRadius: '20px'}}>
+                <div className='container-xxl d-flex flex-column gap-4'>
+                    <div className=''>
                     {(level === 'level-1' || level === 'level-2') && (
                         <>
                         {role_sp === '0' ? (
                                 <>
-                                    <h1>Progress Pengajuan Surat</h1>
-                                    <div style={{display: "flex", flexDirection: "row"}}>
-                                        <div className='pagination'>
+                                    <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
+                                    <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                                        <div className='d-flex flex-row gap-2'>
                                             <button className='left' onClick={handlePrev_Surat}><img src={left} alt="" /></button>
                                             <input className='page-number' type="text" value={pagination_surat.currentPage} />
                                             <button className='right' onClick={handleNext_Surat}><img src={right} alt="" /></button>
                                         </div>
-                                        <div className='search'>
-                                            <label className='pagination-label' htmlFor="">Bulan:</label>
-                                            <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                        <div className='d-flex align-items-center gap-2'>
+                                            <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                            <select className='w-100 h-100 rounded-3 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
                                                 <option value="01">Januari</option>
                                                 <option value="02">Februari</option>
                                                 <option value="03">Maret</option>
@@ -421,60 +439,64 @@ const Content = () => {
                                                 <option value="11">November</option>
                                                 <option value="12">Desember</option>
                                             </select>
-                                            <label className='pagination-label' htmlFor="">Tahun:</label>
-                                            <select className='pagination-search' value={currentYear} name="" id="">
+                                            <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                            <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                                 <option value="2025">2025</option>
                                                 <option value="2026">2026</option>
                                             </select>
                                         </div>
                                     </div>
                                     {surat.length > 0 ? (
-                                        <table>
-                                            <tr>
-                                                <th style={{ textAlign: 'center' }}>Nomor</th>
-                                                <th style={{ textAlign: 'center' }}>id Surat</th>
-                                                <th style={{ textAlign: 'center' }}>Nama</th>
-                                                <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                                <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                                <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                                <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
-                                                <th style={{ textAlign: 'center' }}>Kepala Balai</th>
-                                                <th style={{ textAlign: 'center' }}>Opsi Lain</th>
-                                            </tr>
-                                            {surat.map((item, index) => (
-                                                <tr key={item.id_surat}>
-                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                    <td style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
+                                        <div className='mt-3 container-xxl d-flex flex-column gap-4'>
+                                            <table className='text-white table-bordered' border="1">
+                                                <tr>
+                                                    <th style={{ textAlign: 'center' }}>Nomor</th>
+                                                    <th style={{ textAlign: 'center' }}>id Surat</th>
+                                                    <th style={{ textAlign: 'center' }}>Nama</th>
+                                                    <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                                    <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                                    <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                                    <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                                    <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                                    <th style={{ textAlign: 'center' }}>Opsi Lain</th>
                                                 </tr>
-                                            ))} 
-                                        </table>
+                                                {surat.map((item, index) => (
+                                                    <tr key={item.id_surat}>
+                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td className='d-flex flex-column gap-2' style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button><button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
+                                                    </tr>
+                                                ))} 
+                                            </table>
+                                        </div>    
                                     ) : (
-                                        <p className='table-p'>tidak ada data</p>
+                                        <div className='text-center mt-5 fs-4 fw-bold text-white'>
+                                            <p className=''>tidak ada data</p>
+                                        </div>
                                     )}
                                 </>
                             ) : role_sp === 'S-02' ? (
-                                <>
-                                    <h1>Progress Pengajuan Surat</h1>
-                                    <div style={{display: "flex", flexDirection: "row"}}>
-                                        <div className='pagination'>
+                                <>  
+                                    <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
+                                    <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                                        <div className='d-flex flex-row gap-2'>
                                             <button className='left' onClick={handlePrev_Surat_sp}><img src={left} alt="" /></button>
-                                            <input className='page-number' type="text" value={pagination_surat_role_sp.currentPage} />
+                                            <input className='page-number' type="text" value={pagination_surat.currentPage} />
                                             <button className='right' onClick={handleNext_Surat_sp}><img src={right} alt="" /></button>
                                         </div>
-                                        <div className='search'>
-                                            <label className='pagination-label' htmlFor="">Bulan:</label>
-                                            <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                        <div className='d-flex align-items-center gap-2'>
+                                            <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                            <select className='w-100 h-100 rounded-3 fs-5 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
                                                 <option value="01">Januari</option>
                                                 <option value="02">Februari</option>
                                                 <option value="03">Maret</option>
@@ -488,46 +510,50 @@ const Content = () => {
                                                 <option value="11">November</option>
                                                 <option value="12">Desember</option>
                                             </select>
-                                            <label className='pagination-label' htmlFor="">Tahun:</label>
-                                            <select className='pagination-search' value={currentYear} name="" id="">
+                                            <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                            <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                                 <option value="2025">2025</option>
                                                 <option value="2026">2026</option>
                                             </select>
                                         </div>
                                     </div>
                                     {surat_role_sp.length > 0 ? (
-                                        <table>
-                                            <tr>
-                                                <th style={{ textAlign: 'center' }}>Nomor</th>
-                                                <th style={{ textAlign: 'center' }}>id Surat</th>
-                                                <th style={{ textAlign: 'center' }}>Nama</th>
-                                                <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                                <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                                <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                                <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
-                                                <th style={{ textAlign: 'center' }}>Kepala Balai</th>
-                                                <th style={{ textAlign: 'center' }}>Opsi Lain</th>
-                                            </tr>
-                                            {surat_role_sp.map((item, index) => (
-                                                <tr key={item.id_surat}>
-                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                    <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                    <td style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Detail</button> <br /> <button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button> </td>  
+                                        <div className='mt-3 container-xxl d-flex flex-column gap-4'>
+                                            <table className='text-white table-bordered' border="1">
+                                                <tr>
+                                                    <th style={{ textAlign: 'center' }}>Nomor</th>
+                                                    <th style={{ textAlign: 'center' }}>id Surat</th>
+                                                    <th style={{ textAlign: 'center' }}>Nama</th>
+                                                    <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                                    <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                                    <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                                    <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                                    <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                                    <th style={{ textAlign: 'center' }}>Opsi Lain</th>
                                                 </tr>
-                                            ))} 
-                                        </table>
+                                                {surat_role_sp.map((item, index) => (
+                                                    <tr key={item.id_surat}>
+                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                                        <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                        <td className='d-flex flex-column gap-2' style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button><button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
+                                                    </tr>
+                                                ))} 
+                                            </table>
+                                        </div>    
                                     ) : (
-                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                                        <div className='text-center mt-5 fs-4 fw-bold text-white'>
+                                            <p className=''>tidak ada data</p>
+                                        </div>
                                     )}
                                 </>
                             ) : (
@@ -539,17 +565,17 @@ const Content = () => {
                         </>
                     )}                           
                     {(role ==='A-02' && level === 'level-4') && 
-                        <>
-                            <h1>Progress Pengajuan Surat</h1>
-                            <div style={{display: "flex", flexDirection: "row"}}>
-                                <div className='pagination'>
+                        <>  
+                            <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
+                            <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Surat_a_kasubbag}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
+                                    <input className='page-number' type="text" value={pagination_surat.currentPage} />
                                     <button className='right' onClick={handleNext_Surat_a_kasubbag}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                <div className='d-flex align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 h-100 rounded-3 fs-5 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -563,61 +589,65 @@ const Content = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' value={currentYear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                         <option value="2025">2025</option>
                                         <option value="2026">2026</option>
                                     </select>
                                 </div>
                             </div>
                             {surat_role_a.length > 0 ? (
-                                <table>
-                                    <tr>
-                                        <th style={{ textAlign: 'center' }}>Nomor</th>
-                                        <th style={{ textAlign: 'center' }}>id Surat</th>
-                                        <th style={{ textAlign: 'center' }}>Nama</th>
-                                        <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                        <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                        <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                        <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
-                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>
-                                        <th style={{ textAlign: 'center' }}>Opsi Lain</th>
-                                    </tr>
-                                    {surat_role_a.map((item, index) => (
-                                        <tr key={item.id_surat}>
-                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                            <td style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
+                                <div className='mt-3 container-xxl d-flex flex-column gap-4'>
+                                    <table className='text-white table-bordered' border="1">
+                                        <tr>
+                                            <th style={{ textAlign: 'center' }}>Nomor</th>
+                                            <th style={{ textAlign: 'center' }}>id Surat</th>
+                                            <th style={{ textAlign: 'center' }}>Nama</th>
+                                            <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                            <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                            <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                            <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                            <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                            <th style={{ textAlign: 'center' }}>Opsi Lain</th>
                                         </tr>
+                                        {surat_role_a.map((item, index) => (
+                                            <tr key={item.id_surat}>
+                                                <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td className='d-flex flex-column gap-2' style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button><button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
+                                            </tr>
                                         ))} 
                                     </table>
-                                ) : (
-                                    <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                                </div>    
+                            ) : (
+                                <div className='text-center mt-5 fs-4 fw-bold text-white'>
+                                    <p className=''>tidak ada data</p>
+                                </div>
                             )}
                         </>
                     }
                     {(role ==='A-01' && level === 'level-4') && 
-                        <>
-                            <h1>Progress Pengajuan Surat</h1>
-                            <div style={{display: "flex", flexDirection: "row"}}>
-                                <div className='pagination'>
+                        <>   
+                            <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
+                            <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Surat_a_kabalai}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
+                                    <input className='page-number' type="text" value={pagination_surat.currentPage} />
                                     <button className='right' onClick={handleNext_Surat_a_kabalai}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                <div className='d-flex align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 h-100 rounded-3 fs-5 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -631,61 +661,65 @@ const Content = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' value={currentYear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                         <option value="2025">2025</option>
                                         <option value="2026">2026</option>
                                     </select>
                                 </div>
-                            </div>                            
+                            </div>
                             {surat_role_a_kabalai.length > 0 ? (
-                                <table>
-                                    <tr>
-                                        <th style={{ textAlign: 'center' }}>Nomor</th>
-                                        <th style={{ textAlign: 'center' }}>id Surat</th>
-                                        <th style={{ textAlign: 'center' }}>Nama</th>
-                                        <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                        <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                        <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                        <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
-                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>                                        
-                                        <th style={{ textAlign: 'center' }}>Opsi Lain</th>
-                                    </tr>
-                                    {surat_role_a_kabalai.map((item, index) => (
-                                        <tr key={item.id_surat}>
-                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                            <td style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
+                                <div className='mt-3 container-xxl d-flex flex-column gap-4'>
+                                    <table className='text-white table-bordered' border="1">
+                                        <tr>
+                                            <th style={{ textAlign: 'center' }}>Nomor</th>
+                                            <th style={{ textAlign: 'center' }}>id Surat</th>
+                                            <th style={{ textAlign: 'center' }}>Nama</th>
+                                            <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                            <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                            <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                            <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                            <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                            <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                                        </tr>
+                                        {surat_role_a_kabalai.map((item, index) => (
+                                            <tr key={item.id_surat}>
+                                                <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td className='d-flex flex-column gap-2' style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button><button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
                                             </tr>
                                         ))} 
                                     </table>
-                                ) : (
-                                    <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                                </div>    
+                            ) : (
+                                <div className='text-center mt-5 fs-4 fw-bold text-white'>
+                                    <p className=''>tidak ada data</p>
+                                </div>
                             )}
                         </>
                     }
                     {level === 'level-3' && 
-                        <>
-                            <h1>Progress Pengajuan Surat</h1>
-                            <div style={{display: "flex", flexDirection: "row"}}>
-                                <div className='pagination'>
-                                    <button className='left' onClick={handlePrev_Surat_a_kabalai}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_surat_role_a.currentPage} />
-                                    <button className='right' onClick={handleNext_Surat_a_kabalai}><img src={right} alt="" /></button>
+                        <>  
+                            <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
+                            <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                                <div className='d-flex flex-row gap-2'>
+                                    <button className='left' onClick={handlePrev_Surat_b}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_surat.currentPage} />
+                                    <button className='right' onClick={handleNext_Surat_b}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Bulan:</label>
-                                    <select className='pagination-search' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                <div className='d-flex align-items-center gap-2'>
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                    <select className='w-100 h-100 rounded-3 fs-5 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
                                         <option value="01">Januari</option>
                                         <option value="02">Februari</option>
                                         <option value="03">Maret</option>
@@ -699,69 +733,72 @@ const Content = () => {
                                         <option value="11">November</option>
                                         <option value="12">Desember</option>
                                     </select>
-                                    <label className='pagination-label' htmlFor="">Tahun:</label>
-                                    <select className='pagination-search' value={currentYear} name="" id="">
+                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                    <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                         <option value="2025">2025</option>
                                         <option value="2026">2026</option>
                                     </select>
+                                    <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelSurat}>Download Excel</button>
                                 </div>
                             </div>
                             {surat_role_b.length > 0 ? (
-                                <table>
-                                    <tr>
-                                        <th style={{ textAlign: 'center' }}>Nomor</th>
-                                        <th style={{ textAlign: 'center' }}>id Surat</th>
-                                        <th style={{ textAlign: 'center' }}>Nama</th>
-                                        <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                        <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                        <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                        <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
-                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>
-                                        <th style={{ textAlign: 'center' }}>Jumlah Cuti</th>
-                                        <th style={{ textAlign: 'center' }}>Opsi Lain</th>
-                                    </tr>
-                                    {surat_role_b.map((item, index) => (
-                                        <tr key={item.id_surat}>
-                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                            <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                            <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                            <td style={{ textAlign: 'center'}}>{item.sisa_k}</td>
-                                            <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenSurat(item.id_surat)} className='B-update'>Jawab</button> <br /> <button className='B-deleted'>Hapus</button> </td>  
+                                <div className='mt-3 container-xxl d-flex flex-column gap-4'>
+                                    <table className='text-white table-bordered' border="1">
+                                        <tr>
+                                            <th style={{ textAlign: 'center' }}>Nomor</th>
+                                            <th style={{ textAlign: 'center' }}>id Surat</th>
+                                            <th style={{ textAlign: 'center' }}>Nama</th>
+                                            <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                            <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                            <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                            <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                            <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                            <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                                        </tr>
+                                        {surat_role_b.map((item, index) => (
+                                            <tr key={item.id_surat}>
+                                                <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                                <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                <td className='d-flex flex-column gap-2' style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button><button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
                                             </tr>
                                         ))} 
                                     </table>
-                                ) : (
-                                    <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
-                            )}
+                                </div>    
+                            ) : (
+                                <div className='text-center mt-5 fs-4 fw-bold text-white'>
+                                    <p className=''>tidak ada data</p>
+                                </div>
+                            )}                            
                         </>
                     }
                     </div>
                     {level === 'level-3' &&
-                    <div className='content'>                     
+                    <div className='container-xxl d-flex flex-column gap-4'>                     
                         <>
-                            <h1>Daftar Pegawai</h1>
-                            <div style={{display: "flex", flexDirection: "row"}}>
-                                <div className='pagination'>
+                            <h1 className='text-white fs-2 fw-bold mt-5'>Daftar Pegawai</h1>
+                            <div style={{display: "flex", flexDirection: "row", gap: "10px"}}>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Account}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_account.currentPage} />
+                                    <input className='page-number' type="text" value={pagination_account.currentPage} disabled />
                                     <button className='right' onClick={handleNext_Account}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='search'>
-                                    <label className='pagination-label' htmlFor="">Nama: </label>
-                                    <input className='pagination-search' onChange={handleChangeSearchName} type="text" />
+                                <div className='d-flex flex-row gap-2 align-content-center justify-content-center'>
+                                    <label className='text-white' htmlFor="">Nama: </label>
+                                    <input className='border-0 rounded-3 ps-3' onChange={handleChangeSearchName} type="text" />
                                 </div>
                             </div>
                             {account.length > 0 ? (
-                                <table>
+                                <table className='text-white table-bordered' border={1}>
                                     <tr>
                                         <th style={{ textAlign: 'center' }}>Nomor ID</th>
                                         <th style={{ textAlign: 'center' }}>Nama</th>
@@ -777,7 +814,7 @@ const Content = () => {
                                                     type="number"
                                                     value={item.sisa_cuti}
                                                     onChange={e => handleChangeSisaCuti(e, item.id_number)}
-                                                    style={{ textAlign: 'center' }}
+                                                    style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}
                                                 />
                                             </td>
                                             <td style={{ textAlign: 'center' }}><button onClick={(e) => handleUpdateSisaCuti(e, item.sisa_cuti, item.id_number)} className='B-update'>Ubah</button> </td>  

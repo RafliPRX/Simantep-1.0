@@ -235,7 +235,25 @@ const Request_Form_Detail = () => {
                           <button onClick={(e)=>handleJawab(notif_detail?.id_notif, e)} className='submit'>Kirim</button>
                         </form>
                       </div>
-                    )}                                 
+                    )}
+                    {role_sp === "S-03" && (
+                      <div className='box1'>
+                        <form action="">
+                          <div className='content-f'>
+                            <h1>Jawab</h1>
+                            <label htmlFor="">Approval</label>
+                            <select name="approval" id="approval" onChange={handleChangeApproval}>
+                              <option value="">Pilih</option>
+                              <option value="3">Setuju</option>
+                              <option value="2">Tolak</option>
+                            </select>
+                            <label htmlFor="">Jawaban</label>
+                            <textarea onChange={handleChangeJawaban} name="jawaban" id="jawaban"></textarea>
+                          </div>
+                          <button onClick={(e)=>handleJawab(notif_detail?.id_notif, e)} className='submit'>Kirim</button>
+                        </form>
+                      </div>
+                    )}
                 </div>
             </div>        
         </>

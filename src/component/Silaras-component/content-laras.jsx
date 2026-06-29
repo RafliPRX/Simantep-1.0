@@ -39,7 +39,7 @@ const Content_laras = () => {
         current_page: 1,
     });
     const getFix = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?id=${storeidNumber}&page=${pagination_fix.current_page}&bulan=${searchMonth}&tahun=${currentYear}&nama=${storedUsername}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?id=${storeidNumber}&page=${pagination_fix.current_page}&bulan=${searchMonth}&tahun=${currentYear}&nama=Maulina Nur Chayati Sulchan`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -62,7 +62,7 @@ const Content_laras = () => {
         current_page: 1,
     });
     const getFix_Sarpras = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix.php?page=${pagination_fix_sarpras.current_page}&bulan=${searchMonth}&tahun=${currentYear}&nama=${storedUsername}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix.php?page=${pagination_fix_sarpras.current_page}&bulan=${searchMonth}&tahun=${currentYear}&nama=Maulina Nur Chayati Sulchan`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -89,7 +89,7 @@ const Content_laras = () => {
       current_page: 1,
     });
     const getVehicle = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?id=${storeidNumber}&page=${pagination_vehicle.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}&nama=${storedUsername}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle_by_name.php?id=${storeidNumber}&page=${pagination_vehicle.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}&nama=Maulina Nur Chayati Sulchan`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -112,7 +112,7 @@ const Content_laras = () => {
       current_page: 1,
     });
     const getVehicle_sarpras = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pagination_vehicle_sarpras.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}&nama=${storedUsername}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/vehicle.php?page=${pagination_vehicle_sarpras.current_page}&bulan=${searchMonthVehicle}&tahun=${currentYear}&nama=Maulina Nur Chayati Sulchan`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -140,7 +140,7 @@ const Content_laras = () => {
       current_page: 1,
     })
     const getRequest = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request_by_name.php?id=${storeidNumber}&page=${pagination_request.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}&nama=${storedUsername}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request_by_name.php?id=${storeidNumber}&page=${pagination_request.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}&nama=Maulina Nur Chayati Sulchan`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -163,7 +163,7 @@ const Content_laras = () => {
       current_page: 1,
     })
     const getRequest_Sapras = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request.php?page=${pagination_request_sapras.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}&nama=${storedUsername}`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/request.php?page=${pagination_request_sapras.current_page}&bulan=${searchMonthRequest}&tahun=${currentYear}&nama=Maulina Nur Chayati Sulchan`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);
@@ -396,6 +396,24 @@ const Content_laras = () => {
           navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${id}`);
         }
       }
+      const handleDownloadExcelFix = () => {
+        const bulan = searchMonth;
+        const tahun = currentYear;
+
+        window.location.href = `https://simantepbareta.cloud/API/SILARAS/fix_excel_download.php?bulan=${bulan}&tahun=${tahun}`;
+      };
+      const handleDownloadExcelVehicle = () => {
+        const bulan = searchMonthVehicle;
+        const tahun = currentYear;
+
+        window.location.href = `https://simantepbareta.cloud/API/SILARAS/vehicle_excel_download.php?bulan=${bulan}&tahun=${tahun}`;
+      };
+      const handleDownloadExcelRequest = () => {
+        const bulan = searchMonthRequest;
+        const tahun = currentYear;
+
+        window.location.href = `https://simantepbareta.cloud/API/SILARAS/request_excel_download.php?bulan=${bulan}&tahun=${tahun}`;
+      };
       // const handleOpenFix = (id) => {
       //   navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${id}`);
       // }
@@ -407,27 +425,27 @@ const Content_laras = () => {
       // }
       return(
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 justify-content-left'>
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>}
-                <p>Silaras/Database Sarpras</p>
-                <h1>Sistem Layanan Sarana dan Prasarana</h1>
+                <p className='text-white fs-5'>Silaras/Database Sarpras</p>
+                <h1 className='text-white fs-1 mt-0'>Sistem Layanan Sarana dan Prasarana</h1>
                 <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />
-                <div className='content-col'>
-                    <div className='box-m'>
-                      {(role !== "C-03" ) &&
-                        <div style={{display: level === "level-4" ? 'none' : ''}} className='content'>
-                            <h1>Daftar Form Perbaikan</h1>
-                            <div style={{display: "flex" , flexDirection: "row"}}>
-                              <div className='pagination'>
+                <div className='container-xxl d-flex flex-column bg-green-old align-items-start p-5 m-2 gap-5' style={{borderRadius: '20px'}}>
+                    <div className='container-xxl d-flex flex-column'>
+                      {(role !== "C-03" && role_sp !== "S-03" ) &&
+                        <div style={{display: level === "level-4" ? 'none' : ''}} className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Daftar Form Perbaikan</h1>
+                            <div style={{display: "flex" , flexDirection: "row", gap: "20px"}}>
+                              <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Fix}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_fix?.current_page} />
                                   <button className='right' onClick={handleNext_Fix}><img src={right} alt="" /></button>
                               </div>
-                              <div className='search'>
-                                <label className='pagination-label' htmlFor="">Bulan:</label>
-                                <select className='pagination-search' onChange={handleSearchMonth} value={searchMonth} name="" id="">
+                              <div className='d-flex flex-row align-items-center gap-2'>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonth} value={searchMonth} name="" id="">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -441,15 +459,15 @@ const Content_laras = () => {
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <label className='pagination-label' htmlFor="">Tahun:</label>
-                                <select className='pagination-search' value={currentYear} name="" id="">
+                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                     <option value="2025">2025</option>
                                     <option value="2026">2026</option>
-                                </select>
+                                </select>                                
                               </div>
                             </div>
                             {fix.length > 0 ? (
-                            <table>
+                            <table className='text-white mt-4'>
                               <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
                                 <th style={{textAlign:'center'}}>id Form</th>
@@ -479,9 +497,9 @@ const Content_laras = () => {
                                     <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
                                   )}
                                   <td style={{textAlign:'center'}}>{item.fix}</td>
-                                  <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
-                                  <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
-                                  <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
+                                  <td style={{display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px',textAlign:'center'}}> <img src={white} alt="" /> </td>
+                                  <td style={{display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                  <td style={{display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>                                  
                                   <td style={{textAlign:'center'}}>
                                     <button className='B-update' onClick={(e) => handleOpenFix(item.id_fix, item.stat, item.id_notif, e)}>Lihat disini</button>
                                     <br /><div><button className='B-deleted' onClick={() => handleDeleteFix(item.id_fix)}>Hapus</button></div>
@@ -490,22 +508,22 @@ const Content_laras = () => {
                               ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                       }
                       {(role === "C-03" || level === "level-4") && (
-                        <div className='content'>
-                            <h1>Daftar Form Perbaikan Sarpras</h1>
-                            <div style={{display: "flex" , flexDirection: "row"}}>
-                              <div className='pagination'>
+                        <div className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Daftar Form Perbaikan Sarpras</h1>
+                            <div style={{display: "flex" , flexDirection: "row", gap: "20px"}}>
+                              <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='search'>
-                                <label className='pagination-label' htmlFor="">Bulan:</label>
-                                <select className='pagination-search' onChange={handleSearchMonth} value={searchMonth} name="" id="">
+                              <div className='d-flex flex-row align-items-center gap-2'>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonth} value={searchMonth} name="" id="">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -519,15 +537,16 @@ const Content_laras = () => {
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <label className='pagination-label' htmlFor="">Tahun:</label>
-                                <select className='pagination-search' value={currentYear} name="" id="">
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                    <option selected={currentYear === 2025} value="2025">2025</option>
+                                    <option selected={currentYear === 2026} value="2026">2026</option>
                                 </select>
+                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelFix}>Download Excel</button>
                               </div>
                             </div>
                             {fix_sarpras.length > 0 ? (
-                            <table>
+                            <table className='text-white mt-4'>
                               <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
                                 <th style={{textAlign:'center'}}>id Form</th>
@@ -568,22 +587,22 @@ const Content_laras = () => {
                               ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
                       {role_sp === "S-03" && (
-                        <div className='content'>
-                            <h1>Daftar Form Perbaikan Sarpras</h1>
-                            <div style={{display: "flex" , flexDirection: "row"}}>
-                              <div className='pagination'>
+                        <div className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Daftar Form Perbaikan Sarpras</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                              <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='search'>
-                                <label className='pagination-label' htmlFor="">Bulan:</label>
-                                <select className='pagination-search' onChange={handleSearchMonth} value={searchMonth} name="" id="">
+                              <div className='d-flex flex-row align-items-center gap-2'>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonth} value={searchMonth} name="" id="">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -597,15 +616,16 @@ const Content_laras = () => {
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <label className='pagination-label' htmlFor="">Tahun:</label>
-                                <select className='pagination-search' value={currentYear} name="" id="">
+                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                     <option value="2025">2025</option>
                                     <option value="2026">2026</option>
                                 </select>
+                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelFix}>Download Excel</button>
                               </div>
-                            </div>
+                            </div>                            
                             {fix_sarpras.length > 0 ? (
-                            <table>
+                            <table className='text-white mt-4'>
                               <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
                                 <th style={{textAlign:'center'}}>id Form</th>
@@ -646,22 +666,22 @@ const Content_laras = () => {
                               ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
-                      { (role !== "C-03" ) &&(
-                          <div style={{display: level === "level-4" ? 'none' : ''}} className='content'>
-                            <h1>Daftar Form Peminjaman Kendaraan Dinas</h1>
-                            <div style={{display:"flex", flexDirection:"row"}}>                            
-                              <div className='pagination'>
+                      { (role !== "C-03" && role_sp !== "S-03" ) &&(
+                          <div style={{display: level === "level-4" ? 'none' : ''}} className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Daftar Form Peminjaman Kendaraan Dinas</h1>
+                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>                            
+                              <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Vehicle}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Vehicle}><img src={right} alt="" /></button>
                               </div>
-                              <div className='search'>
-                                <label className='pagination-label' htmlFor="">Bulan:</label>
-                                <select className='pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
+                              <div className='d-flex flex-row align-items-center gap-2'>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -675,15 +695,15 @@ const Content_laras = () => {
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <label className='pagination-label' htmlFor="">Tahun:</label>
-                                <select className='pagination-search' value={currentYear} name="" id="">
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                    <option selected={currentYear === 2025} value="2025">2025</option>
+                                    <option selected={currentYear === 2026} value="2026">2026</option>
                                 </select>
                               </div>
                             </div>
                             {vehicle.length > 0 ? (
-                            <table>
+                            <table className='text-white mt-4'>
                                 <tr>
                                     <th style={{textAlign:'center'}}>Nomor</th>                                    
                                     <th style={{textAlign:'center'}}>Nama</th>
@@ -731,22 +751,22 @@ const Content_laras = () => {
                           ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
-                      { (role === "C-03" || level === "level-4") && (
-                        <div className='content'>
-                            <h1>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
-                            <div style={{display:'flex', flexDirection:'row'}}>                          
-                              <div className='pagination'>
+                      {(role === "C-03" || level === "level-4") && (
+                        <div className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
+                            <div style={{display:'flex', flexDirection:'row', gap: "20px"}}>                          
+                              <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='search'>
-                                <label className='pagination-label' htmlFor="">Bulan:</label>
-                                <select className='pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
+                              <div className='d-flex flex-row align-items-center gap-2'>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -760,15 +780,16 @@ const Content_laras = () => {
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <label className='pagination-label' htmlFor="">Tahun:</label>
-                                <select className='pagination-search' value={currentYear} name="" id="">
+                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                     <option value="2025">2025</option>
                                     <option value="2026">2026</option>
                                 </select>
+                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelVehicle}>Download Excel</button>
                               </div>
                             </div>
                             {vehicle_sarpras.length > 0 ? (
-                            <table>
+                            <table className='text-white mt-4'>
                                 <tr>
                                     <th style={{textAlign:'center'}}>Nomor</th>                                    
                                     <th style={{textAlign:'center'}}>Nama</th>
@@ -820,18 +841,18 @@ const Content_laras = () => {
                             )}                        
                         </div>
                       )}
-                      { role === "S-03" && (
-                        <div className='content'>
-                            <h1>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
-                            <div style={{display:'flex', flexDirection:'row'}}>                          
-                              <div className='pagination'>
+                      { role_sp === "S-03" && (
+                        <div className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
+                            <div style={{display:'flex', flexDirection:'row', gap: "20px"}}>                          
+                              <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='search'>
-                                <label className='pagination-label' htmlFor="">Bulan:</label>
-                                <select className='pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
+                              <div className='d-flex flex-row align-items-center gap-2'>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -845,15 +866,16 @@ const Content_laras = () => {
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <label className='pagination-label' htmlFor="">Tahun:</label>
-                                <select className='pagination-search' value={currentYear} name="" id="">
+                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                     <option value="2025">2025</option>
                                     <option value="2026">2026</option>
                                 </select>
+                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelVehicle}>Download Excel</button>
                               </div>
                             </div>
                             {vehicle_sarpras.length > 0 ? (
-                            <table>
+                            <table className='text-white mt-4'>
                                 <tr>
                                     <th style={{textAlign:'center'}}>Nomor</th>                                    
                                     <th style={{textAlign:'center'}}>Nama</th>
@@ -901,22 +923,22 @@ const Content_laras = () => {
                           ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
-                      {(role !== "C-03" ) && (
-                        <div style={{display: level === "level-4" ? 'none' : ''}} className='content'>
-                            <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
-                            <div style={{display: 'flex', flexDirection: 'row'}}>                          
-                              <div className='pagination'>
+                      {(role !== "C-03" && role_sp !== "S-03") && (
+                        <div style={{display: level === "level-4" ? 'none' : 'flex'}} className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
+                            <div style={{display: 'flex', flexDirection: 'row', gap: "20px"}}>                          
+                              <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Request}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_request?.current_page} />
                                   <button className='right' onClick={handleNext_Request}><img src={right} alt="" /></button>
                               </div>
-                              <div className='search'>
-                                <label className='pagination-label' htmlFor="">Bulan:</label>
-                                <select className='pagination-search' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
+                              <div className='d-flex flex-row align-items-center gap-2'>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -930,15 +952,15 @@ const Content_laras = () => {
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <label className='pagination-label' htmlFor="">Tahun:</label>
-                                <select className='pagination-search' value={currentYear} name="" id="">
+                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                     <option value="2025">2025</option>
                                     <option value="2026">2026</option>
                                 </select>
                               </div>
                             </div>
                             {request.length > 0 ? (
-                            <table>
+                            <table className='text-white mt-4'>
                                 <tr>
                                    <th style={{textAlign:'center'}}>Nomor</th>
                                    <th style={{textAlign:'center'}}>Nama</th>
@@ -946,7 +968,7 @@ const Content_laras = () => {
                                    <th style={{textAlign:'center'}}>Unit Kerja</th>
                                    <th style={{textAlign:'center'}}>Permohonan Barang</th>
                                    <th style={{textAlign:'center'}}>Approval Status</th>
-                                    <th style={{textAlign:'center'}}>Jawaban</th>
+                                   <th style={{textAlign:'center'}}>Jawaban</th>
                                    <th style={{textAlign:'center'}}>Detail</th>
                                 </tr>
                               {request.map((item, index) => (
@@ -978,22 +1000,22 @@ const Content_laras = () => {
                           ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
                       { (role === "C-03" || level === "level-4") && (
-                        <div className='content'>
-                            <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
-                            <div style={{display:'flex', flexDirection:'row'}}>                            
-                              <div className='pagination'>
+                        <div className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
+                            <div style={{display:'flex', flexDirection:'row', gap: "20px"}}>                            
+                              <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />
                                   <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='search'>
-                                <label className='pagination-label' htmlFor="">Bulan:</label>
-                                <select className='pagination-search' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
+                              <div className='d-flex flex-row align-items-center gap-2'>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -1007,15 +1029,16 @@ const Content_laras = () => {
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <label className='pagination-label' htmlFor="">Tahun:</label>
-                                <select className='pagination-search' value={currentYear} name="" id="">
+                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                     <option value="2025">2025</option>
                                     <option value="2026">2026</option>
                                 </select>
+                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelRequest}>Download Excel</button>
                               </div>
                             </div>
                             {request_sapras.length > 0 ? (
-                            <table>
+                            <table className='text-white mt-4'>
                                 <tr>
                                    <th style={{textAlign:'center'}}>Nomor</th>                                   
                                    <th style={{textAlign:'center'}}>Nama</th>
@@ -1055,22 +1078,22 @@ const Content_laras = () => {
                           ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
                       { role_sp === "S-03" && (
-                        <div className='content'>
-                            <h1>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
+                        <div className='d-flex flex-column'>
+                            <h1 className='text-white fw-bold fs-3'>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
                             <div style={{display:'flex', flexDirection:'row'}}>                            
                               <div className='pagination'>
                                   <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />
                                   <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='search'>
-                                <label className='pagination-label' htmlFor="">Bulan:</label>
-                                <select className='pagination-search' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
+                              <div className='d-flex flex-row align-items-center gap-2'>
+                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
                                     <option value="01">Januari</option>
                                     <option value="02">Februari</option>
                                     <option value="03">Maret</option>
@@ -1084,15 +1107,16 @@ const Content_laras = () => {
                                     <option value="11">November</option>
                                     <option value="12">Desember</option>
                                 </select>
-                                <label className='pagination-label' htmlFor="">Tahun:</label>
-                                <select className='pagination-search' value={currentYear} name="" id="">
+                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
+                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
                                     <option value="2025">2025</option>
                                     <option value="2026">2026</option>
                                 </select>
+                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelRequest}>Download Excel</button>
                               </div>
                             </div>
                             {request_sapras.length > 0 ? (
-                            <table>
+                            <table className='table-spaced text-white table-bordered mt-4'>
                                 <tr>
                                    <th style={{textAlign:'center'}}>Nomor</th>                                   
                                    <th style={{textAlign:'center'}}>Nama</th>
@@ -1132,7 +1156,7 @@ const Content_laras = () => {
                           ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
                             )}                        
                         </div>
                       )}

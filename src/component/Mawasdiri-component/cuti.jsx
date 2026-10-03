@@ -10,6 +10,8 @@ import Profile from '../profile';
 const Cuti_form = () => {
   const [cuti, setShow] = useState(false);
   const [cuti_imp, setCutiImp] = useState(false);
+  const [cuti_besar, setCutiBesar] = useState(false);
+  const [cuti_minus_negara, setCutiMinusNegara] = useState(false);
   const [hamil, setHamil] = useState(false);
   const [sakit, setSakit] = useState(false);
   const [selectedStartDates, setSelectedStartDates] = useState(null); // State for start date
@@ -19,7 +21,11 @@ const Cuti_form = () => {
   const [identity, setIdentity] = useState([]);
   const [nama, setNama] = useState(identity.nama);
   const [sisa_cuti, setSisa_cuti] = useState(identity.sisa_cuti);
+  const [sisa_cuti_n1, setSisa_cuti_n1] = useState(identity.sisa_cuti_n1);
+  const [sisa_cuti_n2, setSisa_cuti_n2] = useState(identity.sisa_cuti_n2);
   console.log("sisa cuti = " + sisa_cuti);
+  console.log("sisa cuti = " + sisa_cuti_n1);
+  console.log("sisa cuti = " + sisa_cuti_n2);
   const [jabatan, setJabatan] = useState(identity.nama);
   const [nrk_nip, setNrk_Nip] = useState(identity.nrk_nip);
   const [nama_role_c, setNamaRole_C] = useState(identity.nama_role_c);
@@ -41,6 +47,8 @@ const Cuti_form = () => {
         setNrk_Nip(response.data.nrk_nip);
         setKode_role_c(response.data.kode_role_c);
         setSisa_cuti(response.data.sisa_cuti);
+        setSisa_cuti_n1(response.data.sisa_cuti_n1);
+        setSisa_cuti_n2(response.data.sisa_cuti_n2);
         setNamaRole_C(response.data.nama_role_c);
         setNamaRole(response.data.nama_role);
         setBagian(response.data.bagian);
@@ -70,6 +78,12 @@ const Cuti_form = () => {
   }
   function Cuti_Imp(event) {
     setCutiImp(event.target.checked); // Set show based on checkbox state
+  }
+  function Cuti_Besar(event) {
+    setCutiBesar(event.target.checked); // Set show based on checkbox state
+  }
+  function Cuti_Minus_Negara(event) {
+    setCutiMinusNegara(event.target.checked); // Set show based on checkbox state
   }
   function Hamil(event) {
     setHamil(event.target.checked); // Set show based on checkbox state
@@ -144,7 +158,7 @@ const Cuti_form = () => {
       console.log(response.data);
       if (jenis === "Sakit") {
         setTimeout(() => {
-          navigate(`/Dashboard/${level}/${role}/${role_sp}`);
+          navigate(`/Dashboard/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/${bagian}`);
           alert(response.data.message);
         }, 2000);
       }
@@ -165,7 +179,7 @@ const Cuti_form = () => {
       });
       console.log(response.data);
       setTimeout(() => {
-        navigate(`/Dashboard/${level}/${role}/${role_sp}`);
+        navigate(`/Dashboard/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`);
         alert(response.data.message);
       }, 2000);
     } catch (error) {
@@ -175,15 +189,7 @@ const Cuti_form = () => {
   const handlePostNewSurat = async (event, jumlah_cuti, jenis) => {
     event.preventDefault();
     setIsLoading(true);
-    if (jenis === "Sakit") {
-      try {            
-        await handlePostSurat();
-      } catch (error) {
-        console.log(error);        
-      } finally {
-        setIsLoading(false);        
-      }      
-    } else {
+    if (jenis === "Cuti") {      
       if (cuti_b > jumlah_cuti) {
         alert("Jumlah cuti melebihi sisa cuti yang tersedia.");
         setIsLoading(false);
@@ -198,7 +204,15 @@ const Cuti_form = () => {
         console.log(error);        
       } finally {
         setIsLoading(false);
-      }      
+      }       
+    } else {
+      try {            
+        await handlePostSurat();
+      } catch (error) {
+        console.log(error);        
+      } finally {
+        setIsLoading(false);        
+      }
     }      
   }
   useEffect(() => {
@@ -208,66 +222,112 @@ const Cuti_form = () => {
     }, [kode_role_c]);
   return (
     <>
-      <div className='main-dashboard'>
+      <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '1500px'}} className="load-cuti"></span>
         </div>} 
-        <p>Mawasdiri/Pengajuan Cuti</p>
-        <h1>Pengajuan Cuti</h1>
-        <Profile nama={nama} feature="mawasdiri" />
-        <div className='content-col'>
-          <div className='box1'>
-            <form onSubmit={(e) => handlePostNewSurat(e, sisa_cuti, jenis)} className='form'>
-              <div className='content-f'>
-                <h1>Data Diri</h1>
-                <label htmlFor="">Nama</label>
-                <input onChange={handleChangeNama} value={nama} disabled placeholder='Nama' type="text" />
-                <label htmlFor="">NIP / NRK</label>
-                <input value={nrk_nip} placeholder='No. HP' disabled type="text" />                
-                <label htmlFor="">No.Handphone</label>
-                <input onChange={handleChangeHp} required placeholder='No. HP' type="text" />
-                <label htmlFor="">Jabatan</label>
-                <input value={jabatan} placeholder='No. HP' disabled type="text" />
-                {/* <label htmlFor="">ID Number</label>
-                <input value={storeidNumber} placeholder='No. HP' type="text" /> */}
-                {/* <label htmlFor="">Nama Atasan</label> */}
+        <p className='content-header-p'>Mawasdiri/Pengajuan Cuti</p>
+        <div className='d-flex justify-content-between align-items-center'>
+          <h1 className='content-header-title mt-0'>Pengajuan Cuti</h1>
+          <Profile nama={nama} feature="mawasdiri" />
+        </div>
+        <div className='form-position d-flex flex-column'>
+          <div className='form-display'>
+            <form className='' onSubmit={(e) => handlePostNewSurat(e, sisa_cuti, jenis)}>
+              <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                <h1 className='form-h1 fw-bold ms-3'>Data Diri</h1>
+                <label className='form-label ms-3' htmlFor="">Nama : </label>
+                <input className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeNama} value={nama} disabled placeholder='Nama' type="text" />
+                <label className='form-label ms-3' htmlFor="">NIP / NRK</label>
+                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nrk_nip} placeholder='No. HP' disabled type="text" />                
+                <label className='form-label ms-3' htmlFor="">No.Handphone</label>
+                <input className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeHp} required placeholder='No. HP' type="text" />
+                <label className='form-label ms-3' htmlFor="">Jabatan</label>
+                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={jabatan} placeholder='No. HP' disabled type="text" />
+                {/* <label className='form-label ms-3' htmlFor="">ID Number</label>
+                <input className='form-input ms-3 mb-4 rounded-3' value={storeidNumber} placeholder='No. HP' type="text" /> */}
+                {/* <label className='form-label ms-3' htmlFor="">Nama Atasan</label> */}
                 <input value={nama_atasan} placeholder='Nama Atasan' type="hidden" />
                 {level === 'level-1' && (
                   <>
-                    <label htmlFor="">Unit Kerja</label>
-                    <input value={nama_role} placeholder='Sisa Cuti' disabled type="text" />
+                    <label className='form-label ms-3' htmlFor="">Unit Kerja</label>
+                    <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role} placeholder='Sisa Cuti' disabled type="text" />
                   </>
                 )}
                 {level === 'level-2' && (
                   <>
-                    <label htmlFor="">Unit Kerja</label>
-                    <input value={nama_role_c} placeholder='Sisa Cuti' disabled type="text" />
+                    <label className='form-label ms-3' htmlFor="">Unit Kerja</label>
+                    <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role_c} placeholder='Sisa Cuti' disabled type="text" />
                   </>
                 )}
-                <label htmlFor="">Sisa Cuti</label>
-                <input value={sisa_cuti} placeholder='Sisa Cuti' disabled type="text" />
-              </div>
-              <div className='content-tx'>
-                <h1>Alasan Cuti/Sakit/Izin</h1>
-                <textarea onChange={handleChangeKeterangan} placeholder='Alasan Cuti/Sakit/Izin' />
-              </div>
-              <div className='content-tx'>
-                <h1>Alamat Selama Cuti/Sakit/Izin</h1>
-                <textarea onChange={handleChangeAlamat} placeholder='Alamat Selama Cuti/Sakit/Izin' />
-              </div>
-              <div className='content-f'>
-                <h1>Jenis Surat</h1>
-                <div className='check'>
-                  <input type="checkbox" value='Cuti' onChange={(event) => { Cuti(event); handleChangeJenis(event); }} />
-                  <label htmlFor="">Cuti Tahunan</label>
+                {bagian === '4' ? (
+                  <>
+                    <label className='form-label ms-3' htmlFor="">Sisa Cuti</label>
+                    <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={sisa_cuti} placeholder='Sisa Cuti' disabled type="text" />
+                  </>
+                ) : (
+                  <>
+                  <label className='form-label ms-3' htmlFor="">Catatan Cuti</label>
+                  <div className='d-flex flex-row'>                    
+                    <table className='table-spaced ms-3'>                      
+                      <tr>
+                        <th colSpan={3}>1. Cuti Tahunan</th>
+                      </tr>
+                      <tr>
+                        <th>Tahun</th>
+                        <th>Sisa</th>
+                        <th>Keterangan</th>
+                      </tr>
+                      <tr>
+                        <th>N-2</th>
+                        <th className='text-center'>{sisa_cuti_n2}</th>
+                        <th className='text-center'>-</th>                        
+                      </tr>
+                      <tr>
+                        <th>N-1</th>
+                        <th className='text-center'>{sisa_cuti_n1}</th>
+                        <th className='text-center'>-</th>
+                      </tr>
+                      <tr>
+                        <th>N</th>
+                        <th className='text-center'>{sisa_cuti}</th>
+                        <th className='text-center'>-</th>
+                      </tr>                      
+                    </table>                    
+                  </div>
+                </>
+                )}
+                <div style={bagian == "4" ? {display: 'none'} : {}}>
+                                  
                 </div>
+                <div style={bagian !== "1" ? {display: 'none'} : {}} className='cuti-alasan-penting gap-2 ps-3'>
+                  
+                </div>
+              </div>
+              <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                <h1 className='form-h1 fw-bold ms-3'>Alasan Cuti/Sakit/Izin</h1>
+                <textarea className='form-textarea ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeKeterangan} placeholder='Alasan Cuti/Sakit/Izin' />
+              </div>
+              <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                <h1 className='form-h1 fw-bold ms-3'>Alamat Selama Cuti/Sakit/Izin</h1>
+                <textarea className='form-textarea ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeAlamat} placeholder='Alamat Selama Cuti/Sakit/Izin' />
+              </div>
+              <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                <h1 className='form-h1 fw-bold ms-3'>Jenis Surat</h1>
+                <div className='d-flex flex-row align-items-center gap-2 ps-3'>
+                  <input className='form-check-input' type="checkbox" value='Cuti' onChange={(event) => { Cuti(event); handleChangeJenis(event); }} />
+                  <label className='form-check-label' htmlFor="">Cuti Tahunan</label>
+                </div>                
                 {cuti && (
-                  <div className='check-form'>
-                    <label htmlFor="">Cuti Tahunan (Hari)</label>
-                    <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
-                    <div className='inp-date'>
-                      <label htmlFor="">Dimulai Dari Tanggal</label>
+                  <div className='d-flex flex-column'>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Cuti Tahunan (Hari)</label>
+                      <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="number" />
+                    </div>                    
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Dimulai Dari Tanggal</label>
                       <DatePicker
+                        className='form-input-in-check ms-4 rounded-3 ps-3'
                         selectsRange={true}
                         startDate={selectedStartDates}
                         endDate={selectedEndDates}
@@ -278,17 +338,20 @@ const Cuti_form = () => {
                     </div>
                   </div>
                 )}
-                <div style={bagian !== "1" ? {display: 'none'} : {}} className='check'>
-                  <input type="checkbox" value='Cuti Alasan Penting' onChange={(event) => { Cuti_Imp(event); handleChangeJenis(event); }} />
-                  <label htmlFor="">Cuti Alasan Penting</label>
+                <div style={bagian !== "1" ? {display: 'none'} : {}} className='cuti-alasan-penting gap-2 ps-3'>
+                  <input className='form-check-input' type="checkbox" value='Cuti Alasan Penting' onChange={(event) => { Cuti_Imp(event); handleChangeJenis(event); }} />
+                  <label className='form-check-label' htmlFor="">Cuti Alasan Penting</label>
                 </div>
                 {cuti_imp && (
-                  <div className='check-form'>
-                    <label htmlFor="">Cuti Alasan Penting (Hari)</label>
-                    <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
-                    <div className='inp-date'>
-                      <label htmlFor="">Dimulai Dari Tanggal</label>
+                  <div className='d-flex flex-column'>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Cuti Alasan Penting (Hari)</label>
+                      <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
+                    </div>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Dimulai Dari Tanggal</label>
                       <DatePicker
+                        className='form-input-in-check ms-4 rounded-3 ps-3'
                         selectsRange={true}
                         startDate={selectedStartDates}
                         endDate={selectedEndDates}
@@ -299,17 +362,70 @@ const Cuti_form = () => {
                     </div>
                   </div>
                 )}
-                <div className='check'>
-                  <input type="checkbox" value='Cuti Hamil' onChange={(event) => { Hamil(event); handleChangeJenis(event); }} />
-                  <label htmlFor="">Cuti Hamil </label>
+                
+                <div style={bagian !== "1" ? {display: 'none'} : {}} className='cuti-alasan-penting gap-2 ps-3'>
+                  <input className='form-check-input' type="checkbox" value='Cuti Besar' onChange={(event) => { Cuti_Besar(event); handleChangeJenis(event); }} />
+                  <label className='form-check-label' htmlFor="">Cuti Besar</label>
+                </div>
+                {cuti_besar && (
+                  <div className='d-flex flex-column'>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Cuti Besar (Hari)</label>
+                      <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
+                    </div>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Dimulai Dari Tanggal</label>
+                      <DatePicker
+                        className='form-input-in-check ms-4 rounded-3 ps-3'
+                        selectsRange={true}
+                        startDate={selectedStartDates}
+                        endDate={selectedEndDates}
+                        onChange={handleChangeCutiDate}
+                        dateFormat="yyyy/MM/dd"
+                        placeholderText="Select date range"
+                      />
+                    </div>
+                  </div>
+                )}
+                <div style={bagian !== "1" ? {display: 'none'} : {}} className='cuti-alasan-penting gap-2 ps-3'>
+                  <input className='form-check-input' type="checkbox" value='Cuti Diluar Tanggungan Negara' onChange={(event) => { Cuti_Minus_Negara(event); handleChangeJenis(event); }} />
+                  <label className='form-check-label' htmlFor="">Cuti Diluar Tanggungan Negara</label>
+                </div>
+                {cuti_minus_negara && (
+                  <div className='d-flex flex-column'>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Cuti Diluar Tanggungan Negara (Hari)</label>
+                      <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
+                    </div>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Dimulai Dari Tanggal</label>
+                      <DatePicker
+                        className='form-input-in-check ms-4 rounded-3 ps-3'
+                        selectsRange={true}
+                        startDate={selectedStartDates}
+                        endDate={selectedEndDates}
+                        onChange={handleChangeCutiDate}
+                        dateFormat="yyyy/MM/dd"
+                        placeholderText="Select date range"
+                      />
+                    </div>
+                  </div>
+                )}
+
+                <div className='d-flex flex-row align-items-center gap-2 ps-3'>
+                  <input className='form-check-input' type="checkbox" value='Cuti Melahirkan' onChange={(event) => { Hamil(event); handleChangeJenis(event); }} />
+                  <label className='form-check-label' htmlFor="">Cuti Melahirkan </label>
                 </div>
                 {hamil && (
-                  <div className='check-form'>
-                    <label htmlFor="">Cuti Hamil (Hari)</label>
-                    <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
-                    <div className='inp-date'>
-                      <label htmlFor="">Dimulai Dari Tanggal</label>
+                  <div className='d-flex flex-column'>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Cuti Melahirkan (Hari):</label>
+                      <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />                    
+                    </div>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Dimulai Dari Tanggal:</label>
                       <DatePicker
+                        className='form-input-in-check ms-4 rounded-3 ps-3'
                         selectsRange={true}
                         startDate={selectedStartDates}
                         endDate={selectedEndDates}
@@ -320,17 +436,20 @@ const Cuti_form = () => {
                     </div>
                   </div>
                 )}
-                <div className='check'>
-                  <input type="checkbox" value='Sakit' onChange={(event) => { Sakit(event); handleChangeJenis(event); }} />
-                  <label htmlFor="">Sakit</label>
+                <div className='d-flex flex-row align-items-center gap-2 ps-3'>
+                  <input className='form-check-input' type="checkbox" value='Sakit' onChange={(event) => { Sakit(event); handleChangeJenis(event); }} />
+                  <label className='form-check-label' htmlFor="">Sakit</label>
                 </div>
                 {sakit && (
-                  <div className='check-form'>
-                    <label htmlFor="">Sakit(Hari)</label>
-                    <input onChange={handleChangeCuti} style={{ marginTop: '10px' }} type="text" />
-                    <div className='inp-date'>
-                      <label htmlFor="">Dimulai Dari Tanggal</label>
+                  <div className='d-flex flex-column'>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Sakit(Hari):</label>
+                      <input onChange={handleChangeCuti} className='form-input-in-check ms-3 rounded-3 ps-3' type="text" />
+                    </div>
+                    <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                      <label className='label-check ps-4' htmlFor="">Dimulai Dari Tanggal:</label>
                       <DatePicker
+                      className='form-input-in-check w-100 ms-3 rounded-3 ps-3'
                         selectsRange={true}
                         startDate={selectedStartDates}
                         endDate={selectedEndDates}
@@ -339,12 +458,31 @@ const Cuti_form = () => {
                         placeholderText="Select date range"
                       />
                     </div>
-                    <label htmlFor="">Upload Surat Sakit Dokter (Maks.2mb)</label>
-                    <input type="file" onChange={handleChangeImage} name="" id="" />
+                    <div className="d-flex flex-column">
+                      <label className="label-check ps-4" htmlFor="sakit-file">
+                        Upload Surat Sakit Dokter (Maks. 2Mb)
+                      </label>
+                      <div className="custom-file-row ms-3 mb-3">
+                        <label className="custom-file-btn" htmlFor="sakit-file">
+                          Choose file
+                        </label>
+                        <input
+                          id="sakit-file"
+                          className="custom-file-input"
+                          type="file"
+                          onChange={handleChangeImage}
+                        />
+                        <span className="custom-file-name">
+                          {image ? image.name : 'No file chosen'}
+                        </span>
+                      </div>                      
+                    </div>
                   </div>
                 )}
               </div>
-              <button className='submit' type="submit">Submit</button>
+              <div className='d-flex flex-column align-items-center w-100'>
+                <button className='submit' type="submit">Submit</button>
+              </div>
             </form>
           </div>
         </div>

@@ -133,67 +133,69 @@ const Info_Simak = ({nama}) => {
         }
     return(    
     <>
-    <div className='switch-button'>
-        <button onClick={getSwitch} className='switch-info'>
-          {isSwitch ? "RPD" : "LPJ"}
-        </button>
-    </div>
-      { isSwitch ? (
-        <> 
-            {notif_surat.length > 0 ? (
-              <>
-                <p style={{marginLeft: "0px", marginTop: "10px"}} >Proposal dan LPJ</p>
-                {notif_surat.map((notif) => (
+    <div className='container d-flex flex-column'>
+        <div className='switch-button'>
+            <button onClick={getSwitch} className='switch-info'>
+            {isSwitch ? "RPD" : "LPJ"}
+            </button>
+        </div>
+        { isSwitch ? (
+            <> 
+                {notif_surat.length > 0 ? (
+                <>
+                    <p style={{marginLeft: "0px", marginTop: "10px"}} >Proposal dan LPJ</p>
+                    {notif_surat.map((notif) => (
+                        <>
+                        <div className='info'>
+                        <div style={{background: notif.f_profile === '' ? `url(${default_pic})` : `url(https://simantepbareta.cloud/API/${notif.f_profile})`, backgroundSize: notif.f_profile === '' ? "173%" : "89%", backgroundPosition: notif.f_profile === '' ? "48% 10%" : "34% 5%"}} className='pic'></div>
+                        <p style={{ marginTop: '0px' }}>{notif.nama}</p>
+                        <p style={{ marginTop: '0px' }}>{notif.subjek}</p>
+                        <div className='mark-read-deleted'>
+                            <button onClick={(event) => mark_lpj(notif.id_notif, event)}>Telah dibaca</button>
+                            <button onClick={(event) => deleted_lpj(notif.id_notif, event)}>Hapus</button>
+                            <button onClick={(event) => buka_lpj(notif.id_notif, notif.id_lpj, event)}>Buka</button>
+                        </div>
+                    </div>
+                    </>                  
+                    ))} 
+                </>       
+                ) : (
+                    <div className='coontainer d-flex flex-row ps-5 pt-1 justify-content-center'>
+                        <p className='text-white text-center'>Tidak ada notifikasi</p>
+                    </div>
+                )
+            }
+            </>
+        ): (
+        <>
+            {notif2.length > 0 ? (
+                <>
+                <p style={{marginLeft: "0px",  marginTop: "10px"}} >Rencana Penarikan Dana</p>
+                {notif2.map((notif) => (
                     <>
                     <div className='info'>
-                      <div style={{background: notif.f_profile === '' ? `url(${default_pic})` : `url(https://simantepbareta.cloud/API/${notif.f_profile})`, backgroundSize: notif.f_profile === '' ? "173%" : "89%", backgroundPosition: notif.f_profile === '' ? "48% 10%" : "34% 5%"}} className='pic'></div>
-                      <p style={{ marginTop: '0px' }}>{notif.nama}</p>
-                      <p style={{ marginTop: '0px' }}>{notif.subjek}</p>
-                      <div className='mark-read-deleted'>
-                        <button onClick={(event) => mark_lpj(notif.id_notif, event)}>Telah dibaca</button>
-                        <button onClick={(event) => deleted_lpj(notif.id_notif, event)}>Hapus</button>
-                        <button onClick={(event) => buka_lpj(notif.id_notif, notif.id_lpj, event)}>Buka</button>
-                      </div>
-                  </div>
-                  </>                  
-                ))} 
-              </>       
-            ) : (
-                <div className='info'>
-                  <p style={{ marginTop: '0px'}}>Tidak ada notifikasi</p>
-                </div>
-            )
-          }
-        </>
-      ): (
-      <>
-          {notif2.length > 0 ? (
-            <>
-              <p style={{marginLeft: "0px",  marginTop: "10px"}} >Rencana Penarikan Dana</p>
-              {notif2.map((notif) => (
-                  <>
-                  <div className='info'>
-                    <div style={{background: notif.f_profile === '' ? `url(${default_pic})` : `url(https://simantepbareta.cloud/API/${notif.f_profile})`, backgroundSize: notif.f_profile === '' ? "173%" : "89%", backgroundPosition: notif.f_profile === '' ? "48% 10%" : "34% 5%"}} className='pic'></div>
-                    <p style={{ marginTop: '0px' }}>{notif.nama}</p>
-                    <p style={{ marginTop: '0px' }}>{notif.subjek}</p>
-                    <div className='mark-read-deleted'>
-                      <button onClick={(event) => mark_rpd(notif.id_notif, event)}>Telah dibaca</button>
-                      <button onClick={(event) => deleted_rpd(notif.id_notif, event)}>Hapus</button>
-                      <button onClick={(event) => buka_rpd(notif.id_notif, notif.id_dana, event)}>Buka</button>
+                        <div style={{background: notif.f_profile === '' ? `url(${default_pic})` : `url(https://simantepbareta.cloud/API/${notif.f_profile})`, backgroundSize: notif.f_profile === '' ? "173%" : "89%", backgroundPosition: notif.f_profile === '' ? "48% 10%" : "34% 5%"}} className='pic'></div>
+                        <p style={{ marginTop: '0px' }}>{notif.nama}</p>
+                        <p style={{ marginTop: '0px' }}>{notif.subjek}</p>
+                        <div className='mark-read-deleted'>
+                        <button onClick={(event) => mark_rpd(notif.id_notif, event)}>Telah dibaca</button>
+                        <button onClick={(event) => deleted_rpd(notif.id_notif, event)}>Hapus</button>
+                        <button onClick={(event) => buka_rpd(notif.id_notif, notif.id_dana, event)}>Buka</button>
+                        </div>
                     </div>
-                </div>
-                </>                  
-              ))} 
-            </>       
-            ) : (
-                <div className='info'>
-                  <p style={{ marginTop: '0px' }}>Tidak ada notifikasi</p>
-                </div>
-            )
-          }
-      </>
-    )
-  }
+                    </>                  
+                ))} 
+                </>       
+                ) : (
+                    <div className='coontainer d-flex flex-row ps-5 pt-1 justify-content-center'>
+                        <p className='text-white text-center'>Tidak ada notifikasi</p>
+                    </div>
+                )
+            }
+        </>
+        )
+    }
+  </div>
   </>
 )
 }

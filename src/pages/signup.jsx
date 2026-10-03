@@ -151,14 +151,14 @@ const Signup = () => {
                             </div>
                         </div>
             )}
-            <div className='container-fluid login w-100 vh-100 d-flex align-items-center justify-content-center p-0'>                
+            <div className='container-fluid login d-flex align-items-center justify-content-center p-5 bg-teal'>                
                 <div className='row justify-content-center align-content-center w-100'>
-                    <div className='col-12 col-lg-6 justify-content-center align-items-center d-flex'>
-                        <div className='form-col justify-content-center align-items-center d-flex border rounded-4 w-70'>
-                            <form className='d-flex flex-column g-5 m-5'>
+                    <div className='col-12 col-lg-6 d-flex justify-content-center'>
+                        <div className='container-xxl border rounded-4 bg-green-old p-4 p-lg-5'>
+                            <form className='d-flex flex-column gap-3 w-100'>
                                 <div className='header font-set'>
                                     <h1 className='font-header'>Buat Akun</h1>
-                                    <h3 className='fs-5'>Masukan Username dan Password untuk Membuat Akun</h3>
+                                    <h3 className='font-sub-header'>Masukan Username dan Password untuk Membuat Akun</h3>
                                 </div>
                                 <div className='text-white flex-column d-flex mt-4'>
                                     <label>Nama</label>
@@ -170,8 +170,9 @@ const Signup = () => {
                                                 </>
                                             ))}
                                         </select>
+                                        
                                     <label className='mb-2'>Username</label>
-                                    <input className='w-60 p-2 rounded-2 mt-1' onChange={handleChangeUsername} type="text" />
+                                    <input className='p-2 rounded-2 mt-1' onChange={handleChangeUsername} type="text" />
                                     <label className='mt-2 mb-1'>Password</label>
                                     <div className="d-flex align-items-center w-100 mt-1 position-relative">
                                         <input
@@ -207,7 +208,7 @@ const Signup = () => {
                                     <label className='mb-2'>Jabatan</label>
                                     <input className='w-60 p-2 rounded-2 mt-1' value={jabatan} onChange={handleChangeJabatan} type="text" />
                                     <label className='mb-2'>Unit</label>
-                                    <input className='w-60 p-2 rounded-2 mt-1' value={nama_role} placeholder='Unit' type="Jabatan" />
+                                    <input className='w-60 p-2 rounded-2 mt-1' value={nama_role} placeholder='Unit' type="text" />
                                     <button className='btn-login p-2 rounded-4 mt-4' type='submit' onClick={handleLogin_ppnpn}>Buat Akun</button>
                                     <div className='register'>
                                         <a className='login-href' href="/">Sudah Punya Akun?</a>
@@ -217,7 +218,7 @@ const Signup = () => {
                         </div>
                     </div>
                     <div className='col-12 col-lg-6 p-0 logo-col'>
-                        <div className='d-flex justify-content-center align-items-center vh-100 bg-login-logo'>
+                        <div className='d-flex justify-content-center align-items-center bg-login-logo'>
                             <div className='logo-col'>
                                 <div className='logo-bg'>
                                     <div className='logo'></div>

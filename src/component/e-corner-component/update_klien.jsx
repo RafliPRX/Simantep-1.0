@@ -146,34 +146,36 @@ const Update_Klien_form = () => {
     }, [kode_role_c]);
   return (
     <>
-      <div className='main-dashboard'>
+      <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '1500px'}} className="load-cuti"></span>
         </div>} 
-        <p>E-Corner/Mengubah Klien E-Corner</p>
-        <h1>Mengubah Klien E-Corner</h1>
-        <Profile nama={nama} feature="mawasdiri" />
-        <div className='content-col'>
-          <div className='box1'>
+        <p className='content-header-p'>E-Corner/Mengubah Klien E-Corner</p>
+        <div className='d-flex justify-content-between align-items-center'>
+          <h1 className='content-header-title mt-0'>Mengubah Klien E-Corner</h1>
+          <Profile nama={nama} feature="mawasdiri" />        
+        </div>
+        <div className='form-position d-flex flex-column'>
+          <div className='form-display'>
             <form onSubmit={handlePostClientUpdate}>
-              <div className='content-f'>
-                <h1>Data Diri</h1>
-                <label htmlFor="">id_pengguna</label>
-                <input value={id_corner} disabled placeholder='Example: U-01' type="text" />
-                <label htmlFor="">Nama Klien</label>
-                <input value={nama_klien} onChange={handleChangeNamaKlien} placeholder='Nama Klien' type="text" />                
-                <label htmlFor="">Nama Klien (Inisial)</label>
-                <input value={nama_init} onChange={handleChangeNamaInit} placeholder='Nama Inisial' type="text" />
-                <label htmlFor="">Room no :</label>
-                <select value={room} onChange={handleChangeRoom} name="Room" id="Room">
+              <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                <h1 className='form-h1 fw-bold ms-3'>Data Diri</h1>
+                <label className='form-label ms-3' htmlFor="">id_pengguna</label>
+                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={id_corner} disabled placeholder='Example: U-01' type="text" />
+                <label className='form-label ms-3' htmlFor="">Nama Klien</label>
+                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_klien} onChange={handleChangeNamaKlien} placeholder='Nama Klien' type="text" />                
+                <label className='form-label ms-3' htmlFor="">Nama Klien (Inisial)</label>
+                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_init} onChange={handleChangeNamaInit} placeholder='Nama Inisial' type="text" />
+                <label className='form-label ms-3' htmlFor="">Room no :</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' value={room} onChange={handleChangeRoom} name="Room" id="Room">
                   <option value="">Room no :</option>
                   <option value="Room 1">Room 1</option>
                   <option value="Room 2">Room 2</option>
                   <option value="Room 3">Room 3</option>
                   <option value="Room 4">Room 4</option>
                 </select>                
-                <label htmlFor="Jam">Sesi Jam :</label>
-                <select value={jam} onChange={handleChangeJam} name="Jam" id="Jam">
+                <label className='form-label ms-3' htmlFor="Jam">Sesi Jam :</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' value={jam} onChange={handleChangeJam} name="Jam" id="Jam">
                   <option value="">Sesi Jam :</option>
                   <option value="08.00-08.30">08.00-08.30</option>
                   <option value="08.35-09.05">08.35-09.05</option>
@@ -188,8 +190,8 @@ const Update_Klien_form = () => {
                   <option value="14.45-15.15">14.45-15.15</option>
                   <option value="15.20-15.50">15.20-15.50</option>
                 </select>
-                <label htmlFor="days">Hari :</label>
-                <select value={day} onChange={handleChangeDay} name="days" id="days">
+                <label className='form-label ms-3' htmlFor="days">Hari :</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' value={day} onChange={handleChangeDay} name="days" id="days">
                   <option value="">Hari :</option>
                   <option value="Senin">Senin</option>
                   <option value="Selasa">Selasa</option>
@@ -197,16 +199,16 @@ const Update_Klien_form = () => {
                   <option value="Kamis">Kamis</option>
                   <option value="Jumat">Jumat</option>
                 </select>
-                <label htmlFor="minggu">Minggu ke :</label>
-                <select value={week} onChange={handleChangeWeek} name="minggu" id="minggu">
+                <label className='form-label ms-3' htmlFor="minggu">Minggu ke :</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' value={week} onChange={handleChangeWeek} name="minggu" id="minggu">
                   <option value="">Minggu ke :</option>
                   <option value="1">Minggu ke 1</option>
                   <option value="2">Minggu ke 2</option>
                   <option value="3">Minggu ke 3</option>
                   <option value="4">Minggu ke 4</option>
                 </select>
-                <label htmlFor="bulan">Bulan :</label>
-                <select value={month} onChange={handleChangeMonth} name="bulan" id="bulan">
+                <label className='form-label ms-3' htmlFor="bulan">Bulan :</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' value={month} onChange={handleChangeMonth} name="bulan" id="bulan">
                   <option value="">bulan :</option>
                   <option value="1">Januari</option>
                   <option value="2">Februari</option>

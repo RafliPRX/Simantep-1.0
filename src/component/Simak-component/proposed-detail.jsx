@@ -281,187 +281,151 @@ const Proposed_Detail = () => {
       }
     return(
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>} 
-                <p>Simak/Formulir Pengajuan Proposal & LPJ</p>
-                <h1>Formulir Pengajuan Proposal <br /> & LPJ</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />
-                <div className='content-col'>
-                    <div className='box1'>
-                        <div className='content-f'>
-                            <h1>Data Diri</h1>
-                            <table>
-                            <tr>
-                              <td>Nama</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.nama}</td>
-                            </tr>
-                            <tr>
-                              <td>NIP/NRK</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.nrk_nip}</td>
-                            </tr>
-                            <tr>
-                              <td>NIP/NRK</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.jabatan}</td>
-                            </tr>
-                            <tr>
-                              <td>Units</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.units}</td>
-                            </tr>
-                            <tr>
-                              <td>Jenis Dokumen</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.dokumen}</td>
-                            </tr>
-                            <tr>
-                              <td>Nama Kegiatan</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.nama_kegiatan}</td>
-                            </tr>
-                            <tr>
-                              <td>Rencana Pelaksana</td>
-                            </tr>
-                            <tr>
-                              <td className='input'>{detail.rencana_pelaksana}</td>
-                            </tr>
-                            </table>
-                        </div>
-                        { role_sp === "S-07" && (
-                        <div className='content-f'>
-                          <h1>Jawab Admin Pelayanan</h1>
-                          <form action="">
+                <p className='content-header-p'>Simak/Formulir Pengajuan Proposal & LPJ</p>
+                <div className='d-flex justify-content-between align-items-center'>
+                  <h1 className='content-header-title mt-0'>Formulir Pengajuan Proposal <br /> & LPJ</h1>
+                  <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                
+                </div>
+                <div className='form-position d-flex flex-column'>
+                    <div className='form-display'>
+                        <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 pt-3 pb-3 mb-3'>
+                          <h1 className='form-h1 fw-bold ms-3'>Data Diri</h1>
                           <table>
-                            <tr style={{marginBottom: '15px'}}>
-                              <td>Jawaban</td>
+                            <tr>
+                              <td className='form-label ms-3'>Nama</td>
                             </tr>
-                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeAdm} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="3" id="" /></td>
-                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
+                            <tr>
+                              <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.nama}</td>
                             </tr>
-                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeAdm} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" /></td>
-                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
+                            <tr>
+                              <td className='form-label ms-3'>NIP/NRK</td>
+                            </tr>
+                            <tr>
+                              <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.nrk_nip}</td>
+                            </tr>
+                            <tr>
+                              <td className='form-label ms-3'>NIP/NRK</td>
+                            </tr>
+                            <tr>
+                              <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.jabatan}</td>
+                            </tr>
+                            <tr>
+                              <td className='form-label ms-3'>Units</td>
+                            </tr>
+                            <tr>
+                              <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.units}</td>
+                            </tr>
+                            <tr>
+                              <td className='form-label ms-3'>Jenis Dokumen</td>
+                            </tr>
+                            <tr>
+                              <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.dokumen}</td>
+                            </tr>
+                            <tr>
+                              <td className='form-label ms-3'>Nama Kegiatan</td>
+                            </tr>
+                            <tr>
+                              <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.nama_kegiatan}</td>
+                            </tr>
+                            <tr>
+                              <td className='form-label ms-3'>Rencana Pelaksana</td>
+                            </tr>
+                            <tr>
+                              <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.rencana_pelaksana}</td>
                             </tr>
                           </table>
-                          <button onClick={(e) => handleAdmin(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
+                        </div>
+                        { role_sp === "S-07" && (
+                        <div className='bg-green-old text-white d-flex flex-column align-items-center rounded-5 pt-3 pb-3 mb-3'>
+                          <h1 className='form-h1 fw-bold ms-3'>Jawab Admin Pelayanan</h1>
+                          <form action="">
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3'>
+                              <input className='form-check-input' onChange={handleChangeAdm} type="checkbox" name="" value="3" id="" />
+                              <label className='form-check-label' htmlFor="">Menerima</label>                            
+                            </div>
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3 mb-2'>
+                              <input className='form-check-input' onChange={handleChangeAdm} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" />
+                              <label className='form-check-label' style={{width: '100px'}} htmlFor="">Menolak</label>                              
+                            </div>
+                            <button onClick={(e) => handleAdmin(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>                          
                           </form>
                         </div>
                         )}
-                        { role === "S-02" && (
-                        <div className='content-f'>
-                          <h1>Jawab KASUBAG</h1>
+                        { role_sp === "S-02" && (
+                        <div className='bg-green-old text-white d-flex flex-column align-items-center rounded-5 pt-3 pb-3 mb-3'>
+                          <h1 className='form-h1 fw-bold ms-3'>Jawab KASUBAG</h1>
                           <form action="">
-                          <table>
-                            <tr style={{marginBottom: '15px'}}>
-                              <td>Jawaban</td>
-                            </tr>
-                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="3" id="" /></td>
-                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
-                            </tr>
-                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" /></td>
-                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
-                            </tr>
-                          </table>
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3'>
+                              <input className='form-check-input' onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="3" id="" />
+                              <label className='form-check-label' style={{width: '100px'}} htmlFor="">Menerima</label>  
+                            </div>
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3'>
+                              <input className='form-check-input' onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" />
+                              <label className='form-check-label' style={{width: '100px'}} htmlFor="">Menolak</label>                           
+                            </div>                                                                                                                                              
                           <button onClick={(e) => handleKasubag(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
                           </form>
                         </div>
                         )}
                         { role === "A-02" && (
-                        <div className='content-f'>
-                          <h1>Jawab KASUBAG</h1>
-                          <form action="">
-                          <table>
-                            <tr style={{marginBottom: '15px'}}>
-                              <td>Jawaban</td>
-                            </tr>
-                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="3" id="" /></td>
-                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
-                            </tr>
-                            <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                              <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" /></td>
-                              <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
-                            </tr>
-                          </table>
+                        <div className='bg-green-old text-white d-flex flex-column align-items-center rounded-5 pt-3 pb-3 mb-3'>
+                          <h1 className='form-h1 fw-bold ms-3'>Jawab KASUBAG</h1>
+                          <form action="">                            
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3'>
+                              <input className='form-check-input' onChange={handleChangeKasubag} type="checkbox" name="" value="3" id="" />
+                              <label className='form-check-label' htmlFor="">Menerima</label>                                
+                            </div>
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3'>
+                              <input className='form-check-input' onChange={handleChangeKasubag} style={{width: '20px', height: '20px'}} type="checkbox" name="" value="2" id="" />
+                              <label className='form-check-label' style={{width: '100px'}} htmlFor="">Menolak</label>
+                            </div>                            
                           <button onClick={(e) => handleKasubag(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
                           </form>
                         </div>
                         )}
                         { role === "S-01" && (
-                        <div className='content-f'>
-                          <h1>Jawab KEPALA BALAI</h1>
+                        <div className='bg-green-old text-white d-flex flex-column align-items-center rounded-5 pt-3 pb-3 mb-3'>
+                          <h1 className='form-h1 fw-bold ms-3'>Jawab KEPALA BALAI</h1>
                           <form action="">
-                            <table>
-                              <tr style={{marginBottom: '15px'}}>
-                                <td>Jawaban</td>
-                              </tr>
-                              <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={3} id="" /></td>
-                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
-                              </tr>
-                              <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input  onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={2} id="" /></td>
-                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
-                              </tr>
-                            </table>
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3'>
+                              <input className='form-check-input' onChange={handleChangeHead} type="checkbox" name="" value={3} id="" />
+                              <label className='form-check-label' htmlFor="">Menerima</label>                                                              
+                            </div>
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3'>
+                              <input className='form-check-input' onChange={handleChangeHead} type="checkbox" name="" value={2} id="" />
+                              <label className='form-check-label' htmlFor="">Menolak</label>                          
+                            </div>
                           </form>
                           <button onClick={(e) => handleHead(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
                         </div>
                         )}
                         { role === "A-01" && (
-                        <div className='content-f'>
-                          <h1>Jawab KEPALA BALAI</h1>
+                        <div className='bg-green-old text-white d-flex flex-column align-items-center rounded-5 pt-3 pb-3 mb-3'>
+                          <h1 className='form-h1 fw-bold ms-3'>Jawab KEPALA BALAI</h1>
                           <form action="">
-                            <table>
-                              <tr style={{marginBottom: '15px'}}>
-                                <td>Jawaban</td>
-                              </tr>
-                              <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={3} id="" /></td>
-                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menerima</label></td>                                                          
-                              </tr>
-                              <tr style={{display: 'flex', paddingLeft:'10px', marginBottom:'15px'}}>
-                                <td style={{width: '20px', height: '20px', marginLeft: '-32px'}} ><input  onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={2} id="" /></td>
-                                <td style={{width: '20px', height: '20px', paddingRight: '1px'}}><label style={{width: '100px'}} htmlFor="">Menolak</label></td>                                                          
-                              </tr>
-                            </table>
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3'>
+                              <input className='form-check-input' onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={3} id="" />
+                              <label className='form-check-label' style={{width: '100px'}} htmlFor="">Menerima</label>                                
+                            </div>
+                            <div className='d-flex flex-row align-items-center gap-3 ps-3'>
+                              <input className='form-check-input' onChange={handleChangeHead}  style={{width: '20px', height: '20px'}} type="checkbox" name="" value={2} id="" />
+                              <label className='form-check-label' style={{width: '100px'}} htmlFor="">Menolak</label>                          
+                            </div>
                           </form>
                           <button onClick={(e) => handleHead(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
                         </div>
                         )}
                         { role === "C-04" && (
-                        <div className='content-f'>
-                          <h1>Keterangan Keuangan</h1>
+                        <div className='bg-green-old text-white d-flex flex-column align-items-center rounded-5 pt-3 pb-3 mb-3'>
+                          <h1 className='form-h1 fw-bold ms-3'>Keterangan Keuangan</h1>
                           <form action="">
-                            <table>
-                              <tr style={{marginBottom: '15px'}}>
-                                <td>Jawaban</td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <label htmlFor="">Keterangan</label>
-                                </td>
-                              </tr>
-                              <tr>
-                                <td>
-                                  <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
-                                </td>
-                              </tr>
-                            </table>
-                          </form>
+                            <label className='form-label ms-3' htmlFor="">Keterangan</label>
+                            <textarea className='form-textarea ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeKeterangan} name="" id=""></textarea>
+                           </form>
                           <button onClick={(e) =>handleKeuangan(notif_detail?.id_notif, e)} className='submit' type="submit">Submit</button>
                         </div>
                         )}                        

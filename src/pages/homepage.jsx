@@ -542,11 +542,11 @@ const Homepage = () => {
                             <form className='container-xl d-flex flex-column gap-3'>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="nama">Nama: </label>
-                                <input className='input-form fs-5' value={nama} type="text" />
+                                <input className='input-form fs-5' disabled value={nama} type="text" />
                               </div>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="nrk_nip">NRK/NIP:</label>
-                                <input className='input-form fs-5' value={nrk_nip} type="text" />
+                                <input className='input-form fs-5' disabled value={nrk_nip} type="text" />
                               </div>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="username">Username:</label>
@@ -642,25 +642,25 @@ const Homepage = () => {
                               }
                             </div>
                           </div>  
-                        </div>                        
+                        </div>
                       </div>                      
                     </div>
                   </>
                 }
                 {level === 'level-2' && 
                   <>
-                    <div className='container-xxl bg-green-old p-5 d-flex flex-column m-5 rounded-5'>
+                    <div className='container-xl container-id bg-green-old p-5 m-5 rounded-5'>
                       <div className='d-flex flex-row align-items-center'>
-                        <div className='d-flex flex-column gap-3 col-md-6'>
+                        <div className='gap-3 col-md-6 id-card'>
                             <h1 className='text-white text-center'>Data Identitas</h1>
                             <form className='container-xxl d-flex flex-column gap-3'>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="nama">Nama: </label>
-                                <input className='input-form fs-5' value={nama} type="text" />
+                                <input className='input-form fs-5' disabled value={nama} type="text" />
                               </div>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="nrk_nip">NRK/NIP:</label>
-                                <input className='input-form fs-5' value={nrk_nip} type="text" />
+                                <input className='input-form fs-5' disabled value={nrk_nip} type="text" />
                               </div>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="username">Username:</label>
@@ -713,23 +713,46 @@ const Homepage = () => {
                               </div> */}
                             </form>
                         </div>
-                        <div className='col-md-6 text-white id-card'>
-                          <div className='d-flex flex-column align-items-center gap-4'>  
+                        <div className='d-flex flex-column align-items-center col-md-6 text-white'>
+                          <div className='d-flex flex-column align-items-center gap-4'> 
                             <h2>Identitas Pegawai</h2>
                             <div className='profile-picture'></div>
-                            <div className='d-flex flex-column align-items-center'>                                
+                            <div className='d-flex flex-column align-items-center text-nowrap'>                                
                                 <div className='d-flex flex-row'>
                                   <p>Nama: <span className='fw-bold'>{nama}</span></p>
                                 </div>
                                 <div className='d-flex flex-row'>                                  
                                   <p>NIP/NRK: <span className='fw-bold'>{nrk_nip}</span></p>
                                 </div>
-                                <div className='d-flex flex-row'>                                  
+                                <div className='d-flex flex-row'>
                                   <p>Jabatan: <span className='fw-bold'>{jabatan}</span></p>
                                 </div>
+                                {bagian_server === '' && 
+                                  <div className='bagian-android fs-5 text-yellow'>
+                                    <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                                    <div className='row'>                              
+                                      <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                        <option value="">Wajib diisi</option>
+                                        <option value="1">PNS</option>
+                                        <option value="2">PPPK Paruh Waktu</option>
+                                        <option value="3">PPPK Penuh Waktu</option>
+                                        <option value="4">Alih Daya</option>
+                                      </select>
+                                      <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                                    </div>                            
+                                  </div>
+                                }
+                                {bagian_server !== '' &&
+                                  <div className='d-flex flex-row'>
+                                    {bagian_server === '1' && <p>Status Pegawai: <span className='fw-bold'>PNS</span></p>}
+                                    {bagian_server === '2' && <p>Status Pegawai: <span className='fw-bold'>PPPK Paruh Waktu</span></p>}
+                                    {bagian_server === '3' && <p>Status Pegawai: <span className='fw-bold'>PPPK Penuh Waktu</span></p>}
+                                    {bagian_server === '4' && <p>Status Pegawai: <span className='fw-bold'>Alih Daya</span></p>}
+                                  </div>
+                              }
                             </div>
                           </div>  
-                        </div>                        
+                        </div>
                       </div>                      
                     </div>
                   </>
@@ -738,16 +761,16 @@ const Homepage = () => {
                   <>
                     <div className='container-xxl bg-green-old p-5 d-flex flex-column m-5 rounded-5'>
                       <div className='d-flex flex-row align-items-center'>
-                        <div className='d-flex flex-column gap-3 col-md-6'>
+                        <div className='gap-3 col-md-6 id-card'>
                             <h1 className='text-white text-center'>Data Identitas</h1>
                             <form className='container-xxl d-flex flex-column gap-3'>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="nama">Nama: </label>
-                                <input className='input-form fs-5' value={nama} type="text" />
+                                <input className='input-form fs-5' disabled value={nama} type="text" />
                               </div>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="nrk_nip">NRK/NIP:</label>
-                                <input className='input-form fs-5' value={nrk_nip} type="text" />
+                                <input className='input-form fs-5' disabled value={nrk_nip} type="text" />
                               </div>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="username">Username:</label>
@@ -800,23 +823,46 @@ const Homepage = () => {
                               </div> */}
                             </form>
                         </div>
-                        <div className='col-md-6 text-white id-card'>
-                          <div className='d-flex flex-column align-items-center gap-4'>  
+                        <div className='d-flex flex-column align-items-center col-md-6 text-white'>
+                          <div className='d-flex flex-column align-items-center gap-4'> 
                             <h2>Identitas Pegawai</h2>
                             <div className='profile-picture'></div>
-                            <div className='d-flex flex-column align-items-center'>                                
+                            <div className='d-flex flex-column align-items-center text-nowrap'>                                
                                 <div className='d-flex flex-row'>
                                   <p>Nama: <span className='fw-bold'>{nama}</span></p>
                                 </div>
                                 <div className='d-flex flex-row'>                                  
                                   <p>NIP/NRK: <span className='fw-bold'>{nrk_nip}</span></p>
                                 </div>
-                                <div className='d-flex flex-row'>                                  
+                                <div className='d-flex flex-row'>
                                   <p>Jabatan: <span className='fw-bold'>{jabatan}</span></p>
                                 </div>
+                                {bagian_server === '' && 
+                                  <div className='bagian-android fs-5 text-yellow'>
+                                    <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                                    <div className='row'>                              
+                                      <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                        <option value="">Wajib diisi</option>
+                                        <option value="1">PNS</option>
+                                        <option value="2">PPPK Paruh Waktu</option>
+                                        <option value="3">PPPK Penuh Waktu</option>
+                                        <option value="4">Alih Daya</option>
+                                      </select>
+                                      <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                                    </div>                            
+                                  </div>
+                                }
+                                {bagian_server !== '' &&
+                                  <div className='d-flex flex-row'>
+                                    {bagian_server === '1' && <p>Status Pegawai: <span className='fw-bold'>PNS</span></p>}
+                                    {bagian_server === '2' && <p>Status Pegawai: <span className='fw-bold'>PPPK Paruh Waktu</span></p>}
+                                    {bagian_server === '3' && <p>Status Pegawai: <span className='fw-bold'>PPPK Penuh Waktu</span></p>}
+                                    {bagian_server === '4' && <p>Status Pegawai: <span className='fw-bold'>Alih Daya</span></p>}
+                                  </div>
+                              }
                             </div>
                           </div>  
-                        </div>                        
+                        </div>
                       </div>                      
                     </div>
                   </>
@@ -825,16 +871,16 @@ const Homepage = () => {
                   <>
                     <div className='container-xxl bg-green-old p-5 d-flex flex-column m-5 rounded-5'>
                       <div className='d-flex flex-row align-items-center'>
-                        <div className='d-flex flex-column gap-3 col-md-6'>
+                        <div className='gap-3 col-md-6 id-card'>
                             <h1 className='text-white text-center'>Data Identitas</h1>
                             <form className='container-xxl d-flex flex-column gap-3'>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="nama">Nama: </label>
-                                <input className='input-form fs-5' value={nama} type="text" />
+                                <input className='input-form fs-5' disabled value={nama} type="text" />
                               </div>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="nrk_nip">NRK/NIP:</label>
-                                <input className='input-form fs-5' value={nrk_nip} type="text" />
+                                <input className='input-form fs-5' disabled value={nrk_nip} type="text" />
                               </div>
                               <div className='d-flex flex-column fs-5 text-yellow'>
                                 <label htmlFor="username">Username:</label>
@@ -887,23 +933,46 @@ const Homepage = () => {
                               </div> */}
                             </form>
                         </div>
-                        <div className='col-md-6 text-white id-card'>
-                          <div className='d-flex flex-column align-items-center gap-4'>  
+                        <div className='d-flex flex-column align-items-center col-md-6 text-white'>
+                          <div className='d-flex flex-column align-items-center gap-4'> 
                             <h2>Identitas Pegawai</h2>
                             <div className='profile-picture'></div>
-                            <div className='d-flex flex-column align-items-center'>                                
+                            <div className='d-flex flex-column align-items-center text-nowrap'>                                
                                 <div className='d-flex flex-row'>
                                   <p>Nama: <span className='fw-bold'>{nama}</span></p>
                                 </div>
                                 <div className='d-flex flex-row'>                                  
                                   <p>NIP/NRK: <span className='fw-bold'>{nrk_nip}</span></p>
                                 </div>
-                                <div className='d-flex flex-row'>                                  
+                                <div className='d-flex flex-row'>
                                   <p>Jabatan: <span className='fw-bold'>{jabatan}</span></p>
                                 </div>
+                                {bagian_server === '' && 
+                                  <div className='bagian-android fs-5 text-yellow'>
+                                    <label htmlFor="bagian">Status Pegawai (Wajib diisi)</label>
+                                    <div className='row'>                              
+                                      <select name="" id="" value={bagian_form} onChange={(e) => setBagian_form(e.target.value)}>
+                                        <option value="">Wajib diisi</option>
+                                        <option value="1">PNS</option>
+                                        <option value="2">PPPK Paruh Waktu</option>
+                                        <option value="3">PPPK Penuh Waktu</option>
+                                        <option value="4">Alih Daya</option>
+                                      </select>
+                                      <button className='bagian-button' onClick={(event) => updateStatus(event)}>Perbarui</button>
+                                    </div>                            
+                                  </div>
+                                }
+                                {bagian_server !== '' &&
+                                  <div className='d-flex flex-row'>
+                                    {bagian_server === '1' && <p>Status Pegawai: <span className='fw-bold'>PNS</span></p>}
+                                    {bagian_server === '2' && <p>Status Pegawai: <span className='fw-bold'>PPPK Paruh Waktu</span></p>}
+                                    {bagian_server === '3' && <p>Status Pegawai: <span className='fw-bold'>PPPK Penuh Waktu</span></p>}
+                                    {bagian_server === '4' && <p>Status Pegawai: <span className='fw-bold'>Alih Daya</span></p>}
+                                  </div>
+                              }
                             </div>
                           </div>  
-                        </div>                        
+                        </div>
                       </div>                      
                     </div>
                   </>
@@ -923,6 +992,8 @@ const Homepage = () => {
                     kode_role={currentKodeRole}
                     nama={nama}
                     kode_role_sp={kode_role_sp}
+                    nrk_nip={nrk_nip}
+                    bagian={bagian_server}
                   />
                 )}                    
                 <Footer />

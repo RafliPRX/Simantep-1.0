@@ -86,7 +86,7 @@ const Fix_form = () => {
       console.log(respone.data);
       setTimeout(() => {
         setIsLoading(false);
-        navigate(`/dashboard-laras/${level}/${role}/${role_sp}`);
+        navigate(`/dashboard-laras/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`);
         alert(respone.data.message);
       }, 1000);
     } catch (error) {
@@ -96,42 +96,63 @@ const Fix_form = () => {
   }
     return(
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>} 
-                <p>Silaras/Formulir Perbaikan</p>
-                <h1>Formulir Perbaikan</h1>
-                <Profile nama={nama} f_profile={storedFProfile} feature="silaras" />                 
-                <div className='content-col'>
-                    <div className='box1'>
+                <p className='content-header-p'>Silaras/Formulir Perbaikan</p>
+                <div className='d-flex justify-content-between align-items-center'>
+                  <h1 className='content-header-title mt-0'>Formulir Perbaikan</h1>
+                  <Profile nama={nama} f_profile={storedFProfile} feature="silaras" />
+                </div>                                 
+                <div className='form-position d-flex flex-column'>
+                    <div className='form-display'>
                         <form action="">
-                        <div className='content-f'>
-                            <h1>Data Perbaikan</h1>
-                            <label htmlFor="">Nama</label>
-                            <input value={nama} disabled placeholder='Nama' type="text"/>
-                            <label htmlFor="">NIP/NRK</label>
-                            <input  value={nrk_nip} disabled placeholder='NRK' type="text"/>
-                            <label htmlFor="">Jabatan</label>
-                            <input  value={jabatan} disabled placeholder='Jabatan' type="text"/>
+                        <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                            <h1 className='form-h1 fw-bold ms-3'>Data Perbaikan</h1>
+                            <label className='form-label ms-3' htmlFor="">Nama</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama} disabled placeholder='Nama' type="text"/>
+                            <label className='form-label ms-3' htmlFor="">NIP/NRK</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nrk_nip} disabled placeholder='NRK' type="text"/>
+                            <label className='form-label ms-3' htmlFor="">Jabatan</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={jabatan} disabled placeholder='Jabatan' type="text"/>
                             {level === 'level-1' && (
                               <>
-                                <label htmlFor="">Unit Kerja</label>
-                                <input value={nama_role} disabled placeholder='Units' type="text"/>
+                                <label className='form-label ms-3' htmlFor="">Unit Kerja</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role} disabled placeholder='Units' type="text"/>
                               </>
                             )}
                             {level === 'level-2' && (
                               <>
-                                <label htmlFor="">Unit Kerja</label>
-                                <input value={nama_role_c} disabled placeholder='Units' type="text"/>
+                                <label className='form-label ms-3' htmlFor="">Unit Kerja</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role_c} disabled placeholder='Units' type="text"/>
                               </>
                             )}
-                            <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
-                            <textarea onChange={handleChangeFixing} value={fixing} placeholder='Permintaan Perbaikan' name="" id=""></textarea>
-                            <label htmlFor="">Bukti Foto Rusak (Maks.2 MB)</label>
-                            <input onChange={handleChangeImage} type="file" name="" id="" />
+                            <label className='form-label ms-3' htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
+                            <textarea className='form-textarea ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeFixing} value={fixing} placeholder='Permintaan Perbaikan' name="" id=""></textarea>
+                            <div className="d-flex flex-column">
+                            <label className="form-label ms-3" htmlFor="sakit-file">
+                              Upload Bukti Gambar (Maks. 2Mb)
+                            </label>
+                            <div className="custom-file-row ms-3 mb-3">
+                              <label className="custom-file-btn" htmlFor="sakit-file">
+                                Choose file
+                              </label>
+                              <input
+                                id="sakit-file"
+                                className="custom-file-input"
+                                type="file"
+                                onChange={handleChangeImage}
+                              />
+                              <span className="custom-file-name">
+                                {image ? image.name : 'No file chosen'}
+                              </span>
+                            </div>                      
+                          </div>
                         </div>
-                        <button onClick={handleRequest} className='submit' type="submit">Submit</button>
+                        <div className='d-flex flex-column align-items-center w-100'>
+                            <button onClick={handleRequest} className='submit'>Kirim</button>
+                        </div>
                         </form>
                     </div>
                 </div>

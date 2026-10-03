@@ -120,89 +120,91 @@ const Vehicle_Detail = () => {
     }
     return(
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>} 
-                <p>Silaras/Formulir Peminjaman Kendaraan Dinas</p>
-                <h1>Formulir Peminjaman <br /> Kendaraan Dinas</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
-                <div className='content-col'>
-                  <div className='box1'>
+                <p className='content-header-p'>Silaras/Formulir Peminjaman Kendaraan Dinas</p>
+                <div className='d-flex justify-content-between align-items-center'>
+                  <h1 className='content-header-title'>Formulir Peminjaman <br /> Kendaraan Dinas</h1>
+                  <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                
+                </div>
+                <div className='form-position d-flex flex-column'>
+                  <div className='form-display'>
                         <form action="">
-                        <div className='content-f'>
-                            <h1>Data Diri Peminjam</h1>
-                            <label htmlFor="">Nama</label>
-                            <input name='nama' value={detail.nama} disabled type="text"/>
+                        <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                            <h1 className='form-h1 fw-bold ms-3'>Data Diri Peminjam</h1>
+                            <label className='form-label ms-3' htmlFor="">Nama</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='nama' value={detail.nama} disabled type="text"/>
                             <input value={notif_detail.id_notif} type="hidden"/>
-                            <label htmlFor="">NRK/NIP</label>
-                            <input name='nrk' value={detail.nrk_nip} disabled type="text"/>
-                            <label htmlFor="">Jabatan</label>
-                            <input name='jabatan' value={detail.jabatan} disabled type="text"/>
-                            <label htmlFor="">Unit Kerja</label>
+                            <label className='form-label ms-3' htmlFor="">NRK/NIP</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='nrk' value={detail.nrk_nip} disabled type="text"/>
+                            <label className='form-label ms-3' htmlFor="">Jabatan</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='jabatan' value={detail.jabatan} disabled type="text"/>
+                            <label className='form-label ms-3' htmlFor="">Unit Kerja</label>
                             {level === "level-1" && (
-                              <input name='unit' value={detail.nama_role} disabled type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='unit' value={detail.nama_role} disabled type="text"/>
                             )}
                             {level === "level-2" && (
-                              <input name='unit' value={detail.nama_role_c} disabled type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='unit' value={detail.nama_role_c} disabled type="text"/>
                             )}
                             {level === "level-3" && (
-                              <input name='unit' value={detail.nama_role_b} disabled type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='unit' value={detail.nama_role_b} disabled type="text"/>
                             )}
                             {level === "level-4" && (
-                              <input name='unit' value={detail.nama_role_a} disabled type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='unit' value={detail.nama_role_a} disabled type="text"/>
                             )}
-                            <label htmlFor="">Jenis Peminjaman Kendaraan (Pilih Satu)</label>
-                            <div className='check'>
-                                <input checked={detail.jenis === "Roda 2"}  value={"Roda 2"} type="checkbox" name="" id="" />
-                                <label htmlFor="">Roda 2</label>
+                            <label className='form-label ms-3' htmlFor="">Jenis Peminjaman Kendaraan (Pilih Satu)</label>
+                            <div className='d-flex flex-row align-items-center gap-2 ps-3'>
+                                <input className='form-check-input' checked={detail.jenis === "Roda 2"}  value={"Roda 2"} type="checkbox" name="" id="" />
+                                <label className='form-check-label' htmlFor="">Roda 2</label>
                             </div> 
-                            <div className='check'> 
-                                <input checked={detail.jenis === "Roda 4"}  value={"Roda 4"} type="checkbox" name="" id="" />
-                                <label htmlFor="" >Roda 4</label>
+                            <div className='d-flex flex-row align-items-center gap-2 ps-3'> 
+                                <input className='form-check-input' checked={detail.jenis === "Roda 4"}  value={"Roda 4"} type="checkbox" name="" id="" />
+                                <label className='form-check-label' htmlFor="" >Roda 4</label>
                             </div> 
-                            <div className='check'> 
-                                <input checked={detail.jenis === "Roda 6"}  value={"Roda 6"} type="checkbox" name="" id="" />
-                                <label htmlFor="">Roda 6</label>
+                            <div className='d-flex flex-row align-items-center gap-2 ps-3'> 
+                                <input className='form-check-input' checked={detail.jenis === "Roda 6"}  value={"Roda 6"} type="checkbox" name="" id="" />
+                                <label className='form-check-label' htmlFor="">Roda 6</label>
                             </div>
-                            <label htmlFor="">Tujuan Peminjaman</label>
-                            <input type="text" value={detail.tujuan} disabled placeholder='Tujuan Peminjaman' />
-                            <label htmlFor="">Keperluan Peminjaman</label>
-                            <input type="text" value={detail.keperluan} disabled placeholder='Keperluan Peminjaman' />
-                            <label htmlFor="">Tanggal Peminjaman</label>
-                            <input required value={detail.tanggal_pinjam} disabled type="date"/>
-                            <label htmlFor="">Jam Peminjaman</label>
-                            <input required value={detail.jam_pinjam} disabled type="time"/>
-                            <label htmlFor="">Durasi Peminjaman</label>
-                            <input required value={detail.durasi_pinjam} disabled type="text"/>
+                            <label className='form-label ms-3' htmlFor="">Tujuan Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' type="text" value={detail.tujuan} disabled placeholder='Tujuan Peminjaman' />
+                            <label className='form-label ms-3' htmlFor="">Keperluan Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' type="text" value={detail.keperluan} disabled placeholder='Keperluan Peminjaman' />
+                            <label className='form-label ms-3' htmlFor="">Tanggal Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' required value={detail.tanggal_pinjam} disabled type="date"/>
+                            <label className='form-label ms-3' htmlFor="">Jam Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' required value={detail.jam_pinjam} disabled type="time"/>
+                            <label className='form-label ms-3' htmlFor="">Durasi Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' required value={detail.durasi_pinjam} disabled type="text"/>
                         </div>                        
                         </form>
                     </div>
                     {detail.Approval !== "1" && (
-                      <div className='box1'>
+                      <div className='form-display'>
                         <form action="">
-                          <div className='content-f'>
+                          <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
                             <h1>Jawab</h1>
-                            <label htmlFor="">Jawaban</label>
+                            <label className='form-label ms-3' htmlFor="">Jawaban</label>
                             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
-                              <input  style={{width: '20px', height: '20px'}} checked={detail.Approval === "3"} type="checkbox" value='3' name="" id="" />
+                              <input style={{width: '20px', height: '20px'}} checked={detail.Approval === "3"} type="checkbox" value='3' name="" id="" />
                               <label htmlFor="">Menerima</label>
                             </div>
                             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                               <input style={{width: '20px', height: '20px'}} checked={detail.Approval === "2"} type="checkbox" value='2' name="" id="" />
                               <label htmlFor="">Menolak</label>
                             </div>
-                            <textarea value={detail.jawab} disabled name="" id=""></textarea>
+                            <textarea className='form-textarea ms-3 mb-4 ps-2 rounded-3' value={detail.jawab} disabled name="" id=""></textarea>
                           </div>
                         </form>
                       </div>
                     )}                      
                     {role === "C-03" && (
-                      <div className='box1'>
+                      <div className='form-display'>
                         <form action="">
-                          <div className='content-f'>
+                          <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
                             <h1>Jawab</h1>
-                            <label htmlFor="">Jawaban</label>
+                            <label className='form-label ms-3' htmlFor="">Jawaban</label>
                             <div style={{display: 'flex', flexDirection: 'row', alignItems: 'center'}}>
                               <input onChange={handleChangeStatus} style={{width: '20px', height: '20px'}} type="checkbox" value='3' name="" id="" />
                               <label htmlFor="">Menerima</label>
@@ -211,7 +213,7 @@ const Vehicle_Detail = () => {
                               <input onChange={handleChangeStatus} style={{width: '20px', height: '20px'}} type="checkbox" value='2' name="" id="" />
                               <label htmlFor="">Menolak</label>
                             </div>
-                            <textarea onChange={handleChangeJawaban} name="" id=""></textarea>
+                            <textarea className='form-textarea ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeJawaban} name="" id=""></textarea>
                           </div>
                           <button onClick={(e)=>handleJawab(notif_detail.id_notif,e)} className='submit'>Kirim</button>
                         </form>

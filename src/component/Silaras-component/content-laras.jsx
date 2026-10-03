@@ -33,6 +33,8 @@ const Content_laras = () => {
     const { level } = useParams();
     const { role } = useParams();
     const { role_sp } = useParams();
+    const { nama } = useParams();
+    const { nrk_nip } = useParams();    
     const [fix, setFix] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [pagination_fix, setPagination_Fix] = useState({
@@ -377,7 +379,7 @@ const Content_laras = () => {
         if (stat === 'Active') {
           mark_Fix(id_notif, id);
         } else {
-          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-perbaikan/${id}`);
+          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/form-perbaikan/${id}`);
         }        
       }
       const handleOpenVehicle = (id, stat, id_notif, e) => {
@@ -385,7 +387,7 @@ const Content_laras = () => {
         if (stat === 'Active') {
           mark_Vehicle(id_notif, id);
         } else {
-          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-kendaraan-dinas/${id}`);
+          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/form-kendaraan-dinas/${id}`);
         }
       }
       const handleOpenBHP = (id, stat, id_notif, e) => {
@@ -393,7 +395,7 @@ const Content_laras = () => {
         if (stat === 'Active') {
           mark_Bhp(id_notif, id);
         } else {
-          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/form-permintaan-barang-baru/${id}`);
+          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/form-permintaan-barang-baru/${id}`);
         }
       }
       const handleDownloadExcelFix = () => {
@@ -425,49 +427,55 @@ const Content_laras = () => {
       // }
       return(
         <>
-            <div className='container-fluid d-flex flex-column p-5 m-2 justify-content-left'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>}
-                <p className='text-white fs-5'>Silaras/Database Sarpras</p>
-                <h1 className='text-white fs-1 mt-0'>Sistem Layanan Sarana dan Prasarana</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />
-                <div className='container-xxl d-flex flex-column bg-green-old align-items-start p-5 m-2 gap-5' style={{borderRadius: '20px'}}>
-                    <div className='container-xxl d-flex flex-column'>
+                <p className='content-header-p'>Silaras/Database Sarpras</p>               
+                <div className='d-flex flex-row align-items-center justify-content-between gap-5'>
+                    <h1 className='content-header-title mt-0'>Sistem Layanan Sarana dan Prasarana</h1>
+                    <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />
+                </div>
+                <div className='container-xxl content-display bg-green-old align-items-start' style={{borderRadius: '20px'}}>
+                    <div className='container-xxl d-flex flex-column gap-4'>
                       {(role !== "C-03" && role_sp !== "S-03" ) &&
                         <div style={{display: level === "level-4" ? 'none' : ''}} className='d-flex flex-column'>
-                            <h1 className='text-white fw-bold fs-3'>Daftar Form Perbaikan</h1>
-                            <div style={{display: "flex" , flexDirection: "row", gap: "20px"}}>
+                            <h1 className='content-title fw-bold mt-0'>Daftar Form Perbaikan</h1>
+                            <div className='header-content'>
                               <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Fix}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_fix?.current_page} />
                                   <button className='right' onClick={handleNext_Fix}><img src={right} alt="" /></button>
                               </div>
-                              <div className='d-flex flex-row align-items-center gap-2'>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonth} value={searchMonth} name="" id="">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                </select>                                
+                              <div className='gap-2 header-search-content'>
+                                <div className='header-month'>
+                                  <label className='text-month-search' htmlFor="">Bulan:</label>
+                                  <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonth} value={searchMonth} name="" id="">
+                                      <option value="01">Januari</option>
+                                      <option value="02">Februari</option>
+                                      <option value="03">Maret</option>
+                                      <option value="04">April</option>
+                                      <option value="05">Mei</option>
+                                      <option value="06">Juni</option>
+                                      <option value="07">Juli</option>
+                                      <option value="08">Agustus</option>
+                                      <option value="09">September</option>
+                                      <option value="10">Oktober</option>
+                                      <option value="11">November</option>
+                                      <option value="12">Desember</option>
+                                  </select>
+                                </div>
+                                <div className='header-year'>
+                                  <label className='text-year-search' htmlFor="">Tahun:</label>
+                                  <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                      <option value="2025">2025</option>
+                                      <option value="2026">2026</option>
+                                  </select>
+                                </div>                                                                
                               </div>
                             </div>
                             {fix.length > 0 ? (
-                            <table className='text-white mt-4'>
+                            <table className='table-spaced mt-3' border='1'>
                               <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
                                 <th style={{textAlign:'center'}}>id Form</th>
@@ -508,45 +516,51 @@ const Content_laras = () => {
                               ))}
                             </table>
                             ) : (
-                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
+                                <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                             )}                        
                         </div>
                       }
                       {(role === "C-03" || level === "level-4") && (
                         <div className='d-flex flex-column'>
-                            <h1 className='text-white fw-bold fs-3'>Daftar Form Perbaikan Sarpras</h1>
-                            <div style={{display: "flex" , flexDirection: "row", gap: "20px"}}>
+                            <h1 className='content-title fw-bold mt-0'>Daftar Form Perbaikan Sarpras</h1>
+                            <div className='header-content'>
                               <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='d-flex flex-row align-items-center gap-2'>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonth} value={searchMonth} name="" id="">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                    <option selected={currentYear === 2025} value="2025">2025</option>
-                                    <option selected={currentYear === 2026} value="2026">2026</option>
-                                </select>
-                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelFix}>Download Excel</button>
+                              <div className='gap-2 header-search-content'>
+                                <div className='header-month align-items-center'>
+                                  <label className='text-month-search' htmlFor="">Bulan:</label>
+                                  <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonth} value={searchMonth} name="" id="">
+                                      <option value="01">Januari</option>
+                                      <option value="02">Februari</option>
+                                      <option value="03">Maret</option>
+                                      <option value="04">April</option>
+                                      <option value="05">Mei</option>
+                                      <option value="06">Juni</option>
+                                      <option value="07">Juli</option>
+                                      <option value="08">Agustus</option>
+                                      <option value="09">September</option>
+                                      <option value="10">Oktober</option>
+                                      <option value="11">November</option>
+                                      <option value="12">Desember</option>
+                                  </select>      
+                                </div>
+                                <div className='header-year align-items-center'>
+                                  <label className='text-year-search' htmlFor="">Tahun:</label>
+                                  <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                      <option selected={currentYear === 2025} value="2025">2025</option>
+                                      <option selected={currentYear === 2026} value="2026">2026</option>
+                                  </select>       
+                                </div>
+                                <div>
+                                    <button className='btn-download w-100 p-2 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelFix}>Download Excel</button>                              
+                                </div>
                               </div>
                             </div>
                             {fix_sarpras.length > 0 ? (
-                            <table className='text-white mt-4'>
+                            <table className='table-spaced mt-3' border="1">
                               <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
                                 <th style={{textAlign:'center'}}>id Form</th>
@@ -587,45 +601,51 @@ const Content_laras = () => {
                               ))}
                             </table>
                             ) : (
-                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
+                                <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
                       {role_sp === "S-03" && (
                         <div className='d-flex flex-column'>
-                            <h1 className='text-white fw-bold fs-3'>Daftar Form Perbaikan Sarpras</h1>
-                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>
+                            <h1 className='content-title fw-bold mt-0'>Daftar Form Perbaikan Sarpras</h1>
+                            <div className='header-content'>
                               <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Fix_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_fix_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Fix_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='d-flex flex-row align-items-center gap-2'>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonth} value={searchMonth} name="" id="">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                </select>
-                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelFix}>Download Excel</button>
+                              <div className='gap-2 header-search-content'>
+                                <div className='header-month align-items-center'>
+                                  <label className='text-month-search' htmlFor="">Bulan:</label>
+                                  <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonth} value={searchMonth} name="" id="">
+                                      <option value="01">Januari</option>
+                                      <option value="02">Februari</option>
+                                      <option value="03">Maret</option>
+                                      <option value="04">April</option>
+                                      <option value="05">Mei</option>
+                                      <option value="06">Juni</option>
+                                      <option value="07">Juli</option>
+                                      <option value="08">Agustus</option>
+                                      <option value="09">September</option>
+                                      <option value="10">Oktober</option>
+                                      <option value="11">November</option>
+                                      <option value="12">Desember</option>
+                                  </select>                                
+                                </div>
+                                <div className='header-year align-items-center'>
+                                  <label className='text-year-search' htmlFor="">Tahun:</label>
+                                  <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                      <option value="2025">2025</option>
+                                      <option value="2026">2026</option>
+                                  </select>                                
+                                </div>
+                                <div>
+                                  <button className='btn-download w-100 h-100 p-2 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelFix}>Download Excel</button>                              
+                                </div>
                               </div>
                             </div>                            
                             {fix_sarpras.length > 0 ? (
-                            <table className='text-white mt-4'>
+                            <table className='table-spaced mt-3' border="1">
                               <tr>
                                 <th style={{textAlign:'center'}}>Nomor</th>
                                 <th style={{textAlign:'center'}}>id Form</th>
@@ -666,44 +686,48 @@ const Content_laras = () => {
                               ))}
                             </table>
                             ) : (
-                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
+                                <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
                       { (role !== "C-03" && role_sp !== "S-03" ) &&(
                           <div style={{display: level === "level-4" ? 'none' : ''}} className='d-flex flex-column'>
-                            <h1 className='text-white fw-bold fs-3'>Daftar Form Peminjaman Kendaraan Dinas</h1>
-                            <div style={{display: 'flex', flexDirection: "row", gap: "20px"}}>                            
+                            <h1 className='content-title fw-bold mt-0'>Daftar Form Peminjaman Kendaraan Dinas</h1>
+                            <div className='header-content'>                            
                               <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Vehicle}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Vehicle}><img src={right} alt="" /></button>
                               </div>
-                              <div className='d-flex flex-row align-items-center gap-2'>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                    <option selected={currentYear === 2025} value="2025">2025</option>
-                                    <option selected={currentYear === 2026} value="2026">2026</option>
-                                </select>
+                              <div className='gap-2 header-search-content'>
+                                <div className='header-month'>
+                                  <label className='text-month-search' htmlFor="">Bulan:</label>
+                                  <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
+                                      <option value="01">Januari</option>
+                                      <option value="02">Februari</option>
+                                      <option value="03">Maret</option>
+                                      <option value="04">April</option>
+                                      <option value="05">Mei</option>
+                                      <option value="06">Juni</option>
+                                      <option value="07">Juli</option>
+                                      <option value="08">Agustus</option>
+                                      <option value="09">September</option>
+                                      <option value="10">Oktober</option>
+                                      <option value="11">November</option>
+                                      <option value="12">Desember</option>
+                                  </select>
+                                </div>
+                                <div className='header-year'>
+                                  <label className='text-year-search' htmlFor="">Tahun:</label>
+                                  <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                      <option selected={currentYear === 2025} value="2025">2025</option>
+                                      <option selected={currentYear === 2026} value="2026">2026</option>
+                                  </select>
+                                </div>
                               </div>
                             </div>
                             {vehicle.length > 0 ? (
-                            <table className='text-white mt-4'>
+                            <table className='table-spaced mt-3' border='1'>
                                 <tr>
                                     <th style={{textAlign:'center'}}>Nomor</th>                                    
                                     <th style={{textAlign:'center'}}>Nama</th>
@@ -751,45 +775,51 @@ const Content_laras = () => {
                           ))}
                             </table>
                             ) : (
-                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
+                                <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
                       {(role === "C-03" || level === "level-4") && (
                         <div className='d-flex flex-column'>
-                            <h1 className='text-white fw-bold fs-3'>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
-                            <div style={{display:'flex', flexDirection:'row', gap: "20px"}}>                          
+                            <h1 className='content-title fw-bold mt-0'>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
+                            <div className='header-content'>                          
                               <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='d-flex flex-row align-items-center gap-2'>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                </select>
-                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelVehicle}>Download Excel</button>
+                              <div className='header-search-content gap-2'>
+                                <div className='header-month align-items-center'>
+                                  <label className='text-month-search' htmlFor="">Bulan:</label>
+                                  <select className='w-100 h-100 rounded-2 fs-6 lh-lg pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
+                                      <option value="01">Januari</option>
+                                      <option value="02">Februari</option>
+                                      <option value="03">Maret</option>
+                                      <option value="04">April</option>
+                                      <option value="05">Mei</option>
+                                      <option value="06">Juni</option>
+                                      <option value="07">Juli</option>
+                                      <option value="08">Agustus</option>
+                                      <option value="09">September</option>
+                                      <option value="10">Oktober</option>
+                                      <option value="11">November</option>
+                                      <option value="12">Desember</option>
+                                  </select>
+                                </div>
+                                <div className='header-year align-items-center'>
+                                  <label className='text-year-search' htmlFor="">Tahun:</label>
+                                  <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                      <option value="2025">2025</option>
+                                      <option value="2026">2026</option>
+                                  </select>
+                                </div>
+                                <div>
+                                  <button className='btn-download p-2 w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelVehicle}>Download Excel</button>                              
+                                </div>
                               </div>
                             </div>
                             {vehicle_sarpras.length > 0 ? (
-                            <table className='text-white mt-4'>
+                            <table className='table-spaced mt-3' border='1'>
                                 <tr>
                                     <th style={{textAlign:'center'}}>Nomor</th>                                    
                                     <th style={{textAlign:'center'}}>Nama</th>
@@ -837,45 +867,51 @@ const Content_laras = () => {
                           ))}
                             </table>
                             ) : (
-                                <p style={{display:'flex', paddingTop:'10px', justifyContent:'center', paddingLeft:'400px'}}>tidak ada data</p>
+                                <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
                       { role_sp === "S-03" && (
                         <div className='d-flex flex-column'>
-                            <h1 className='text-white fw-bold fs-3'>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
-                            <div style={{display:'flex', flexDirection:'row', gap: "20px"}}>                          
+                            <h1 className='content-title fw-bold mt-0'>Daftar Form Peminjaman Kendaraan Dinas Sarpras</h1>
+                            <div className='header-content'>                          
                               <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Vehicle_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_vehicle_sarpras?.current_page} />
                                   <button className='right' onClick={handleNext_Vehicle_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='d-flex flex-row align-items-center gap-2'>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                </select>
-                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelVehicle}>Download Excel</button>
+                              <div className='header-search-content gap-2'>
+                                <div className='header-month align-items-center'>
+                                  <label className='text-month-search' htmlFor="">Bulan:</label>
+                                  <select className='w-100 h-100 rounded-2 fs-6 lh-lg pagination-search' onChange={handleSearchMonthVehicle} value={searchMonthVehicle} name="" id="">
+                                      <option value="01">Januari</option>
+                                      <option value="02">Februari</option>
+                                      <option value="03">Maret</option>
+                                      <option value="04">April</option>
+                                      <option value="05">Mei</option>
+                                      <option value="06">Juni</option>
+                                      <option value="07">Juli</option>
+                                      <option value="08">Agustus</option>
+                                      <option value="09">September</option>
+                                      <option value="10">Oktober</option>
+                                      <option value="11">November</option>
+                                      <option value="12">Desember</option>
+                                  </select>
+                                </div>
+                                <div className='header-year align-items-center'>
+                                  <label className='text-year-search' htmlFor="">Tahun:</label>
+                                  <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                      <option value="2025">2025</option>
+                                      <option value="2026">2026</option>
+                                  </select>
+                                </div>
+                                <div>
+                                  <button className='btn-download p-2 w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelVehicle}>Download Excel</button>                              
+                                </div>
                               </div>
                             </div>
                             {vehicle_sarpras.length > 0 ? (
-                            <table className='text-white mt-4'>
+                            <table className='table-spaced mt-3' border='1'>
                                 <tr>
                                     <th style={{textAlign:'center'}}>Nomor</th>                                    
                                     <th style={{textAlign:'center'}}>Nama</th>
@@ -923,122 +959,132 @@ const Content_laras = () => {
                           ))}
                             </table>
                             ) : (
-                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
+                                <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
                       {(role !== "C-03" && role_sp !== "S-03") && (
                         <div style={{display: level === "level-4" ? 'none' : 'flex'}} className='d-flex flex-column'>
-                            <h1 className='text-white fw-bold fs-3'>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
-                            <div style={{display: 'flex', flexDirection: 'row', gap: "20px"}}>                          
+                            <h1 className='content-title fw-bold mt-0'>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor</h1>
+                            <div className='header-content'>                          
                               <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Request}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_request?.current_page} />
                                   <button className='right' onClick={handleNext_Request}><img src={right} alt="" /></button>
                               </div>
-                              <div className='d-flex flex-row align-items-center gap-2'>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                </select>
+                              <div className=' header-search-content gap-2'>
+                                <div className='header-month'>
+                                  <label className='text-month-search' htmlFor="">Bulan:</label>
+                                  <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
+                                      <option value="01">Januari</option>
+                                      <option value="02">Februari</option>
+                                      <option value="03">Maret</option>
+                                      <option value="04">April</option>
+                                      <option value="05">Mei</option>
+                                      <option value="06">Juni</option>
+                                      <option value="07">Juli</option>
+                                      <option value="08">Agustus</option>
+                                      <option value="09">September</option>
+                                      <option value="10">Oktober</option>
+                                      <option value="11">November</option>
+                                      <option value="12">Desember</option>
+                                  </select>                                
+                                </div>
+                                <div className='header-year'>
+                                  <label className='text-year-search' htmlFor="">Tahun:</label>
+                                  <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                      <option value="2025">2025</option>
+                                      <option value="2026">2026</option>
+                                  </select>
+                                </div>
                               </div>
                             </div>
                             {request.length > 0 ? (
-                            <table className='text-white mt-4'>
-                                <tr>
-                                   <th style={{textAlign:'center'}}>Nomor</th>
-                                   <th style={{textAlign:'center'}}>Nama</th>
-                                   <th style={{textAlign:'center'}}>NIP/NRK</th>
-                                   <th style={{textAlign:'center'}}>Unit Kerja</th>
-                                   <th style={{textAlign:'center'}}>Permohonan Barang</th>
-                                   <th style={{textAlign:'center'}}>Approval Status</th>
-                                   <th style={{textAlign:'center'}}>Jawaban</th>
-                                   <th style={{textAlign:'center'}}>Detail</th>
-                                </tr>
+                            <table className='table-spaced mt-3' border='1'>
+                              <tr>
+                                <th style={{textAlign:'center'}}>Nomor</th>
+                                <th style={{textAlign:'center'}}>Nama</th>
+                                <th style={{textAlign:'center'}}>NIP/NRK</th>
+                                <th style={{textAlign:'center'}}>Unit Kerja</th>
+                                <th style={{textAlign:'center'}}>Permohonan Barang</th>
+                                <th style={{textAlign:'center'}}>Approval Status</th>
+                                <th style={{textAlign:'center'}}>Jawaban</th>
+                                <th style={{textAlign:'center'}}>Detail</th>
+                              </tr>
                               {request.map((item, index) => (
                                 <tr key={item.id}>
-                                    <td style={{textAlign:'center'}}>{index + 1}</td>
-                                    <td style={{textAlign:'center'}}>{item.nama}</td>
-                                    <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
-                                    {level === "level-1" && (
-                                    <td style={{textAlign:'center'}}>{item.nama_role}</td>
-                                    )}
-                                    {level === "level-2" && (
-                                      <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
-                                    )}
-                                    {level === "level-3" && (
-                                      <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
-                                    )}
-                                    {level === "level-4" && (
-                                      <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
-                                    )}
-                                    <td style={{textAlign:'center'}}>{item.barang}</td>
-                                    <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
-                                    <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
-                                    <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
-                                    <td style={{textAlign:'center'}}>{item.jawab}</td>
-                                    <td style={{textAlign:'center'}}> <button className='B-update' onClick={(e) => handleOpenBHP(item.id_bhp, item.stat, item.id_notif, e)}>Lihat Disini</button>
-                                    <br /><div><button className='B-deleted' onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
+                                  <td style={{textAlign:'center'}}>{index + 1}</td>
+                                  <td style={{textAlign:'center'}}>{item.nama}</td>
+                                  <td style={{textAlign:'center'}}>{item.nrk_nip}</td>
+                                  {level === "level-1" && (
+                                  <td style={{textAlign:'center'}}>{item.nama_role}</td>
+                                  )}
+                                  {level === "level-2" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_c}</td>
+                                  )}
+                                  {level === "level-3" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_b}</td>
+                                  )}
+                                  {level === "level-4" && (
+                                    <td style={{textAlign:'center'}}>{item.nama_role_a}</td>
+                                  )}
+                                  <td style={{textAlign:'center'}}>{item.barang}</td>
+                                  <td style={{textAlign:'center', display: item.Approval === '1' ? 'block' : 'none', marginTop: '30px'}}> <img src={white} alt="" /> </td>
+                                  <td style={{textAlign:'center', display: item.Approval === '2' ? 'block' : 'none', marginTop: '30px'}}> <img src={red} alt="" /> </td>
+                                  <td style={{textAlign:'center', display: item.Approval === '3' ? 'block' : 'none', marginTop: '30px'}}> <img src={green} alt="" /> </td>
+                                  <td style={{textAlign:'center'}}>{item.jawab}</td>
+                                  <td style={{textAlign:'center'}}> <button className='B-update' onClick={(e) => handleOpenBHP(item.id_bhp, item.stat, item.id_notif, e)}>Lihat Disini</button>
+                                  <br /><div><button className='B-deleted' onClick={() => handleDeleteRequest(item.id_bhp)}>Hapus</button></div>
                                 </td>
                             </tr>
                           ))}
                             </table>
                             ) : (
-                                <p className='fs-5 fw-bold text-white text-center mt-4'>tidak ada data</p>
+                                <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                             )}                        
                         </div>
                       )}
-                      { (role === "C-03" || level === "level-4") && (
+                      {(role === "C-03" || level === "level-4") && (
                         <div className='d-flex flex-column'>
-                            <h1 className='text-white fw-bold fs-3'>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
-                            <div style={{display:'flex', flexDirection:'row', gap: "20px"}}>                            
+                            <h1 className='content-title fw-bold mt-0'>Daftar Form Permohonan Barang Habis Pakai dan Alat Tulis Kantor Sarpras</h1>
+                            <div className='header-content'>                            
                               <div className='d-flex flex-row gap-2'>
                                   <button className='left' onClick={handlePrev_Request_Sarpras}><img src={left} alt="" /></button>
                                   <input className='page-number' type="text" value={pagination_request_sapras?.current_page} />
                                   <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
                               </div>
-                              <div className='d-flex flex-row align-items-center gap-2'>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                </select>
-                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelRequest}>Download Excel</button>
+                              <div className='d-flex header-search-content gap-2'>
+                                <div className='header-month align-items-center'>
+                                  <label className='text-month-search' htmlFor="">Bulan:</label>
+                                  <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
+                                      <option value="01">Januari</option>
+                                      <option value="02">Februari</option>
+                                      <option value="03">Maret</option>
+                                      <option value="04">April</option>
+                                      <option value="05">Mei</option>
+                                      <option value="06">Juni</option>
+                                      <option value="07">Juli</option>
+                                      <option value="08">Agustus</option>
+                                      <option value="09">September</option>
+                                      <option value="10">Oktober</option>
+                                      <option value="11">November</option>
+                                      <option value="12">Desember</option>
+                                  </select>      
+                                </div>
+                                <div className='header-year align-items-center'>
+                                  <label className='text-year-search' htmlFor="">Tahun:</label>
+                                  <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                      <option value="2025">2025</option>
+                                      <option value="2026">2026</option>
+                                  </select>                                
+                                </div>
+                                <div>
+                                  <button className='btn-download p-2 w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelRequest}>Download Excel</button>                              
+                                </div>
                               </div>
                             </div>
                             {request_sapras.length > 0 ? (
-                            <table className='text-white mt-4'>
+                            <table className='table-spaced mt-3' border='1'>
                                 <tr>
                                    <th style={{textAlign:'center'}}>Nomor</th>                                   
                                    <th style={{textAlign:'center'}}>Nama</th>
@@ -1092,31 +1138,37 @@ const Content_laras = () => {
                                   <button className='right' onClick={handleNext_Request_Sarpras}><img src={right} alt="" /></button>
                               </div>
                               <div className='d-flex flex-row align-items-center gap-2'>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
-                                    <option value="01">Januari</option>
-                                    <option value="02">Februari</option>
-                                    <option value="03">Maret</option>
-                                    <option value="04">April</option>
-                                    <option value="05">Mei</option>
-                                    <option value="06">Juni</option>
-                                    <option value="07">Juli</option>
-                                    <option value="08">Agustus</option>
-                                    <option value="09">September</option>
-                                    <option value="10">Oktober</option>
-                                    <option value="11">November</option>
-                                    <option value="12">Desember</option>
-                                </select>
-                                <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                    <option value="2025">2025</option>
-                                    <option value="2026">2026</option>
-                                </select>
-                                <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelRequest}>Download Excel</button>
+                                <div className='header-month align-items-center'>
+                                  <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
+                                  <select className='w-100 h-100 rounded-2 fs-6 lh-lg' onChange={handleSearchMonthRequest} value={searchMonthRequest} name="" id="">
+                                      <option value="01">Januari</option>
+                                      <option value="02">Februari</option>
+                                      <option value="03">Maret</option>
+                                      <option value="04">April</option>
+                                      <option value="05">Mei</option>
+                                      <option value="06">Juni</option>
+                                      <option value="07">Juli</option>
+                                      <option value="08">Agustus</option>
+                                      <option value="09">September</option>
+                                      <option value="10">Oktober</option>
+                                      <option value="11">November</option>
+                                      <option value="12">Desember</option>
+                                  </select>                                
+                                </div>
+                                <div className='header-year align-items-center'>
+                                  <label className='text-year-search' htmlFor="">Tahun:</label>
+                                  <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                      <option value="2025">2025</option>
+                                      <option value="2026">2026</option>
+                                  </select>                                
+                                </div>
+                                <div>
+                                  <button className='btn-download p-2 w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelRequest}>Download Excel</button>                              
+                                </div>
                               </div>
                             </div>
                             {request_sapras.length > 0 ? (
-                            <table className='table-spaced text-white table-bordered mt-4'>
+                            <table className='table-spaced mt-3' border='1'>
                                 <tr>
                                    <th style={{textAlign:'center'}}>Nomor</th>                                   
                                    <th style={{textAlign:'center'}}>Nama</th>

@@ -14,6 +14,7 @@ const New_Klien_form = () => {
   const { level } = useParams();
   const { role } = useParams();
   const { role_sp } = useParams();
+  const { nrk_nip } = useParams();
   const getIdentity = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
@@ -44,15 +45,35 @@ const New_Klien_form = () => {
       }
   }
   const [nama_klien, setNamaKlien] = useState("");
-  const handleChangeNamaKlien = (event) => {
-    setNamaKlien(event.target.value);
-    console.log(event.target.value);    
-  }
   const [nama_init, setNamaInit] = useState("");
-  const handleChangeNamaInit = (event) => {
-    setNamaInit(event.target.value);
-    console.log(event.target.value);    
-  }
+  // const handleChangeNamaKlien = (event) => {
+  //   setNamaKlien(event.target.value);
+  //   console.log(event.target.value);    
+  // }
+  const handleChangeNamaKlien = (event) => {
+        setNamaKlien(event.target.value);
+        const selectedIdentityData = allKlien.find((identitas) => identitas.nama_klien === event.target.value);
+        if (selectedIdentityData) {
+          setNamaInit(selectedIdentityData.inisial_klien);
+        }
+    }
+  const [allKlien, setAllIdentity_lv1] = useState([]);
+    const getKlien = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/E-corner/get_allKlien.php`;
+        let url = baseUrl;
+        axios.get(url).then((res2) => {
+            console.log(res2.data.Data);
+            const response = res2.data.Data;
+            setAllIdentity_lv1(response);
+            console.log(response);
+        })        
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    useEffect(() => {
+        getKlien();
+    },[]);
   const [room, setRoom] = useState("");
   const handleChangeRoom = (event) => {
     setRoom(event.target.value);
@@ -118,7 +139,7 @@ const New_Klien_form = () => {
       console.log(response.data);
       setTimeout(() => {
         setIsLoading(false);
-        navigate(`/Dashboard-E-Corner/${level}/${role}/${role_sp}`);
+        navigate(`/Dashboard-E-Corner/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`);
         alert(response.data.message);
       }, 1000);
     } catch (error) {
@@ -136,26 +157,35 @@ const New_Klien_form = () => {
     }, [kode_role_c]);
   return (
     <>
-      <div className='main-dashboard'>
+      <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '1500px'}} className="load-cuti"></span>
         </div>} 
-        <p>E-Corner/Menambah Klien E-Corner</p>
-        <h1>Menambah Klien E-Corner</h1>
-        <Profile nama={nama} feature="mawasdiri" />
-        <div className='content-col'>
-          <div className='box1'>
+        <p className='content-header-p'>E-Corner/Menambah Jadwal Klien E-Corner</p>
+        <div className='d-flex justify-content-between align-items-center'>
+          <h1 className='content-header-title mt-0'>Menambah Jadwal Klien E-Corner</h1>
+          <Profile nama={nama} feature="mawasdiri" />        
+        </div>
+        <div className='form-position d-flex flex-column'>
+          <div className='form-display'>
             <form onSubmit={handlePostClient}>
-              <div className='content-f'>
-                <h1>Data Diri</h1>
+              <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                <h1 className='form-h1 fw-bold ms-3'>Data Diri</h1>
                 {/* <label htmlFor="">id pengguna</label>
                 <input onChange={handleChangeId} placeholder='Nomor' type="number" /> */}
-                <label htmlFor="">Nama Klien</label>
-                <input onChange={handleChangeNamaKlien} placeholder='Nama Klien' type="text" />                
-                <label htmlFor="">Nama Klien (Inisial)</label>
-                <input onChange={handleChangeNamaInit} placeholder='Nama Inisial' type="text" />
-                <label htmlFor="bulan">Bulan :</label>
-                <select onChange={handleChangeMonth} name="bulan" id="bulan">
+                <label className='form-label ms-3' htmlFor="">Nama Klien</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeNamaKlien} name="nama_klien" id="nama_klien">
+                  <option value="">Nama Klien :</option>
+                  {allKlien.map((identitas) => (
+                    <option key={identitas.id_klien} value={identitas.nama_klien}>
+                      {identitas.nama_klien}
+                    </option>
+                  ))}
+                </select>          
+                <label className='form-label ms-3' htmlFor="">Nama Klien (Inisial)</label>
+                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_init} placeholder='Nama Inisial' type="text" />
+                <label className='form-label ms-3' htmlFor="bulan">Bulan :</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeMonth} name="bulan" id="bulan">
                   <option value="">bulan :</option>
                   <option value="1">Januari</option>
                   <option value="2">Februari</option>
@@ -170,8 +200,8 @@ const New_Klien_form = () => {
                   <option value="11">November</option>
                   <option value="12">Desember</option>
                 </select>
-                <label htmlFor="minggu">Minggu ke :</label>
-                <select onChange={handleChangeWeek} name="minggu" id="minggu">
+                <label className='form-label ms-3' htmlFor="minggu">Minggu ke :</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeWeek} name="minggu" id="minggu">
                   <option value="">Minggu ke :</option>
                   <option value="1">Minggu ke 1</option>
                   <option value="2">Minggu ke 2</option>
@@ -179,8 +209,8 @@ const New_Klien_form = () => {
                   <option value="4">Minggu ke 4</option>
                   <option value="5">Minggu ke 5</option>
                 </select>
-                <label htmlFor="days">Hari :</label>
-                <select onChange={handleChangeDay} name="days" id="days">
+                <label className='form-label ms-3' htmlFor="days">Hari :</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeDay} name="days" id="days">
                   <option value="">Hari :</option>
                   <option value="Senin">Senin</option>
                   <option value="Selasa">Selasa</option>
@@ -188,8 +218,8 @@ const New_Klien_form = () => {
                   <option value="Kamis">Kamis</option>
                   <option value="Jumat">Jumat</option>
                 </select>
-                <label htmlFor="Jam">Sesi Jam :</label>
-                <select onChange={handleChangeJam} name="Jam" id="Jam">
+                <label className='form-label ms-3' htmlFor="Jam">Sesi Jam :</label>
+                <select className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeJam} name="Jam" id="Jam">
                   <option value="">Sesi Jam :</option>
                   <option value="08.00-08.30">08.00-08.30</option>
                   <option value="08.35-09.05">08.35-09.05</option>
@@ -204,11 +234,13 @@ const New_Klien_form = () => {
                   <option value="14.45-15.15">14.45-15.15</option>
                   <option value="15.20-15.50">15.20-15.50</option>
                 </select>
-                <button className='submit' type="button" onClick={() => handleGetKlienRooms()}>Cari Ruangan</button>
+                <div className='d-flex flex-column align-items-center w-100'>
+                  <button className='submit-room' type="button" onClick={() => handleGetKlienRooms()}>Cari Ruangan</button>                
+                </div>
                   {klien_rooms.length > 0 ? (
                     <div>
-                      <label htmlFor="">Room no :</label>
-                      <select onChange={handleChangeRoom} name="Room" id="Room">
+                      <label className='form-label ms-3' htmlFor="">Room no :</label>
+                      <select className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeRoom} name="Room" id="Room">
                         <option value="">Room no :</option>
                         {klien_rooms[0]?.rooms === "Room 1" ? (
                           <option value="Room 1" disabled>Room 1 tidak Tersedia</option>
@@ -231,19 +263,23 @@ const New_Klien_form = () => {
                           <option value="Room 4">Room 4</option>
                         )}
                       </select>
-                      <button className='submit' type="submit">Submit Klien</button>
+                      <div className='d-flex flex-column align-items-center w-100'>
+                        <button className='submit' type="submit">Submit Klien</button>                        
+                      </div>
                     </div>
                   ) : (
                     <div>
-                      <label htmlFor="">Room no :</label>
-                      <select onChange={handleChangeRoom} name="Room" id="Room">
+                      <label className='form-label ms-3' htmlFor="">Room no :</label>
+                      <select className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeRoom} name="Room" id="Room">
                         <option value="">Room no :</option>                      
                           <option value="Room 1">Room 1</option>                      
                           <option value="Room 2">Room 2</option>
                           <option value="Room 3">Room 3</option>
                           <option value="Room 4">Room 4</option>
                       </select>
-                      <button className='submit' type="submit">Submit Klien</button>
+                      <div className='d-flex flex-column align-items-center w-100'>
+                        <button className='submit' type="submit">Submit Klien</button>                    
+                      </div>
                     </div>
                   )}                  
               </div>              

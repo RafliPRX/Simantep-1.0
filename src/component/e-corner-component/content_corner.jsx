@@ -21,6 +21,7 @@ const Content_Corner = () => {
     const storeidNumber = localStorage.getItem('id_number');
     const [identity, setIdentity] = useState([]);
     const [nama, setNama] = useState(identity.nama);
+    const { nrk_nip } = useParams();
     const getIdentity = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
@@ -160,7 +161,7 @@ const Content_Corner = () => {
         });
     }    
     const handleOpenCorner = (id) => {
-        navigate(`/Dashboard-E-Corner/${ level }/${role}/${role_sp}/Update_Klien/${id}`);
+        navigate(`/Dashboard-E-Corner/${ level }/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/Update_Klien/${id}`);
     }
     useEffect(() => {
     getIdentity();
@@ -206,7 +207,7 @@ const Content_Corner = () => {
             headers: {
             "Content-Type": "multipart/form-data"
             }
-        });      
+        });
         console.log(response.data);
         setTimeout(() => {
             setIsLoading(false);            
@@ -221,142 +222,166 @@ const Content_Corner = () => {
     }
     return (
         <>
-        <div className='main-dashboard'>
+        <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
         {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
             <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
         </div>} 
-        <p>E-Corner/Database Klien E-Corner</p>
-            <h1>E-Corner</h1>
-            <Profile nama={nama} feature="mawasdiri" />
-            <div className='content-col'>
-                <div className='box-m'>
-                    <div className='content'>
+        <p className='content-header-p'>E-Corner/Database Klien E-Corner</p>
+            <div className='d-flex flex-row align-items-center justify-content-between gap-5'>
+                <h1 className=' content-header-title fw-bold mt-0'>E-Corner</h1>
+                <Profile nama={nama} feature="mawasdiri" />
+            </div>
+            <div className='container-xxl content-display bg-green-old align-items-start' style={{borderRadius: '20px'}}>
+                <div className='container-xxl d-flex flex-column gap-4'>
+                    <div className=''>
                         {role_sp ==='S-06' && 
                             <>
-                                <h1>Database Klien E-Corner</h1>                        
-                                <div className='pagination'>
-                                    <button className='left' onClick={handlePrev_Corner}><img src={left} alt="" /></button>
-                                    <input className='page-number' type="text" value={pagination_e_corner.currentPage} />
-                                    <button className='right' onClick={handleNext_Corner}><img src={right} alt="" /></button>
+                                <h1 className='content-title fw-bold mt-0'>Database Klien E-Corner</h1>                        
+                                <div className='header-content'>
+                                    <div className='d-flex flex-row gap-2'>
+                                        <button className='left' onClick={handlePrev_Corner}><img src={left} alt="" /></button>
+                                        <input className='page-number' type="text" value={pagination_e_corner.currentPage} />
+                                        <button className='right' onClick={handleNext_Corner}><img src={right} alt="" /></button>                                
+                                    </div>
                                 </div>
                                 {e_corner.length > 0 ? (
-                                    <table>
-                                        <tr>
-                                            <th style={{ textAlign: 'center' }}>Nomor</th>
-                                            <th style={{ textAlign: 'center' }}>Nama Klien</th>
-                                            <th style={{ textAlign: 'center' }}>Nama Klien (Inisial)</th>
-                                            <th style={{ textAlign: 'center' }}>Room</th>
-                                            <th style={{ textAlign: 'center' }}>Time</th>
-                                            <th style={{ textAlign: 'center' }}>Hari</th>
-                                            <th style={{ textAlign: 'center' }}>Status</th>
-                                        </tr>
-                                        {e_corner.map((item, index) => (
-                                            <tr key={item.id_surat}>
-                                                <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.nama_klien}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.nama_init}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.rooms}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.time}</td>
-                                                <td style={{ textAlign: 'center' }}>{item.days}</td>                                                
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item.id_corner)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item.id_corner)} className='B-deleted'>Deleted</button> </td>  
-                                                </tr>
-                                            ))} 
+                                        <table className='table-spaced mt-3' border="1">
+                                            <tr>
+                                                <th style={{ textAlign: 'center' }}>Nomor</th>
+                                                <th style={{ textAlign: 'center' }}>Nama Klien</th>
+                                                <th style={{ textAlign: 'center' }}>Nama Klien (Inisial)</th>
+                                                <th style={{ textAlign: 'center' }}>Room</th>
+                                                <th style={{ textAlign: 'center' }}>Time</th>
+                                                <th style={{ textAlign: 'center' }}>Hari</th>
+                                                <th style={{ textAlign: 'center' }}>Status</th>
+                                            </tr>
+                                            {e_corner.map((item, index) => (
+                                                <tr key={item.id_surat}>
+                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.nama_klien}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.nama_init}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.rooms}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.time}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.days}</td>                                                
+                                                    <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item.id_corner)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item.id_corner)} className='B-deleted'>Deleted</button> </td>  
+                                                    </tr>
+                                                ))} 
                                         </table>
                                     ) : (
-                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                                        <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                                 )}
                             </>
                         }                        
                     </div>
-                    <div className='content'>
+                    <div className=''>
                         {role_sp ==='S-06' && 
-                            <>
-                                <h1>Pencarian Bulan dan Minggu</h1>
-                                <form action="">                                    
-                                    <label htmlFor="Bulan">Pilih Bulan :</label>
-                                    <select onChange={handleChangeBulan} name="Bulan" id="Bulan">
-                                        <option value="0">Pilih Bulan :</option>
-                                        <option value="1">Januari</option>
-                                        <option value="2">Februari</option>
-                                        <option value="3">Maret</option>
-                                        <option value="4">April</option>
-                                        <option value="5">Mei</option>
-                                        <option value="6">Juni</option>
-                                        <option value="7">Juli</option>
-                                        <option value="8">Agustus</option>
-                                        <option value="9">September</option>
-                                        <option value="10">Oktober</option>
-                                        <option value="11">November</option>
-                                        <option value="12">Desember</option>
-                                    </select>
-                                    <label htmlFor="Minngu">Pilih Minggu ke- :</label>
-                                    <select onChange={handleChangeMinggu} style={{marginRight: "50px"}} name="Minggu" id="Minggu">
-                                        <option value="0">Pilih Minggu ke- </option>
-                                        <option value="1">Minggu ke 1</option>
-                                        <option value="2">Minggu ke 2</option>
-                                        <option value="3">Minggu ke 3</option>
-                                        <option value="4">Minggu ke 4</option>
-                                        <option value="5">Minggu ke 5</option>
-                                    </select>
-                                    <br />
-                                    <label htmlFor="date">Tanggal</label>
-                                    <DatePicker
-                                        className='date'
-                                        selectsRange={true}
-                                        startDate={startDate}
-                                        endDate={endDate}
-                                        onChange={handleChangeDate}
-                                        dateFormat="yyyy/MM/dd"
-                                        placeholderText="Select date range"
-                                    />
-                                    <label htmlFor="">Nama Klien: </label>
-                                    <input type="text" onChange={handleChangeNamaKlien} />
-                                    <button className='cari' onClick={() => handleGetKlienSearch()} type="button">Cari</button>
-                                    <button className='active' onClick={(event) => handleActiveWeek(event)} type="button">Aktifkan</button>
-                                </form>
-                                <h1>Aktif Saat ini</h1>
-                                <form action="">
+                            <div className='container-xxl d-flex flex-column gap-4'>
+                                <h1 className='content-title fw-bold mt-0'>Pencarian Bulan dan Minggu</h1>
+                                <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                                    <form action="">
+                                        <div className='ecorner-filter-content'>
+                                            <div className='ecorner-filter'>
+                                                <label className='text-month-search fw-bold' htmlFor="Bulan">Pilih Bulan :</label>
+                                                <select className='ecorner-filter-input rounded-3 pe-3 ps-3' onChange={handleChangeBulan} name="Bulan" id="Bulan">
+                                                    <option value="0">Pilih Bulan :</option>
+                                                    <option value="1">Januari</option>
+                                                    <option value="2">Februari</option>
+                                                    <option value="3">Maret</option>
+                                                    <option value="4">April</option>
+                                                    <option value="5">Mei</option>
+                                                    <option value="6">Juni</option>
+                                                    <option value="7">Juli</option>
+                                                    <option value="8">Agustus</option>
+                                                    <option value="9">September</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">Desember</option>
+                                                </select>                                                
+                                            </div>
+                                            <div className='ecorner-filter'>
+                                                <label className='text-month-search fw-bold' htmlFor="Minngu">Pilih Minggu ke- :</label>
+                                                <select className='ecorner-filter-input rounded-3 pe-3 ps-3' onChange={handleChangeMinggu} style={{marginRight: "50px"}} name="Minggu" id="Minggu">
+                                                    <option value="0">Pilih Minggu ke- </option>
+                                                    <option value="1">Minggu ke 1</option>
+                                                    <option value="2">Minggu ke 2</option>
+                                                    <option value="3">Minggu ke 3</option>
+                                                    <option value="4">Minggu ke 4</option>
+                                                    <option value="5">Minggu ke 5</option>
+                                                </select>                                            
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <div className='ecorner-filter-content'>
+                                            <div className='ecorner-filter'>
+                                                <label className='text-month-search fw-bold' htmlFor="date">Tanggal: </label>
+                                                <DatePicker
+                                                    className='ecorner-filter-input rounded-3 pe-3 ps-3'
+                                                    selectsRange={true}
+                                                    startDate={startDate}
+                                                    endDate={endDate}
+                                                    onChange={handleChangeDate}
+                                                    dateFormat="yyyy/MM/dd"
+                                                    placeholderText="Pilih Tanggal"
+                                                />                                                
+                                            </div>
+                                            <div className='header-month'>
+                                                <div className='ecorner-filter'>
+                                                    <label className='text-month-search fw-bold' htmlFor="">Nama Klien: </label>
+                                                    <input className='ecorner-filter-input rounded-3 pe-3 ps-3' placeholder='Nama Klien' type="text" onChange={handleChangeNamaKlien} />                                            
+                                                </div>
+                                            </div>
+                                            <div className='header-month'>
+                                                <button className='btn btn-secondary' onClick={() => handleGetKlienSearch()} type="button">Cari</button>
+                                                <button className='btn btn-success' onClick={(event) => handleActiveWeek(event)} type="button">Aktifkan</button>                                        
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                                <h1 className='text-white fs-2 fw-bold mt-0'>Aktif Saat ini</h1>
+                                <form className='d-flex flex-row gap-4 text-white' action="">
                                     <label htmlFor="">id: {id_week}</label>
                                     <label htmlFor="Bulan">Bulan saat ini : {month}</label>                                    
                                     <label style={{marginRight:"50px"}} htmlFor="Minngu">Minggu Saat ini : {week}</label>                                    
-                                    <button className='reset' onClick={(event) => handleResetWeek(event)} type="button">Reset</button>
+                                    <button className='btn btn-danger' onClick={(event) => handleResetWeek(event)} type="button">Reset</button>
                                 </form>
-                            </>
+                            </div>
                         }
                     </div>
-                    <div className='content'>
+                    <div className=''>
                         {role_sp ==='S-06' &&
                             <>
-                                <h1>Hasil Pencarian Klien E-Corner</h1>                        
-                                <div>
-                                    <button onClick={handlePrev_Corner}>Previous</button>
-                                    <button onClick={handleNext_Corner}>Next</button>
+                                <h1 className='content-title fw-bold mt-0'>Hasil Pencarian Klien E-Corner</h1>                        
+                                <div className='d-flex flex-row gap-2'>
+                                    <button className='left' onClick={handlePrev_Corner}><img src={left} alt="" /></button>
+                                    <button className='right' onClick={handleNext_Corner}><img src={right} alt="" /></button>
                                 </div>
                                 {klien_search.length > 0 ? (
-                                    <table>
-                                        <tr>
-                                            <th style={{ textAlign: 'center' }}>Nomor</th>
-                                            <th style={{ textAlign: 'center' }}>Nama Klien</th>
-                                            <th style={{ textAlign: 'center' }}>Nama Klien (Inisial)</th>
-                                            <th style={{ textAlign: 'center' }}>Room</th>
-                                            <th style={{ textAlign: 'center' }}>Time</th>
-                                            <th style={{ textAlign: 'center' }}>Hari</th>
-                                            <th style={{ textAlign: 'center' }}>Status</th>
-                                        </tr>
-                                        {klien_search.map((item_s, index) => (
-                                            <tr key={item_s.id_corner}>
-                                                <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                <td style={{ textAlign: 'center' }}>{item_s.nama_klien}</td>
-                                                <td style={{ textAlign: 'center' }}>{item_s.nama_init}</td>
-                                                <td style={{ textAlign: 'center' }}>{item_s.rooms}</td>
-                                                <td style={{ textAlign: 'center' }}>{item_s.time}</td>
-                                                <td style={{ textAlign: 'center' }}>{item_s.days}</td>                                                
-                                                <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item_s.id_corner)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item_s.id_corner)} className='B-deleted'>Deleted</button> </td>  
+                                    <div className='mt-3 container-xxl d-flex flex-column gap-4'>
+                                        <table className='table-spaced' border="1">
+                                            <tr>
+                                                <th style={{ textAlign: 'center' }}>Nomor</th>
+                                                <th style={{ textAlign: 'center' }}>Nama Klien</th>
+                                                <th style={{ textAlign: 'center' }}>Nama Klien (Inisial)</th>
+                                                <th style={{ textAlign: 'center' }}>Room</th>
+                                                <th style={{ textAlign: 'center' }}>Time</th>
+                                                <th style={{ textAlign: 'center' }}>Hari</th>
+                                                <th style={{ textAlign: 'center' }}>Status</th>
+                                            </tr>
+                                            {klien_search.map((item_s, index) => (
+                                                <tr key={item_s.id_corner}>
+                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item_s.nama_klien}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item_s.nama_init}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item_s.rooms}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item_s.time}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item_s.days}</td>                                                
+                                                    <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item_s.id_corner)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item_s.id_corner)} className='B-deleted'>Deleted</button> </td>  
                                                 </tr>
                                             ))} 
                                         </table>
+                                    </div>
                                     ) : (
-                                        <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                                    <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                                 )}
                             </>
                         }

@@ -1,4 +1,23 @@
-.profile{
+.bg-green-old{
+    background: #127C70;
+}
+.bg-blue-profile{
+    background: #00B4D8;
+}
+.profile-display{
+    display: flex;
+}
+@media only screen and (max-width: 480px) {
+    .profile-display{
+        display: none;
+    }
+}
+@media only screen and (max-width: 370px) {
+    .profile-display{
+        display: none;
+    }    
+}
+/* .profile{
     display: flex;
     position: fixed;
     flex-direction: row;
@@ -48,7 +67,7 @@
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
-    line-height: 20px; /* 142.857% */
+    line-height: 20px;
     letter-spacing: -0.28px;
     padding-left: 10px;
 }
@@ -156,4 +175,4 @@
 .notification .info .mark-read-deleted button:hover{
     transform: scale(1.1);
     transition: all 0.4s ease-in-out;
-}
+} */

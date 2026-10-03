@@ -2,14 +2,17 @@ import { useEffect, useState } from 'react';
 import '../css/sidebar.css';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import menu from '../../assets/menu.svg'
+import menu from '../../assets/menu.svg';
+import logo from '../../assets/simanteb-logo_web.webp';
+import default_profile from '../../assets/profile.svg';
 
 const Sidebar = () => {
-    const [windowWidth, setWindowWidth] = useState(window.innerWidth);
-    const [isSidebarVisible, setIsSidebarVisible] = useState(false);
     const { level } = useParams();
     const { role } = useParams();
     const { role_sp } = useParams();
+    const { nama } = useParams();
+    const { nrk_nip } = useParams();
+    const { bagian } = useParams();
     const [isSubMenuPagi, setIsSupMenuPagi] = useState(false);
     const storeidNumber = localStorage.getItem('id_number');
     function SubMenuPagi() {
@@ -40,9 +43,6 @@ const Sidebar = () => {
     }
     useEffect(() => {
       getAbsensi();
-      const handleResize = () => setWindowWidth(window.innerWidth);
-      window.addEventListener('resize', handleResize);
-      return () => window.removeEventListener('resize', handleResize);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -78,21 +78,187 @@ const Sidebar = () => {
       }
     };
 
-    const toggleSidebar = () => {
-        setIsSidebarVisible(!isSidebarVisible);
-    };
-
     return (
         <>
-            {windowWidth > 480 ? (
-                <div className='sidebar'>
-                    <div className='sidebar-col'>
+        <div className='sidebar'>          
+          <div className='sidebar-col'>
+              <div className='logo-col' onClick={() => window.location.href = `/Home/${level}`}>
+                  <div className='logo'></div>
+                  <h2>SIMANTEP</h2>                            
+              </div>
+              <div className='separator'></div>
+              <div className='selected'>                        
+              <div id='databasePegawai'
+                   className='list'
+                   onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/${bagian}`)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" className="icon icon-tabler icons-tabler-filled icon-tabler-layout-dashboard">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 3a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2zm10 -4a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 -8a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2z" />
+                  </svg>
+                  <p>Status Pengajuan Cuti</p>
+              </div>
+              <div id='Pengajuan-Cuti' 
+                   className='list'
+                   onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/${bagian}/Cuti-form`)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" className="icon icon-tabler icons-tabler-filled icon-tabler-file-description">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005zm3 14h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2m0 -4h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2" />
+                      <path d="M19 7h-4l-.001 -4.001z" />
+                  </svg>
+                  <p href="Cuti-form">Formulir Pengajuan Cuti</p>
+              </div>
+              {role === 'D-19' && (
+              <div>
+                <div className='list' onClick={SubMenuPagi}>
+                <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-sun">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+                  <path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" />
+                  <path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
+                  <path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+                  <path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
+                  <path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" />
+                  <path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
+                  <path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
+                  <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
+                </svg>
+                <p>Absensi</p>
+                </div>
+              </div>
+              )}
+              {isSubMenuPagi && (
+                <div style={{marginLeft: '30px'}}>
+                  <div className='list' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Absensi-Page`)}>
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                    <path d="M3 12h13l-3 -3" />
+                    <path d="M13 15l3 -3" />
+                  </svg>
+                  <p>Absensi Masuk</p>
+                  </div>
+                  <div className='list' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Absensi-Page-Keluar/${absensi.id_snap}`)}>
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                    <path d="M15 12h-12l3 -3" />\
+                    <path d="M6 15l-3 -3" />
+                  </svg>                                
+                  <p>Absensi Keluar</p>
+                  </div>
+                </div>
+              )}
+              <div id='Pengajuan-Cuti' 
+                   className='list'
+                   onClick={() => window.location.href = `/Home/${level}`}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M9 14l-4 -4l4 -4" />
+                      <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+                  </svg>
+                  <p href="Cuti-form">Kembali Ke Halaman Utama</p>
+              </div>
+              {/* <div>
+                <div className='list' onClick={SubMenuMalam}>
+                <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-moon">
+                  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                  <path d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" />
+                </svg>                            
+                <p>Absensi Malam</p>
+                </div>                        
+              </div>
+              {isSubMenuMalam && (
+                <div style={{marginLeft: '30px'}}>
+                  <div className='list' onClick={() => handleDivClick('/Absensi-Page-Malam')}>
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                    <path d="M3 12h13l-3 -3" />
+                    <path d="M13 15l3 -3" />
+                  </svg>
+                      <p>Absensi Masuk Malam</p>
+                  </div>
+                  <div className='list' onClick={() => handleDivClick(`/Absensi-Page-Keluar-Malam/${detected_malam.id_snap}`)}>
+                  <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                    <path d="M15 12h-12l3 -3" />\
+                    <path d="M6 15l-3 -3" />
+                  </svg>                                
+                      <p>Absen Keluar Malam</p>
+                  </div>
+                </div>
+              )} */}
+              <div className='list' onClick={handleLogout}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                      <path d="M15 12h-12l3 -3" />
+                      <path d="M6 15l-3 -3" />
+                  </svg>
+                  <p>Keluar</p>
+              </div>
+              </div>
+          </div>
+        </div>
+          <a className='Sidebar-res' data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+            <img src={menu} style={{width: "50px", height: "50px"}} alt="" />
+          </a>
+          <div className="offcanvas offcanvas-start bg-green-old" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+            <div className="offcanvas-header d-flex flex-row">
+              <img src={logo} style={{width: "100px", height: "100px"}} alt="" />
+              <h5 className="offcanvas-title title" id="offcanvasExampleLabel">SIMANTEB</h5>
+              <button type="button" className="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div className="offcanvas-header d-flex flex-column gap-2">
+              <div className='profile-bg'>
+                <img src={default_profile} style={{width: "40px", height: "40px"}} alt="" />
+              </div>
+              <h5 className="offcanvas-title profile-name" id="offcanvasExampleLabel">{nama}</h5>
+              <h5 className="offcanvas-title profile-nrk-nip" id="offcanvasExampleLabel">{nrk_nip}</h5>
+            </div>
+            <div className="separator"></div>
+            <div className="offcanvas-body ">
+              <div id='databasePegawai' className='list fs-5' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/${bagian}`)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white" className="icon icon-tabler icons-tabler-filled icon-tabler-layout-dashboard">
+                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                    <path d="M9 3a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 12a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2zm10 -4a2 2 0 0 1 2 2v6a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-6a2 2 0 0 1 2 -2zm0 -8a2 2 0 0 1 2 2v2a2 2 0 0 1 -2 2h-4a2 2 0 0 1 -2 -2v-2a2 2 0 0 1 2 -2z" />
+                  </svg>
+                  <p>Status Pengajuan Cuti</p>
+              </div>
+              <div id='Pengajuan-Cuti' className='list fs-5' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/${bagian}/Cuti-form`)}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" fill="white" className="icon icon-tabler icons-tabler-filled icon-tabler-file-description">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005zm3 14h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2m0 -4h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2" />
+                      <path d="M19 7h-4l-.001 -4.001z" />
+                  </svg>
+                  <p href="Cuti-form">Formulir Pengajuan Cuti</p>
+              </div>
+              <div id='Pengajuan-Cuti' className='list fs-5' onClick={() => window.location.href = `/Home/${level}`}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M9 14l-4 -4l4 -4" />
+                      <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
+                  </svg>
+                  <p href="Cuti-form">Kembali Ke Halaman Utama</p>
+              </div>
+              <div className='list fs-5' onClick={handleLogout}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
+                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+                      <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
+                      <path d="M15 12h-12l3 -3" />
+                      <path d="M6 15l-3 -3" />
+                  </svg>
+                  <p>Keluar</p>
+              </div>
+            </div>
+          </div>
+                {/* <div className='sidebar'>
+                    <img className='menu-icon' data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" src={menu} alt="Toggle Sidebar" onClick={toggleSidebar} />                                      
+                    <div className='offcanvas offcanvas-start'>
                         <div className='logo-col' onClick={() => window.location.href = `/Home/${level}`}>
                             <div className='logo'></div>
-                            <h2>SIMANTEP</h2>
+                            <h2>SIMANTEP</h2>                            
                         </div>
                         <div className='separator'></div>
-                        <div className='selected'>
+                        <div className='selected'>                        
                         <div id='databasePegawai'
                              className='list'
                              onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}`)}>
@@ -161,7 +327,7 @@ const Sidebar = () => {
                             </svg>
                             <p href="Cuti-form">Kembali Ke Halaman Utama</p>
                         </div>
-                        {/* <div>
+                        <div>
                           <div className='list' onClick={SubMenuMalam}>
                           <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-moon">
                             <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -169,8 +335,8 @@ const Sidebar = () => {
                           </svg>                            
                           <p>Absensi Malam</p>
                           </div>                        
-                        </div> */}
-                        {/* {isSubMenuMalam && (
+                        </div>
+                        {isSubMenuMalam && (
                           <div style={{marginLeft: '30px'}}>
                             <div className='list' onClick={() => handleDivClick('/Absensi-Page-Malam')}>
                             <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
@@ -190,7 +356,7 @@ const Sidebar = () => {
                                 <p>Absen Keluar Malam</p>
                             </div>
                           </div>
-                        )} */}
+                        )}
                         <div className='list' onClick={handleLogout}>
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
                                 <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
@@ -202,154 +368,7 @@ const Sidebar = () => {
                         </div>
                         </div>
                     </div>
-                </div>
-            ) : (
-                <>
-                    <img style={{width: "40px", height: "40px", position: "absolute", top: "10px", right: "10px"}} src={menu} alt="Toggle Sidebar" onClick={toggleSidebar} />
-                    {isSidebarVisible && (
-                        <div className='sidebar'>
-                            <div className='sidebar-col'>
-                                <div className='logo-col' onClick={() => window.location.href = `/Home/${level}`}>
-                                    <div className='logo'></div>
-                                    <h2 >SIMANTEP</h2>
-                                </div>
-                                <div className='separator'></div>
-                                <div className='selected'>
-                            <div id='databasePegawai'
-                             className='list'
-                             onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}`)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                                    <g clipPath="url(#clip0_5_1280)">
-                                      <path d="M10.0001 19V14H14.0001V19C14.0001 19.55 14.4501 20 15.0001 20H18.0001C18.5501 20 19.0001 19.55 19.0001 19V12H20.7001C21.1601 12 21.3801 11.43 21.0301 11.13L12.6701 3.59997C12.2901 3.25997 11.7101 3.25997 11.3301 3.59997L2.9701 11.13C2.6301 11.43 2.8401 12 3.3001 12H5.0001V19C5.0001 19.55 5.4501 20 6.0001 20H9.0001C9.5501 20 10.0001 19.55 10.0001 19Z" fill="white"/>
-                                    </g>
-                                    <defs>
-                                      <clipPath id="clip0_5_1280">
-                                        <rect width="24" height="24" fill="white"/>
-                                      </clipPath>
-                                    </defs>
-                                  </svg>
-                                  <p>Status Pengajuan Cuti</p>
-                              </div>
-                              <div id='Pengajuan-Cuti' 
-                                   className='list'
-                                   onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Cuti-form`)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="white" className="icon icon-tabler icons-tabler-filled icon-tabler-file-description">
-                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                      <path d="M12 2l.117 .007a1 1 0 0 1 .876 .876l.007 .117v4l.005 .15a2 2 0 0 0 1.838 1.844l.157 .006h4l.117 .007a1 1 0 0 1 .876 .876l.007 .117v9a3 3 0 0 1 -2.824 2.995l-.176 .005h-10a3 3 0 0 1 -2.995 -2.824l-.005 -.176v-14a3 3 0 0 1 2.824 -2.995l.176 -.005zm3 14h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2m0 -4h-6a1 1 0 0 0 0 2h6a1 1 0 0 0 0 -2" />
-                                      <path d="M19 7h-4l-.001 -4.001z" />
-                                  </svg>
-                                  <p href="Cuti-form">Formulir Pengajuan Cuti</p>
-                              </div>
-                        {role === 'D-19' &&(
-                        <div>
-                          <div className='list' onClick={SubMenuPagi}>
-                          <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-sun">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
-                            <path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" />
-                            <path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
-                            <path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
-                            <path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
-                            <path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" />
-                            <path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
-                            <path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
-                            <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
-                          </svg>                          
-                          <p>Absensi Pagi</p>
-                          </div>                        
-                        </div>
-                        )}
-                        <div>
-                          <div className='list' onClick={SubMenuPagi}>
-                          <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-sun">
-                            <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 19a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
-                            <path d="M18.313 16.91l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.218 -1.567l.102 .07z" />
-                            <path d="M7.007 16.993a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
-                            <path d="M4 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
-                            <path d="M21 11a1 1 0 0 1 .117 1.993l-.117 .007h-1a1 1 0 0 1 -.117 -1.993l.117 -.007h1z" />
-                            <path d="M6.213 4.81l.094 .083l.7 .7a1 1 0 0 1 -1.32 1.497l-.094 -.083l-.7 -.7a1 1 0 0 1 1.217 -1.567l.102 .07z" />
-                            <path d="M19.107 4.893a1 1 0 0 1 .083 1.32l-.083 .094l-.7 .7a1 1 0 0 1 -1.497 -1.32l.083 -.094l.7 -.7a1 1 0 0 1 1.414 0z" />
-                            <path d="M12 2a1 1 0 0 1 .993 .883l.007 .117v1a1 1 0 0 1 -1.993 .117l-.007 -.117v-1a1 1 0 0 1 1 -1z" />
-                            <path d="M12 7a5 5 0 1 1 -4.995 5.217l-.005 -.217l.005 -.217a5 5 0 0 1 4.995 -4.783z" />
-                          </svg>                          
-                          <p>Absensi Pagi</p>
-                          </div>                        
-                        </div>
-                        {isSubMenuPagi && (
-                          <div style={{marginLeft: '30px'}}>
-                            <div className='list' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Absensi-Page`)}>
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-                              <path d="M3 12h13l-3 -3" />
-                              <path d="M13 15l3 -3" />
-                            </svg>
-                            <p>Absensi Masuk</p>
-                            </div>
-                            <div className='list' onClick={() => handleDivClick(`/Dashboard/${level}/${role}/${role_sp}/Absensi-Page-Keluar/${absensi.id_snap || ''}`)}>
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-                              <path d="M15 12h-12l3 -3" />\
-                              <path d="M6 15l-3 -3" />
-                            </svg>                                
-                            <p>Absensi Keluar</p>
-                            </div>
-                          </div>
-                          )}
-                          <div id='Pengajuan-Cuti' 
-                                   className='list'
-                                   onClick={() => handleDivClick(`/Home/${level}`)}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-arrow-back-up">
-                                      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                      <path d="M9 14l-4 -4l4 -4" />
-                                      <path d="M5 10h11a4 4 0 1 1 0 8h-1" />
-                                  </svg>
-                                  <p href="Cuti-form">Kembali ke Halaman Utama</p>
-                          </div>
-                          {/* <div>
-                            <div className='list' onClick={SubMenuMalam}>
-                            <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="white"  className="icon icon-tabler icons-tabler-filled icon-tabler-moon">
-                              <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                              <path d="M12 1.992a10 10 0 1 0 9.236 13.838c.341 -.82 -.476 -1.644 -1.298 -1.31a6.5 6.5 0 0 1 -6.864 -10.787l.077 -.08c.551 -.63 .113 -1.653 -.758 -1.653h-.266l-.068 -.006l-.06 -.002z" />
-                            </svg>                            
-                            <p>Absensi Malam</p>
-                            </div>                        
-                          </div> */}
-                          {/* {isSubMenuMalam && (
-                            <div style={{marginLeft: '30px'}}>
-                              <div className='list' onClick={() => handleDivClick('/Absensi-Page-Malam')}>
-                              <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-login-2">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                <path d="M9 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-                                <path d="M3 12h13l-3 -3" />
-                                <path d="M13 15l3 -3" />
-                              </svg>
-                                  <p>Absensi Masuk Malam</p>
-                              </div>
-                              <div className='list' onClick={() => handleDivClick(`/Absensi-Page-Keluar-Malam/${detected_malam.id_snap}`)}>
-                              <svg  xmlns="http://www.w3.org/2000/svg"  width={24}  height={24}  viewBox="0 0 24 24"  fill="none"  stroke="white"  strokeWidth={2}  strokeLinecap="round"  strokeLinejoin="round"  className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
-                                <path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-                                <path d="M15 12h-12l3 -3" />\
-                                <path d="M6 15l-3 -3" />
-                              </svg>                                
-                                  <p>Absen Keluar Malam</p>
-                              </div>
-                            </div>
-                          )} */}
-                            <div className='list' onClick={handleLogout}>
-                                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="icon icon-tabler icons-tabler-outline icon-tabler-logout-2">
-                                    <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                    <path d="M10 8v-2a2 2 0 0 1 2 -2h7a2 2 0 0 1 2 2v12a2 2 0 0 1 -2 2h-7a2 2 0 0 1 -2 -2v-2" />
-                                    <path d="M15 12h-12l3 -3" />
-                                    <path d="M6 15l-3 -3" />
-                                </svg>
-                                  <p>Keluar</p>
-                              </div>
-                                </div>
-                            </div>
-                        </div>
-                    )}
-                </>
-            )}
+                </div> */}
         </>
     );
 };

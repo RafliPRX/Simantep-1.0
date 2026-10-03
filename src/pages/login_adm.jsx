@@ -41,36 +41,31 @@ const Login_ADM = () => {
     }
     return(
         <>
-        <div className='login'>
-            <div className='col'>
-                <div className='form-col'>
-                    <form action="/Home">
-                        <div className='header'>
-                            <h1>Sign in</h1>
-                            <h3>Enter Your Email and Password to Sign In</h3>
-                        </div>
-                        <div className='input-col'>
-                            <label>Email</label>
-                            <input onChange={handleChangeUsername} type="text" value="admin" />
-                            <label>Password</label>
-                            <input onChange={handleChangePassword} type="password" />
-                            <div className='forget'>
-                                <div className='checkbox'>
-                                    <input type="checkbox" name="checkbox" id="" />
-                                    <label htmlFor="">Keep me logged in</label>
-                                </div>
+        <div className='container-fluid login w-100 vh-100 d-flex align-items-center justify-content-center p-0 bg-teal overflow-auto'>
+            <div className='row justify-content-center align-content-center w-100'>
+                <div className='col-12 col-lg-6 justify-content-center align-items-center d-flex'>
+                    <div className='form-col justify-content-center align-items-center d-flex border rounded-4 w-70 bg-green-old'>
+                        <form className='d-flex flex-column g-5 m-5'>
+                            <div className='header font-set'>
+                                <h1 className='font-header'>Sign in</h1>
+                                <h3 className='fs-5'>Enter Your Email and Password to Sign In</h3>
                             </div>
-                            <button onClick={handleLoginADM}>Sign In</button>
-                        </div> 
-                    </form>
-                </div>
-                <div className='logo'>
-                    <div className='logo-col'>
-                    <div className='logo-bg'>
-                        <div className='logo'></div>
+                            <div className='text-white flex-column d-flex mt-4'>
+                                <label className='mb-2'>Email</label>
+                                <input className='w-60 p-2 rounded-2 mt-1' onChange={handleChangeUsername} type="text" value="admin" />
+                                <label className='mb-1 mt-2'>Password</label>
+                                <input className='w-60 p-2 rounded-2 mt-1 mb-4'   onChange={handleChangePassword} type="password" />                            
+                                <button className='btn-login p-2 rounded-4' onClick={handleLoginADM}>Sign In</button>
+                            </div> 
+                        </form>
                     </div>
-                        <div className='mask'>
-                            <div className='pic'></div>
+                </div>
+                <div className='col-12 col-lg-6 p-0 logo-col'>
+                    <div className='d-flex justify-content-center align-items-center vh-100 bg-login-logo'>
+                        <div className='logo-col'>
+                            <div className='logo-bg'>
+                                <div className='logo'></div>
+                            </div>
                         </div>
                     </div>
                 </div>

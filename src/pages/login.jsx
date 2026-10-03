@@ -88,10 +88,10 @@ const Login = () => {
                             </div>
                         </div>
             )}
-            <div className='container-fluid login w-100 vh-100 d-flex align-items-center justify-content-center p-0'>                
+            <div className='container-fluid login w-100 vh-100 d-flex align-items-center justify-content-center p-0 bg-teal overflow-auto'>                
                 <div className='row justify-content-center align-content-center w-100'>
                     <div className='col-12 col-lg-6 justify-content-center align-items-center d-flex'>
-                        <div className='form-col justify-content-center align-items-center d-flex border rounded-4 w-70'>
+                        <div className='form-col justify-content-center align-items-center d-flex border rounded-4 w-70 bg-green-old'>
                             <form className='d-flex flex-column g-5 m-5'>
                                 <div className='header font-set'>
                                     <h1 className='font-header'>Masuk</h1>

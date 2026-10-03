@@ -6,6 +6,16 @@
     line-height: 1.5;
     font-weight: 400;
 }
+.bg-teal{
+    background: #3ACCB6;
+}
+.bg-green-old{
+    background: #127C70;
+}
+.font-sub-header{
+    font-weight: 400;
+    font-size: 1.25rem;
+}
 .font-header {
     font-weight: 700;
     font-size: 2.6rem;
@@ -30,9 +40,12 @@
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 .bg-login-logo {
+    width: 100%;
+    min-height: 100vh;
     background-image: url('../../assets/Asset-6_web.webp');
     background-size: cover;
     background-position: center;
+    background-repeat: no-repeat;
     border-bottom-left-radius: 10rem;
 }
 .logo-col{
@@ -54,8 +67,21 @@
     background-size: cover;
     background-position: center;
 }
+.form-control,input,select {
+    box-sizing: border-box;
+}
 @media only screen and (max-width: 480px) {
     .logo-col{
         display: none;
+    }
+}
+@media only screen and (max-width: 360px) {
+    .font-header {
+        font-weight: 700;
+        font-size: 1.5rem;
+    }
+    .font-sub-header{
+        font-weight: 400;
+        font-size: 1rem;
     }
 }

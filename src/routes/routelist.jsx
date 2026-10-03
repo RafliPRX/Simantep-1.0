@@ -36,6 +36,7 @@ import Detail_Form_Account from "../pages/Admin-Page/account_detail";
 import Dashboard_Corner from "../pages/E-Corner-Page/dashboard_corner";
 import Klien_form from "../pages/E-Corner-Page/klien-form";
 import Klien_form_Update from "../pages/E-Corner-Page/klien-form-update";
+import Add_Klien_form from '../pages/E-Corner-Page/add_new_klien';
 // import Maintanance from "../pages/maintanance-page/maintanance";
 
 // Lazy load Homepage
@@ -152,7 +153,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/Dashboard/:level/:role/:role_sp",
+        path: "/Dashboard/:level/:role/:role_sp/:nama/:nrk_nip/:bagian",
         element: (
             <RoutedProtected>
                 <Dashboard/>
@@ -160,7 +161,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/Dashboard/:level/:role/:role_sp/Cuti-form",
+        path: "/Dashboard/:level/:role/:role_sp/:nama/:nrk_nip/:bagian/Cuti-form",
         element: (
             <RoutedProtected>
                 <Cuti/>
@@ -168,7 +169,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-laras/:level/:role/:role_sp",
+        path: "/dashboard-laras/:level/:role/:role_sp/:nama/:nrk_nip",
         element: (
             <RoutedProtected>
                 <Dashboard_laras/>
@@ -176,7 +177,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-laras/:level/:role/:role_sp/form-perbaikan",
+        path: "/dashboard-laras/:level/:role/:role_sp/:nama/:nrk_nip/form-perbaikan",
         element: (
             <RoutedProtected>
                 <Fix/>
@@ -184,7 +185,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-laras/:level/:role/:role_sp/form-kendaraan-dinas",
+        path: "/dashboard-laras/:level/:role/:role_sp/:nama/:nrk_nip/form-kendaraan-dinas",
         element: (
             <RoutedProtected>
                 <Form_vehicle/>
@@ -192,7 +193,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-laras/:level/:role/:role_sp/form-permohonan-BHP-ATK",
+        path: "/dashboard-laras/:level/:role/:role_sp/:nama/:nrk_nip/form-permohonan-BHP-ATK",
         element: (
             <RoutedProtected>
                 <Form_request/>
@@ -200,7 +201,7 @@ export const routeList = [
         ),
     },
     {
-        path: '/dashboard-simak/:level/:role/:role_sp',
+        path: '/dashboard-simak/:level/:role/:role_sp/:nama/:nrk_nip',
         element: (
             <RoutedProtected>
                 <Dashboard_simak/>
@@ -208,7 +209,7 @@ export const routeList = [
         ),
     },
     {
-        path: '/dashboard-simak/:level/:role/:role_sp/Withdrawl-form',
+        path: '/dashboard-simak/:level/:role/:role_sp/:nama/:nrk_nip/Withdrawl-form',
         element: (
             <RoutedProtected>
                 <Form_withdrawl/>
@@ -216,7 +217,7 @@ export const routeList = [
         ),
     },
     {
-        path: '/dashboard-simak/:level/:role/:role_sp/Proposed-form',
+        path: '/dashboard-simak/:level/:role/:role_sp/:nama/:nrk_nip/Proposed-form',
         element: (
             <RoutedProtected>
                 <Proposed_Form/>
@@ -256,7 +257,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-laras/:level/:role/:role_sp/form-perbaikan/:id",
+        path: "/dashboard-laras/:level/:role/:role_sp/:nama/:nrk_nip/form-perbaikan/:id",
         element: (
             <RoutedProtected>
                 <Fix_Detail/>
@@ -264,7 +265,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-laras/:level/:role/:role_sp/form-kendaraan-dinas/:id",
+        path: "/dashboard-laras/:level/:role/:role_sp/:nama/:nrk_nip/form-kendaraan-dinas/:id",
         element: (
             <RoutedProtected>
                 <Form_vehicle_Detail/>
@@ -272,7 +273,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-laras/:level/:role/:role_sp/form-permintaan-barang-baru/:id",
+        path: "/dashboard-laras/:level/:role/:role_sp/:nama/:nrk_nip/form-permintaan-barang-baru/:id",
         element: (
             <RoutedProtected>
                 <Request_Detail/>
@@ -280,7 +281,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-simak/:level/:role/:role_sp/form-dana-RPD/:id",
+        path: "/dashboard-simak/:level/:role/:role_sp/:nama/:nrk_nip/form-dana-RPD/:id",
         element: (
             <RoutedProtected>
                 <Detail_Form_withdrawl/>
@@ -288,7 +289,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/dashboard-simak/:level/:role/:role_sp/form-dana-LPJ/:id",
+        path: "/dashboard-simak/:level/:role/:role_sp/:nama/:nrk_nip/form-dana-LPJ/:id",
         element: (
             <RoutedProtected>
                 <Detail_Form_Propose/>
@@ -296,7 +297,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/Dashboard/:level/:role/:role_sp/Cuti-detail/:id",
+        path: "/Dashboard/:level/:role/:role_sp/:nama/:nrk_nip/:bagian/Cuti-detail/:id",
         element: (
             <RoutedProtected>
                 <Cuti_Detail/>
@@ -304,7 +305,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/Dashboard-E-Corner/:level/:role/:role_sp",
+        path: "/Dashboard-E-Corner/:level/:role/:role_sp/:nama/:nrk_nip",
         element: (
             <RoutedProtected>
                 <Dashboard_Corner/>
@@ -312,7 +313,7 @@ export const routeList = [
         ),
     },
     {
-        path: "/Dashboard-E-Corner/:level/:role/:role_sp/New_Klien",
+        path: "/Dashboard-E-Corner/:level/:role/:role_sp/:nama/:nrk_nip/New_Klien",
         element: (
             <RoutedProtected>
                 <Klien_form/>
@@ -320,10 +321,18 @@ export const routeList = [
         ),
     },
     {
-        path: "/Dashboard-E-Corner/:level/:role/:role_sp/Update_Klien/:id",
+        path: "/Dashboard-E-Corner/:level/:role/:role_sp/:nama/:nrk_nip/Update_Klien/:id",
         element: (
             <RoutedProtected>
                 <Klien_form_Update/>
+            </RoutedProtected>
+        ),
+    },
+    {
+        path: "/Dashboard-E-Corner/:level/:role/:role_sp/:nama/:nrk_nip/Add_new_klien",
+        element: (
+            <RoutedProtected>
+                <Add_Klien_form/>
             </RoutedProtected>
         ),
     },

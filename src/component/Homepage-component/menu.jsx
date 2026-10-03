@@ -9,10 +9,12 @@ import { useEffect, useState } from 'react'
 import PropTypes from 'prop-types'
 
 const Menu = ({
-    // nama,   
+    nama,
     akses_level,
     kode_role,
-    kode_role_sp,    
+    kode_role_sp,
+    nrk_nip,
+    bagian,
 }) => {
     // const storedUsername = localStorage.getItem('nama');
     // const f_profile = localStorage.getItem('f_profile');
@@ -309,17 +311,17 @@ const Menu = ({
         <>
             <div className='container-fluid'>
                 <div className='d-flex flex-row justify-content-center flex-wrap gap-5'>                
-                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/Dashboard/level-${akses_level}/${kode_role}/${kode_role_sp}`}>
+                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/Dashboard/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/${bagian}`}>
                         <div className='menu-card p-4 gap-3'>
                             <div className='menu-pic' style={{backgroundImage: `url(${absen})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center"}}></div>
                             <div className='text'>
                                 <h3 className='menu-h3'>MAWASDIRI</h3>
                                 <h5 className='text-white'>Manajemen Pegawai Berbasis{isMobile && <br />} Kinerja Mandiri</h5>
-                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/Dashboard/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/Dashboard/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/${bagian}`}>Masuk</button>
                             </div>
                         </div>
                     </div>
-                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/dashboard-simak/level-${akses_level}/${kode_role}/${kode_role_sp}`}>
+                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/dashboard-simak/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>
                         <div className='menu-card p-4 gap-3'>
                             <div className='menu-pic' style={{backgroundImage: `url(${simak})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center"}}></div>
                             <div className='text'>
@@ -329,48 +331,48 @@ const Menu = ({
                             </div>
                         </div>
                     </div>                    
-                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}`}>
+                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>
                         <div className='menu-card p-4 gap-3'>
                             <div className='menu-pic' style={{backgroundImage: `url(${silaras})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center"}}></div>
                             <div className='text'>
                                 <h3 className='menu-h3'>SILARAS</h3>
                                 <h5 className='text-white'>Sistem Layanan sarana dan {isMobile && <br />} Prasarana</h5>
-                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>Masuk</button>
                             </div>
                         </div>
                     </div>
                     {kode_role_sp === 'S-06' &&(
-                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}`}>
+                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>
                         <div className='menu-card p-4 gap-3'>
                             <div className='menu-pic' style={{backgroundImage: `url(${e_corner})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center"}}></div>
                             <div className='text'>
                                 <h3 className='menu-h3'>E-Corner</h3>
                                 <h5 className='text-white'>Khusus Admin E-Corner</h5>
-                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>Masuk</button>
                             </div>
                         </div>
                     </div>
                     )}
                     {kode_role === 'A-02' &&(
-                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}`}>
+                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>
                         <div className='menu-card p-4 gap-3'>
                             <div className='menu-pic' style={{backgroundImage: `url(${e_corner})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center"}}></div>
                             <div className='text'>
                                 <h3 className='menu-h3'>E-Corner</h3>
                                 <h5 className='text-white'>Khusus Admin E-Corner</h5>
-                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>Masuk</button>
                             </div>
                         </div>
                     </div>
                     )}
                     {kode_role === 'A-01' &&(
-                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}`}>
+                    <div className='menu flex-column gap-5' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>
                         <div className='menu-card p-4 gap-3'>
                             <div className='menu-pic' style={{backgroundImage: `url(${e_corner})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center"}}></div>
                             <div className='text'>
                                 <h3 className='menu-h3'>E-Corner</h3>
                                 <h5 className='text-white'>Khusus Admin E-Corner</h5>
-                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}`}>Masuk</button>
+                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>Masuk</button>
                             </div>
                         </div>
                     </div>
@@ -386,6 +388,8 @@ Menu.propTypes = {
     akses_level: PropTypes.string,
     kode_role: PropTypes.string,
     kode_role_sp: PropTypes.string,
+    nrk_nip: PropTypes.string,
+    bagian: PropTypes.string,
 }
 
 export default Menu

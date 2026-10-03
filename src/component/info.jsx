@@ -73,11 +73,12 @@ const Info = ({nama}) => {
 
     return(
     <>
+    <div className='d-flex flex-column bg-green-old position-fixed p-4 rounded-3' style={{left: "1240px", top: "180px"}}>
             {notif_surat.length > 0 ? (
              <>
                 {notif_surat.map((notif) => (
                     <>
-                    <div className='info'>
+                    <div className='d-flex flex-column'>
                       <div style={{background: notif.f_profile === '' ? `url(${default_pic})` : `url(https://simantepbareta.cloud/API/${notif.f_profile})`, backgroundSize: notif.f_profile === '' ? "173%" : "89%", backgroundPosition: notif.f_profile === '' ? "48% 10%" : "34% 5%"}} className='pic'></div>
                       <p style={{ marginTop: '0px' }}>{notif.sender}</p>
                       <p style={{ marginTop: '0px' }}>{notif.subjek}</p>
@@ -91,11 +92,12 @@ const Info = ({nama}) => {
                 ))}
               </>         
             ) : (
-                <div className='info'>
-                  <p style={{ marginTop: '0px' }}>Tidak ada notifikasi</p>
-                </div>      
+                <div className=''>
+                    <p className='text-white text-center'>Tidak ada notifikasi</p>
+                </div>
             )
-          } 
+          }
+    </div>      
     </>        
     )
 }

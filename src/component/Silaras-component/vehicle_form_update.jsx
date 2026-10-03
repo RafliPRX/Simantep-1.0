@@ -104,62 +104,66 @@ const Vehicle_Update = () => {
     }
     return(
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>} 
-                <p>Silaras/Formulir Peminjaman Kendaraan Dinas</p>
-                <h1>Mengubah Formulir Peminjaman <br /> Kendaraan Dinas</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
-                <div className='content-col'>
-                    <div className='box1'>
+                <p className='content-header-p'>Silaras/Formulir Peminjaman Kendaraan Dinas</p>
+                <div className='d-flex justify-content-between align-items-center'>
+                  <h1 className='content-header-title'>Mengubah Formulir Peminjaman <br /> Kendaraan Dinas</h1>
+                  <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                
+                </div>
+                <div className='form-position d-flex flex-column'>
+                    <div className='form-display'>
                         <form action="">
-                        <div className='content-f'>
-                            <h1>Data Diri Peminjam</h1>
-                            <label htmlFor="">Nama</label>
-                            <input name='nama' value={nama} disabled type="text"/>
-                            <label htmlFor="">NRK/NIP</label>
-                            <input name='nrk' value={nrk} disabled type="text"/>
-                            <label htmlFor="">Jabatan</label>
-                            <input name='jabatan' value={jabatan} disabled type="text"/>
-                            <label htmlFor="">Unit Kerja</label>
+                        <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                            <h1 className='form-h1 fw-bold ms-3'>Data Diri Peminjam</h1>
+                            <label className='form-label ms-3' htmlFor="">Nama</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='nama' value={nama} disabled type="text"/>
+                            <label className='form-label ms-3' htmlFor="">NRK/NIP</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='nrk' value={nrk} disabled type="text"/>
+                            <label className='form-label ms-3' htmlFor="">Jabatan</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' name='jabatan' value={jabatan} disabled type="text"/>
+                            <label className='form-label ms-3' htmlFor="">Unit Kerja</label>
                             {level === "level-1" && (
-                              <input required value={detail.nama_role_c} disabled type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' required value={detail.nama_role_c} disabled type="text"/>
                             )}
                             {level === "level-2" && (
-                              <input required value={detail.nama_role_c} disabled type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' required value={detail.nama_role_c} disabled type="text"/>
                             )}
                             {level === "level-3" && (
-                              <input required value={detail.nama_role_b} disabled type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' required value={detail.nama_role_b} disabled type="text"/>
                             )}
                             {level === "level-4" && (
-                              <input required value={detail.nama_role_a} disabled type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' required value={detail.nama_role_a} disabled type="text"/>
                             )}
-                            <label htmlFor="">Jenis Peminjaman Kendaraan (Pilih Satu)</label>
-                            <div className='check'>
-                                <input onChange={handleChangeJenis} checked={jenis === "Roda 2"}  value={"Roda 2"} type="checkbox" name="" id="" />
-                                <label htmlFor="">Roda 2</label>
+                            <label className='form-label ms-3' htmlFor="">Jenis Peminjaman Kendaraan (Pilih Satu)</label>
+                            <div className='d-flex flex-row align-items-center gap-2 ps-3'>
+                                <input className='form-check-input' onChange={handleChangeJenis} checked={jenis === "Roda 2"}  value={"Roda 2"} type="checkbox" name="" id="" />
+                                <label className='form-check-label' htmlFor="">Roda 2</label>
                             </div> 
-                            <div className='check'> 
-                                <input onChange={handleChangeJenis} checked={jenis === "Roda 4"}  value={"Roda 4"} type="checkbox" name="" id="" />
-                                <label htmlFor="" >Roda 4</label>
+                            <div className='d-flex flex-row align-items-center gap-2 ps-3'> 
+                                <input className='form-check-input' onChange={handleChangeJenis} checked={jenis === "Roda 4"}  value={"Roda 4"} type="checkbox" name="" id="" />
+                                <label className='form-check-label' htmlFor="" >Roda 4</label>
                             </div> 
-                            <div className='check'> 
-                                <input onChange={handleChangeJenis} checked={jenis === "Roda 6"}  value={"Roda 6"} type="checkbox" name="" id="" />
-                                <label htmlFor="">Roda 6</label>
+                            <div className='d-flex flex-row align-items-center gap-2 ps-3'> 
+                                <input className='form-check-input' onChange={handleChangeJenis} checked={jenis === "Roda 6"}  value={"Roda 6"} type="checkbox" name="" id="" />
+                                <label className='form-check-label' htmlFor="">Roda 6</label>
                             </div>
-                            <label htmlFor="">Tujuan Peminjaman</label>
-                            <input type="text" onChange={handleChangeTujuan} value={tujuan} placeholder='Tujuan Peminjaman' />
-                            <label htmlFor="">Keperluan Peminjaman</label>
-                            <input type="text" onChange={handleChangeKeperluan} value={keperluan} placeholder='Keperluan Peminjaman' />
-                            <label htmlFor="">Tanggal Peminjaman</label>
-                            <input required onChange={handleChangeTanggal} value={tanggal} type="date"/>
-                            <label htmlFor="">Jam Peminjaman</label>
-                            <input required onChange={handleChangeJam} value={jam} type="time"/>
-                            <label htmlFor="">Durasi Peminjaman</label>
-                            <input required onChange={handleChangeDurasi} value={durasi} type="text"/>
+                            <label className='form-label ms-3' htmlFor="">Tujuan Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' type="text" onChange={handleChangeTujuan} value={tujuan} placeholder='Tujuan Peminjaman' />
+                            <label className='form-label ms-3' htmlFor="">Keperluan Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' type="text" onChange={handleChangeKeperluan} value={keperluan} placeholder='Keperluan Peminjaman' />
+                            <label className='form-label ms-3' htmlFor="">Tanggal Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' required onChange={handleChangeTanggal} value={tanggal} type="date"/>
+                            <label className='form-label ms-3' htmlFor="">Jam Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' required onChange={handleChangeJam} value={jam} type="time"/>
+                            <label className='form-label ms-3' htmlFor="">Durasi Peminjaman</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' required onChange={handleChangeDurasi} value={durasi} type="text"/>
                         </div>
-                        <button onClick={handleRequest} className='submit' type="submit">Submit</button>
+                        <div className='d-flex flex-column align-items-center w-100'>
+                          <button onClick={handleRequest} className='submit' type="submit">Submit</button>                    
+                        </div>
                         </form>
                     </div>
                 </div>

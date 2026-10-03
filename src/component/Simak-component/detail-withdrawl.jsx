@@ -107,162 +107,164 @@ const Detail_Withdraw = () => {
       }
     return (
         <>
-            <div className='main-dashboard'>
-            {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
-                <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
-            </div>} 
-                <p>Simak/Formulir Rencana Penarikan Dana</p>
-                <h1>Formulir Rencana Penarikan <br /> Dana</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                
-                <div className='content-col'>
-                    <div className='box1'>
-                        <form action="">
-                            <div className='content-f'>
-                                <h1>Data Diri</h1>
-                                <table>
+          <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
+          {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
+              <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
+          </div>} 
+            <p className='content-header-p'>Simak/Formulir Rencana Penarikan Dana</p>
+            <div className='d-flex justify-content-between align-items-center'>
+              <h1 className='content-header-title mt-0'>Formulir Rencana Penarikan <br /> Dana</h1>
+              <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />
+            </div>                
+            <div className='form-position d-flex flex-column'>
+                <div className='form-display'>
+                    <form action="">
+                        <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 pt-3 pb-3 mb-3'>
+                            <h1 className='form-h1 fw-bold ms-3'>Data Diri</h1>
+                            <table style={{marginLeft: 20}}>
+                                <tr>
+                                  <td className='form-label ms-3'>Nama</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.nama}</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-label ms-3'>NIP/NRK</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.nrk_nip}</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-label ms-3'>Jabatan</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.jabatan}</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-label ms-3'>Nama Kegiatan</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.nama_kegiatan}</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-label ms-3'>Rencana Pelaksana</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.rencana_pelaksana}</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-label ms-3'>Units</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.units}</td>
+                                </tr>
+                                <div style={{display: detail.units === 'Sosial' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
                                     <tr>
-                                      <td>Nama</td>
+                                      <td className='form-label ms-3'>Kebutuhan Akun 521211</td>
                                     </tr>
                                     <tr>
-                                      <td className='input'>{detail.nama}</td>
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto' , paddingRight: '20px'}}>{detail.acc_521211}</td>
                                     </tr>
                                     <tr>
-                                      <td>NIP/NRK</td>
+                                      <td className='form-label ms-3'>Kebutuhan 522141</td>
                                     </tr>
                                     <tr>
-                                      <td className='input'>{detail.nrk_nip}</td>
+                                      <td className='ms-3 fs-6'>- Sewa Tempat</td>  
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', marginLeft: '50px', paddingRight: '20px'}}>{detail.acc_522141_tempat}</td>
                                     </tr>
                                     <tr>
-                                      <td>Jabatan</td>
+                                      <td className='ms-3 fs-6'>- Sewa Kendaraan</td>  
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', marginLeft: '50px', paddingRight: '20px'}}>{detail.acc_522141_kendaraan}</td>
                                     </tr>
                                     <tr>
-                                      <td className='input'>{detail.jabatan}</td>
+                                      <td className='form-label ms-3'>Kebutuhan Akun 522151</td>
                                     </tr>
                                     <tr>
-                                      <td>Nama Kegiatan</td>
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_522151}</td>
                                     </tr>
                                     <tr>
-                                      <td className='input'>{detail.nama_kegiatan}</td>
+                                      <td className='form-label ms-3'>Kebutuhan Akun 524113</td>
                                     </tr>
                                     <tr>
-                                      <td>Rencana Pelaksana</td>
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_524113}</td>
                                     </tr>
                                     <tr>
-                                      <td className='input'>{detail.rencana_pelaksana}</td>
+                                      <td className='form-label ms-3'>Kebutuhan Akun 524114</td>
                                     </tr>
                                     <tr>
-                                      <td>Units</td>
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_524114}</td>
+                                    </tr>
+                                </div>
+                                <div style={{display: detail.units === 'Medis' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
+                                    <tr>
+                                      <td className='form-label ms-3'>Kebutuhan Akun 521211</td>
                                     </tr>
                                     <tr>
-                                      <td className='input'>{detail.units}</td>
-                                    </tr>
-                                    <div style={{display: detail.units === 'Sosial' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>Kebutuhan Akun 521211</td>
-                                        </tr>
-                                        <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto' , paddingRight: '20px'}}>{detail.acc_521211}</td>
-                                        </tr>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan 522141</td>
-                                        </tr>
-                                        <tr style={{}}>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingLeft: '20px'}}>- Sewa Tempat</td>  
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', marginLeft: '50px', paddingRight: '20px'}}>{detail.acc_522141_tempat}</td>
-                                        </tr>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingLeft: '20px'}}>- Sewa Kendaraan</td>  
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', marginLeft: '50px', paddingRight: '20px'}}>{detail.acc_522141_kendaraan}</td>
-                                        </tr>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 522151</td>
-                                        </tr>
-                                        <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_522151}</td>
-                                        </tr>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 524113</td>
-                                        </tr>
-                                        <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_524113}</td>
-                                        </tr>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 524114</td>
-                                        </tr>
-                                        <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_524114}</td>
-                                        </tr>
-                                    </div>
-                                    <div style={{display: detail.units === 'Medis' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 521211</td>
-                                        </tr>
-                                        <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_521211}</td>
-                                        </tr>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Kebutuhan Akun 522191</td>
-                                        </tr>
-                                        <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_522191}</td>
-                                        </tr>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Keterangan</td>
-                                        </tr>
-                                        <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.keterangan}</td>
-                                        </tr>
-                                    </div>
-                                    <div style={{display: detail.units === 'Manajemen' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Total Permintaan Dana</td>
-                                        </tr>
-                                        <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.total_dana_manajemen}</td>
-                                        </tr>
-                                        <tr>
-                                          <td style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto'}}>Metode Pembayaran</td>
-                                        </tr>
-                                        <tr>
-                                          <td className='input' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.metode}</td>
-                                        </tr>
-                                    </div>
-                                    <tr>
-                                      <td>Keterangan Keuangan</td>
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_521211}</td>
                                     </tr>
                                     <tr>
-                                      <td className='input'>{detail.keterangan_keuangan}</td>
+                                      <td className='form-label ms-3'>Kebutuhan Akun 522191</td>
                                     </tr>
-                                </table>
-                            </div>
-                        </form>
-                    </div>
-                    {role === "C-04" && (
-                    <div className='box1'>
-                      <form action="">
-                        <div className='content-f'>
-                          <h1>Jawab</h1>
-                          <label htmlFor="">Jawaban</label>
-                          <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
+                                    <tr>
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.acc_522191}</td>
+                                    </tr>
+                                    <tr>
+                                      <td className='form-label ms-3'>Keterangan</td>
+                                    </tr>
+                                    <tr>
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.keterangan}</td>
+                                    </tr>
+                                </div>
+                                <div style={{display: detail.units === 'Manajemen' ? 'flex' : 'none', flexDirection: 'column', alignItems: 'flex-start', gap: '10px'}}>
+                                    <tr>
+                                      <td className='form-label ms-3'>Total Permintaan Dana</td>
+                                    </tr>
+                                    <tr>
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.total_dana_manajemen}</td>
+                                    </tr>
+                                    <tr>
+                                      <td className='form-label ms-3'>Metode Pembayaran</td>
+                                    </tr>
+                                    <tr>
+                                      <td className='form-input ms-3 mb-4 ps-2 rounded-3' style={{display: 'flex', flexDirection: 'row', alignItems: 'center', width: 'auto', paddingRight: '20px'}}>{detail.metode}</td>
+                                    </tr>
+                                </div>
+                                <tr>
+                                  <td className='form-label ms-3'>Keterangan Keuangan</td>
+                                </tr>
+                                <tr>
+                                  <td className='form-input ms-3 mb-4 ps-2 rounded-3'>{detail.keterangan_keuangan}</td>
+                                </tr>
+                            </table>
                         </div>
-                        <button onClick={(e) => handleJawab(notif_detail?.id_notif, e)} className='submit'>Kirim</button>
-                      </form>
-                    </div>
-                    )}
-                    {role_sp === "S-04" && (
-                    <div className='box1'>
-                      <form action="">
-                        <div className='content-f'>
-                          <h1>Jawab</h1>
-                          <label htmlFor="">Jawaban</label>
-                          <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
-                        </div>
-                        <button onClick={(e) => handleJawab(notif_detail?.id_notif, e)} className='submit'>Kirim</button>
-                      </form>
-                    </div>
-                    )}
+                    </form>
                 </div>
-            </div>        
+                {role === "C-04" && (
+                <div className='form-display'>
+                  <form action="">
+                    <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                      <h1>Jawab</h1>
+                      <label htmlFor="">Jawaban</label>
+                      <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
+                    </div>
+                    <button onClick={(e) => handleJawab(notif_detail?.id_notif, e)} className='submit'>Kirim</button>
+                  </form>
+                </div>
+                )}
+                {role_sp === "S-04" && (
+                <div className='form-display'>
+                  <form action="">
+                    <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                      <h1>Jawab</h1>
+                      <label htmlFor="">Jawaban</label>
+                      <textarea onChange={handleChangeKeterangan} name="" id=""></textarea>
+                    </div>
+                    <button onClick={(e) => handleJawab(notif_detail?.id_notif, e)} className='submit'>Kirim</button>
+                  </form>
+                </div>
+                )}
+            </div>
+          </div>        
         </>
     );
 }

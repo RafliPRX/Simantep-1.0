@@ -18,6 +18,8 @@ const Content = () => {
     const { level } = useParams();
     const { role } = useParams();
     const { role_sp } = useParams();
+    const { nrk_nip } = useParams();
+    const { bagian } = useParams();
     const date = new Date();
     const currentMonth = String(date.getMonth() + 1).padStart(2, '0');
     const currentYear = date.getFullYear();
@@ -25,10 +27,10 @@ const Content = () => {
     const navigate = useNavigate();
     const [searchName, setSearchName] = useState('');
     const storeidNumber = localStorage.getItem('id_number');
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 480);
     // const [isLoading, setIsLoading] = useState('false')
     const [identity, setIdentity] = useState([]);
     const [nama, setNama] = useState(identity?.nama);
+    const [Role_sp_Mode, setRole_sp_Mode] = useState('Pegawai');
     const getIdentity = async () => {
       try {
         const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
@@ -100,6 +102,24 @@ const Content = () => {
             )
         );
         console.log('sisa cuti changed for', id_number, value);
+    }
+    const handleChangeSisaCutiN1 = (event, id_number) => {
+        const value_n1 = event.target.value;
+        setAccount(prev =>
+            prev.map(acc =>
+                acc.id_number === id_number ? { ...acc, sisa_cuti_n1: value_n1 } : acc
+            )
+        );
+        console.log('sisa cuti N-1 changed for', id_number, value_n1);
+    }
+    const handleChangeSisaCutiN2 = (event, id_number) => {
+        const value_n2 = event.target.value;
+        setAccount(prev =>
+            prev.map(acc =>
+                acc.id_number === id_number ? { ...acc, sisa_cuti_n2: value_n2 } : acc
+            )
+        );
+        console.log('sisa cuti N-1 changed for', id_number, value_n2);
     }
     const handleNext_Surat = () => {
         setPagination_surat({
@@ -255,11 +275,6 @@ const Content = () => {
     const [pagination_surat_role_sp, setPagination_surat_role_sp] = useState({
         currentPage: 1,
     });
-    useEffect(() => {
-        const handleResize = () => setIsMobile(window.innerWidth <= 480);
-        window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, []);
     const getSurat_role_sp = async() => {
         const baseUrl = `https://simantepbareta.cloud/API/MAWASDIRI/Cuti/surat_by_role_sp.php?page=${pagination_surat_role_sp.currentPage}&nama=${nama}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
@@ -313,7 +328,7 @@ const Content = () => {
         if (stat === 'Active') {
             mark(id_notif, id);
         } else {
-            navigate(`/Dashboard/${level}/${role}/${role_sp}/Cuti-detail/${id}`);
+            navigate(`/Dashboard/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/${bagian}/Cuti-detail/${id}`);
         }        
     }
     const [absensi, setAbsensi] = useState([]);
@@ -394,6 +409,52 @@ const Content = () => {
         alert("error code 103");
       }
     }
+    const handleUpdateSisaCutiN1 = async (event, sisa_cuti, id_number) => {
+      event.preventDefault();
+      setIsLoading(true);
+      const payload = {
+        sisa_cuti: sisa_cuti
+      };
+      try {
+        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/update_sisa_cuti_N1.php?id=${id_number}`, payload, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+        console.log(response.data);
+        setTimeout(() => {
+          setIsLoading(false);          
+          alert(response.data.message);
+        }, 1000);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error.response);
+        alert("error code 103");
+      }
+    }
+    const handleUpdateSisaCutiN2 = async (event, sisa_cuti, id_number) => {
+      event.preventDefault();
+      setIsLoading(true);
+      const payload = {
+        sisa_cuti: sisa_cuti
+      };
+      try {
+        const response = await axios.post(`https://simantepbareta.cloud/API/MAWASDIRI/Cuti/update_sisa_cuti_N2.php?id=${id_number}`, payload, {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        });
+        console.log(response.data);
+        setTimeout(() => {
+          setIsLoading(false);          
+          alert(response.data.message);
+        }, 1000);
+      } catch (error) {
+        setIsLoading(false);
+        console.log(error.response);
+        alert("error code 103");
+      }
+    }
     const handleDownloadExcelSurat = () => {
         const bulan = searchMonth;
         const tahun = currentYear;
@@ -402,53 +463,72 @@ const Content = () => {
       };
     return (
         <>
-        <div className='container-fluid d-flex flex-column p-5 m-2 justify-content-left'>
-        {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
-            <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
-        </div>}
-        <p className='text-white fs-5'>Mawasdiri/Database Pegawai</p>
-            <h1 className='text-white fs-1 mt-0'>Manajemen Pegawai Berbasis {isMobile && <br />} Kinerja Mandiri</h1>
-            <Profile nama={nama} feature="mawasdiri" />
-            <div className='container-xxl d-flex flex-column bg-green-old align-items-start p-5 m-2' style={{borderRadius: '20px'}}>
+        {isLoading && 
+        <div style={{
+            position: 'absolute',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'rgba(255, 255, 255, 0.5)',
+            width: '100%',
+            height: '100%',
+            zIndex: '9999'
+        }}>
+            <div style={{width: '4rem', height: '4rem'}} className="spinner-grow text-success" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </div>
+        </div>
+        }
+        <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>        
+        <p className='content-header-p'>Mawasdiri/Database Pegawai</p>
+            <div className='d-flex flex-row align-items-center justify-content-between gap-5'>
+                <h1 className='content-header-title mt-0'>Manajemen Pegawai Berbasis Kinerja Mandiri</h1>
+                <Profile nama={nama} feature="mawasdiri" />
+            </div>
+            <div className='container-xxl content-display bg-green-old align-items-start ' style={{borderRadius: '20px'}}>
                 <div className='container-xxl d-flex flex-column gap-4'>
                     <div className=''>
                     {(level === 'level-1' || level === 'level-2') && (
                         <>
                         {role_sp === '0' ? (
                                 <>
-                                    <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
-                                    <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                                    <h1 className='content-title fw-bold mt-0'>Progress Pengajuan Surat</h1>
+                                    <div className='header-content'>
                                         <div className='d-flex flex-row gap-2'>
                                             <button className='left' onClick={handlePrev_Surat}><img src={left} alt="" /></button>
                                             <input className='page-number' type="text" value={pagination_surat.currentPage} />
                                             <button className='right' onClick={handleNext_Surat}><img src={right} alt="" /></button>
-                                        </div>
-                                        <div className='d-flex align-items-center gap-2'>
-                                            <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                            <select className='w-100 h-100 rounded-3 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
-                                                <option value="01">Januari</option>
-                                                <option value="02">Februari</option>
-                                                <option value="03">Maret</option>
-                                                <option value="04">April</option>
-                                                <option value="05">Mei</option>
-                                                <option value="06">Juni</option>
-                                                <option value="07">Juli</option>
-                                                <option value="08">Agustus</option>
-                                                <option value="09">September</option>
-                                                <option value="10">Oktober</option>
-                                                <option value="11">November</option>
-                                                <option value="12">Desember</option>
-                                            </select>
-                                            <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                            <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                                <option value="2025">2025</option>
-                                                <option value="2026">2026</option>
-                                            </select>
+                                        </div>                                        
+                                        <div className='gap-2 header-search-content'>
+                                            <div className='header-month'>
+                                                <label className='text-month-search' htmlFor="">Bulan:</label>
+                                                <select className='w-100 h-100 rounded-3 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                                    <option value="01">Januari</option>
+                                                    <option value="02">Februari</option>
+                                                    <option value="03">Maret</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">Mei</option>
+                                                    <option value="06">Juni</option>
+                                                    <option value="07">Juli</option>
+                                                    <option value="08">Agustus</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">Desember</option>
+                                                </select>
+                                            </div>
+                                            <div className='header-year'>
+                                                <label className='text-year-search' htmlFor="">Tahun:</label>
+                                                <select className='w-100 h-100 rounded-3 fs-6' value={currentYear} name="" id="">
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
                                     {surat.length > 0 ? (
                                         <div className='mt-3 container-xxl d-flex flex-column gap-4'>
-                                            <table className='text-white table-bordered' border="1">
+                                            <table className='table-spaced' border="1">
                                                 <tr>
                                                     <th style={{ textAlign: 'center' }}>Nomor</th>
                                                     <th style={{ textAlign: 'center' }}>id Surat</th>
@@ -480,81 +560,126 @@ const Content = () => {
                                             </table>
                                         </div>    
                                     ) : (
-                                        <div className='text-center mt-5 fs-4 fw-bold text-white'>
-                                            <p className=''>tidak ada data</p>
-                                        </div>
+                                            <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                                     )}
                                 </>
                             ) : role_sp === 'S-02' ? (
                                 <>  
-                                    <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
-                                    <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                                    <h1 className='content-title fw-bold mt-0'>Progress Pengajuan Surat</h1>
+                                    <div className='header-content'>
                                         <div className='d-flex flex-row gap-2'>
                                             <button className='left' onClick={handlePrev_Surat_sp}><img src={left} alt="" /></button>
                                             <input className='page-number' type="text" value={pagination_surat.currentPage} />
                                             <button className='right' onClick={handleNext_Surat_sp}><img src={right} alt="" /></button>
                                         </div>
-                                        <div className='d-flex align-items-center gap-2'>
-                                            <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                            <select className='w-100 h-100 rounded-3 fs-5 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
-                                                <option value="01">Januari</option>
-                                                <option value="02">Februari</option>
-                                                <option value="03">Maret</option>
-                                                <option value="04">April</option>
-                                                <option value="05">Mei</option>
-                                                <option value="06">Juni</option>
-                                                <option value="07">Juli</option>
-                                                <option value="08">Agustus</option>
-                                                <option value="09">September</option>
-                                                <option value="10">Oktober</option>
-                                                <option value="11">November</option>
-                                                <option value="12">Desember</option>
-                                            </select>
-                                            <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                            <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                                <option value="2025">2025</option>
-                                                <option value="2026">2026</option>
-                                            </select>
+                                        <div className='d-flex flex-row gap-3'>
+                                            <button className='Special-text border-0 p-1 rounded-1' onClick={() => setRole_sp_Mode('Sendiri')} >Surat cuti Sendiri</button>
+                                            <button className='Special-text border-0 p-1 rounded-1' onClick={() => setRole_sp_Mode('Pegawai')} >Surat Cuti Pegawai</button>
+                                        </div>
+                                        <div className='gap-2 header-search-content'>
+                                            <div className='header-month'>
+                                                <label className='text-month-search' htmlFor="">Bulan:</label>
+                                                <select className='w-100 h-100 rounded-3 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                                    <option value="01">Januari</option>
+                                                    <option value="02">Februari</option>
+                                                    <option value="03">Maret</option>
+                                                    <option value="04">April</option>
+                                                    <option value="05">Mei</option>
+                                                    <option value="06">Juni</option>
+                                                    <option value="07">Juli</option>
+                                                    <option value="08">Agustus</option>
+                                                    <option value="09">September</option>
+                                                    <option value="10">Oktober</option>
+                                                    <option value="11">November</option>
+                                                    <option value="12">Desember</option>
+                                                </select>
+                                            </div>                                            
+                                            <div className='header-year'>
+                                                <label className='text-year-search' htmlFor="">Tahun:</label>
+                                                <select className='w-100 h-100 rounded-3 fs-6' value={currentYear} name="" id="">
+                                                    <option value="2025">2025</option>
+                                                    <option value="2026">2026</option>
+                                                </select>
+                                            </div>
                                         </div>
                                     </div>
-                                    {surat_role_sp.length > 0 ? (
-                                        <div className='mt-3 container-xxl d-flex flex-column gap-4'>
-                                            <table className='text-white table-bordered' border="1">
-                                                <tr>
-                                                    <th style={{ textAlign: 'center' }}>Nomor</th>
-                                                    <th style={{ textAlign: 'center' }}>id Surat</th>
-                                                    <th style={{ textAlign: 'center' }}>Nama</th>
-                                                    <th style={{ textAlign: 'center' }}>Keterangan</th>
-                                                    <th style={{ textAlign: 'center' }}>Jabatan</th>
-                                                    <th style={{ textAlign: 'center' }}>Jenis Surat</th>
-                                                    <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
-                                                    <th style={{ textAlign: 'center' }}>Kepala Balai</th>
-                                                    <th style={{ textAlign: 'center' }}>Opsi Lain</th>
-                                                </tr>
-                                                {surat_role_sp.map((item, index) => (
-                                                    <tr key={item.id_surat}>
-                                                        <td style={{ textAlign: 'center' }}>{index + 1}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
-                                                        <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
-                                                        <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
-                                                        <td className='d-flex flex-column gap-2' style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button><button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
+                                    {Role_sp_Mode === 'Pegawai' && (surat_role_sp.length > 0 ? (
+                                            <div className='mt-3 container-xxl d-flex flex-column gap-4'>
+                                                <table className='table-spaced' border="1">
+                                                    <tr>
+                                                        <th style={{ textAlign: 'center' }}>Nomor</th>
+                                                        <th style={{ textAlign: 'center' }}>id Surat</th>
+                                                        <th style={{ textAlign: 'center' }}>Nama</th>
+                                                        <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                                        <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                                        <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                                        <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                                        <th style={{ textAlign: 'center' }}>Opsi Lain</th>
                                                     </tr>
-                                                ))} 
-                                            </table>
-                                        </div>    
-                                    ) : (
-                                        <div className='text-center mt-5 fs-4 fw-bold text-white'>
-                                            <p className=''>tidak ada data</p>
-                                        </div>
-                                    )}
+                                                    {surat_role_sp.map((item, index) => (
+                                                        <tr key={item.id_surat}>
+                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                            <td className='d-flex flex-column gap-2' style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button><button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
+                                                        </tr>
+                                                    ))} 
+                                                </table>
+                                            </div>    
+                                        ) : (
+                                            <div className='no-data-p mt-5 text-center'>
+                                                <p className=''>tidak ada data Surat Pegawai</p>
+                                            </div>
+                                    ))}
+                                    {Role_sp_Mode === 'Sendiri' && 
+                                        (surat.length > 0 ? (
+                                            <div className='mt-3 container-xxl d-flex flex-column gap-4'>
+                                                <table className='table-spaced' border="1">
+                                                    <tr>
+                                                        <th style={{ textAlign: 'center' }}>Nomor</th>
+                                                        <th style={{ textAlign: 'center' }}>id Surat</th>
+                                                        <th style={{ textAlign: 'center' }}>Nama</th>
+                                                        <th style={{ textAlign: 'center' }}>Keterangan</th>
+                                                        <th style={{ textAlign: 'center' }}>Jabatan</th>
+                                                        <th style={{ textAlign: 'center' }}>Jenis Surat</th>
+                                                        <th style={{ textAlign: 'center' }}>Kasubbag Tata Usaha</th>
+                                                        <th style={{ textAlign: 'center' }}>Kepala Balai</th>
+                                                        <th style={{ textAlign: 'center' }}>Opsi Lain</th>
+                                                    </tr>
+                                                    {surat.map((item, index) => (
+                                                        <tr key={item.id_surat}>
+                                                            <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.id_surat}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.nama}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.Keterangan}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.jabatan}</td>
+                                                            <td style={{ textAlign: 'center' }}>{item.jenis_surat}</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_1 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_1 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_1 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_2 === '1' ? '' : 'none' }}><img src={white} alt="" />Belum di Baca</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_2 === '2' ? '' : 'none' }}><img src={red} alt="" />Tunda</td>
+                                                            <td style={{ textAlign: 'center', display: item.veri_2 === '3' ? '' : 'none' }}><img src={green} alt="" />Setuju</td>
+                                                            <td className='d-flex flex-column gap-2' style={{ textAlign: 'center' }}> <button onClick={(e) => handleOpenSurat(item.id_surat, item.stat, item.id_notif, e )} className='B-update'>Ubah</button><button onClick={() => confirmDeleteSurat(item.id_surat)} className='B-deleted'>Hapus</button></td>  
+                                                        </tr>
+                                                    ))} 
+                                                </table>
+                                            </div>    
+                                        ) : (
+                                            <div className='no-data-p mt-5 text-center'>
+                                                <p className=''>tidak ada data</p>
+                                            </div>
+                                        ))}                                    
                                 </>
                             ) : (
                                 <>
@@ -566,39 +691,43 @@ const Content = () => {
                     )}                           
                     {(role ==='A-02' && level === 'level-4') && 
                         <>  
-                            <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
-                            <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                            <h1 className='content-title mt-0'>Progress Pengajuan Surat</h1>
+                            <div className='header-content'>
                                 <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Surat_a_kasubbag}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_surat.currentPage} />
                                     <button className='right' onClick={handleNext_Surat_a_kasubbag}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='d-flex align-items-center gap-2'>
-                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                    <select className='w-100 h-100 rounded-3 fs-5 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
-                                        <option value="01">Januari</option>
-                                        <option value="02">Februari</option>
-                                        <option value="03">Maret</option>
-                                        <option value="04">April</option>
-                                        <option value="05">Mei</option>
-                                        <option value="06">Juni</option>
-                                        <option value="07">Juli</option>
-                                        <option value="08">Agustus</option>
-                                        <option value="09">September</option>
-                                        <option value="10">Oktober</option>
-                                        <option value="11">November</option>
-                                        <option value="12">Desember</option>
-                                    </select>
-                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                    <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                        <option value="2025">2025</option>
-                                        <option value="2026">2026</option>
-                                    </select>
+                                <div className='header-search-content gap-2'>
+                                    <div className='header-month'>
+                                        <label className='text-month-search' htmlFor="">Bulan:</label>
+                                        <select className='w-100 h-100 rounded-3 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                            <option value="01">Januari</option>
+                                            <option value="02">Februari</option>
+                                            <option value="03">Maret</option>
+                                            <option value="04">April</option>
+                                            <option value="05">Mei</option>
+                                            <option value="06">Juni</option>
+                                            <option value="07">Juli</option>
+                                            <option value="08">Agustus</option>
+                                            <option value="09">September</option>
+                                            <option value="10">Oktober</option>
+                                            <option value="11">November</option>
+                                            <option value="12">Desember</option>
+                                        </select>
+                                    </div>
+                                    <div className='header-year'>
+                                        <label className='text-year-search' htmlFor="">Tahun:</label>
+                                        <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                            <option value="2025">2025</option>
+                                            <option value="2026">2026</option>
+                                        </select>
+                                    </div>                                        
                                 </div>
                             </div>
                             {surat_role_a.length > 0 ? (
                                 <div className='mt-3 container-xxl d-flex flex-column gap-4'>
-                                    <table className='text-white table-bordered' border="1">
+                                    <table className='table-spaced' border="1">
                                         <tr>
                                             <th style={{ textAlign: 'center' }}>Nomor</th>
                                             <th style={{ textAlign: 'center' }}>id Surat</th>
@@ -630,7 +759,7 @@ const Content = () => {
                                     </table>
                                 </div>    
                             ) : (
-                                <div className='text-center mt-5 fs-4 fw-bold text-white'>
+                                <div className='no-data-p mt-5 text-center'>
                                     <p className=''>tidak ada data</p>
                                 </div>
                             )}
@@ -638,39 +767,43 @@ const Content = () => {
                     }
                     {(role ==='A-01' && level === 'level-4') && 
                         <>   
-                            <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
-                            <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                            <h1 className='content-title mt-0'>Progress Pengajuan Surat</h1>
+                            <div className='header-content'>
                                 <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Surat_a_kabalai}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_surat.currentPage} />
                                     <button className='right' onClick={handleNext_Surat_a_kabalai}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='d-flex align-items-center gap-2'>
-                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                    <select className='w-100 h-100 rounded-3 fs-5 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
-                                        <option value="01">Januari</option>
-                                        <option value="02">Februari</option>
-                                        <option value="03">Maret</option>
-                                        <option value="04">April</option>
-                                        <option value="05">Mei</option>
-                                        <option value="06">Juni</option>
-                                        <option value="07">Juli</option>
-                                        <option value="08">Agustus</option>
-                                        <option value="09">September</option>
-                                        <option value="10">Oktober</option>
-                                        <option value="11">November</option>
-                                        <option value="12">Desember</option>
-                                    </select>
-                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                    <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                        <option value="2025">2025</option>
-                                        <option value="2026">2026</option>
-                                    </select>
+                                <div className='header-search-content gap-2'>
+                                    <div className='header-month'>
+                                        <label className='text-month-search fs-6' htmlFor="">Bulan:</label>
+                                        <select className='w-100 h-100 rounded-3 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                            <option value="01">Januari</option>
+                                            <option value="02">Februari</option>
+                                            <option value="03">Maret</option>
+                                            <option value="04">April</option>
+                                            <option value="05">Mei</option>
+                                            <option value="06">Juni</option>
+                                            <option value="07">Juli</option>
+                                            <option value="08">Agustus</option>
+                                            <option value="09">September</option>
+                                            <option value="10">Oktober</option>
+                                            <option value="11">November</option>
+                                            <option value="12">Desember</option>
+                                        </select>
+                                    </div>
+                                    <div className='header-year'>
+                                        <label className='text-year-search fs-6' htmlFor="">Tahun:</label>
+                                        <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                            <option value="2025">2025</option>
+                                            <option value="2026">2026</option>
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
                             {surat_role_a_kabalai.length > 0 ? (
                                 <div className='mt-3 container-xxl d-flex flex-column gap-4'>
-                                    <table className='text-white table-bordered' border="1">
+                                    <table className='table-spaced' border="1">
                                         <tr>
                                             <th style={{ textAlign: 'center' }}>Nomor</th>
                                             <th style={{ textAlign: 'center' }}>id Surat</th>
@@ -702,7 +835,7 @@ const Content = () => {
                                     </table>
                                 </div>    
                             ) : (
-                                <div className='text-center mt-5 fs-4 fw-bold text-white'>
+                                <div className='no-data-p mt-5 text-center'>
                                     <p className=''>tidak ada data</p>
                                 </div>
                             )}
@@ -710,40 +843,44 @@ const Content = () => {
                     }
                     {level === 'level-3' && 
                         <>  
-                            <h1 className='text-white fs-2 fw-bold mt-0'>Progress Pengajuan Surat</h1>
-                            <div style={{display: "flex", flexDirection: "row", gap: "15px"}}>
+                            <h1 className='content-title mt-0'>Progress Pengajuan Surat</h1>
+                            <div className='header-content'>
                                 <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Surat_b}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_surat.currentPage} />
                                     <button className='right' onClick={handleNext_Surat_b}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='d-flex align-items-center gap-2'>
-                                    <label className='text-white fw-bold fs-6' htmlFor="">Bulan:</label>
-                                    <select className='w-100 h-100 rounded-3 fs-5 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
-                                        <option value="01">Januari</option>
-                                        <option value="02">Februari</option>
-                                        <option value="03">Maret</option>
-                                        <option value="04">April</option>
-                                        <option value="05">Mei</option>
-                                        <option value="06">Juni</option>
-                                        <option value="07">Juli</option>
-                                        <option value="08">Agustus</option>
-                                        <option value="09">September</option>
-                                        <option value="10">Oktober</option>
-                                        <option value="11">November</option>
-                                        <option value="12">Desember</option>
-                                    </select>
-                                    <label className='text-white fw-bold fs-6' htmlFor="">Tahun:</label>
-                                    <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
-                                        <option value="2025">2025</option>
-                                        <option value="2026">2026</option>
-                                    </select>
-                                    <button className='btn-download w-100 h-100 rounded-3 border-0 bg-teal text-white' onClick={handleDownloadExcelSurat}>Download Excel</button>
+                                <button className='btn-download rounded-3 border-0 bg-teal text-white p-1' onClick={handleDownloadExcelSurat}>Download Excel</button>
+                                <div className='header-search-content gap-2'>
+                                    <div className='header-month'>
+                                        <label className='text-month-search fs-6' htmlFor="">Bulan:</label>
+                                        <select className='w-100 h-100 rounded-3 fs-6 lh-lg' onChange={handleChangeSearchMonth} value={searchMonth} name="" id="">
+                                            <option value="01">Januari</option>
+                                            <option value="02">Februari</option>
+                                            <option value="03">Maret</option>
+                                            <option value="04">April</option>
+                                            <option value="05">Mei</option>
+                                            <option value="06">Juni</option>
+                                            <option value="07">Juli</option>
+                                            <option value="08">Agustus</option>
+                                            <option value="09">September</option>
+                                            <option value="10">Oktober</option>
+                                            <option value="11">November</option>
+                                            <option value="12">Desember</option>
+                                        </select>
+                                    </div>
+                                    <div className='header-year'>
+                                        <label className='text-year-search fs-6' htmlFor="">Tahun:</label>
+                                        <select className='w-100 h-100 rounded-3' value={currentYear} name="" id="">
+                                            <option value="2025">2025</option>
+                                            <option value="2026">2026</option>
+                                        </select>
+                                    </div>                                    
                                 </div>
                             </div>
                             {surat_role_b.length > 0 ? (
                                 <div className='mt-3 container-xxl d-flex flex-column gap-4'>
-                                    <table className='text-white table-bordered' border="1">
+                                    <table className='table-spaced' border="1">
                                         <tr>
                                             <th style={{ textAlign: 'center' }}>Nomor</th>
                                             <th style={{ textAlign: 'center' }}>id Surat</th>
@@ -775,7 +912,7 @@ const Content = () => {
                                     </table>
                                 </div>    
                             ) : (
-                                <div className='text-center mt-5 fs-4 fw-bold text-white'>
+                                <div className='no-data-p mt-5 text-center'>
                                     <p className=''>tidak ada data</p>
                                 </div>
                             )}                            
@@ -785,44 +922,69 @@ const Content = () => {
                     {level === 'level-3' &&
                     <div className='container-xxl d-flex flex-column gap-4'>                     
                         <>
-                            <h1 className='text-white fs-2 fw-bold mt-5'>Daftar Pegawai</h1>
-                            <div style={{display: "flex", flexDirection: "row", gap: "10px"}}>
+                            <h1 className='content-title mt-0'>Daftar Pegawai</h1>
+                            <div className='header-content'>
                                 <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Account}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_account.currentPage} disabled />
                                     <button className='right' onClick={handleNext_Account}><img src={right} alt="" /></button>
                                 </div>
-                                <div className='d-flex flex-row gap-2 align-content-center justify-content-center'>
-                                    <label className='text-white' htmlFor="">Nama: </label>
-                                    <input className='border-0 rounded-3 ps-3' onChange={handleChangeSearchName} type="text" />
+                                <div className='d-flex flex-row gap-2 align-items-center'>
+                                    <label className='text-year-search fs-6' htmlFor="">Nama: </label>
+                                    <input className='border-0 rounded-3 input-lv3 p-1' onChange={handleChangeSearchName} type="text" />
                                 </div>
                             </div>
                             {account.length > 0 ? (
-                                <table className='text-white table-bordered' border={1}>
+                                <table className='table-spaced' border={1}>
                                     <tr>
                                         <th style={{ textAlign: 'center' }}>Nomor ID</th>
                                         <th style={{ textAlign: 'center' }}>Nama</th>
-                                        <th style={{ textAlign: 'center' }}>Jumlah Cuti</th>
-                                        <th style={{ textAlign: 'center' }}>Ubah</th>
+                                        <th style={{ textAlign: 'center' }}>Jumlah Cuti N</th>
+                                        <th style={{ textAlign: 'center' }}>Jumlah Cuti N-1</th>
+                                        <th style={{ textAlign: 'center' }}>Jumlah Cuti N-2</th>
                                     </tr>
                                     {account.map((item) => (
                                         <tr key={item.id_number}>
                                             <td style={{ textAlign: 'center' }}>{item.id_number}</td>
                                             <td style={{ textAlign: 'center' }}>{item.nama}</td>
-                                            <td style={{ textAlign: 'center' }}>
-                                                <input
-                                                    type="number"
-                                                    value={item.sisa_cuti}
-                                                    onChange={e => handleChangeSisaCuti(e, item.id_number)}
-                                                    style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}
-                                                />
+                                            <td style={{ textAlign: 'center'}}>
+                                                <div className='d-flex flex-column ps-5 pe-5'>
+                                                    <input
+                                                        type="number"
+                                                        value={item.sisa_cuti}
+                                                        onChange={e => handleChangeSisaCuti(e, item.id_number)}
+                                                        style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}
+                                                    />
+                                                    <button onClick={(e) => handleUpdateSisaCuti(e, item.sisa_cuti, item.id_number)} className='B-update'>Ubah</button>
+                                                </div> 
                                             </td>
-                                            <td style={{ textAlign: 'center' }}><button onClick={(e) => handleUpdateSisaCuti(e, item.sisa_cuti, item.id_number)} className='B-update'>Ubah</button> </td>  
-                                            </tr>
+                                            <td>
+                                                <div className='d-flex flex-column ps-5 pe-5'>
+                                                    <input
+                                                        type="number"
+                                                        value={item.sisa_cuti_n1}
+                                                        onChange={e => handleChangeSisaCutiN1(e, item.id_number)}
+                                                        style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}
+                                                    />
+                                                    <button onClick={(e) => handleUpdateSisaCutiN1(e, item.sisa_cuti_n1, item.id_number)} className='B-update'>Ubah</button>
+                                                </div> 
+                                            </td>
+                                            <td>
+                                                <div className='d-flex flex-column ps-5 pe-5'>
+                                                    <input
+                                                        type="number"
+                                                        value={item.sisa_cuti_n2}
+                                                        onChange={e => handleChangeSisaCutiN2(e, item.id_number)}
+                                                        style={{ textAlign: 'center', marginTop: '10px', marginBottom: '10px' }}
+                                                    />
+                                                    <button onClick={(e) => handleUpdateSisaCutiN2(e, item.sisa_cuti_n2, item.id_number)} className='B-update'>Ubah</button>
+                                                </div> 
+                                            </td>
+                                        </tr>
                                         ))} 
                                     </table>
                                 ) : (
-                                    <p style={{ display: 'flex', paddingTop: '10px', justifyContent: 'center', paddingLeft: '400px' }}>tidak ada data</p>
+                                    <p className='no-data-p mt-5 text-center'>tidak ada data</p>
                             )}
                         </>                    
                     </div>  
@@ -831,7 +993,7 @@ const Content = () => {
                         <div className='content'>
                             <>
                                 <h1>Absensi</h1>
-                                <div className='pagination'>
+                                <div className='d-flex flex-row gap-2'>
                                     <button className='left' onClick={handlePrev_Absensi}><img src={left} alt="" /></button>
                                     <input className='page-number' type="text" value={pagination_account.currentPage} />
                                     <button className='right' onClick={handleNext_Absensi}><img src={right} alt="" /></button>

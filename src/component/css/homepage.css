@@ -36,6 +36,9 @@
     padding: 5px 20px;
     font-weight: 500;
 }
+.jabatan-text{
+    flex-wrap: nowrap;
+}
 .profile-picture{
     width: 150px;
     height: 150px;
@@ -128,5 +131,8 @@
         justify-content: center; 
         flex-direction: column;
         align-items: center;
+    }
+    .jabatan-text{
+        flex-wrap: nowrap;        
     }
 }

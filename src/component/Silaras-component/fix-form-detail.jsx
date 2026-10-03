@@ -130,39 +130,41 @@ const Fix_form_Detail = () => {
   }
   return(
       <>
-          <div className='main-dashboard'>
+          <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
           {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>}  
-              <p>Silaras/Formulir Perbaikan</p>
-              <h1>Formulir Perbaikan</h1>
-              <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />              
-              <div className='content-col'>
-                  <div className='box1'>
+              <p className='content-header-p'>Silaras/Formulir Perbaikan</p>
+              <div className='d-flex justify-content-between align-items-center'>
+                <h1 className='content-header-title mt-0'>Formulir Perbaikan</h1>
+                <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />              
+              </div>
+              <div className='form-position d-flex flex-column'>
+                  <div className='form-display'>
                       <form action="">
-                      <div className='content-f'>
-                          <h1>Data Perbaikan</h1>
-                          <label htmlFor="">Nama</label>
+                      <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 pt-3 pb-3 mb-3'>
+                          <h1 className='form-h1 fw-bold ms-3'>Data Perbaikan</h1>
+                          <label className='form-label ms-3' htmlFor="">Nama</label>
                           {/* <input type="text" value={param.id} /> */}
-                          <input value={detail.nama} disabled type="text"/>
-                          <label htmlFor="">NIP/NRK</label>
-                          <input value={detail.nrk_nip} disabled type="text"/>
-                          <label htmlFor="">Units</label>
+                          <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={detail.nama} disabled type="text"/>
+                          <label className='form-label ms-3' htmlFor="">NIP/NRK</label>
+                          <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={detail.nrk_nip} disabled type="text"/>
+                          <label className='form-label ms-3' htmlFor="">Units</label>
                           {level === "level-1" && (
-                            <input value={nama_role} disabled type="text"/>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role} disabled type="text"/>
                           )}
                           {level === "level-2" && (
-                            <input value={nama_role_c} disabled type="text"/>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role_c} disabled type="text"/>
                           )}
                           {level === "level-3" && (
-                            <input value={nama_role_b} disabled type="text"/>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role_b} disabled type="text"/>
                           )}
                           {level === "level-4" && (
-                            <input value={nama_role_a} disabled type="text"/>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role_a} disabled type="text"/>
                           )}
-                          <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
-                          <textarea value={detail.fix} disabled name="" id=""></textarea>
-                          <label htmlFor="">Gambar Bukti</label>
+                          <label className='form-label ms-3' htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
+                          <textarea className='form-textarea ms-3 mb-4 ps-2 rounded-3' value={detail.fix} disabled name="" id=""></textarea>
+                          <label className='form-label ms-3' htmlFor="">Gambar Bukti</label>
                           <img style={{width: '600px', height: 'auto', borderRadius: '10px', marginLeft: "35px", marginBottom: "10px"}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.foto}`} alt="" />
                       </div>
                     </form>
@@ -172,10 +174,10 @@ const Fix_form_Detail = () => {
                       <form action="">
                       <div className='content-f'>
                           <h1>Jawaban Perbaikan</h1>
-                            <label htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
-                            <textarea value={detail.jawab} name="" id=""></textarea>
-                            <label htmlFor="">Bukti Gambar</label>
-                            <img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.bukti}`} alt="" />
+                          <label className='form-label ms-3' htmlFor="">Permintaan Perbaikan (Deskripsikan Perbaikan)</label>
+                          <textarea className='form-textarea ms-3 mb-4 ps-2 rounded-3' value={detail.jawab} name="" id=""></textarea>
+                          <label className='form-label ms-3' htmlFor="">Bukti Gambar</label>
+                          <img style={{width: '600px', height: 'auto', borderRadius: '10px'}} src={`https://simantepbareta.cloud/API/SILARAS/${detail.bukti}`} alt="" />
                       </div>
                       </form>
                     </div>
@@ -185,9 +187,9 @@ const Fix_form_Detail = () => {
                     <form action="">
                       <div className='content-f'>
                         <h1>Jawab</h1>
-                        <label htmlFor="">Jawaban</label>
-                        <textarea onChange={handleChangeJawaban} name="" id=""></textarea>
-                        <label htmlFor="">Bukti Gambar</label>
+                        <label className='form-label ms-3' htmlFor="">Jawaban</label>
+                        <textarea className='form-textarea ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeJawaban} name="" id=""></textarea>
+                        <label className='form-label ms-3' htmlFor="">Bukti Gambar</label>
                         <input onChange={handleChangeImage} type="file" name="" id="" />
                       </div>
                       <button onClick={(e) => handleJawab(notif_detail.id_notif, e)} className='submit'>Kirim</button>
@@ -199,9 +201,9 @@ const Fix_form_Detail = () => {
                     <form action="">
                       <div className='content-f'>
                         <h1>Jawab</h1>
-                        <label htmlFor="">Jawaban</label>
+                        <label className='form-label ms-3' htmlFor="">Jawaban</label>
                         <textarea onChange={handleChangeJawaban} name="" id=""></textarea>
-                        <label htmlFor="">Bukti Gambar</label>
+                        <label className='form-label ms-3' htmlFor="">Bukti Gambar</label>
                         <input onChange={handleChangeImage} type="file" name="" id="" />
                       </div>
                       <button onClick={(e) => handleJawab(notif_detail.id_notif, e)} className='submit'>Kirim</button>

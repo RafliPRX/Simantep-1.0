@@ -120,7 +120,7 @@ const Request_Form_Update = () => {
         });
         console.log(response.data);
         setTimeout(() => {
-          navigate(`/dashboard-laras/${level}/${role}/${role_sp}`);
+          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`);
           alert(response.data.message);
           setIsLoading(false);
         }, 1000);
@@ -167,82 +167,86 @@ const Request_Form_Update = () => {
 
     return(
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
               {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
               </div>} 
-                <p>Silaras/Formulir Permohonan BHP & ATK</p>
-                <h1>Mengubah Formulir Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                 
-                <div className='content-col'>
-                    <div className='box1' id='box_request'>
+                <p className='content-header-p'>Silaras/Formulir Permohonan BHP & ATK</p>
+                <div className='d-flex justify-content-between align-items-center'>
+                  <h1 className='content-header-title mt-0'>Mengubah Formulir Permohonan Barang <br /> Habis Pakai & Alat Tulis <br /> Kantor</h1>
+                  <Profile nama={storedUsername} f_profile={storedFProfile} feature="silaras" />                
+                </div>
+                <div className='form-position d-flex flex-column'>
+                    <div className='form-display' id='box_request'>
                         <form action="">
-                        <div className='content-f'>
-                            <h1>Data Diri Peminjam</h1>
-                            <label htmlFor="">Nama</label>
-                            <input value={nama} disabled placeholder='Nama' type="text"/>
-                            <label htmlFor="">NIP/NRK</label>
-                            <input value={nrk_nip} disabled placeholder='NRK' type="text"/>
-                            <label htmlFor="">Jabatan</label>
-                            <input value={jabatan} disabled placeholder='NRK' type="text"/>
-                            <label htmlFor="">Unit Kerja</label>
+                        <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                            <h1 className='form-h1 fw-bold ms-3'>Data Diri Peminjam</h1>
+                            <label className='form-label ms-3' htmlFor="">Nama</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama} disabled placeholder='Nama' type="text"/>
+                            <label className='form-label ms-3' htmlFor="">NIP/NRK</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nrk_nip} disabled placeholder='NRK' type="text"/>
+                            <label className='form-label ms-3' htmlFor="">Jabatan</label>
+                            <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={jabatan} disabled placeholder='NRK' type="text"/>
+                            <label className='form-label ms-3' htmlFor="">Unit Kerja</label>
                             {level === 'level-1' && (
-                              <input value={request.nama_role} disabled placeholder='Unit Kerja' type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={request.nama_role} disabled placeholder='Unit Kerja' type="text"/>
                             )}
                             {level === 'level-2' && (
-                              <input value={request.nama_role_c} disabled placeholder='Unit Kerja' type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={request.nama_role_c} disabled placeholder='Unit Kerja' type="text"/>
                             )}
                             {level === 'level-3' && (
-                              <input value={request.nama_role_b} disabled placeholder='Unit Kerja' type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={request.nama_role_b} disabled placeholder='Unit Kerja' type="text"/>
                             )}
                             {level === 'level-4' && (
-                              <input value={request.nama_role_a} disabled placeholder='Unit Kerja' type="text"/>
+                              <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={request.nama_role_a} disabled placeholder='Unit Kerja' type="text"/>
                             )}
-                            <label htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>
-                            <table>
+                            <label className='form-label ms-3' htmlFor="">Permohonan Barang (Deskripsikan Permohonan)</label>
+                            <table className='table-spaced text-center' border={1}>
                               <tbody>
-                                <tr className='barang-bar'>
-                                  <th className='barang-no'>No</th>
-                                  <th className='barang-jenis'>Nama Barang</th>
-                                  <th className='barang-jumlah'>Jumlah</th>
-                                  <th className='barang-satuan'>Satuan</th>
+                                <tr>
+                                  <th>No</th>
+                                  <th>Nama Barang</th>
+                                  <th>Jumlah</th>
+                                  <th>Satuan</th>
                                 </tr>
-                                <tr className='barang-bar'>
-                                  <th className='barang-no'>1</th>
-                                  <th className='barang-jenis'><input onChange={handleChangeBarang} value={barang} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang} value={jumlah_barang} type="text" /></th>
-                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang} value={satuan_barang} type="text" /></th>
+                                <tr>
+                                  <th>1</th>
+                                  <th><input className='text-center' onChange={handleChangeBarang} value={barang} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeJumlahBarang} value={jumlah_barang} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeSatuanBarang} value={satuan_barang} type="text" /></th>
                                 </tr>
-                                <tr className='barang-bar'>
-                                  <th className='barang-no'>2</th>
-                                  <th className='barang-jenis'><input onChange={handleChangeBarang2} value={barang2} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang2} value={jumlah_barang2} type="text" /></th>
-                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang2} value={satuan_barang2} type="text" /></th>
+                                <tr>
+                                  <th>2</th>
+                                  <th><input className='text-center' onChange={handleChangeBarang2} value={barang2} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeJumlahBarang2} value={jumlah_barang2} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeSatuanBarang2} value={satuan_barang2} type="text" /></th>
 
                                 </tr>
-                                <tr className='barang-bar'>
-                                  <th className='barang-no'>3</th>
-                                  <th className='barang-jenis'><input onChange={handleChangeBarang3} value={barang3} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang3} value={jumlah_barang3} type="text" /></th>
-                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang3} value={satuan_barang3} type="text" /></th>
+                                <tr>
+                                  <th>3</th>
+                                  <th><input className='text-center' onChange={handleChangeBarang3} value={barang3} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeJumlahBarang3} value={jumlah_barang3} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeSatuanBarang3} value={satuan_barang3} type="text" /></th>
                                 </tr>
-                                <tr className='barang-bar'>
-                                  <th className='barang-no'>4</th>
-                                  <th className='barang-jenis'><input onChange={handleChangeBarang4} value={barang4} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang4} value={jumlah_barang4} type="text" /></th>
-                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang4} value={satuan_barang4} type="text" /></th>
+                                <tr>
+                                  <th>4</th>
+                                  <th><input className='text-center' onChange={handleChangeBarang4} value={barang4} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeJumlahBarang4} value={jumlah_barang4} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeSatuanBarang4} value={satuan_barang4} type="text" /></th>
                                 </tr>
-                                <tr className='barang-bar'>
-                                  <th className='barang-no'>5</th>
-                                  <th className='barang-jenis'><input onChange={handleChangeBarang5} value={barang5} type="text" /></th>
-                                  <th className='barang-jumlah'><input onChange={handleChangeJumlahBarang5} value={jumlah_barang5} type="text" /></th>
-                                  <th className='barang-satuan'><input onChange={handleChangeSatuanBarang5} value={satuan_barang5} type="text" /></th>
+                                <tr>
+                                  <th>5</th>
+                                  <th><input className='text-center' onChange={handleChangeBarang5} value={barang5} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeJumlahBarang5} value={jumlah_barang5} type="text" /></th>
+                                  <th><input className='text-center' onChange={handleChangeSatuanBarang5} value={satuan_barang5} type="text" /></th>
                                 </tr>
                               </tbody>
                             </table>
-                        </div>                        
-                         <button  className='submit' onClick={(event)=>hadleRequest(event)} type="submit">Submit</button>
-                        </form>                        
+                        </div>
+                        <div className='d-flex flex-column align-items-center w-100'>
+                          <button  className='submit' onClick={(event)=>hadleRequest(event)} type="submit">Submit</button>                        
+                        </div>
+                      </form>                        
                     </div> 
                 </div>
             </div>        

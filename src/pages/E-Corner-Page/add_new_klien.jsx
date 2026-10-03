@@ -2,8 +2,9 @@ import '../../component/css/dashboard.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Sidebar_Corner from '../../component/e-corner-component/sidebar_corner';
-import New_Klien_form from '../../component/e-corner-component/new_klien';
-const Klien_form = () =>  {
+import New_Data_Klien_form from '../../component/e-corner-component/new_data_klien';
+
+const Add_Klien_form = () =>  {
     const storeidNumber = localStorage.getItem('id_number');
     const [identity, setIdentity] = useState([]);
     const [kode_role_c, setKode_role_c] = useState(identity.kode_role_c);
@@ -27,9 +28,9 @@ const Klien_form = () =>  {
         <> 
             <div className="dashboard">
                 <Sidebar_Corner/>
-                <New_Klien_form kode_role_c={kode_role_c}/>
+                <New_Data_Klien_form kode_role_c={kode_role_c}/>
             </div>
         </>
     )
 }
-export default Klien_form
+export default Add_Klien_form

@@ -12,6 +12,7 @@ const Update_Withdraw = () => {
     const storedFProfile = localStorage.getItem('f_profile');
     const navigate = useNavigate();
     const param = useParams();
+    const { nrk_nip } = useParams();
     const [show, setShow] = useState(false); // Changed to boolean for clarity
 
     function handleShow(event) {
@@ -174,7 +175,7 @@ const Update_Withdraw = () => {
             console.log(response.data);
             setTimeout(() => {
                 setIsLoading(false);
-                navigate(`/dashboard-simak/${level}/${role}/${role_sp}`)
+                navigate(`/dashboard-simak/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`);
                 alert(response.data.message);
             }, 1000);
         } catch (error) {
@@ -183,56 +184,77 @@ const Update_Withdraw = () => {
     }    
     return (
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>} 
-                <p>Simak/Formulir Rencana Penarikan Dana</p>
-                <h1>Mengubah Formulir  Rencana Penarikan <br /> Dana</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                
-                <div className='content-col'>
-                    <div className='box1'>
+                <p className='content-header-p'>Simak/Formulir Rencana Penarikan Dana</p>
+                <div className='d-flex justify-content-between align-content-center'>
+                    <h1 className='content-header-title mt-0'>Mengubah Formulir  Rencana Penarikan <br /> Dana</h1>
+                    <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                
+                </div>
+                <div className='form-position d-flex flex-column'>
+                    <div className='form-display'>
                         <form action="">
-                            <div className='content-f'>
-                                <h1>Data Diri</h1>
-                                <label htmlFor="">Nama</label>
-                                <input onChange={handleChangeNama} disabled value={nama} placeholder={detail.nama} type="text"/>
-                                <label htmlFor="">NIP/NRK</label>
-                                <input onChange={handleChangeNRK} disabled value={nrk} placeholder={detail.NRK} type="text"/>
-                                <label htmlFor="">Jabatan</label>
-                                <input onChange={handleChangeJabatan} disabled value={jabatan} placeholder={detail.jabatan_pj} type="text"/>
+                            <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                                <h1 className='form-h1 fw-bold ms-3'>Data Diri</h1>
+                                <label className='form-label ms-3' htmlFor="">Nama</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeNama} disabled value={nama} placeholder={detail.nama} type="text"/>
+                                <label className='form-label ms-3' htmlFor="">NIP/NRK</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeNRK} disabled value={nrk} placeholder={detail.NRK} type="text"/>
+                                <label className='form-label ms-3' htmlFor="">Jabatan</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeJabatan} disabled value={jabatan} placeholder={detail.jabatan_pj} type="text"/>
                             </div>
 
-                            <div className='content-f'>
-                                <h1>Nama Kegiatan & Unit</h1>
-                                <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
-                                <input onChange={handleChangeKegiatan} value={kegiatan} placeholder={detail.nama_kegiatan} type="text"/>
-                                <label htmlFor="">Rencana Pelaksanaan</label>
-                                <input onChange={handleChangeRencana} value={rencana} placeholder={detail.rencana_pelaksana} type="date"/>
-                                <div className='check'>
-                                    <input value="Sosial" checked={units === "Sosial"} type="checkbox" id="sosialCheckbox" onChange={(event) => {
+                            <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                                <h1 className='form-h1 fw-bold ms-3'>Nama Kegiatan & Unit</h1>
+                                <label className='form-label ms-3' htmlFor="">Nama Rencana Kegiatan dan Program</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeKegiatan} value={kegiatan} placeholder={detail.nama_kegiatan} type="text"/>
+                                <label className='form-label ms-3' htmlFor="">Rencana Pelaksanaan</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' onChange={handleChangeRencana} value={rencana} placeholder={detail.rencana_pelaksana} type="date"/>
+                                <div className='d-flex flex-row align-items-center gap-2 ps-3'>
+                                    <input className='form-check-input' value="Sosial" checked={units === "Sosial"} type="checkbox" id="sosialCheckbox" onChange={(event) => {
                                         handleShow(event);
                                         handleChangeUnits(event);
                                     }} />
-                                    <label htmlFor="sosialCheckbox">Sosial</label>                                    
+                                    <label className='form-check-label' htmlFor="sosialCheckbox">Sosial</label>                                    
                                 </div>
                                 {(show || units === "Sosial") && (
-                                    <div className='check-form'>
-                                        <label htmlFor="">Kebutuhan Akun 521211</label>
-                                        <input onChange={handleChangeAkun211} value={akun211} placeholder={detail.acc_521211} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522141</label><br /><br />
-                                        <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
-                                        <label style={{width: '200px'}} htmlFor="">Sewa Tempat</label><br /><br />                  
-                                        <input onChange={handleChangeTempat} value={tempat} placeholder={detail.acc_522141_tempat} type="text" name="" id="" />
-                                        <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
-                                        <label style={{width: '200px'}} htmlFor="">Sewa Kendaraan</label><br /><br />                  
-                                        <input onChange={handleChangeKendaraan} value={kendaraan} placeholder={detail.acc_522141_tempat} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522151</label>
-                                        <input onChange={handleChangeAkun151} value={akun151} placeholder={detail.acc_522151} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 524113</label>
-                                        <input onChange={handleChangeAkun113} value={akun113} placeholder={detail.acc_524113} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 524114</label>
-                                        <input onChange={handleChangeAkun114} value={akun114} placeholder={detail.acc_524114} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                    <div className='d-flex flex-column'>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-2'>
+                                            <label className='label-check ps-4' htmlFor="">Kebutuhan Akun 521211</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeAkun211} value={akun211} placeholder={detail.acc_521211} style={{marginTop: '10px'}} type="text" name="" id="" />                                            
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-2'>
+                                            <label className='label-check ps-4' htmlFor="">Kebutuhan Akun 522141</label>                                                                                    
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-2'>
+                                            <div className='d-flex flex-row gap-3 me-5'>
+                                                <label className='label-check' htmlFor="">o</label>
+                                                <label className='label-check' htmlFor="">Sewa Tempat</label>                                                              
+                                            </div>
+                                            <input onChange={handleChangeTempat} value={tempat} placeholder={detail.acc_522141_tempat} type="text" name="" id="" />
+                                             <div className='d-flex flex-row gap-3 me-5'>
+                                                <label className='label-check ps-4' htmlFor="">o</label>
+                                                <label className='label-check ps-4' htmlFor="">Sewa Kendaraan</label>                                                              
+                                            </div>
+                                            <input onChange={handleChangeKendaraan} value={kendaraan} placeholder={detail.acc_522141_tempat} type="text" name="" id="" />                                          
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-2'>
+                                                                                 
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label htmlFor="">Kebutuhan Akun 522151</label>
+                                            <input onChange={handleChangeAkun151} value={akun151} placeholder={detail.acc_522151} style={{marginTop: '10px'}} type="text" name="" id="" />                                        
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label htmlFor="">Kebutuhan Akun 524113</label>
+                                            <input onChange={handleChangeAkun113} value={akun113} placeholder={detail.acc_524113} style={{marginTop: '10px'}} type="text" name="" id="" />                                        
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label htmlFor="">Kebutuhan Akun 524114</label>
+                                            <input onChange={handleChangeAkun114} value={akun114} placeholder={detail.acc_524114} style={{marginTop: '10px'}} type="text" name="" id="" />                                    
+                                        </div>
                                     </div>
                                 )}
                                 <div className='check'>

@@ -184,7 +184,7 @@ const Withdraw = () => {
             console.log(response.data);
             setTimeout(() => {
                 setIsLoading(false);
-                navigate(`/dashboard-simak/${level}/${role}/${role_sp}`)
+                navigate(`/dashboard-simak/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`)
                 alert(response.data.message);
             }, 1000);
         } catch (error) {
@@ -194,101 +194,126 @@ const Withdraw = () => {
     }
     return (
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '1934px', height: '2504px'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>} 
-                <p>Simak/Form Rencana Penarikan Dana</p>
-                <h1>Formulir Rencana Penarikan <br /> Dana</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                
-                <div className='content-col'>
-                    <div className='box1'>
+                <p className='content-header-p'>Simak/Form Rencana Penarikan Dana</p>
+                <div className='d-flex justify-content-between align-items-center'>
+                    <h1 className='content-header-title mt-0'>Formulir Rencana Penarikan Dana</h1>
+                    <Profile nama={storedUsername} f_profile={storedFProfile} feature="simak" />                                
+                </div>
+                <div className='form-position d-flex flex-column'>
+                    <div className='form-display'>
                         <form action="">
-                            <div className='content-f'>
-                                <h1>Data Diri</h1>
-                                <label htmlFor="">Nama</label>
-                                <input value={nama} disabled placeholder='Nama' type="text"/>
-                                <label htmlFor="">NIP/NRK</label>
-                                <input value={nrk_nip} disabled placeholder='NIP/NRK' type="text"/>
-                                <label htmlFor="">Jabatan</label>
-                                <input value={jabatan} disabled placeholder='Jabatan' type="text"/>
+                            <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                                <h1 className='form-h1 fw-bold ms-3'>Data Diri</h1>
+                                <label className='form-label ms-3' htmlFor="">Nama</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama} disabled placeholder='Nama' type="text"/>
+                                <label className='form-label ms-3' htmlFor="">NIP/NRK</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nrk_nip} disabled placeholder='NIP/NRK' type="text"/>
+                                <label className='form-label ms-3' htmlFor="">Jabatan</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={jabatan} disabled placeholder='Jabatan' type="text"/>
                                 {level === 'level-1' && (
                                 <>
-                                    <label htmlFor="">Unit Kerja</label>
-                                    <input value={nama_role} placeholder='Sisa Cuti' disabled type="text" />
+                                    <label className='form-label ms-3' htmlFor="">Unit Kerja</label>
+                                    <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role} placeholder='Sisa Cuti' disabled type="text" />
                                 </>
                                 )}
                                 {level === 'level-2' && (
                                 <>
-                                    <label htmlFor="">Unit Kerja</label>
-                                    <input value={nama_role_c} placeholder='Sisa Cuti' disabled type="text" />
+                                    <label className='form-label ms-3' htmlFor="">Unit Kerja</label>
+                                    <input className='form-input ms-3 mb-4 ps-2 rounded-3' value={nama_role_c} placeholder='Sisa Cuti' disabled type="text" />
                                 </>
                                 )}
                             </div>
-
-                            <div className='content-f'>
-                                <h1>Nama Kegiatan & Unit</h1>
-                                <label htmlFor="">Nama Pengaju</label>
-                                <input onChange={handleChangeNamaPengaju} value={nama_Pengaju} placeholder='Nama Pengaju' type="text"/>
-                                <label htmlFor="">Nama Rencana Kegiatan dan Program</label>
-                                <input onChange={handleChangeKegiatan} value={kegiatan} placeholder='Nama Rencana Kegiatan dan Program' type="text"/>
-                                <label htmlFor="">Rencana Pelaksanaan</label>
-                                <input onChange={handleChangeRencana} value={rencana} placeholder='Rencana Pelaksanaan' type="date"/>
-                                <div className='check'>
-                                    <input value="Sosial" type="checkbox" id="sosialCheckbox" onChange={(event) => {
+                            <div className='bg-green-old text-white d-flex flex-column align-items-start justify-content-start rounded-5 p-3 mb-3'>
+                                <h1 className='form-h1 fw-bold ms-3'>Nama Kegiatan & Unit</h1>
+                                <label className='form-label ms-3' htmlFor="">Nama Pengaju</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3'  onChange={handleChangeNamaPengaju} value={nama_Pengaju} placeholder='Nama Pengaju' type="text"/>
+                                <label className='form-label ms-3' htmlFor="">Nama Rencana Kegiatan dan Program</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3'  onChange={handleChangeKegiatan} value={kegiatan} placeholder='Nama Rencana Kegiatan dan Program' type="text"/>
+                                <label className='form-label ms-3' htmlFor="">Rencana Pelaksanaan</label>
+                                <input className='form-input ms-3 mb-4 ps-2 rounded-3'  onChange={handleChangeRencana} value={rencana} placeholder='Rencana Pelaksanaan' type="date"/>
+                                <div className='d-flex flex-row align-items-center gap-2 ps-3'>
+                                    <input className='form-input-in-check ms-4 rounded-3 ps-3' value="Sosial" type="checkbox" id="sosialCheckbox" onChange={(event) => {
                                         handleShow(event);
                                         handleChangeUnits(event);
                                     }} />
-                                    <label htmlFor="sosialCheckbox">Sosial</label>
+                                    <label className='form-check-label' htmlFor="sosialCheckbox">Sosial</label>
                                 </div>
                                 {show && ( // Conditionally render based on show state
-                                    <div className='check-form'>
-                                        <label htmlFor="">Kebutuhan Akun 521211 (Rp.)</label>
-                                        <input onChange={handleChangeAkun211} value={akun211} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522141 (Rp.)</label><br /><br />
-                                        <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
-                                        <label style={{width: '200px'}} htmlFor="">Sewa Tempat</label><br /><br />                  
-                                        <input onChange={handleChangeTempat} value={tempat} placeholder='Sewa Tempat' type="text" name="" id="" />
-                                        <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
-                                        <label style={{width: '200px'}} htmlFor="">Sewa Kendaraan</label><br /><br />                  
-                                        <input onChange={handleChangeKendaraan} value={kendaraan} placeholder='Sewa Kendaraan' type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522151 (Rp.)</label>
-                                        <input onChange={handleChangeAkun151} value={akun151} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 524113 (Rp.)</label>
-                                        <input onChange={handleChangeAkun113} value={akun113} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 524114 (Rp.)</label>
-                                        <input onChange={handleChangeAkun114} value={akun114} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                    <div className='d-flex flex-column'>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Kebutuhan Akun 521211 (Rp.)</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeAkun211} value={akun211} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Kebutuhan Akun 522141 (Rp.)</label>
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
+                                            <label className='label-check ps-4' style={{width: '200px'}} htmlFor="">Sewa Tempat</label><br /><br />                  
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeTempat} value={tempat} placeholder='Sewa Tempat' type="text" name="" id="" />
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label style={{paddingLeft: '25px'}} htmlFor="">o</label>
+                                            <label className='label-check ps-4' style={{width: '200px'}} htmlFor="">Sewa Kendaraan</label><br /><br />                  
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeKendaraan} value={kendaraan} placeholder='Sewa Kendaraan' type="text" name="" id="" />
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Kebutuhan Akun 522151 (Rp.)</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeAkun151} value={akun151} style={{marginTop: '10px'}} type="text" name="" id="" />                                        
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Kebutuhan Akun 524113 (Rp.)</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeAkun113} value={akun113} style={{marginTop: '10px'}} type="text" name="" id="" />                                            
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Kebutuhan Akun 524114 (Rp.)</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeAkun114} value={akun114} style={{marginTop: '10px'}} type="text" name="" id="" />                                    
+                                        </div>
                                     </div>
                                 )}
-                                <div className='check'>
-                                    <input value="Medis" type="checkbox" id="sosialCheckbox" onChange={(event)=> {
+                                <div className='d-flex flex-row align-items-center gap-2 ps-3'>
+                                    <input className='form-input-in-check ms-4 rounded-3 ps-3' value="Medis" type="checkbox" id="sosialCheckbox" onChange={(event)=> {
                                         handleShow1(event);
                                         handleChangeUnits(event);
                                     }}/>
-                                    <label htmlFor="sosialCheckbox">Medis</label>
+                                    <label className='form-check-label' htmlFor="sosialCheckbox">Medis</label>
                                 </div>
                                 {show1 && ( // Conditionally render based on show state
-                                    <div className='check-form'>
-                                        <label htmlFor="">Kebutuhan Akun 521211 (Rp.)</label>
-                                        <input onChange={handleChangeAkun211} value={akun211} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Kebutuhan Akun 522191 (Rp.)</label>
-                                        <input onChange={handleChangeAkun191} value={akun191} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Keterangan</label>
-                                        <input onChange={handleChangeKeterangan} value={keterangan} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                    <div className='d-flex flex-column'>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Kebutuhan Akun 521211 (Rp.)</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeAkun211} value={akun211} style={{marginTop: '10px'}} type="text" name="" id="" />                                        
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Kebutuhan Akun 522191 (Rp.)</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeAkun191} value={akun191} style={{marginTop: '10px'}} type="text" name="" id="" />                                        
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Keterangan</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeKeterangan} value={keterangan} style={{marginTop: '10px'}} type="text" name="" id="" />                                    
+                                        </div>
                                     </div>
                                 )}
-                                <div className='check'>
-                                    <input type="checkbox" value="Manajemen" id="sosialCheckbox" onChange={(event) =>{
+                                <div className='d-flex flex-row align-items-center gap-2 ps-3'>
+                                    <input className='form-input-in-check ms-4 rounded-3 ps-3' type="checkbox" value="Manajemen" id="sosialCheckbox" onChange={(event) =>{
                                         handleShow2(event)
                                         handleChangeUnits(event);}} />
-                                    <label htmlFor="sosialCheckbox">Manajemen</label>
+                                    <label className='form-check-label' htmlFor="sosialCheckbox">Manajemen</label>
                                 </div>
                                 {show2 && ( // Conditionally render based on show state
-                                    <div className='check-form'>
-                                        <label htmlFor="">Total Permintaan Dana (Rp.)</label>
-                                        <input onChange={handleChangeDana} value={totaldana} style={{marginTop: '10px'}} type="text" name="" id="" />
-                                        <label htmlFor="">Metode Pembayaran</label>
-                                        <input onChange={handleChangeMetode} value={metode} style={{marginTop: '10px'}} type="text" name="" id="" />
+                                    <div className='d-flex flex-column'>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Total Permintaan Dana (Rp.)</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeDana} value={totaldana} style={{marginTop: '10px'}} type="text" name="" id="" />                                        
+                                        </div>
+                                        <div className='d-flex form-in-check-position gap-2 ps-3 mb-4'>
+                                            <label className='label-check ps-4' htmlFor="">Metode Pembayaran</label>
+                                            <input className='form-input-in-check ms-4 rounded-3 ps-3' onChange={handleChangeMetode} value={metode} style={{marginTop: '10px'}} type="text" name="" id="" />                                    
+                                        </div>
                                     </div>
                                 )}
                             </div>

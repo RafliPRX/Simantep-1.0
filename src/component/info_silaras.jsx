@@ -236,9 +236,9 @@ const Info_Silaras = ({nama}) => {
                   ))} 
                 </>       
               ) : (
-                  <div className='info'>
-                    <p style={{ marginTop: '0px'}}>Tidak ada notifikasi</p>
-                  </div>
+                  <div className='coontainer d-flex flex-row ps-5 pt-1 justify-content-center'>
+                    <p className='text-white text-center'>Tidak ada notifikasi</p>
+                </div>
               )
             }
           </>  
@@ -264,9 +264,9 @@ const Info_Silaras = ({nama}) => {
                   ))} 
                 </>       
               ) : (
-                  <div className='info'>
-                    <p style={{ marginTop: '0px'}}>Tidak ada notifikasi</p>
-                  </div>
+                <div className='coontainer d-flex flex-row ps-5 pt-1 justify-content-center'>
+                    <p className='text-white text-center'>Tidak ada notifikasi</p>
+                </div>
               )
             }
           </>  
@@ -292,9 +292,9 @@ const Info_Silaras = ({nama}) => {
                   ))} 
                 </>       
               ) : (
-                  <div className='info'>
-                    <p style={{ marginTop: '0px'}}>Tidak ada notifikasi</p>
-                  </div>
+                <div className='coontainer d-flex flex-row ps-5 pt-1 justify-content-center'>
+                    <p className='text-white text-center'>Tidak ada notifikasi</p>
+                </div>
               )
             }
           </>  

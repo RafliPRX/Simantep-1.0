@@ -27,25 +27,6 @@ console.log('status: ' +status);
 console.log("Id = " +id_user);
 console.log("Username= " +email);
 console.log('pj: ' +pj);
-
-
-// Notification helper functions
-const showBrowserNotification = (title, options) => {
-  if (!("Notification" in window)) {
-    console.log("This browser does not support notifications");
-    return;
-  }
-  
-  if (Notification.permission === "granted") {
-    const notification = new Notification(title, options);
-    notification.onclick = (event) => {
-      event.preventDefault(); // Prevent the default action
-      // window.location.href = '/Home'; // Redirect to '/home'
-    };
-  } else if (Notification.permission !== "denied") {
-    Notification.requestPermission()
-  }
-};
 // eslint-disable-next-line react-refresh/only-export-components
 function Today() {
     const tanggal = new Date();
@@ -375,16 +356,7 @@ const Home_Admin = () => {
       return () => {
         clearTimeout(timeoutId);
       };
-    }, [notif_lpj, notif_surat, notif_dana, notif_fix, notif_vehicle, notif_bhp]);
-    const scrollClick = () => {
-        console.log('discover');
-        window.scrollTo({top: 1100, behavior: 'smooth'});
-    };
-    const [profile, setProfile] = useState("");
-    const handleChangeProfile = (event) => {
-        setProfile(event.target.files[0]);
-        console.log(event.target.files[0]);
-    } 
+    }, [notif_lpj, notif_surat, notif_dana, notif_fix, notif_vehicle, notif_bhp]);   
     const navigate = useNavigate();
     const handleLogout = async () => {
       try {
@@ -407,54 +379,29 @@ const Home_Admin = () => {
       } catch (error) {
         console.log(error.response);
       }
-    };
-    const uploadProfile = async (event) => {
-        event.preventDefault();
-        const payload ={
-            profile_image: profile
-        }
-        try {
-            const response = await axios.post(`https://simantepbareta.cloud/API/upload_gambar_profile.php?id=${id_user}`, payload, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            })
-            console.log(response.data.message);
-            showBrowserNotification('Profile Updated', {
-              body: response.data.message,
-              icon: 'https://simantepbareta.cloud/API/LOGO%20BNN%20AI%20HD%20TERBARU%202023.png'
-            });
-            setTimeout(() => {
-                handleLogout();
-            }, 2000);
-        } catch (error) {
-            console.log(error.response);
-        }
-    }
+    };   
     return (
         <>
-            <div className='home'>
-                <Banner onDiscoveryClick={scrollClick} />
-                <div className='asset'></div>
-                <div className='profile-info'>
-                    <h1>Data Diri</h1>
-                    <form>
-                        <label htmlFor="">Nama</label>
-                        <input disabled value={storedUsername} type="text" />
-                        <label htmlFor="">NRK/NIP</label>
-                        <input disabled value={storeNrk} type="text" />
-                        <label htmlFor="">Username atau Email</label>
-                        <input disabled value={email} type="text" name="" id="" />
-                        <label htmlFor="">Jabatan</label>
-                        <input disabled value={jabatan} type="text" />
-                        <label style={{display: status === "ppnpn" ? "flex" : "none"}} htmlFor="">Penanggung Jawab</label>
-                        <input disabled value={pj} style={{display: status === "ppnpn" ? "flex" : "none"}} type="text" />
-                        <label htmlFor="">Upload foto Profile</label>
-                        <div className='u-profile'>
-                            <input onChange={handleChangeProfile} className='file' type="file" name="" id="" />
-                            <button onClick={uploadProfile}>Upload Gambar</button>
+            <div className='container-fluid home bg-teal p-0 m-0 d-flex align-items-center flex-column'>
+                <Banner Logout={handleLogout} />
+                <div className='container-ss container-id bg-green-old p-5 m-5 rounded-5'>
+                  <div className='d-flex flex-row align-items-center justify-content-center'>
+                      <div className='d-flex flex-column align-items-center gap-4'> 
+                        <h2 className='text-white text-center'>Identitas Pegawai</h2>
+                        <div className='profile-picture'></div>
+                        <div className='d-flex flex-column align-items-center text-nowrap text-white'>                                
+                            <div className='d-flex flex-row'>
+                              <p>Nama: <span className='fw-bold'>{storedUsername}</span></p>
+                            </div>
+                            <div className='d-flex flex-row'>                                  
+                              <p>NIP/NRK: <span className='fw-bold'>-</span></p>
+                            </div>
+                            <div className='d-flex flex-row'>
+                              <p>Jabatan: <span className='fw-bold'>Admin Simantep</span></p>
+                            </div>                          
                         </div>
-                    </form>
+                      </div>
+                  </div>
                 </div>
                 <div style={{background: `url(https://simantepbareta.cloud/API/${storedFProfile})`, backgroundSize: "cover", backgroundPosition: "50% 10%"}} className='profile-pic'></div>
                 <Menu_Admin />

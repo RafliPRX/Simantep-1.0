@@ -37,6 +37,7 @@ import Dashboard_Corner from "../pages/E-Corner-Page/dashboard_corner";
 import Klien_form from "../pages/E-Corner-Page/klien-form";
 import Klien_form_Update from "../pages/E-Corner-Page/klien-form-update";
 import Add_Klien_form from '../pages/E-Corner-Page/add_new_klien';
+import Update_Klien_form from '../pages/E-Corner-Page/update_page_klien';
 // import Maintanance from "../pages/maintanance-page/maintanance";
 
 // Lazy load Homepage
@@ -333,6 +334,14 @@ export const routeList = [
         element: (
             <RoutedProtected>
                 <Add_Klien_form/>
+            </RoutedProtected>
+        ),
+    },
+    {
+        path: "/Dashboard-E-Corner/:level/:role/:role_sp/:nama/:nrk_nip/Update_Nama_Klien/:id",
+        element: (
+            <RoutedProtected>
+                <Update_Klien_form/>
             </RoutedProtected>
         ),
     },

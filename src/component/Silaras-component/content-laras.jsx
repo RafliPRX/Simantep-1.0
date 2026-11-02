@@ -41,7 +41,7 @@ const Content_laras = () => {
         current_page: 1,
     });
     const getFix = async() => {
-        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?id=${storeidNumber}&page=${pagination_fix.current_page}&bulan=${searchMonth}&tahun=${currentYear}&nama=Maulina Nur Chayati Sulchan`;
+        const baseUrl = `https://simantepbareta.cloud/API/SILARAS/fix_by_name.php?id=${storeidNumber}&page=${pagination_fix.current_page}&bulan=${searchMonth}&tahun=${currentYear}`;
         let url = baseUrl;
         axios.get(url).then((res1) => {
             console.log(res1.data.Data);

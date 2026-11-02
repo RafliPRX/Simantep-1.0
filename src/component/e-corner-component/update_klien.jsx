@@ -14,6 +14,7 @@ const Update_Klien_form = () => {
   const { level } = useParams();
   const { role } = useParams();
   const { role_sp } = useParams();
+  const { nrk_nip } = useParams();
   const { id } = useParams();
   console.log("identitas Klien: " + id);
   
@@ -127,7 +128,7 @@ const Update_Klien_form = () => {
       console.log(response.data);
       setTimeout(() => {
         setIsLoading(false);
-        navigate(`/Dashboard-E-Corner/${level}/${role}/${role_sp}`);
+        navigate(`//Dashboard-E-Corner/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`);
         alert(response.data.message);
       }, 1000);
     } catch (error) {

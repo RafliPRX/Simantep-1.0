@@ -273,7 +273,7 @@ const Proposed_Detail = () => {
           setIsLoading(true);
           await mark(idNotif);
           await handleKeuanganRequest();
-        } catch (error) {
+        } catch (error) {          
           console.log(error);        
         } finally {
           setIsLoading(false);

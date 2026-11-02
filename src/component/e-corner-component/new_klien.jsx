@@ -44,6 +44,8 @@ const New_Klien_form = () => {
         console.log(error);
       }
   }
+  const [id_klien, setId_Klien] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [nama_klien, setNamaKlien] = useState("");
   const [nama_init, setNamaInit] = useState("");
   // const handleChangeNamaKlien = (event) => {
@@ -55,6 +57,8 @@ const New_Klien_form = () => {
         const selectedIdentityData = allKlien.find((identitas) => identitas.nama_klien === event.target.value);
         if (selectedIdentityData) {
           setNamaInit(selectedIdentityData.inisial_klien);
+          setId_Klien(selectedIdentityData.id_klien);
+          console.log("ID Klien: " + selectedIdentityData.id_klien);
         }
     }
   const [allKlien, setAllIdentity_lv1] = useState([]);
@@ -122,7 +126,7 @@ const New_Klien_form = () => {
     event.preventDefault();
     setIsLoading(true);
     const payload = {
-      nama_klien: nama_klien,
+      id_klien: id_klien,
       nama_init: nama_init,
       rooms: room,
       time: jam,

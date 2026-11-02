@@ -27,8 +27,7 @@ const Proposed = () => {
         const [show1, setShow1] = useState(false); // Changed to boolean for clarity    
         function handleShow1(event) {
             setShow1(event.target.checked); // Set show based on checkbox state
-        }
-    
+        }    
         const [show2, setShow2] = useState(false); // Changed to boolean for clarity    
         function handleShow2(event) {
             setShow2(event.target.checked); // Set show based on checkbox state

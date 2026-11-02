@@ -4,15 +4,17 @@ import absen from '../../assets/absen.png'
 const Menu_Admin = () => {    
     return(
         <>
-            <div className='menu'>
-                <div className='menu-disp'>
-                    <div className='card'>
-                        <div className='pic' style={{backgroundImage: `url(${absen})`, backgroundColor: "lightgray", backgroundSize: "cover" }}></div>
-                        <div className='text'>
-                            <h3>ACCOUNT SETTING</h3>
-                            <h5>Setting Akun SIMANTEB</h5>
-                            <button onClick={() => window.location.href = "/Home-Admin/Akun-Dashboard"}>Masuk</button>
-                        </div>
+            <div className='container-fluid'>
+                <div className=' d-flex flex-row justify-content-center flex-wrap gap-5'>
+                    <div className='menu flex-column gap-5'>
+                        <div className='menu-card p-4 gap-3'>
+                            <div className='menu-pic' style={{backgroundImage: `url(${absen})`, backgroundColor: "lightgray", backgroundSize: "cover" }}></div>
+                            <div className='text'>
+                                <h3 className='menu-h3'>ACCOUNT SETTING</h3>
+                                <h5 className='text-white'>Setting Akun SIMANTEB</h5>
+                                <button className='menu-button p-3 mt-3' onClick={() => window.location.href = "/Home-Admin/Akun-Dashboard"}>Masuk</button>
+                            </div>
+                        </div>                        
                     </div>
                 </div>
             </div>

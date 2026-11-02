@@ -992,6 +992,7 @@ const Homepage = () => {
                     kode_role={currentKodeRole}
                     nama={nama}
                     kode_role_sp={kode_role_sp}
+                    kode_role_c={kode_role_c}
                     nrk_nip={nrk_nip}
                     bagian={bagian_server}
                   />

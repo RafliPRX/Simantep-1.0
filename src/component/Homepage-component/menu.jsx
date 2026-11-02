@@ -13,6 +13,7 @@ const Menu = ({
     akses_level,
     kode_role,
     kode_role_sp,
+    kode_role_c,
     nrk_nip,
     bagian,
 }) => {
@@ -307,6 +308,8 @@ const Menu = ({
     //     setButton_fix(false);
     //     setButton_Vehicle(false);
     // }
+    const laporAccessCode = ['C-01', 'C-09'];
+    const laporAccess = laporAccessCode.includes(kode_role_c);
     return(
         <>
             <div className='container-fluid'>
@@ -341,6 +344,18 @@ const Menu = ({
                             </div>
                         </div>
                     </div>
+                    {laporAccess && (
+                        <div className='menu flex-column gap-5' onClick={() => window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>
+                            <div className='menu-card p-4 gap-3'>
+                                <div className='menu-pic' style={{backgroundImage: `url(${silaras})`, backgroundColor: "lightgray", backgroundSize: "cover", backgroundPosition: "center"}}></div>
+                                <div className='text'>
+                                    <h3 className='menu-h3'>LAPOR</h3>
+                                    <h5 className='text-white'>Layanan Pelaporan dan Pengaduan</h5>
+                                    <button className='menu-button p-3 mt-3' onClick={() => window.location.href = `/dashboard-laras/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>Masuk</button>
+                                </div>
+                            </div>
+                        </div>
+                    )}                    
                     {kode_role_sp === 'S-06' &&(
                     <div className='menu flex-column gap-5' onClick={() => window.location.href = `/Dashboard-E-Corner/level-${akses_level}/${kode_role}/${kode_role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`}>
                         <div className='menu-card p-4 gap-3'>
@@ -388,6 +403,7 @@ Menu.propTypes = {
     akses_level: PropTypes.string,
     kode_role: PropTypes.string,
     kode_role_sp: PropTypes.string,
+    kode_role_c: PropTypes.string,
     nrk_nip: PropTypes.string,
     bagian: PropTypes.string,
 }

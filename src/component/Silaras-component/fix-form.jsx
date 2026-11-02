@@ -4,96 +4,130 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Profile from '../profile';
 const Fix_form = () => {
-  const storeidNumber = localStorage.getItem('id_number');
-  console.log('id_number: ' + storeidNumber);
-  const storedFProfile = localStorage.getItem('f_profile');
-  const [identity, setIdentity] = useState([]);
-  const [nama, setNama] = useState(identity.nama);
-  const [jabatan, setJabatan] = useState(identity.jabatan);    
-  const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
-  const [nama_role, setNama_role] = useState(identity.nama_role);
-  const [nama_role_c, setNama_role_c] = useState(identity.nama_role_c);
-  const [isLoading, setIsLoading] = useState(false);
-  const { level } = useParams();
-  const { role } = useParams();
-  const { role_sp } = useParams();
-  const [identity_pjSarpras, setIdentity_PJSarpras] = useState([]);
-  const [nama_pjSarpras, setNama_PJSarpras] = useState(identity_pjSarpras.nama);
-  console.log("nama pj Sarpras: " + nama_pjSarpras);
-  
-  const getIdentity_pjSarpras = async () => {
-    try {
-      const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/get_pjSarpras_Identity.php?kode_role_c=C-03` , {
-        headers: {"Content-Type": "application/json"},
-      });
-      console.log(response.data);
-      setIdentity_PJSarpras(response.data.Data[0]);
-      setNama_PJSarpras(response.data.Data[0].nama);
-         
-    } catch (error) {
-      console.log(error);
-    }
-  }
+    const storeidNumber = localStorage.getItem('id_number');
+    console.log('id_number: ' + storeidNumber);
+    const storedFProfile = localStorage.getItem('f_profile');
+    const [identity, setIdentity] = useState([]);
+    const [nama, setNama] = useState(identity.nama);
+    const [jabatan, setJabatan] = useState(identity.jabatan);    
+    const [nrk_nip, setNrk_nip] = useState(identity.nrk_nip);
+    const [nama_role, setNama_role] = useState(identity.nama_role);
+    const [nama_role_c, setNama_role_c] = useState(identity.nama_role_c);
+    const [isLoading, setIsLoading] = useState(false);
+    const { level } = useParams();
+    const { role } = useParams();
+    const { role_sp } = useParams();
+    const [identity_pjSarpras, setIdentity_PJSarpras] = useState([]);
+    const [nama_pjSarpras, setNama_PJSarpras] = useState(identity_pjSarpras.id_number);
+    console.log("nama pj Sarpras: " + nama_pjSarpras);
 
-  const getIdentity = async () => {
-    try {
-      const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
-        headers: {"Content-Type": "application/json"},
-      });
-      console.log(response.data);
-      setIdentity(response.data);
-      setNama(response.data.nama);
-      setJabatan(response.data.jabatan);
-      setNrk_nip(response.data.nrk_nip);
-      setNama_role(response.data.nama_role);
-      setNama_role_c(response.data.nama_role_c);
-    } catch (error) {
-      console.log(error);
+    const getIdentity_pjSarpras = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/SILARAS/get_pjSarpras_Identity.php?kode_role_c=C-03` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setIdentity_PJSarpras(response.data.Data[0]);
+        setNama_PJSarpras(response.data.Data[0].id_number);         
+      } catch (error) {
+        console.log(error);
+      }
     }
-  }
-  useEffect(() => {
-    getIdentity();
-    getIdentity_pjSarpras();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  const [fixing, setFixing] = useState("");
-  const [image, setImage] = useState("")
-  const navigate = useNavigate();
-  const handleChangeFixing = (event) => {
-    console.log(event.target.value);
-    setFixing(event.target.value);
-  }
-  const handleChangeImage = (event) => {
-    setImage(event.target.files[0]);
-    console.log(event.target.files[0]);
-  }
 
-  const handleRequest = async (event) => {
-    event.preventDefault();
-    setIsLoading(true);
-    const payload = {
-      id_number: storeidNumber,
-      fix: fixing,
-      foto: image,
-      sent_to: nama_pjSarpras
-    };
-    try {
-      const respone = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_fix.php`, payload, {
-        headers: {
-          "Content-Type" : "multipart/form-data"
-        }
-      });
-      console.log(respone.data);
-      setTimeout(() => {
+    const getIdentity = async () => {
+      try {
+        const response = await axios.get(`https://simantepbareta.cloud/API/Admin_API/detail_identity.php?id=${storeidNumber}` , {
+          headers: {"Content-Type": "application/json"},
+        });
+        console.log(response.data);
+        setIdentity(response.data);
+        setNama(response.data.nama);
+        setJabatan(response.data.jabatan);
+        setNrk_nip(response.data.nrk_nip);
+        setNama_role(response.data.nama_role);
+        setNama_role_c(response.data.nama_role_c);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    useEffect(() => {
+      getIdentity();
+      getIdentity_pjSarpras();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+    const [fixing, setFixing] = useState("");
+    const [image, setImage] = useState("")
+    const navigate = useNavigate();
+    const handleChangeFixing = (event) => {
+      console.log(event.target.value);
+      setFixing(event.target.value);
+    }
+    const handleChangeImage = (event) => {
+      setImage(event.target.files[0]);
+      console.log(event.target.files[0]);
+    }
+
+    const id_fix_number = () =>
+      String(Math.floor(Math.random() * 1000)).padStart(3, '0');
+    console.log("angka yang dibuat = " + id_fix_number());
+    
+    const handleRequest = async () => {
+      const payload = {
+        id_fix: id_fix_number(),
+        id_number: storeidNumber,
+        fix: fixing,
+        foto: image,
+        sent_to: nama_pjSarpras
+      };
+      try {
+        const respone = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_fix.php`, payload, {
+          headers: {
+            "Content-Type" : "multipart/form-data"
+          }
+        });
+        console.log(respone.data);
+        setTimeout(() => {
+          setIsLoading(false);
+          navigate(`/dashboard-laras/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`);
+          alert(respone.data.message);
+        }, 1000);
+      } catch (error) {
+        console.log(error.respone);
+        alert("error code 105");
+      }
+    }
+    const addNotif_fix = async () => {
+      const payload_notif = {
+        who: nama_pjSarpras,
+        id_fix: id_fix_number(),
+        subjek: fixing,
+        sender: storeidNumber,
+        stat: 1,
+      };
+      try {
+        const respone = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_notif_fix.php`, payload_notif, {
+          headers: {
+            "Content-Type" : "multipart/form-data"
+          }
+        });
+        console.log(respone.data);
+      } catch (error) {
+        console.log(error.respone);
+        alert("error code 105 Notif");
+      }
+    }
+    const handleFix = async (event) => {
+      event.preventDefault();
+      try {
+        setIsLoading(true);
+        await addNotif_fix();
+        await handleRequest();        
+      } catch (error) {
+        console.log(error);
+      } finally {
         setIsLoading(false);
-        navigate(`/dashboard-laras/${level}/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}`);
-        alert(respone.data.message);
-      }, 1000);
-    } catch (error) {
-      console.log(error.respone);
-      alert("error code 105");
+      }
     }
-  }
     return(
         <>
             <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
@@ -151,7 +185,7 @@ const Fix_form = () => {
                           </div>
                         </div>
                         <div className='d-flex flex-column align-items-center w-100'>
-                            <button onClick={handleRequest} className='submit'>Kirim</button>
+                            <button onClick={(e) => handleFix(e)} className='submit'>Kirim</button>
                         </div>
                         </form>
                     </div>

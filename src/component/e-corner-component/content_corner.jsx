@@ -69,6 +69,46 @@ const Content_Corner = () => {
             currentPage: pagination_e_corner.currentPage - 1,
         })
     }
+    const [database_klien, setDatabase_Klien] = useState([]);
+    const [pagination_database_klien, setPagination_Database_Klien] = useState({
+        currentPage: 1,
+    });
+    const [nama_klien_search, setNama_Klien_Search] = useState('');
+    const getDatabase_Klien = async() => {
+        const baseUrl = `https://simantepbareta.cloud/API/E-corner/get_databaseKlien.php?page=${pagination_database_klien.currentPage}&nama_klien=${nama_klien_search}`;
+        let url = baseUrl;
+        axios.get(url).then((res1) => {
+            console.log(res1.data.Data);
+            const response = res1.data.Data;
+            const pagination_surat = {
+                total: res1.data.total_records,
+                currentPage: res1.data.current_page,
+                nextPage: res1.data.nextPage,
+            }
+            setDatabase_Klien(response);
+            setPagination_Database_Klien(pagination_surat);
+            console.log(response);
+        })
+        .catch((error) => {
+            console.log(error);
+        });
+    }
+    const handleChangeNamaKlienSearch = (event) => {
+        setNama_Klien_Search(event.target.value);
+        console.log(event.target.value);
+    };
+    const handleNext_databaseKlien = () => {
+        setPagination_Database_Klien({
+            ...pagination_database_klien,
+            currentPage: pagination_database_klien.currentPage + 1,
+        })
+    }
+    const handlePrev_databaseKlien = () => {
+        setPagination_Database_Klien({
+            ...pagination_database_klien,
+            currentPage: pagination_database_klien.currentPage - 1,
+        })
+    }
     const [week_list, setWeek_lst] = useState([]);
     const [id_week, setId_week] = useState(week_list?.id_minggu || "-");
     const [week, setWeek] = useState(week_list?.minngu || "-");
@@ -107,11 +147,34 @@ const Content_Corner = () => {
           alert("error code 104");
         }
     }
+    const deletedDatabaseKlien = async (id) => {
+        setIsLoading(true)
+        try {
+          const response = await axios.delete(`https://simantepbareta.cloud/API/E-corner/deleted_databaseKlien.php?id=${id}`, {
+            headers: { "Content-Type": "application/json" },
+          });
+          console.log(response.data);
+          alert(response.data.message);
+          setTimeout(() => {
+                setIsLoading(false);
+                window.location.reload();
+            }, 500);
+        } catch (error) {
+          console.log(error.response);
+          setIsLoading(false);
+          alert("error code 104");
+        }
+    }
     const confirmDeleteCorner = (id) => {
         if (window.confirm("Apakah Anda yakin Surat ini di Hapuskan ?")) {
             deletedClient(id);
         }
-    }    
+    }
+    const confirmDeleteDatabaseKlien = (id) => {
+        if (window.confirm("Apakah Anda yakin Surat ini di Hapuskan ?")) {
+            deletedDatabaseKlien(id);
+        }
+    }  
     const [minggu, setMinggu] = useState('');
     const [bulan, setBulan] = useState('');
     const [nama_klien, setNama_Klien] = useState('');
@@ -159,16 +222,21 @@ const Content_Corner = () => {
         .catch((error) => {
             console.log(error);
         });
-    }    
+    }
+    
     const handleOpenCorner = (id) => {
         navigate(`/Dashboard-E-Corner/${ level }/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/Update_Klien/${id}`);
+    }
+    const handleOpenKlien = (id) => {
+        navigate(`/Dashboard-E-Corner/${ level }/${role}/${role_sp}/${nama}/${encodeURIComponent(nrk_nip)}/Update_Nama_Klien/${id}`);
     }
     useEffect(() => {
     getIdentity();
     getKlien_Corner();
     getWeek();
+    getDatabase_Klien();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [pagination_e_corner?.currentPage]);
+    }, [pagination_e_corner?.currentPage, pagination_database_klien?.currentPage, nama_klien_search]);
     const handleResetWeek = async (event) => {
         setIsLoading(true);
         event.preventDefault();
@@ -259,7 +327,7 @@ const Content_Corner = () => {
                                                 <tr key={item.id_surat}>
                                                     <td style={{ textAlign: 'center' }}>{index + 1}</td>
                                                     <td style={{ textAlign: 'center' }}>{item.nama_klien}</td>
-                                                    <td style={{ textAlign: 'center' }}>{item.nama_init}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item.inisial_klien}</td>
                                                     <td style={{ textAlign: 'center' }}>{item.rooms}</td>
                                                     <td style={{ textAlign: 'center' }}>{item.time}</td>
                                                     <td style={{ textAlign: 'center' }}>{item.days}</td>                                                
@@ -376,6 +444,47 @@ const Content_Corner = () => {
                                                     <td style={{ textAlign: 'center' }}>{item_s.time}</td>
                                                     <td style={{ textAlign: 'center' }}>{item_s.days}</td>                                                
                                                     <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenCorner(item_s.id_corner)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteCorner(item_s.id_corner)} className='B-deleted'>Deleted</button> </td>  
+                                                </tr>
+                                            ))} 
+                                        </table>
+                                    </div>
+                                    ) : (
+                                    <p className='no-data-p mt-5 text-center'>tidak ada data</p>
+                                )}
+                            </>
+                        }
+                    </div>
+                    <div className=''>
+                        {role_sp ==='S-06' &&
+                            <>
+                                <h1 className='content-title fw-bold mt-0'>Daftar Nama Klien</h1>
+                                <div className='justify-content-between d-flex gap-3'>
+                                    <div className='d-flex flex-row gap-2'>
+                                        <button className='left' onClick={handlePrev_databaseKlien}><img src={left} alt="" /></button>
+                                        <input className='page-number' type="number" value={pagination_database_klien.currentPage}></input>
+                                        <button className='right' onClick={handleNext_databaseKlien}><img src={right} alt="" /></button>
+                                    </div>
+                                    <div className='d-flex flex-row gap-2'>
+                                        <label className='text-month-search fw-bold'>Nama Klien:</label>
+                                        <input className='ecorner-filter-input rounded-3 pe-3 ps-3' type="text" value={nama_klien_search} onChange={handleChangeNamaKlienSearch}></input>
+                                    </div>
+                                </div>
+                                
+                                {database_klien.length > 0 ? (
+                                    <div className='mt-3 container-xxl d-flex flex-column gap-4'>
+                                        <table className='table-spaced' border="1">
+                                            <tr>
+                                                <th style={{ textAlign: 'center' }}>Nomor</th>
+                                                <th style={{ textAlign: 'center' }}>Nama Klien</th>
+                                                <th style={{ textAlign: 'center' }}>Nama Klien (Inisial)</th>
+                                                <th style={{ textAlign: 'center' }}>Detail</th>
+                                            </tr>
+                                            {database_klien.map((item_k, index) => (
+                                                <tr key={item_k.id_klien}>
+                                                    <td style={{ textAlign: 'center' }}>{index + 1}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item_k.nama_klien}</td>
+                                                    <td style={{ textAlign: 'center' }}>{item_k.inisial_klien}</td>
+                                                    <td style={{ textAlign: 'center' }}> <button onClick={() => handleOpenKlien(item_k.id_klien)} className='B-update'>Update</button> | <button onClick={() => confirmDeleteDatabaseKlien(item_k.id_klien)} className='B-deleted'>Deleted</button> </td>  
                                                 </tr>
                                             ))} 
                                         </table>

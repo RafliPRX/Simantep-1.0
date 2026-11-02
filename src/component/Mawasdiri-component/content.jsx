@@ -485,7 +485,7 @@ const Content = () => {
                 <h1 className='content-header-title mt-0'>Manajemen Pegawai Berbasis Kinerja Mandiri</h1>
                 <Profile nama={nama} feature="mawasdiri" />
             </div>
-            <div className='container-xxl content-display bg-green-old align-items-start ' style={{borderRadius: '20px'}}>
+            <div className='container-xxl content-display bg-green-old align-items-start' style={{borderRadius: '20px'}}>
                 <div className='container-xxl d-flex flex-column gap-4'>
                     <div className=''>
                     {(level === 'level-1' || level === 'level-2') && (

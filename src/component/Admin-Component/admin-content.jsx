@@ -600,16 +600,18 @@ const Admin_Content = () => {
     }
     return(
         <>
-            <div className='main-dashboard'>
+            <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
             {isLoading && <div style={{position: 'absolute', marginLeft: '-303px', display: 'flex', alignItems: 'center', justifyContent: 'center', backgroundColor: 'rgba(255, 255, 255, 0.5)', width: '100%', height: '100vh'}}>
                 <span style={{position: 'absolute', top : '600px'}} className="load-cuti"></span>
             </div>}     
-                <p>Admin/Dashboard</p>
-                <h1>Main Dashboard</h1>
-                <Profile nama={storedUsername} f_profile={storedFProfile}/>
-                <div className='content-col'>
-                    <div className='box-m'>
-                        <div className='tab-container'>
+                <p className='content-header-p'>Admin/Dashboard</p>
+                <div className='d-flex flex-row align-items-center justify-content-between gap-5'>
+                    <h1 className='content-header-title mt-0'>Main Dashboard</h1>
+                    <Profile nama={storedUsername} f_profile={storedFProfile}/>                
+                </div>
+                <div className='container-xxl content-display bg-green-old align-items-start rounded-3'>
+                    <div className='container-xxl d-flex flex-column gap-4'>
+                        <div className='tab-container'>                            
                             <ul className='tab-list'>
                                 <li className={`tab-item ${activeTab === 'identitas' ? 'active' : ''}`}
                                 onClick={() => setActiveTab('identitas')}>
@@ -626,8 +628,8 @@ const Admin_Content = () => {
                             </ul>
                         </div>
                         {activeTab === 'identitas' && (
-                        <div className='content'>
-                            <div className='tab-identity'>
+                        <div>
+                            <div className='tab-identity mb-3'>
                                 <ul className='identity-list'>
                                     <li className={`identity-item ${identitasLevel === 'level 1' ? 'active' : ''}`}
                                     onClick={() => setIdentitasLevel('level 1')}>Level 1</li>
@@ -641,19 +643,19 @@ const Admin_Content = () => {
                             </div>
                             {identitasLevel === 'level 1' && (                             
                             <>    
-                                <h1>Daftar Identitas Pegawai Level 1</h1>
-                                <div style={{display: 'flex', flexDirection: "row"}}>
-                                    <div className='pagination'>
+                                <h1 className='content-title fw-bold mt-0'>Daftar Identitas Pegawai Level 1</h1>
+                                <div className='header-content mb-3'>
+                                    <div className='d-flex flex-row gap-2'>
                                         <button className='left' onClick={handlePrev_Identity}><img src={left} alt="" /></button>
                                         <input className='page-number' type="text" value={pagination_identity?.currentPage} />
                                         <button className='right' onClick={handleNext_Identity}><img src={right} alt="" /></button>                                
                                     </div>
-                                    <div className='search'>
-                                        <label className='pagination-label' htmlFor="">Cari: </label>
-                                        <input className='pagination-input' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
+                                    <div className='d-flex flex-row gap-2 align-items-center'>
+                                        <label className='text-year-search' htmlFor="">Cari: </label>
+                                        <input className='w-100 h-100 rounded-3 fs-6 ps-2' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
                                     </div>
                                 </div>
-                                <table>
+                                <table className='table-spaced'>
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Nama Lengkap</th>
@@ -679,19 +681,19 @@ const Admin_Content = () => {
                             )}
                             {identitasLevel === 'level 2' && (
                             <>    
-                                <h1>Daftar Identitas Pegawai Level 2</h1>
-                                <div style={{display: 'flex', flexDirection: "row"}}>
-                                    <div className='pagination'>
+                                <h1 className='content-title fw-bold mt-0'>Daftar Identitas Pegawai Level 2</h1>
+                                <div className='header-content'>
+                                    <div className='d-flex flex-row gap-2'>
                                         <button className='left' onClick={handlePrev_Identity_level2}><img src={left} alt="" /></button>
                                         <input className='page-number' type="text" value={pagination_identity_level2?.currentPage} />
                                         <button className='right' onClick={handleNext_Identity_level2}><img src={right} alt="" /></button>                                
                                     </div>
-                                    <div className='search'>
-                                        <label className='pagination-label' htmlFor="">Cari: </label>
-                                        <input className='pagination-input' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
+                                    <div className='d-flex flex-row gap-2 align-items-center'>
+                                        <label className='text-year-search' htmlFor="">Cari: </label>
+                                        <input className='w-100 h-100 rounded-3 fs-6 ps-2' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
                                     </div>
                                 </div>
-                                <table>
+                                <table className='table-spaced'>
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Nama Lengkap</th>
@@ -713,12 +715,13 @@ const Admin_Content = () => {
                             )}
                             {identitasLevel === 'level 3' && (
                             <>    
-                                <h1>Daftar Identitas Pegawai Level 3</h1>
-                                <div>
-                                    <button onClick={handlePrev_Identity_level3}>Previous</button>
-                                    <button onClick={handleNext_Identity_level3}>Next</button>
+                                <h1 className='content-title fw-bold mt-0'>Daftar Identitas Pegawai Level 3</h1>
+                                <div className='d-flex flex-row gap-2 mb-3'>
+                                    <button className='left' onClick={handlePrev_Identity_level3}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_identity_level3?.currentPage} />
+                                    <button className='right' onClick={handleNext_Identity_level3}><img src={right} alt="" /></button>
                                 </div>
-                                <table>
+                                <table className='table-spaced'>
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Nama Lengkap</th>
@@ -740,12 +743,13 @@ const Admin_Content = () => {
                             )}
                             {identitasLevel === 'level 4' && (
                             <>    
-                                <h1>Daftar Identitas Pegawai Level 4</h1>
-                                <div>
-                                    <button onClick={handlePrev_Identity_level4}>Previous</button>
-                                    <button onClick={handleNext_Identity_level4}>Next</button>
+                                <h1 className='content-title fw-bold mt-0'>Daftar Identitas Pegawai Level 4</h1>
+                                <div className='d-flex flex-row gap-2 mb-3'>
+                                    <button className='left' onClick={handlePrev_Identity_level4}><img src={left} alt="" /></button>
+                                    <input className='page-number' type="text" value={pagination_identity_level4?.currentPage} />
+                                    <button className='right' onClick={handleNext_Identity_level4}><img src={right} alt="" /></button>
                                 </div>
-                                <table>
+                                <table className='table-spaced'>
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Nama Lengkap</th>
@@ -768,7 +772,7 @@ const Admin_Content = () => {
                         </div>
                         )}
                         {activeTab === 'Role' && (
-                        <div className='content'>
+                        <div>
                             <div className='tab-identity'>
                                 <ul className='identity-list'>
                                     <li className={`identity-item ${roleLevel === 'level 1' ? 'active' : ''}`}
@@ -785,12 +789,15 @@ const Admin_Content = () => {
                             </div>
                             {roleLevel === 'level 1' && (
                                 <>
-                                    <h1>Daftar Role Simanteb Level 1</h1>
-                                    <div>
-                                        <button onClick={handlePrev_Role}>Previous</button>
-                                        <button onClick={handleNext_Role}>Next</button>
+                                    <h1 className='content-title fw-bold mt-3'>Daftar Role Simanteb Level 1</h1>
+                                    <div className='header-content mb-3'>
+                                        <div className='d-flex flex-row gap-2'>
+                                            <button className='left' onClick={handlePrev_Role}><img src={left} alt="" /></button>
+                                            <input className='page-number' type="text" value={pagination_role?.currentPage} />
+                                            <button className='right' onClick={handleNext_Role}><img src={right} alt=""/></button>
+                                        </div>
                                     </div>
-                                    <table>
+                                    <table className='table-spaced'>
                                         <tr>
                                             <th>Nomor</th>
                                             <th>Nama Role</th>
@@ -810,12 +817,15 @@ const Admin_Content = () => {
                             )}
                             {roleLevel === 'level 2' && (
                                 <>
-                                    <h1>Daftar Role Simanteb Level 2</h1>
-                                    <div>
-                                        <button onClick={handlePrev_Role_level2}>Previous</button>
-                                        <button onClick={handleNext_Role_level2}>Next</button>
+                                    <h1 className='content-title fw-bold mt-3'>Daftar Role Simanteb Level 2</h1>
+                                    <div className='header-content mb-3'>
+                                        <div className='d-flex flex-row gap-2'>
+                                            <button className='left' onClick={handlePrev_Role_level2}><img src={left} alt=""/></button>
+                                            <input className='page-number' type="text" value={pagination_role_level2?.currentPage} />
+                                            <button className='right' onClick={handleNext_Role_level2}><img src={right} alt=""/></button>
+                                        </div>                                    
                                     </div>
-                                    <table>
+                                    <table className='table-spaced'>
                                         <tr>
                                             <th>Nomor</th>
                                             <th>Nama Role</th>
@@ -835,12 +845,15 @@ const Admin_Content = () => {
                             )}
                             {roleLevel === 'level 3' && (
                                 <>
-                                    <h1>Daftar Role Simanteb Level 3</h1>
-                                    <div>
-                                        <button onClick={handlePrev_Role_level3}>Previous</button>
-                                        <button onClick={handleNext_Role_level3}>Next</button>
+                                    <h1 className='content-title fw-bold mt-3'>Daftar Role Simanteb Level 3</h1>
+                                    <div className='d-flex flex-row gap-2'>
+                                        <div className='header-content'>
+                                            <button className='left' onClick={handlePrev_Role_level3}><img src={left} alt="" /></button>
+                                            <input className='page-number' value={pagination_role_level3?.currentPage} type="text" />
+                                            <button className='right' onClick={handleNext_Role_level3}><img src={right} alt="" /></button>
+                                        </div>
                                     </div>
-                                    <table>
+                                    <table className='table-spaced'>
                                         <tr>
                                             <th>Nomor</th>
                                             <th>Nama Role</th>
@@ -860,12 +873,15 @@ const Admin_Content = () => {
                             )}
                             {roleLevel === 'level 4' && (
                                 <>
-                                    <h1>Daftar Role Simanteb Level 4</h1>
-                                    <div>
-                                        <button onClick={handlePrev_Role_level4}>Previous</button>
-                                        <button onClick={handleNext_Role_level4}>Next</button>
+                                    <h1 className='content-title fw-bold mt-3'>Daftar Role Simanteb Level 4</h1>
+                                    <div className='header-content'>
+                                        <div className='d-flex flex-row gap-2'>
+                                            <button className='left' onClick={handlePrev_Role_level4}><img src={left} alt="" /></button>
+                                            <input className='page-number' value={pagination_role_level4?.currentPage} type="text" />
+                                            <button className='right' onClick={handleNext_Role_level4}><img src={right} alt="" /></button>
+                                        </div>
                                     </div>
-                                    <table>
+                                    <table className='table-spaced'>
                                         <tr>
                                             <th>Nomor</th>
                                             <th>Nama Role</th>
@@ -885,12 +901,15 @@ const Admin_Content = () => {
                             )}
                             {roleLevel === 'spesial' && (
                                 <>
-                                    <h1>Daftar Role Simanteb Spesial</h1>
-                                    <div>
-                                        <button onClick={handlePrev_Role_Spesial}>Previous</button>
-                                        <button onClick={handleNext_Role_Spesial}>Next</button>
+                                    <h1 className='content-title fw-bold mt-3'>Daftar Role Simanteb Spesial</h1>
+                                    <div className='header-content'>
+                                        <div className='d-flex flex-row gap-2'>
+                                            <button className='left' onClick={handlePrev_Role_Spesial}><img src={left} alt="" /></button>
+                                            <input className='page-number' value={pagination_role_spesial?.currentPage} type="text" />
+                                            <button className='right' onClick={handleNext_Role_Spesial}><img src={right} alt="" /></button>
+                                        </div>
                                     </div>
-                                    <table>
+                                    <table className='table-spaced'>
                                         <tr>
                                             <th>Nomor</th>
                                             <th>Nama Role</th>
@@ -911,7 +930,7 @@ const Admin_Content = () => {
                         </div>                            
                         )}
                         {activeTab === 'Akun' && (
-                        <div className='content'>
+                        <div>
                             <div className='tab-identity'>
                                 <ul className='identity-list'>
                                     <li className={`identity-item ${akunLevel === 'level 1' ? 'active' : ''}`}
@@ -926,19 +945,19 @@ const Admin_Content = () => {
                             </div>
                             {akunLevel === 'level 1' && (
                             <>
-                                <h1>Daftar Akun Pegawai Level 1</h1>
-                                <div style={{display: 'flex', flexDirection: "row"}}>
-                                    <div className='pagination'>
+                                <h1 className='content-title fw-bold mt-3'>Daftar Akun Pegawai Level 1</h1>
+                                <div className='header-content mb-3'>
+                                    <div className='d-flex flex-row gap-2'>
                                         <button className='left' onClick={handlePrev_Akun_level1}><img src={left} alt="" /></button>
                                         <input className='page-number' type="text" value={pagination_akun_level1?.currentPage} />
                                         <button className='right' onClick={handleNext_Akun_Level1}><img src={right} alt="" /></button>                                
                                     </div>
-                                    <div className='search'>
-                                        <label className='pagination-label' htmlFor="">Cari: </label>
-                                        <input className='pagination-input' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
+                                    <div className='header-month align-items-center'>
+                                        <label className='text-month-search' htmlFor="">Cari: </label>
+                                        <input className='w-100 h-100 rounded-3 fs-6 lh-lg ps-2' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
                                     </div>
                                 </div>
-                                <table>
+                                <table className='table-spaced'>
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Nama Lengkap</th>
@@ -966,19 +985,19 @@ const Admin_Content = () => {
                             )}
                             {akunLevel === 'level 2' && (
                             <>    
-                                <h1>Daftar Akun Pegawai Level 2</h1>
-                                <div style={{display: 'flex', flexDirection: "row"}}>
-                                    <div className='pagination'>
+                                <h1 className='content-title fw-bold mt-3'>Daftar Akun Pegawai Level 2</h1>
+                                <div className='header-content mb-3'>
+                                    <div className='d-flex flex-row gap-2'>
                                         <button className='left' onClick={handlePrev_Akun_level2}><img src={left} alt="" /></button>
                                         <input className='page-number' type="text" value={pagination_akun_level2?.currentPage} />
                                         <button className='right' onClick={handleNext_Akun_Level2}><img src={right} alt="" /></button>                                
                                     </div>
-                                    <div className='search'>
-                                        <label className='pagination-label' htmlFor="">Cari: </label>
-                                        <input className='pagination-input' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
+                                    <div className='header-month align-items-center'>
+                                        <label className='text-month-search' htmlFor="">Cari: </label>
+                                        <input className='w-100 h-100 rounded-3 fs-6 lh-lg ps-2' onChange={handleChangeSearchName} type="text" placeholder='Cari Identitas...' />
                                     </div>
                                 </div>
-                                <table>
+                                <table className='table-spaced'>
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Nama Lengkap</th>
@@ -1006,12 +1025,14 @@ const Admin_Content = () => {
                             )}
                             {akunLevel === 'level 3' && (
                             <>    
-                                <h1>Daftar Akun Pegawai Level 3</h1>
-                                <div>
-                                    <button onClick={handlePrev_Akun_Level3}>Previous</button>
-                                    <button onClick={handleNext_Akun_Level3}>Next</button>
+                                <h1 className='content-title fw-bold mt-3'>Daftar Akun Pegawai Level 3</h1>
+                                <div className='header-content'>
+                                    <div className='d-flex flex-row gap-2'>
+                                        <button className='left' onClick={handlePrev_Akun_Level3}>Previous</button>
+                                        <button className='right' onClick={handleNext_Akun_Level3}>Next</button>
+                                    </div>
                                 </div>
-                                <table>
+                                <table className='table-spaced'>
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Nama Lengkap</th>
@@ -1039,12 +1060,14 @@ const Admin_Content = () => {
                             )}
                             {akunLevel === 'level 4' && (
                             <>    
-                                <h1>Daftar Akun Pegawai Level 4</h1>
-                                <div>
-                                    <button onClick={handlePrev_Akun_Level4}>Previous</button>
-                                    <button onClick={handleNext_Akun_Level4}>Next</button>
+                                <h1 className='content-title fw-bold mt-3'>Daftar Akun Pegawai Level 4</h1>
+                                <div className='header-content'>
+                                    <div className='d-flex flex-row gap-2'>
+                                        <button className='left' onClick={handlePrev_Akun_Level4}>Previous</button>
+                                        <button className='right' onClick={handleNext_Akun_Level4}>Next</button>
+                                    </div>
                                 </div>
-                                <table>
+                                <table className='table-spaced'>
                                     <tr>
                                         <th>Nomor</th>
                                         <th>Nama Lengkap</th>

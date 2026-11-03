@@ -71,13 +71,13 @@ const Fix_form = () => {
       String(Math.floor(Math.random() * 1000)).padStart(3, '0');
     console.log("angka yang dibuat = " + id_fix_number());
     
-    const handleRequest = async () => {
+    const handleRequest = async (event) => {
+      event.preventDefault();
+      setIsLoading(true);
       const payload = {
-        id_fix: id_fix_number(),
         id_number: storeidNumber,
         fix: fixing,
-        foto: image,
-        sent_to: nama_pjSarpras
+        foto: image
       };
       try {
         const respone = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_fix.php`, payload, {
@@ -96,38 +96,38 @@ const Fix_form = () => {
         alert("error code 105");
       }
     }
-    const addNotif_fix = async () => {
-      const payload_notif = {
-        who: nama_pjSarpras,
-        id_fix: id_fix_number(),
-        subjek: fixing,
-        sender: storeidNumber,
-        stat: 1,
-      };
-      try {
-        const respone = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_notif_fix.php`, payload_notif, {
-          headers: {
-            "Content-Type" : "multipart/form-data"
-          }
-        });
-        console.log(respone.data);
-      } catch (error) {
-        console.log(error.respone);
-        alert("error code 105 Notif");
-      }
-    }
-    const handleFix = async (event) => {
-      event.preventDefault();
-      try {
-        setIsLoading(true);
-        await addNotif_fix();
-        await handleRequest();        
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
+    // const addNotif_fix = async () => {
+    //   const payload_notif = {
+    //     who: nama_pjSarpras,
+    //     id_fix: id_fix_number(),
+    //     subjek: fixing,
+    //     sender: storeidNumber,
+    //     stat: 1,
+    //   };
+    //   try {
+    //     const respone = await axios.post(`https://simantepbareta.cloud/API/SILARAS/new_notif_fix.php`, payload_notif, {
+    //       headers: {
+    //         "Content-Type" : "multipart/form-data"
+    //       }
+    //     });
+    //     console.log(respone.data);
+    //   } catch (error) {
+    //     console.log(error.respone);
+    //     alert("error code 105 Notif");
+    //   }
+    // }
+    // const handleFix = async (event) => {
+    //   event.preventDefault();
+    //   try {
+    //     setIsLoading(true);
+    //     await addNotif_fix();
+    //     await handleRequest();        
+    //   } catch (error) {
+    //     console.log(error);
+    //   } finally {
+    //     setIsLoading(false);
+    //   }
+    // }
     return(
         <>
             <div className='container-fluid d-flex flex-column p-5 m-2 overflow-auto'>
@@ -185,7 +185,7 @@ const Fix_form = () => {
                           </div>
                         </div>
                         <div className='d-flex flex-column align-items-center w-100'>
-                            <button onClick={(e) => handleFix(e)} className='submit'>Kirim</button>
+                            <button onClick={handleRequest} className='submit'>Kirim</button>
                         </div>
                         </form>
                     </div>
